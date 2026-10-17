@@ -66,3 +66,5 @@ Same GitHub Actions app/check name is not proof of an immutable workflow. Changi
 Stable diagnostics should include codes for context-stale/ambiguous, policy-invalid/downgrade, required-missing/skipped, producer-unsuccessful, suite-empty/incomplete, artifact-missing/unsafe/expired/oversize, duplicate-result, unsupported-version, scanner-unavailable/finding, cleanup-failed, budget-exceeded and owner-source-unverified (notice, never automatic consent).
 
 Recovery names the actual dependency to repair, preserves old attempts and reruns affected checks. Removing the check, shortening the selection set or attaching an unrelated artifact is not recovery. Local equivalent evidence may be used only where established policy allows and must not fabricate an Actions result or bypass required protection.
+
+Implementation framing: manifest/selection digests use SHA-256 of UTF-8 `F002-json-v1` followed by a NUL byte and canonical JSON (object keys sorted lexicographically, array order retained, no whitespace). Artifact/workflow byte digests use raw SHA-256. Hosted producers compare current manifest digests to the shared tested context.

@@ -75,3 +75,43 @@ test("timestamp and nested authority constraints cannot be bypassed", () => {
     /field/,
   );
 });
+test("passed counts cannot omit actual passes or add authority fields", () => {
+  const r = {
+    schema: "solodesk.verification.report",
+    schema_version: 1,
+    id: "r",
+    context_ref: "c",
+    run_ref: "run",
+    check_id: "test",
+    target_id: null,
+    command_id: "test",
+    argv: [],
+    producer: { mode: "local" },
+    started_at: "2026-01-01T00:00:00.000Z",
+    finished_at: "2026-01-01T00:00:01.000Z",
+    status: "passed",
+    expected: "assertions",
+    observed: {},
+    counts: {
+      kind: "tests",
+      executed: 2,
+      passed: 0,
+      failed: 0,
+      skipped: 0,
+      todo: 0,
+    },
+    artifacts: [],
+    findings: [],
+    cleanup: { status: "completed" },
+    tool_versions: {},
+  };
+  assert.throws(() => validateRecord(r), /suite-empty/);
+  assert.throws(
+    () =>
+      validateRecord({
+        ...r,
+        counts: { kind: "tests", executed: 2, passed: 2, approved: true },
+      }),
+    /counts-invalid/,
+  );
+});

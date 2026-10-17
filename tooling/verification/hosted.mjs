@@ -151,7 +151,6 @@ async function main() {
     allocate(root, "publish");
     let size = 0;
     for (const report of r.reports) {
-      if (report.check_id === "lint") continue; // User-approved temporary missing-report trial A-26; restore before delivery.
       for (const a of report.artifacts) {
         validateArtifact(root, a.path, a);
         const dest = `.verification/publish/${report.check_id.replace(/:/g, "-")}-${path.basename(a.path)}`;
@@ -241,6 +240,30 @@ async function main() {
       });
     value.automated_ready = value.findings.length === 0;
     allocate(root, "gate");
+    const runRecord = envelope("run", value.run_ref, {
+      context_ref: context.id,
+      provider_run_id: Number(process.env.GITHUB_RUN_ID),
+      attempt_number: Number(process.env.GITHUB_RUN_ATTEMPT),
+      started_at:
+        reports.map((r) => r.started_at).sort()[0] ||
+        context.provider.started_at,
+      finished_at: new Date().toISOString(),
+      state: value.automated_ready ? "completed" : "failed",
+      selection_digest: digest("F002-json-v1\0" + canonicalJSON(selection)),
+      limits: readRecord(safePath(root, "verification/policy.v1.json")).limits,
+      scratch: ".verification/gate",
+      reports: reports.map((r) => ({
+        id: r.id,
+        check_id: r.check_id,
+        status: r.status,
+      })),
+      cleanup: {
+        status: reports.every((r) => r.cleanup?.status === "completed")
+          ? "completed"
+          : "failed",
+      },
+    });
+    writeRecord(root, ".verification/gate/run.json", runRecord);
     writeRecord(root, ".verification/gate/summary.json", value);
     console.log(JSON.stringify(value, null, 2));
     process.exitCode = value.automated_ready ? 0 : 1;

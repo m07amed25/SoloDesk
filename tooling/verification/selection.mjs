@@ -39,7 +39,12 @@ export function selectChecks(
         current.group !== base.group ||
         current.target !== base.target ||
         current.min_tests < base.min_tests ||
-        base.argv.some((a, i) => current.argv[i] !== a)
+        base.argv.some((a, i) => current.argv[i] !== a) ||
+        (current.argv.length > base.argv.length &&
+          (base.kind !== "tests" ||
+            current.argv
+              .slice(base.argv.length)
+              .some((a) => !/^tests\/[\w./-]+\.test\.mjs$/.test(a))))
       )
         findings.push({ code: "suite-downgrade", check_id: base.id });
     }
@@ -77,7 +82,20 @@ export function selectChecks(
       reason: c ? "mandatory-baseline" : "required-suite-missing",
     };
   });
-  for (const target of policy.targets) {
+  const targets = new Map((basePolicy?.targets || []).map((t) => [t.id, t]));
+  for (const t of policy.targets) {
+    if (
+      targets.has(t.id) &&
+      JSON.stringify(targets.get(t.id)) !== JSON.stringify(t)
+    )
+      findings.push({ code: "target-policy-downgrade", target_id: t.id });
+    targets.set(t.id, t);
+  }
+  if (
+    basePolicy?.targets.some((t) => !policy.targets.some((c) => c.id === t.id))
+  )
+    findings.push({ code: "target-policy-downgrade" });
+  for (const target of targets.values()) {
     const id = `desktop:${target.id}`,
       c = definitions.get(id);
     if (risk && !c)

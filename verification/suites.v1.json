@@ -154,7 +154,7 @@
         "tests/verification/unit/adoption.test.mjs"
       ],
       "kind": "tests",
-      "min_tests": 56,
+      "min_tests": 61,
       "timeout_ms": 300000,
       "phase_ids": ["F002"],
       "requirement_ids": ["NFR-014"],

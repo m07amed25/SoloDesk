@@ -327,7 +327,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 ### F002 — Automated CI and verification harness
 
 - **Feature specification:** [Full F002 specification](specs/002-ci-verification-harness/spec.md), [technical plan and design artifacts](specs/002-ci-verification-harness/plan.md), [dependency-ordered tasks](specs/002-ci-verification-harness/tasks.md) and [requirements-quality checklist](specs/002-ci-verification-harness/checklists/requirements.md). Specification/planning readiness does not change delivery status or authorize implementation.
-- **PR identity:** `[F002] Automated CI and verification harness`; branch `feat/f002-automated-ci-and-verification-harness` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F002] Automated CI and verification harness`; branch `feat/f002-automated-ci-and-verification-harness` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F001 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** NFR-008, NFR-014, NFR-015. **Behavior authority:** [requirements](docs/product/requirements.md).
 - **Build the feature:** Add locked installs, type/lint/build, meaningful unit/integration runners, desktop test harness, documentation integrity and an always-running aggregate PR gate.
@@ -341,7 +341,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F003 — Shared typed commands and domain primitives
 
-- **PR identity:** `[F003] Shared typed commands and domain primitives`; branch `feat/f003-shared-typed-commands-and-domain-primitives` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F003] Shared typed commands and domain primitives`; branch `feat/f003-shared-typed-commands-and-domain-primitives` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F002 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** NFR-001, NFR-015, PLT-008. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Define versioned DTOs, IDs, exact decimal/money and integer-second types, stable localized error codes, validation bounds and adapter ports.
@@ -355,7 +355,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F004 — Secure Electron lifecycle and preload bridge
 
-- **PR identity:** `[F004] Secure Electron lifecycle and preload bridge`; branch `feat/f004-secure-electron-lifecycle-and-preload-bridge` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F004] Secure Electron lifecycle and preload bridge`; branch `feat/f004-secure-electron-lifecycle-and-preload-bridge` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F003 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-012, NFR-015. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Add single-instance/profile ownership, narrow validated preload IPC, sender/origin checks, safe deep links/external URLs and shutdown/window behavior.
@@ -369,7 +369,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F005 — Accessible English/Arabic application shell
 
-- **PR identity:** `[F005] Accessible English/Arabic application shell`; branch `feat/f005-accessible-english-arabic-application-shell` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F005] Accessible English/Arabic application shell`; branch `feat/f005-accessible-english-arabic-application-shell` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F004 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-015, NFR-006, NFR-007, NFR-015. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Build navigation, workspace/timer/sync placeholders, translation infrastructure, full RTL/logical layout, theme/focus and command-shell routing with Tailwind/shadcn.
@@ -383,7 +383,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F006 — Cross-platform key protection and encryption proof
 
-- **PR identity:** `[F006] Cross-platform key protection and encryption proof`; branch `feat/f006-cross-platform-key-protection-and-encryption-proof` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F006] Cross-platform key protection and encryption proof`; branch `feat/f006-cross-platform-key-protection-and-encryption-proof` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F004 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-007, NFR-005. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Prove an Electron-compatible encrypted SQLite adapter, OS-wrapped device keys and encrypted attachment/temp/WAL handling on supported native targets.
@@ -397,7 +397,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F007 — Encrypted local persistence and migrations
 
-- **PR identity:** `[F007] Encrypted local persistence and migrations`; branch `feat/f007-encrypted-local-persistence-and-migrations` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F007] Encrypted local persistence and migrations`; branch `feat/f007-encrypted-local-persistence-and-migrations` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F003, F006 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-007, NFR-003, NFR-010. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Implement protected per-account/workspace cache, transactions, schema history, migration journal and recoverable read failures.
@@ -411,7 +411,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F008 — Managed backend and tenant isolation
 
-- **PR identity:** `[F008] Managed backend and tenant isolation`; branch `feat/f008-managed-backend-and-tenant-isolation` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F008] Managed backend and tenant isolation`; branch `feat/f008-managed-backend-and-tenant-isolation` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F003 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-003, PLT-005, NFR-004, NFR-009. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Define Supabase local/staging schemas, tenant keys, relational constraints, least-privilege RLS/private storage baseline and bounded Edge Functions.
@@ -425,7 +425,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F009 — Authoritative command receipts and audit
 
-- **PR identity:** `[F009] Authoritative command receipts and audit`; branch `feat/f009-authoritative-command-receipts-and-audit` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F009] Authoritative command receipts and audit`; branch `feat/f009-authoritative-command-receipts-and-audit` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F008 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-014, NFR-001, NFR-004. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Add verified actor/current-scope entry points, expected revisions, transactional receipts/request digests, accepted event cursor and redacted append-only audit.
@@ -439,7 +439,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F010 — Browser sign-in and native enrollment
 
-- **PR identity:** `[F010] Browser sign-in and native enrollment`; branch `feat/f010-browser-sign-in-and-native-enrollment` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F010] Browser sign-in and native enrollment`; branch `feat/f010-browser-sign-in-and-native-enrollment` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F005, F007, F009 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-001, PLT-002. **Behavior authority:** [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Build separate bilingual hosted sign-in UI, Supabase auth/session flow, system-browser PKCE/state and validated native callback; enroll first device online.
@@ -453,7 +453,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F011 — MFA and account recovery
 
-- **PR identity:** `[F011] MFA and account recovery`; branch `feat/f011-mfa-and-account-recovery` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F011] MFA and account recovery`; branch `feat/f011-mfa-and-account-recovery` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F010 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-002. **Behavior authority:** [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Implement configured MFA enrollment/challenge/recovery codes, reauthentication and lost-session/password recovery without claiming recovery of missing unsynced keys.
@@ -467,7 +467,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F012 — Workspace creation and safe switching
 
-- **PR identity:** `[F012] Workspace creation and safe switching`; branch `feat/f012-workspace-creation-and-safe-switching` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F012] Workspace creation and safe switching`; branch `feat/f012-workspace-creation-and-safe-switching` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F010 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-003. **Behavior authority:** [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Create solo/team workspaces with profile/timezone/defaults; switch caches/subscriptions safely; show current tenant in consequential actions.
@@ -481,7 +481,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F013 — Member invitations
 
-- **PR identity:** `[F013] Member invitations`; branch `feat/f013-member-invitations` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F013] Member invitations`; branch `feat/f013-member-invitations` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F012 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-004. **Behavior authority:** [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Create recipient-bound role/scope invitations with expiry, one-use acceptance, resend invalidation and revoke.
@@ -495,7 +495,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F014 — Roles and project-scoped grants
 
-- **PR identity:** `[F014] Roles and project-scoped grants`; branch `feat/f014-roles-and-project-scoped-grants` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F014] Roles and project-scoped grants`; branch `feat/f014-roles-and-project-scoped-grants` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F013 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-005, NFR-004. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Implement capability-based Owner/Admin/Manager/Contributor/Finance/Viewer templates, project/client grants, ownership transfer and policy invalidation.
@@ -509,7 +509,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F015 — Device enrollment and revocation
 
-- **PR identity:** `[F015] Device enrollment and revocation`; branch `feat/f015-device-enrollment-and-revocation` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F015] Device enrollment and revocation`; branch `feat/f015-device-enrollment-and-revocation` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F011, F014 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-006. **Behavior authority:** [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** List device label/version/last contact, manage independent credentials/keys, revoke sessions and handle next-contact local restrictions.
@@ -523,7 +523,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F016 — Bounded offline authorization and lock
 
-- **PR identity:** `[F016] Bounded offline authorization and lock`; branch `feat/f016-bounded-offline-authorization-and-lock` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F016] Bounded offline authorization and lock`; branch `feat/f016-bounded-offline-authorization-and-lock` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F015 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-010. **Behavior authority:** [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Issue signed offline leases, encrypted unlock/lock states, expiry/reauth recovery and honest cached access policy.
@@ -537,7 +537,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F017 — Durable local outbox and push
 
-- **PR identity:** `[F017] Durable local outbox and push`; branch `feat/f017-durable-local-outbox-and-push` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F017] Durable local outbox and push`; branch `feat/f017-durable-local-outbox-and-push` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F007, F009, F016 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-008, NFR-002. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Commit eligible local changes with outbound commands atomically; order dependencies; use bounded retries and per-operation accepted/rejected receipts.
@@ -551,7 +551,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F018 — Incremental pull and permission invalidation
 
-- **PR identity:** `[F018] Incremental pull and permission invalidation`; branch `feat/f018-incremental-pull-and-permission-invalidation` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F018] Incremental pull and permission invalidation`; branch `feat/f018-incremental-pull-and-permission-invalidation` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F017 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-008, NFR-004. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Apply authorized accepted events/cursor atomically, refresh cache scopes, dispose old subscriptions and resynchronize after interruptions.
@@ -565,7 +565,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F019 — Conflict review center
 
-- **PR identity:** `[F019] Conflict review center`; branch `feat/f019-conflict-review-center` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F019] Conflict review center`; branch `feat/f019-conflict-review-center` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F018 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-009. **Behavior authority:** [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Preserve base/local/remote candidates; merge only proven independent fields; resolve against current revision with audit.
@@ -579,7 +579,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F020 — Deletion tombstones and stale-device rejoin
 
-- **PR identity:** `[F020] Deletion tombstones and stale-device rejoin`; branch `feat/f020-deletion-tombstones-and-stale-device-rejoin` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F020] Deletion tombstones and stale-device rejoin`; branch `feat/f020-deletion-tombstones-and-stale-device-rejoin` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F019 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** NFR-002, NFR-003, NFR-010, PLT-008. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Separate archive/delete/purge, retain scoped tombstones, enforce cursor retention and resnapshot old devices before writes.
@@ -593,7 +593,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F021 — Personal, device and workspace settings
 
-- **PR identity:** `[F021] Personal, device and workspace settings`; branch `feat/f021-personal-device-and-workspace-settings` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F021] Personal, device and workspace settings`; branch `feat/f021-personal-device-and-workspace-settings` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F012, F014 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-011. **Behavior authority:** [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Separate preference scopes, locale/digits/timezone/theme/quiet hours, workspace defaults and protected profile edits.
@@ -607,7 +607,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F022 — In-app and OS notification center
 
-- **PR identity:** `[F022] In-app and OS notification center`; branch `feat/f022-in-app-and-os-notification-center` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F022] In-app and OS notification center`; branch `feat/f022-in-app-and-os-notification-center` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F014, F018, F021 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-013. **Behavior authority:** [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Add deduped unread/read/snooze, source links, quiet hours and accessible OS-permission fallback.
@@ -621,7 +621,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F023 — Private versioned attachments
 
-- **PR identity:** `[F023] Private versioned attachments`; branch `feat/f023-private-versioned-attachments` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F023] Private versioned attachments`; branch `feat/f023-private-versioned-attachments` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F007, F014, F018 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** WRK-011, FIN-033, NFR-005. **Behavior authority:** [requirements](docs/product/requirements.md), [finance](docs/specs/finance.md), [work-management](docs/specs/work-management.md).
 - **Build the feature:** Stage files encrypted, validate type/size/hash, resume upload, commit verified private refs and reauthorize downloads with short-lived links.
@@ -635,7 +635,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F024 — Safe staged import framework
 
-- **PR identity:** `[F024] Safe staged import framework`; branch `feat/f024-safe-staged-import-framework` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F024] Safe staged import framework`; branch `feat/f024-safe-staged-import-framework` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F003, F023 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-016, NFR-013. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Add inert CSV/JSON/archive parsing, locale/encoding mapping, row previews, duplicate IDs, staged errors and batch provenance.
@@ -649,7 +649,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F025 — Encrypted device backup export
 
-- **PR identity:** `[F025] Encrypted device backup export`; branch `feat/f025-encrypted-device-backup-export` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F025] Encrypted device backup export`; branch `feat/f025-encrypted-device-backup-export` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F007, F023 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-016, NFR-003, NFR-005. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Export versioned encrypted manifest, permitted records/local capture/files, checksums and key-recovery instructions excluding credentials.
@@ -663,7 +663,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F026 — Isolated restore and reviewed cloud rejoin
 
-- **PR identity:** `[F026] Isolated restore and reviewed cloud rejoin`; branch `feat/f026-isolated-restore-and-reviewed-cloud-rejoin` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F026] Isolated restore and reviewed cloud rejoin`; branch `feat/f026-isolated-restore-and-reviewed-cloud-rejoin` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F020, F025 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-016, NFR-003. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Validate/decrypt into a new recovery identity, preview integrity, safety export and explicit permitted rejoin; never replace tenant from old file.
@@ -677,7 +677,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F027 — Scoped portable data export
 
-- **PR identity:** `[F027] Scoped portable data export`; branch `feat/f027-scoped-portable-data-export` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F027] Scoped portable data export`; branch `feat/f027-scoped-portable-data-export` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F014, F023 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-016, NFR-013. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Provide exact CSV/JSON/archive snapshot exports with scope/as-of/manifest, safe names and formula-injection handling.
@@ -691,7 +691,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F028 — Feature and policy configuration
 
-- **PR identity:** `[F028] Feature and policy configuration`; branch `feat/f028-feature-and-policy-configuration` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F028] Feature and policy configuration`; branch `feat/f028-feature-and-policy-configuration` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F021, F009 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-017. **Behavior authority:** [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Version enabled features/profiles, prerequisites/role/online needs and safe disable behavior preserving historical data/obligations.
@@ -705,7 +705,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F029 — Native callback, packaging and signing feasibility
 
-- **PR identity:** `[F029] Native callback, packaging and signing feasibility`; branch `feat/f029-native-callback-packaging-and-signing-feasibility` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F029] Native callback, packaging and signing feasibility`; branch `feat/f029-native-callback-packaging-and-signing-feasibility` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F004, F006, F010 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** NFR-011, PLT-012. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Prove packaged native callback, encrypted-adapter ABI, key-store continuity and installer feasibility on target architectures early.
@@ -719,7 +719,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F030 — Durable scheduled job execution
 
-- **PR identity:** `[F030] Durable scheduled job execution`; branch `feat/f030-durable-scheduled-job-execution` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F030] Durable scheduled job execution`; branch `feat/f030-durable-scheduled-job-execution` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F009, F014, F028 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** INT-010, NFR-009. **Behavior authority:** [requirements](docs/product/requirements.md), [integrations-and-automation](docs/specs/integrations-and-automation.md).
 - **Build the feature:** Add job/outbox leases, checkpoints, bounded batches, occurrence IDs, retries/dead letters and current-authority checks before effects.
@@ -733,7 +733,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F031 — Clients and contact profiles
 
-- **PR identity:** `[F031] Clients and contact profiles`; branch `feat/f031-clients-and-contact-profiles` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F031] Clients and contact profiles`; branch `feat/f031-clients-and-contact-profiles` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F018, F021, F027 **Milestone:** P02 — Client acquisition and commercial lifecycle.
 - **Requirements:** CRM-001. **Behavior authority:** [client-lifecycle](docs/specs/client-lifecycle.md).
 - **Build the feature:** Deliver scoped legal/display/billing profiles, contacts/addresses/tags, preferred currency/locale and duplicate suggestions.
@@ -747,7 +747,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F032 — Project creation and lifecycle
 
-- **PR identity:** `[F032] Project creation and lifecycle`; branch `feat/f032-project-creation-and-lifecycle` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F032] Project creation and lifecycle`; branch `feat/f032-project-creation-and-lifecycle` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F031, F014 **Milestone:** P03 — Work planning and delivery.
 - **Requirements:** WRK-001. **Behavior authority:** [work-management](docs/specs/work-management.md).
 - **Build the feature:** Create client/internal projects, grants, dates and lifecycle/archive flag with reopen/completion consequences.
@@ -761,7 +761,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F033 — Task creation, ownership and states
 
-- **PR identity:** `[F033] Task creation, ownership and states`; branch `feat/f033-task-creation-ownership-and-states` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F033] Task creation, ownership and states`; branch `feat/f033-task-creation-ownership-and-states` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F032, F005 **Milestone:** P03 — Work planning and delivery.
 - **Requirements:** WRK-002. **Behavior authority:** [work-management](docs/specs/work-management.md).
 - **Build the feature:** Deliver task forms, descriptions, accountable owner/collaborators, semantic statuses, priority/dates and safe edits.
@@ -775,7 +775,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F034 — Task lists, filters and bulk editing
 
-- **PR identity:** `[F034] Task lists, filters and bulk editing`; branch `feat/f034-task-lists-filters-and-bulk-editing` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F034] Task lists, filters and bulk editing`; branch `feat/f034-task-lists-filters-and-bulk-editing` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F033 **Milestone:** P03 — Work planning and delivery.
 - **Requirements:** WRK-004. **Behavior authority:** [work-management](docs/specs/work-management.md).
 - **Build the feature:** Add cross-project list/search/status/date/assignee/label filters, undated buckets, saved views and bulk preview/results.
@@ -789,7 +789,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F035 — Manual reviewed time entries
 
-- **PR identity:** `[F035] Manual reviewed time entries`; branch `feat/f035-manual-reviewed-time-entries` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F035] Manual reviewed time entries`; branch `feat/f035-manual-reviewed-time-entries` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F033, F018 **Milestone:** P04 — Time evidence and productivity.
 - **Requirements:** TIM-005, TIM-011. **Behavior authority:** [time-and-productivity](docs/specs/time-and-productivity.md).
 - **Build the feature:** Capture duration/interval work with integer seconds, work date/source, task/project and billable/review states.
@@ -803,7 +803,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F036 — Persistent timer start, pause, switch and stop
 
-- **PR identity:** `[F036] Persistent timer start, pause, switch and stop`; branch `feat/f036-persistent-timer-start-pause-switch-and-stop` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F036] Persistent timer start, pause, switch and stop`; branch `feat/f036-persistent-timer-start-pause-switch-and-stop` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F035, F004 **Milestone:** P04 — Time evidence and productivity.
 - **Requirements:** TIM-001, TIM-002, TIM-003, TIM-024. **Behavior authority:** [time-and-productivity](docs/specs/time-and-productivity.md).
 - **Build the feature:** Implement one timer per user/device, durable segments, atomic switch/stop, visible indicator and keyboard controls.
@@ -817,7 +817,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F037 — Timer crash, sleep and exit recovery
 
-- **PR identity:** `[F037] Timer crash, sleep and exit recovery`; branch `feat/f037-timer-crash-sleep-and-exit-recovery` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F037] Timer crash, sleep and exit recovery`; branch `feat/f037-timer-crash-sleep-and-exit-recovery` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F036 **Milestone:** P04 — Time evidence and productivity.
 - **Requirements:** TIM-004, TIM-016. **Behavior authority:** [time-and-productivity](docs/specs/time-and-productivity.md).
 - **Build the feature:** Checkpoint confirmed work, detect suspend/clock anomalies, review uncertain gaps, configure close/tray and recover real OS termination.
@@ -831,7 +831,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F038 — Timezone and overlap reconciliation
 
-- **PR identity:** `[F038] Timezone and overlap reconciliation`; branch `feat/f038-timezone-and-overlap-reconciliation` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F038] Timezone and overlap reconciliation`; branch `feat/f038-timezone-and-overlap-reconciliation` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F037, F019 **Milestone:** P04 — Time evidence and productivity.
 - **Requirements:** TIM-007, TIM-008, TIM-022. **Behavior authority:** [time-and-productivity](docs/specs/time-and-productivity.md).
 - **Build the feature:** Split reporting days by explicit zone, retain original instants/offsets and reconcile same-user multi-device overlaps.
@@ -845,7 +845,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F039 — Dated selling and internal cost rates
 
-- **PR identity:** `[F039] Dated selling and internal cost rates`; branch `feat/f039-dated-selling-and-internal-cost-rates` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F039] Dated selling and internal cost rates`; branch `feat/f039-dated-selling-and-internal-cost-rates` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F035, F021 **Milestone:** P04 — Time evidence and productivity.
 - **Requirements:** TIM-010, WRK-012. **Behavior authority:** [time-and-productivity](docs/specs/time-and-productivity.md), [work-management](docs/specs/work-management.md).
 - **Build the feature:** Resolve versioned rate precedence/currency and snapshots, private labor costs and explicit repricing of unbilled work.
@@ -859,7 +859,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F040 — Exact money and calculation profiles
 
-- **PR identity:** `[F040] Exact money and calculation profiles`; branch `feat/f040-exact-money-and-calculation-profiles` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F040] Exact money and calculation profiles`; branch `feat/f040-exact-money-and-calculation-profiles` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F003, F028 **Milestone:** P05 — Finance and commercial operations.
 - **Requirements:** FIN-016, FIN-017, FIN-018, NFR-001. **Behavior authority:** [requirements](docs/product/requirements.md), [finance](docs/specs/finance.md).
 - **Build the feature:** Implement currency exponents, bounded exact quantities/rates, versioned rounding/tax/discount order and independent golden fixtures.
@@ -873,7 +873,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F041 — Offline invoice draft editor
 
-- **PR identity:** `[F041] Offline invoice draft editor`; branch `feat/f041-offline-invoice-draft-editor` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F041] Offline invoice draft editor`; branch `feat/f041-offline-invoice-draft-editor` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F031, F039, F040 **Milestone:** P05 — Finance and commercial operations.
 - **Requirements:** FIN-001, FIN-004, FIN-005, FIN-034. **Behavior authority:** [finance](docs/specs/finance.md).
 - **Build the feature:** Create/edit/duplicate manual or source-candidate drafts with parties, dates/terms, currency, revision and complete preview.
@@ -887,7 +887,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F042 — Authoritative time/expense draft reservations
 
-- **PR identity:** `[F042] Authoritative time/expense draft reservations`; branch `feat/f042-authoritative-time-expense-draft-reservations` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F042] Authoritative time/expense draft reservations`; branch `feat/f042-authoritative-time-expense-draft-reservations` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F041, F009 **Milestone:** P05 — Finance and commercial operations.
 - **Requirements:** TIM-012, TIM-013, FIN-022. **Behavior authority:** [finance](docs/specs/finance.md), [time-and-productivity](docs/specs/time-and-productivity.md).
 - **Build the feature:** Acknowledge/release online draft reservations, distinguish offline candidates and protect finalized source revisions/ranges.
@@ -901,7 +901,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F043 — Invoice numbering and atomic online issuance
 
-- **PR identity:** `[F043] Invoice numbering and atomic online issuance`; branch `feat/f043-invoice-numbering-and-atomic-online-issuance` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F043] Invoice numbering and atomic online issuance`; branch `feat/f043-invoice-numbering-and-atomic-online-issuance` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F042, F040 **Milestone:** P05 — Finance and commercial operations.
 - **Requirements:** FIN-006, FIN-007, FIN-029, FIN-030. **Behavior authority:** [finance](docs/specs/finance.md).
 - **Build the feature:** Online command atomically revalidates preview, freezes snapshot, allocates number/source ownership and commits audit/receipt/event.
@@ -915,7 +915,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F044 — English/Arabic invoice PDF export
 
-- **PR identity:** `[F044] English/Arabic invoice PDF export`; branch `feat/f044-english-arabic-invoice-pdf-export` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F044] English/Arabic invoice PDF export`; branch `feat/f044-english-arabic-invoice-pdf-export` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F043, F023 **Milestone:** P05 — Finance and commercial operations.
 - **Requirements:** FIN-008, FIN-031. **Behavior authority:** [finance](docs/specs/finance.md).
 - **Build the feature:** Render exact saved snapshot with licensed embedded Arabic fonts, bidi-safe identifiers, pagination and no remote executable content.
@@ -929,7 +929,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F045 — Manual delivery and invoice status
 
-- **PR identity:** `[F045] Manual delivery and invoice status`; branch `feat/f045-manual-delivery-and-invoice-status` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F045] Manual delivery and invoice status`; branch `feat/f045-manual-delivery-and-invoice-status` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F044 **Milestone:** P05 — Finance and commercial operations.
 - **Requirements:** FIN-009, FIN-011. **Behavior authority:** [finance](docs/specs/finance.md).
 - **Build the feature:** Separate issued/delivery/settlement/dispute/overdue indicators; record manual sharing evidence without claiming receipt/read.
@@ -943,7 +943,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F046 — Partial payments and unapplied client credit
 
-- **PR identity:** `[F046] Partial payments and unapplied client credit`; branch `feat/f046-partial-payments-and-unapplied-client-credit` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F046] Partial payments and unapplied client credit`; branch `feat/f046-partial-payments-and-unapplied-client-credit` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F043, F009 **Milestone:** P05 — Finance and commercial operations.
 - **Requirements:** FIN-010, FIN-011, FIN-012. **Behavior authority:** [finance](docs/specs/finance.md).
 - **Build the feature:** Post online manual payments, split eligible same-client/currency settlements, overpayments and exact remaining balances.
@@ -957,7 +957,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F047 — Expense recording and receipt evidence
 
-- **PR identity:** `[F047] Expense recording and receipt evidence`; branch `feat/f047-expense-recording-and-receipt-evidence` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F047] Expense recording and receipt evidence`; branch `feat/f047-expense-recording-and-receipt-evidence` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F040, F023 **Milestone:** P05 — Finance and commercial operations.
 - **Requirements:** FIN-021, FIN-033. **Behavior authority:** [finance](docs/specs/finance.md).
 - **Build the feature:** Record supplier/category/date/amount/currency/tax/receipt and project attribution as local draft/authoritative recorded evidence.
@@ -971,7 +971,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F048 — Core work and receivables overview
 
-- **PR identity:** `[F048] Core work and receivables overview`; branch `feat/f048-core-work-and-receivables-overview` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F048] Core work and receivables overview`; branch `feat/f048-core-work-and-receivables-overview` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F034, F038, F045, F046 **Milestone:** P06 — Business insights, knowledge and search.
 - **Requirements:** INS-001, FIN-025. **Behavior authority:** [finance](docs/specs/finance.md), [insights-and-knowledge](docs/specs/insights-and-knowledge.md).
 - **Build the feature:** Show permitted upcoming tasks/time/unbilled/receivables grouped by currency with source links/as-of and cache completeness.
@@ -985,7 +985,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F049 — Core pilot release and cross-domain evidence
 
-- **PR identity:** `[F049] Core pilot release and cross-domain evidence`; branch `feat/f049-core-pilot-release-and-cross-domain-evidence` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F049] Core pilot release and cross-domain evidence`; branch `feat/f049-core-pilot-release-and-cross-domain-evidence` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F026, F027, F029, F048 **Milestone:** P09 — Commercial readiness, supported distribution and operations.
 - **Requirements:** NFR-001, NFR-002, NFR-003, NFR-004, NFR-005, NFR-006, NFR-007, NFR-011, NFR-014. **Behavior authority:** [requirements](docs/product/requirements.md).
 - **Build the feature:** Deliver reproducible pilot artifact and automated bilingual two-member client→task→time→invoice→partial-payment/recovery journey.
@@ -999,7 +999,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F050 — Client archive, merge and relationship integrity
 
-- **PR identity:** `[F050] Client archive, merge and relationship integrity`; branch `feat/f050-client-archive-merge-and-relationship-integrity` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F050] Client archive, merge and relationship integrity`; branch `feat/f050-client-archive-merge-and-relationship-integrity` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F031, F043 **Milestone:** P02 — Client acquisition and commercial lifecycle.
 - **Requirements:** CRM-001. **Behavior authority:** [client-lifecycle](docs/specs/client-lifecycle.md).
 - **Build the feature:** Add archive/reactivation and reviewed atomic merge/aliases with affected links, field conflicts and frozen-history protection.
@@ -1013,7 +1013,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F051 — Opportunity pipeline and weighted forecast
 
-- **PR identity:** `[F051] Opportunity pipeline and weighted forecast`; branch `feat/f051-opportunity-pipeline-and-weighted-forecast` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F051] Opportunity pipeline and weighted forecast`; branch `feat/f051-opportunity-pipeline-and-weighted-forecast` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F031, F040 **Milestone:** P02 — Client acquisition and commercial lifecycle.
 - **Requirements:** CRM-002. **Behavior authority:** [client-lifecycle](docs/specs/client-lifecycle.md).
 - **Build the feature:** Create semantic/custom stages, values/ranges, probability, next action and won/lost/reopen history.
@@ -1027,7 +1027,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F052 — Relationship activities and follow-ups
 
-- **PR identity:** `[F052] Relationship activities and follow-ups`; branch `feat/f052-relationship-activities-and-follow-ups` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F052] Relationship activities and follow-ups`; branch `feat/f052-relationship-activities-and-follow-ups` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F051, F022, F030 **Milestone:** P02 — Client acquisition and commercial lifecycle.
 - **Requirements:** CRM-003. **Behavior authority:** [client-lifecycle](docs/specs/client-lifecycle.md).
 - **Build the feature:** Record scoped activity/evidence and scheduled/completed/snoozed/cancelled follow-ups with deduped catch-up.
@@ -1041,7 +1041,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F053 — Versioned service catalog
 
-- **PR identity:** `[F053] Versioned service catalog`; branch `feat/f053-versioned-service-catalog` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F053] Versioned service catalog`; branch `feat/f053-versioned-service-catalog` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F039, F040 **Milestone:** P02 — Client acquisition and commercial lifecycle.
 - **Requirements:** CRM-004. **Behavior authority:** [client-lifecycle](docs/specs/client-lifecycle.md).
 - **Build the feature:** Maintain catalog codes/descriptions/units/selling rates/currency and private estimate assumptions with archive/versioning.
@@ -1055,7 +1055,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F054 — Estimate scenarios and comparison
 
-- **PR identity:** `[F054] Estimate scenarios and comparison`; branch `feat/f054-estimate-scenarios-and-comparison` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F054] Estimate scenarios and comparison`; branch `feat/f054-estimate-scenarios-and-comparison` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F053 **Milestone:** P02 — Client acquisition and commercial lifecycle.
 - **Requirements:** CRM-004, FIN-002. **Behavior authority:** [client-lifecycle](docs/specs/client-lifecycle.md), [finance](docs/specs/finance.md).
 - **Build the feature:** Create versioned hourly/fixed/unit/milestone estimate scenarios, alternatives/contingency and explicit draft refresh.
@@ -1069,7 +1069,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F055 — Proposal revisions and document sharing
 
-- **PR identity:** `[F055] Proposal revisions and document sharing`; branch `feat/f055-proposal-revisions-and-document-sharing` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F055] Proposal revisions and document sharing`; branch `feat/f055-proposal-revisions-and-document-sharing` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F054, F044 **Milestone:** P02 — Client acquisition and commercial lifecycle.
 - **Requirements:** CRM-005. **Behavior authority:** [client-lifecycle](docs/specs/client-lifecycle.md).
 - **Build the feature:** Version scope/terms/options, export exact proposal revision and distinguish exported/shared/superseded/withdrawn states.
@@ -1083,7 +1083,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F056 — Acceptance evidence and disputes
 
-- **PR identity:** `[F056] Acceptance evidence and disputes`; branch `feat/f056-acceptance-evidence-and-disputes` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F056] Acceptance evidence and disputes`; branch `feat/f056-acceptance-evidence-and-disputes` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F055, F009 **Milestone:** P02 — Client acquisition and commercial lifecycle.
 - **Requirements:** CRM-006. **Behavior authority:** [client-lifecycle](docs/specs/client-lifecycle.md).
 - **Build the feature:** Record manual versus authenticated decision provenance, selected options, expiry and correction/dispute history.
@@ -1097,7 +1097,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F057 — Agreements, amendments and obligations
 
-- **PR identity:** `[F057] Agreements, amendments and obligations`; branch `feat/f057-agreements-amendments-and-obligations` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F057] Agreements, amendments and obligations`; branch `feat/f057-agreements-amendments-and-obligations` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F056, F023, F030 **Milestone:** P02 — Client acquisition and commercial lifecycle.
 - **Requirements:** CRM-007. **Behavior authority:** [client-lifecycle](docs/specs/client-lifecycle.md).
 - **Build the feature:** Version agreements/SOW/NDA/support documents, term/notice dates, signature evidence and assigned obligation states.
@@ -1111,7 +1111,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F058 — Client onboarding checklists
 
-- **PR identity:** `[F058] Client onboarding checklists`; branch `feat/f058-client-onboarding-checklists` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F058] Client onboarding checklists`; branch `feat/f058-client-onboarding-checklists` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F057, F033, F023 **Milestone:** P02 — Client acquisition and commercial lifecycle.
 - **Requirements:** CRM-008. **Behavior authority:** [client-lifecycle](docs/specs/client-lifecycle.md).
 - **Build the feature:** Create versioned questionnaires/checklists, responsible party, blocking verification and explicit waivers.
@@ -1125,7 +1125,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F059 — Accepted engagement project handoff
 
-- **PR identity:** `[F059] Accepted engagement project handoff`; branch `feat/f059-accepted-engagement-project-handoff` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F059] Accepted engagement project handoff`; branch `feat/f059-accepted-engagement-project-handoff` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F056, F058, F032 **Milestone:** P02 — Client acquisition and commercial lifecycle.
 - **Requirements:** CRM-009. **Behavior authority:** [client-lifecycle](docs/specs/client-lifecycle.md).
 - **Build the feature:** Preview mapping accepted scope/template/options into one project/task/milestone baseline with stable handoff receipt.
@@ -1139,7 +1139,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F060 — Renewals and deterministic client health
 
-- **PR identity:** `[F060] Renewals and deterministic client health`; branch `feat/f060-renewals-and-deterministic-client-health` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F060] Renewals and deterministic client health`; branch `feat/f060-renewals-and-deterministic-client-health` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F052, F057, F048 **Milestone:** P02 — Client acquisition and commercial lifecycle.
 - **Requirements:** CRM-010. **Behavior authority:** [client-lifecycle](docs/specs/client-lifecycle.md).
 - **Build the feature:** Track review/renewal cadence, explicit satisfaction/health rules and overdue/delivery signals with evidence links.
@@ -1153,7 +1153,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F061 — Task hierarchy and checklists
 
-- **PR identity:** `[F061] Task hierarchy and checklists`; branch `feat/f061-task-hierarchy-and-checklists` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F061] Task hierarchy and checklists`; branch `feat/f061-task-hierarchy-and-checklists` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F033 **Milestone:** P03 — Work planning and delivery.
 - **Requirements:** WRK-002. **Behavior authority:** [work-management](docs/specs/work-management.md).
 - **Build the feature:** Add bounded parent/subtask structure, checklist completion and explicit parent-close/reopen behavior.
@@ -1167,7 +1167,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F062 — Accessible Kanban workflow
 
-- **PR identity:** `[F062] Accessible Kanban workflow`; branch `feat/f062-accessible-kanban-workflow` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F062] Accessible Kanban workflow`; branch `feat/f062-accessible-kanban-workflow` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F034, F061 **Milestone:** P03 — Work planning and delivery.
 - **Requirements:** WRK-004. **Behavior authority:** [work-management](docs/specs/work-management.md).
 - **Build the feature:** Add status/group boards with keyboard move, permitted saved board config and transactional status changes.
@@ -1181,7 +1181,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F063 — Task dependency graph
 
-- **PR identity:** `[F063] Task dependency graph`; branch `feat/f063-task-dependency-graph` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F063] Task dependency graph`; branch `feat/f063-task-dependency-graph` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F061 **Milestone:** P03 — Work planning and delivery.
 - **Requirements:** WRK-003. **Behavior authority:** [work-management](docs/specs/work-management.md).
 - **Build the feature:** Add validated finish-to-start edges, blockers and explicit predecessor-cancel repair without auto-rescheduling agreements.
@@ -1195,7 +1195,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F064 — Milestone completion and acceptance
 
-- **PR identity:** `[F064] Milestone completion and acceptance`; branch `feat/f064-milestone-completion-and-acceptance` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F064] Milestone completion and acceptance`; branch `feat/f064-milestone-completion-and-acceptance` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F063, F056 **Milestone:** P03 — Work planning and delivery.
 - **Requirements:** WRK-003. **Behavior authority:** [work-management](docs/specs/work-management.md).
 - **Build the feature:** Group tasks/deliverables into criteria/date/owner milestones with ready/review/accepted/cancelled evidence.
@@ -1209,7 +1209,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F065 — Task calendar view
 
-- **PR identity:** `[F065] Task calendar view`; branch `feat/f065-task-calendar-view` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F065] Task calendar view`; branch `feat/f065-task-calendar-view` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F034, F038 **Milestone:** P03 — Work planning and delivery.
 - **Requirements:** WRK-004. **Behavior authority:** [work-management](docs/specs/work-management.md).
 - **Build the feature:** Render permitted tasks/undated items by selected timezone; date moves are validated edits with keyboard equivalents.
@@ -1223,7 +1223,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F066 — Project timeline planning
 
-- **PR identity:** `[F066] Project timeline planning`; branch `feat/f066-project-timeline-planning` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F066] Project timeline planning`; branch `feat/f066-project-timeline-planning` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F063, F065 **Milestone:** P03 — Work planning and delivery.
 - **Requirements:** WRK-004, WRK-003. **Behavior authority:** [work-management](docs/specs/work-management.md).
 - **Build the feature:** Show dependency-aware intervals/milestones and preview reschedule impacts without rewriting agreed dates automatically.
@@ -1237,7 +1237,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F067 — Team capacity and leave calendars
 
-- **PR identity:** `[F067] Team capacity and leave calendars`; branch `feat/f067-team-capacity-and-leave-calendars` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F067] Team capacity and leave calendars`; branch `feat/f067-team-capacity-and-leave-calendars` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F014, F066 **Milestone:** P03 — Work planning and delivery.
 - **Requirements:** WRK-005. **Behavior authority:** [work-management](docs/specs/work-management.md).
 - **Build the feature:** Model user working hours/timezone/leave, remaining estimates and explicit overload/capacity suggestions.
@@ -1251,7 +1251,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F068 — Sprints and delivery cycles
 
-- **PR identity:** `[F068] Sprints and delivery cycles`; branch `feat/f068-sprints-and-delivery-cycles` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F068] Sprints and delivery cycles`; branch `feat/f068-sprints-and-delivery-cycles` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F034, F064 **Milestone:** P03 — Work planning and delivery.
 - **Requirements:** WRK-006. **Behavior authority:** [work-management](docs/specs/work-management.md).
 - **Build the feature:** Manage cycle goals/periods/task selection, completion snapshots and explicit carryover.
@@ -1265,7 +1265,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F069 — Recurring task generation
 
-- **PR identity:** `[F069] Recurring task generation`; branch `feat/f069-recurring-task-generation` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F069] Recurring task generation`; branch `feat/f069-recurring-task-generation` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F030, F033, F038 **Milestone:** P03 — Work planning and delivery.
 - **Requirements:** WRK-006. **Behavior authority:** [work-management](docs/specs/work-management.md).
 - **Build the feature:** Store timezone/anchor/end/template revision and unique occurrence; preview missed create/skip/merge decisions.
@@ -1279,7 +1279,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F070 — Project and task templates
 
-- **PR identity:** `[F070] Project and task templates`; branch `feat/f070-project-and-task-templates` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F070] Project and task templates`; branch `feat/f070-project-and-task-templates` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F061, F063, F064 **Milestone:** P03 — Work planning and delivery.
 - **Requirements:** WRK-007. **Behavior authority:** [work-management](docs/specs/work-management.md).
 - **Build the feature:** Version reusable task/checklist/dependency/project skeletons with safe clone mapping and no client secrets.
@@ -1293,7 +1293,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F071 — Typed custom fields
 
-- **PR identity:** `[F071] Typed custom fields`; branch `feat/f071-typed-custom-fields` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F071] Typed custom fields`; branch `feat/f071-typed-custom-fields` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F070, F003 **Milestone:** P03 — Work planning and delivery.
 - **Requirements:** WRK-007. **Behavior authority:** [work-management](docs/specs/work-management.md).
 - **Build the feature:** Add bounded text/number/date/bool/choice/member fields, classifications and archive/migration preview.
@@ -1307,7 +1307,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F072 — Scope baseline and change requests
 
-- **PR identity:** `[F072] Scope baseline and change requests`; branch `feat/f072-scope-baseline-and-change-requests` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F072] Scope baseline and change requests`; branch `feat/f072-scope-baseline-and-change-requests` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F059, F064, F040 **Milestone:** P03 — Work planning and delivery.
 - **Requirements:** WRK-008. **Behavior authority:** [work-management](docs/specs/work-management.md).
 - **Build the feature:** Version agreed scope, price/effort/date impacts; approve exact change and apply new baseline atomically.
@@ -1321,7 +1321,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F073 — Versioned deliverables and internal review
 
-- **PR identity:** `[F073] Versioned deliverables and internal review`; branch `feat/f073-versioned-deliverables-and-internal-review` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F073] Versioned deliverables and internal review`; branch `feat/f073-versioned-deliverables-and-internal-review` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F064, F023, F056 **Milestone:** P03 — Work planning and delivery.
 - **Requirements:** WRK-009. **Behavior authority:** [work-management](docs/specs/work-management.md).
 - **Build the feature:** Track exact file/criteria versions, internal review/readiness and publication eligibility; new revisions retain approval history.
@@ -1335,7 +1335,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F074 — Scoped comments, mentions and threads
 
-- **PR identity:** `[F074] Scoped comments, mentions and threads`; branch `feat/f074-scoped-comments-mentions-and-threads` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F074] Scoped comments, mentions and threads`; branch `feat/f074-scoped-comments-mentions-and-threads` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F014, F022, F033 **Milestone:** P03 — Work planning and delivery.
 - **Requirements:** WRK-010. **Behavior authority:** [work-management](docs/specs/work-management.md).
 - **Build the feature:** Support safe threaded comments, mention eligibility, revision/resolution and explicit internal/client-visible separation.
@@ -1349,7 +1349,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F075 — Project notes and attachment revisions
 
-- **PR identity:** `[F075] Project notes and attachment revisions`; branch `feat/f075-project-notes-and-attachment-revisions` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F075] Project notes and attachment revisions`; branch `feat/f075-project-notes-and-attachment-revisions` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F023, F074 **Milestone:** P03 — Work planning and delivery.
 - **Requirements:** WRK-011. **Behavior authority:** [work-management](docs/specs/work-management.md).
 - **Build the feature:** Link safe notes/snippets/files to projects, preserve rich-text conflict versions and local/remote availability.
@@ -1363,7 +1363,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F076 — Budget baselines and threshold alerts
 
-- **PR identity:** `[F076] Budget baselines and threshold alerts`; branch `feat/f076-budget-baselines-and-threshold-alerts` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F076] Budget baselines and threshold alerts`; branch `feat/f076-budget-baselines-and-threshold-alerts` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F039, F048, F072 **Milestone:** P03 — Work planning and delivery.
 - **Requirements:** WRK-012, TIM-017. **Behavior authority:** [time-and-productivity](docs/specs/time-and-productivity.md), [work-management](docs/specs/work-management.md).
 - **Build the feature:** Compare versioned fee/effort/cost budget to reviewed source work with deduped explained thresholds.
@@ -1377,7 +1377,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F077 — Portfolio health, risks and decisions
 
-- **PR identity:** `[F077] Portfolio health, risks and decisions`; branch `feat/f077-portfolio-health-risks-and-decisions` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F077] Portfolio health, risks and decisions`; branch `feat/f077-portfolio-health-risks-and-decisions` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F076, F052 **Milestone:** P03 — Work planning and delivery.
 - **Requirements:** WRK-013. **Behavior authority:** [work-management](docs/specs/work-management.md).
 - **Build the feature:** Aggregate permitted project health, named rules/overrides, risk likelihood/impact/mitigation and decision history.
@@ -1391,7 +1391,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F078 — Archive, task transfer and handover
 
-- **PR identity:** `[F078] Archive, task transfer and handover`; branch `feat/f078-archive-task-transfer-and-handover` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F078] Archive, task transfer and handover`; branch `feat/f078-archive-task-transfer-and-handover` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F073, F074, F042 **Milestone:** P03 — Work planning and delivery.
 - **Requirements:** WRK-014. **Behavior authority:** [work-management](docs/specs/work-management.md).
 - **Build the feature:** Preview project/task move, archive/restore and member handover; preserve billing/time/approval history and ownership.
@@ -1405,7 +1405,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F079 — Unallocated time editing and conservation
 
-- **PR identity:** `[F079] Unallocated time editing and conservation`; branch `feat/f079-unallocated-time-editing-and-conservation` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F079] Unallocated time editing and conservation`; branch `feat/f079-unallocated-time-editing-and-conservation` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F042, F038 **Milestone:** P04 — Time evidence and productivity.
 - **Requirements:** TIM-006, TIM-023. **Behavior authority:** [time-and-productivity](docs/specs/time-and-productivity.md).
 - **Build the feature:** Split/merge/duplicate/correct/move eligible entries with revision/audit, explicit undo and lock explanation.
@@ -1419,7 +1419,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F080 — Time list and calendar views
 
-- **PR identity:** `[F080] Time list and calendar views`; branch `feat/f080-time-list-and-calendar-views` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F080] Time list and calendar views`; branch `feat/f080-time-list-and-calendar-views` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F079, F065 **Milestone:** P04 — Time evidence and productivity.
 - **Requirements:** TIM-014. **Behavior authority:** [time-and-productivity](docs/specs/time-and-productivity.md).
 - **Build the feature:** Provide day/week/source/client/project/billable/review/approval/allocation filters and saved views in exact seconds.
@@ -1433,7 +1433,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F081 — Versioned billing time-rounding policies
 
-- **PR identity:** `[F081] Versioned billing time-rounding policies`; branch `feat/f081-versioned-billing-time-rounding-policies` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F081] Versioned billing time-rounding policies`; branch `feat/f081-versioned-billing-time-rounding-policies` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F040, F079 **Milestone:** P04 — Time evidence and productivity.
 - **Requirements:** TIM-009. **Behavior authority:** [time-and-productivity](docs/specs/time-and-productivity.md).
 - **Build the feature:** Add configured increments/grouping/minimum/tie policies and raw-versus-billed preview without changing source seconds.
@@ -1447,7 +1447,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F082 — Optional idle detection and review
 
-- **PR identity:** `[F082] Optional idle detection and review`; branch `feat/f082-optional-idle-detection-and-review` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F082] Optional idle detection and review`; branch `feat/f082-optional-idle-detection-and-review` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F037 **Milestone:** P04 — Time evidence and productivity.
 - **Requirements:** TIM-015. **Behavior authority:** [time-and-productivity](docs/specs/time-and-productivity.md).
 - **Build the feature:** Process minimal local idle signal, threshold/enable controls and keep/discard/split review with privacy.
@@ -1461,7 +1461,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F083 — Focus sessions and breaks
 
-- **PR identity:** `[F083] Focus sessions and breaks`; branch `feat/f083-focus-sessions-and-breaks` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F083] Focus sessions and breaks`; branch `feat/f083-focus-sessions-and-breaks` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F036, F022 **Milestone:** P04 — Time evidence and productivity.
 - **Requirements:** TIM-018. **Behavior authority:** [time-and-productivity](docs/specs/time-and-productivity.md).
 - **Build the feature:** Add optional focus/break/goals preferences, local reminders and explicit assignment to saved time.
@@ -1475,7 +1475,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F084 — Timesheet submission and approvals
 
-- **PR identity:** `[F084] Timesheet submission and approvals`; branch `feat/f084-timesheet-submission-and-approvals` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F084] Timesheet submission and approvals`; branch `feat/f084-timesheet-submission-and-approvals` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F014, F079 **Milestone:** P04 — Time evidence and productivity.
 - **Requirements:** TIM-019. **Behavior authority:** [time-and-productivity](docs/specs/time-and-productivity.md).
 - **Build the feature:** Submit revisioned periods, reviewer assignment, rejection/withdrawal/resubmission and approval-based billing eligibility.
@@ -1489,7 +1489,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F085 — Partial time-source allocation
 
-- **PR identity:** `[F085] Partial time-source allocation`; branch `feat/f085-partial-time-source-allocation` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F085] Partial time-source allocation`; branch `feat/f085-partial-time-source-allocation` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F043, F079, F084 **Milestone:** P05 — Finance and commercial operations.
 - **Requirements:** TIM-012, TIM-013, FIN-030. **Behavior authority:** [finance](docs/specs/finance.md), [time-and-productivity](docs/specs/time-and-productivity.md).
 - **Build the feature:** Allocate nonoverlapping canonical second ranges with exact locks, corrections and explicit release chains.
@@ -1503,7 +1503,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F086 — Time imports and detailed exports
 
-- **PR identity:** `[F086] Time imports and detailed exports`; branch `feat/f086-time-imports-and-detailed-exports` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F086] Time imports and detailed exports`; branch `feat/f086-time-imports-and-detailed-exports` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F024, F027, F080 **Milestone:** P04 — Time evidence and productivity.
 - **Requirements:** TIM-020. **Behavior authority:** [time-and-productivity](docs/specs/time-and-productivity.md).
 - **Build the feature:** Map source IDs/units/timezone/locale, duplicate/overlap validation and reviewed export of raw metadata.
@@ -1517,7 +1517,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F087 — Utilization and effective-rate metrics
 
-- **PR identity:** `[F087] Utilization and effective-rate metrics`; branch `feat/f087-utilization-and-effective-rate-metrics` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F087] Utilization and effective-rate metrics`; branch `feat/f087-utilization-and-effective-rate-metrics` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F080, F046, F067 **Milestone:** P06 — Business insights, knowledge and search.
 - **Requirements:** TIM-021. **Behavior authority:** [time-and-productivity](docs/specs/time-and-productivity.md).
 - **Build the feature:** Calculate explicit reviewed/billable/utilization/effective collected-rate definitions with missing allocation/denominator states.
@@ -1531,7 +1531,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F088 — Credit notes and invoice correction
 
-- **PR identity:** `[F088] Credit notes and invoice correction`; branch `feat/f088-credit-notes-and-invoice-correction` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F088] Credit notes and invoice correction`; branch `feat/f088-credit-notes-and-invoice-correction` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F043, F046 **Milestone:** P05 — Finance and commercial operations.
 - **Requirements:** FIN-013, FIN-015. **Behavior authority:** [finance](docs/specs/finance.md).
 - **Build the feature:** Issue online immutable partial/full credits against original line/tax/discount entitlement with correction references.
@@ -1545,7 +1545,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F089 — Refund recording and settlement reversals
 
-- **PR identity:** `[F089] Refund recording and settlement reversals`; branch `feat/f089-refund-recording-and-settlement-reversals` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F089] Refund recording and settlement reversals`; branch `feat/f089-refund-recording-and-settlement-reversals` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F088 **Milestone:** P05 — Finance and commercial operations.
 - **Requirements:** FIN-014, FIN-015. **Behavior authority:** [finance](docs/specs/finance.md).
 - **Build the feature:** Post online compensating cash/allocation events, refundable bounds and linked credit/debt preview.
@@ -1559,7 +1559,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F090 — Expense approval, splits and reimbursement
 
-- **PR identity:** `[F090] Expense approval, splits and reimbursement`; branch `feat/f090-expense-approval-splits-and-reimbursement` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F090] Expense approval, splits and reimbursement`; branch `feat/f090-expense-approval-splits-and-reimbursement` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F047, F084, F042, F088 **Milestone:** P05 — Finance and commercial operations.
 - **Requirements:** FIN-021, FIN-022. **Behavior authority:** [finance](docs/specs/finance.md).
 - **Build the feature:** Add approval workflow, exact project/eligible splits, at-cost/markup and full/partial reimbursement source ownership.
@@ -1573,7 +1573,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F091 — Deposits and final-invoice application
 
-- **PR identity:** `[F091] Deposits and final-invoice application`; branch `feat/f091-deposits-and-final-invoice-application` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F091] Deposits and final-invoice application`; branch `feat/f091-deposits-and-final-invoice-application` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F046, F088 **Milestone:** P05 — Finance and commercial operations.
 - **Requirements:** FIN-032. **Behavior authority:** [finance](docs/specs/finance.md).
 - **Build the feature:** Model deposit agreement/invoice/cash separately and explicit remaining-scope or credit application to final bill.
@@ -1587,7 +1587,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F092 — Milestone billing schedules
 
-- **PR identity:** `[F092] Milestone billing schedules`; branch `feat/f092-milestone-billing-schedules` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F092] Milestone billing schedules`; branch `feat/f092-milestone-billing-schedules` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F064, F091, F054 **Milestone:** P05 — Finance and commercial operations.
 - **Requirements:** FIN-032, FIN-003. **Behavior authority:** [finance](docs/specs/finance.md).
 - **Build the feature:** Convert approved estimate/milestone amounts into distinct reviewed draft invoices, track consumed entitlement/due triggers.
@@ -1601,7 +1601,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F093 — Monetary prepaid retainers
 
-- **PR identity:** `[F093] Monetary prepaid retainers`; branch `feat/f093-monetary-prepaid-retainers` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F093] Monetary prepaid retainers`; branch `feat/f093-monetary-prepaid-retainers` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F089, F091 **Milestone:** P05 — Finance and commercial operations.
 - **Requirements:** FIN-020. **Behavior authority:** [finance](docs/specs/finance.md).
 - **Build the feature:** Track prepaid receipts, consumption, replenishment, refundable balance and explicit cancellation/expiry terms.
@@ -1615,7 +1615,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F094 — Included-service retainers and overages
 
-- **PR identity:** `[F094] Included-service retainers and overages`; branch `feat/f094-included-service-retainers-and-overages` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F094] Included-service retainers and overages`; branch `feat/f094-included-service-retainers-and-overages` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F085, F093 **Milestone:** P05 — Finance and commercial operations.
 - **Requirements:** FIN-020. **Behavior authority:** [finance](docs/specs/finance.md).
 - **Build the feature:** Track service-period units, approved consumption, rollover/cap/expiry and overage at versioned rates.
@@ -1629,7 +1629,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F095 — Client subscriptions and proration
 
-- **PR identity:** `[F095] Client subscriptions and proration`; branch `feat/f095-client-subscriptions-and-proration` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F095] Client subscriptions and proration`; branch `feat/f095-client-subscriptions-and-proration` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F091, F094, F030 **Milestone:** P05 — Finance and commercial operations.
 - **Requirements:** FIN-035. **Behavior authority:** [finance](docs/specs/finance.md).
 - **Build the feature:** Manage accepted service plans, period anchors, quantities, pause/end, effective changes and explicit proration adjustments.
@@ -1643,7 +1643,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F096 — Recurring invoice draft generation
 
-- **PR identity:** `[F096] Recurring invoice draft generation`; branch `feat/f096-recurring-invoice-draft-generation` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F096] Recurring invoice draft generation`; branch `feat/f096-recurring-invoice-draft-generation` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F030, F041, F095 **Milestone:** P05 — Finance and commercial operations.
 - **Requirements:** FIN-019. **Behavior authority:** [finance](docs/specs/finance.md).
 - **Build the feature:** Generate one draft per schedule/template/period, preview next dates, pause/resume/end and recover missed occurrences.
@@ -1657,7 +1657,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F097 — Collection reminder schedules
 
-- **PR identity:** `[F097] Collection reminder schedules`; branch `feat/f097-collection-reminder-schedules` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F097] Collection reminder schedules`; branch `feat/f097-collection-reminder-schedules` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F030, F045, F046, F022 **Milestone:** P05 — Finance and commercial operations.
 - **Requirements:** FIN-027. **Behavior authority:** [finance](docs/specs/finance.md).
 - **Build the feature:** Prepare versioned reminder schedule/text, suppress opted-out/paid/disputed/void records and record catch-up history.
@@ -1671,7 +1671,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F098 — Bank-file reconciliation
 
-- **PR identity:** `[F098] Bank-file reconciliation`; branch `feat/f098-bank-file-reconciliation` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F098] Bank-file reconciliation`; branch `feat/f098-bank-file-reconciliation` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F024, F046, F090, F089 **Milestone:** P05 — Finance and commercial operations.
 - **Requirements:** FIN-024. **Behavior authority:** [finance](docs/specs/finance.md).
 - **Build the feature:** Import account transaction IDs, match split/combined payments/expenses, fees/transfers and explicit exclusions/undo.
@@ -1685,7 +1685,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F099 — Portable accounting transaction exports
 
-- **PR identity:** `[F099] Portable accounting transaction exports`; branch `feat/f099-portable-accounting-transaction-exports` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F099] Portable accounting transaction exports`; branch `feat/f099-portable-accounting-transaction-exports` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F027, F088, F090, F098 **Milestone:** P05 — Finance and commercial operations.
 - **Requirements:** FIN-026. **Behavior authority:** [finance](docs/specs/finance.md).
 - **Build the feature:** Export exact IDs/source/tax/discount/reversal/currency/account mappings with reconciliation summaries.
@@ -1699,7 +1699,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F100 — Cross-currency settlement records
 
-- **PR identity:** `[F100] Cross-currency settlement records`; branch `feat/f100-cross-currency-settlement-records` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F100] Cross-currency settlement records`; branch `feat/f100-cross-currency-settlement-records` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F046, F089, F040 **Milestone:** P05 — Finance and commercial operations.
 - **Requirements:** FIN-018. **Behavior authority:** [finance](docs/specs/finance.md).
 - **Build the feature:** Record original and invoice currency amounts, approved FX/source/date/rounding and explicit fee components.
@@ -1713,7 +1713,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F101 — Disputes, write-offs and collection notes
 
-- **PR identity:** `[F101] Disputes, write-offs and collection notes`; branch `feat/f101-disputes-write-offs-and-collection-notes` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F101] Disputes, write-offs and collection notes`; branch `feat/f101-disputes-write-offs-and-collection-notes` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F088, F089, F097 **Milestone:** P05 — Finance and commercial operations.
 - **Requirements:** FIN-028. **Behavior authority:** [finance](docs/specs/finance.md).
 - **Build the feature:** Record separate dispute/promised date/write-off adjustments with reasons/permissions and reminder suppression.
@@ -1727,7 +1727,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F102 — Branded bilingual document templates
 
-- **PR identity:** `[F102] Branded bilingual document templates`; branch `feat/f102-branded-bilingual-document-templates` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F102] Branded bilingual document templates`; branch `feat/f102-branded-bilingual-document-templates` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F044, F055, F088 **Milestone:** P05 — Finance and commercial operations.
 - **Requirements:** FIN-031. **Behavior authority:** [finance](docs/specs/finance.md).
 - **Build the feature:** Version invoice/estimate/credit layout, branding/notes/QR links and document locale with safe asset selection.
@@ -1741,7 +1741,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F103 — Validated market invoice profiles
 
-- **PR identity:** `[F103] Validated market invoice profiles`; branch `feat/f103-validated-market-invoice-profiles` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F103] Validated market invoice profiles`; branch `feat/f103-validated-market-invoice-profiles` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F040, F043, F088, F102 **Milestone:** P05 — Finance and commercial operations.
 - **Requirements:** FIN-001, FIN-007, FIN-016, FIN-030. **Behavior authority:** [finance](docs/specs/finance.md).
 - **Build the feature:** Configure selected seller/market-required fields, numbering/correction/tax/retention validators and unsupported-profile blocks.
@@ -1755,7 +1755,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F104 — Customizable home dashboards
 
-- **PR identity:** `[F104] Customizable home dashboards`; branch `feat/f104-customizable-home-dashboards` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F104] Customizable home dashboards`; branch `feat/f104-customizable-home-dashboards` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F048, F077, F087 **Milestone:** P06 — Business insights, knowledge and search.
 - **Requirements:** INS-001. **Behavior authority:** [insights-and-knowledge](docs/specs/insights-and-knowledge.md).
 - **Build the feature:** Personal/shared widget configuration, scoped actions and versioned definitions without copied source balances.
@@ -1769,7 +1769,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F105 — Revenue and collection reports
 
-- **PR identity:** `[F105] Revenue and collection reports`; branch `feat/f105-revenue-and-collection-reports` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F105] Revenue and collection reports`; branch `feat/f105-revenue-and-collection-reports` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F099, F100, F101 **Milestone:** P06 — Business insights, knowledge and search.
 - **Requirements:** INS-002, FIN-025. **Behavior authority:** [finance](docs/specs/finance.md), [insights-and-knowledge](docs/specs/insights-and-knowledge.md).
 - **Build the feature:** Separate net invoiced/collected/credits/refunds/taxes/costs by explicit basis/date/currency with drill-down.
@@ -1783,7 +1783,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F106 — Receivables aging and cash scenarios
 
-- **PR identity:** `[F106] Receivables aging and cash scenarios`; branch `feat/f106-receivables-aging-and-cash-scenarios` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F106] Receivables aging and cash scenarios`; branch `feat/f106-receivables-aging-and-cash-scenarios` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F105, F051, F097 **Milestone:** P06 — Business insights, knowledge and search.
 - **Requirements:** INS-004. **Behavior authority:** [insights-and-knowledge](docs/specs/insights-and-knowledge.md).
 - **Build the feature:** Show current/aging buckets, disputes/promises, recurring/contracted/weighted-pipeline forecasts as separate assumptions.
@@ -1797,7 +1797,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F107 — Project operational profitability
 
-- **PR identity:** `[F107] Project operational profitability`; branch `feat/f107-project-operational-profitability` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F107] Project operational profitability`; branch `feat/f107-project-operational-profitability` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F105, F090, F039 **Milestone:** P06 — Business insights, knowledge and search.
 - **Requirements:** INS-003. **Behavior authority:** [insights-and-knowledge](docs/specs/insights-and-knowledge.md).
 - **Build the feature:** Report net service revenue minus attributed costs with versioned private labor rates and explicit incomplete data.
@@ -1811,7 +1811,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F108 — Delivery and capacity analytics
 
-- **PR identity:** `[F108] Delivery and capacity analytics`; branch `feat/f108-delivery-and-capacity-analytics` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F108] Delivery and capacity analytics`; branch `feat/f108-delivery-and-capacity-analytics` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F067, F068, F077, F087 **Milestone:** P06 — Business insights, knowledge and search.
 - **Requirements:** INS-005. **Behavior authority:** [insights-and-knowledge](docs/specs/insights-and-knowledge.md).
 - **Build the feature:** Define completion/accepted versus done/throughput/blocked-age/milestone variance and remaining workload metrics.
@@ -1825,7 +1825,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F109 — Consolidated FX reporting
 
-- **PR identity:** `[F109] Consolidated FX reporting`; branch `feat/f109-consolidated-fx-reporting` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F109] Consolidated FX reporting`; branch `feat/f109-consolidated-fx-reporting` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F105, F100 **Milestone:** P06 — Business insights, knowledge and search.
 - **Requirements:** INS-006. **Behavior authority:** [insights-and-knowledge](docs/specs/insights-and-knowledge.md).
 - **Build the feature:** Keep original totals and explicit report-currency rate source/date/version/missing-rate policy for consolidation.
@@ -1839,7 +1839,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F110 — Knowledge library and safe reusable notes
 
-- **PR identity:** `[F110] Knowledge library and safe reusable notes`; branch `feat/f110-knowledge-library-and-safe-reusable-notes` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F110] Knowledge library and safe reusable notes`; branch `feat/f110-knowledge-library-and-safe-reusable-notes` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F075, F070 **Milestone:** P06 — Business insights, knowledge and search.
 - **Requirements:** INS-007. **Behavior authority:** [insights-and-knowledge](docs/specs/insights-and-knowledge.md).
 - **Build the feature:** Provide personal/shared notes, code snippets, linked decisions/runbooks/templates and revision/conflict/archive/export.
@@ -1853,7 +1853,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F111 — Permission-aware global text search
 
-- **PR identity:** `[F111] Permission-aware global text search`; branch `feat/f111-permission-aware-global-text-search` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F111] Permission-aware global text search`; branch `feat/f111-permission-aware-global-text-search` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F110, F105, F018 **Milestone:** P06 — Business insights, knowledge and search.
 - **Requirements:** INS-008, PLT-015. **Behavior authority:** [insights-and-knowledge](docs/specs/insights-and-knowledge.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Index permitted clients/work/tasks/notes/document metadata with Arabic normalization, filters, snippets/cursors and cache scope.
@@ -1867,7 +1867,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F112 — Reproducible report snapshots and exports
 
-- **PR identity:** `[F112] Reproducible report snapshots and exports`; branch `feat/f112-reproducible-report-snapshots-and-exports` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F112] Reproducible report snapshots and exports`; branch `feat/f112-reproducible-report-snapshots-and-exports` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F105, F106, F107, F109, F044 **Milestone:** P06 — Business insights, knowledge and search.
 - **Requirements:** INS-009. **Behavior authority:** [insights-and-knowledge](docs/specs/insights-and-knowledge.md).
 - **Build the feature:** Freeze report filters/formulas/as-of/currencies/data scope and render exact CSV/PDF/archive with retry/cancel.
@@ -1881,7 +1881,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F113 — Business goals and explained threshold alerts
 
-- **PR identity:** `[F113] Business goals and explained threshold alerts`; branch `feat/f113-business-goals-and-explained-threshold-alerts` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F113] Business goals and explained threshold alerts`; branch `feat/f113-business-goals-and-explained-threshold-alerts` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F104, F105, F108, F022 **Milestone:** P06 — Business insights, knowledge and search.
 - **Requirements:** INS-010. **Behavior authority:** [insights-and-knowledge](docs/specs/insights-and-knowledge.md).
 - **Build the feature:** Track configurable targets/period/basis and deterministic deduped alerts with reason/expiry/snooze.
@@ -1895,7 +1895,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F114 — Connector registry and OAuth secret lifecycle
 
-- **PR identity:** `[F114] Connector registry and OAuth secret lifecycle`; branch `feat/f114-connector-registry-and-oauth-secret-lifecycle` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F114] Connector registry and OAuth secret lifecycle`; branch `feat/f114-connector-registry-and-oauth-secret-lifecycle` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F014, F030, F015 **Milestone:** P07 — Providers and deterministic automation.
 - **Requirements:** INT-001, INT-002. **Behavior authority:** [integrations-and-automation](docs/specs/integrations-and-automation.md).
 - **Build the feature:** Add provider/account/scope/owner/status, authorization/revoke/rotation and server vault with health/last success.
@@ -1909,7 +1909,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F115 — Typed deterministic automation rules
 
-- **PR identity:** `[F115] Typed deterministic automation rules`; branch `feat/f115-typed-deterministic-automation-rules` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F115] Typed deterministic automation rules`; branch `feat/f115-typed-deterministic-automation-rules` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F114, F030, F028 **Milestone:** P07 — Providers and deterministic automation.
 - **Requirements:** INT-009. **Behavior authority:** [integrations-and-automation](docs/specs/integrations-and-automation.md).
 - **Build the feature:** Build bounded trigger/condition/action rules, version/owner/scope, dry run, cooldown/loop/run caps and stop control.
@@ -1923,7 +1923,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F116 — GitHub project context and issue import
 
-- **PR identity:** `[F116] GitHub project context and issue import`; branch `feat/f116-github-project-context-and-issue-import` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F116] GitHub project context and issue import`; branch `feat/f116-github-project-context-and-issue-import` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F114, F033, F111 **Milestone:** P07 — Providers and deterministic automation.
 - **Requirements:** INT-003. **Behavior authority:** [integrations-and-automation](docs/specs/integrations-and-automation.md).
 - **Build the feature:** Map approved GitHub repos; link issues/PRs/commits/releases and selected read-only metadata with source IDs.
@@ -1937,7 +1937,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F117 — GitLab project context and issue import
 
-- **PR identity:** `[F117] GitLab project context and issue import`; branch `feat/f117-gitlab-project-context-and-issue-import` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F117] GitLab project context and issue import`; branch `feat/f117-gitlab-project-context-and-issue-import` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F114, F033, F111 **Milestone:** P07 — Providers and deterministic automation.
 - **Requirements:** INT-003. **Behavior authority:** [integrations-and-automation](docs/specs/integrations-and-automation.md).
 - **Build the feature:** Add GitLab adapter using same bounded mapping/ID/permission contracts, separate from GitHub credentials.
@@ -1951,7 +1951,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F118 — Explicit engineering-status synchronization
 
-- **PR identity:** `[F118] Explicit engineering-status synchronization`; branch `feat/f118-explicit-engineering-status-synchronization` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F118] Explicit engineering-status synchronization`; branch `feat/f118-explicit-engineering-status-synchronization` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F115, F116, F117 **Milestone:** P07 — Providers and deterministic automation.
 - **Requirements:** INT-003. **Behavior authority:** [integrations-and-automation](docs/specs/integrations-and-automation.md).
 - **Build the feature:** Enable selected issue/status writes and mapped PR/MR transitions with revision conflict and source loop prevention.
@@ -1965,7 +1965,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F119 — Calendar availability and event import
 
-- **PR identity:** `[F119] Calendar availability and event import`; branch `feat/f119-calendar-availability-and-event-import` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F119] Calendar availability and event import`; branch `feat/f119-calendar-availability-and-event-import` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F114, F065, F067 **Milestone:** P07 — Providers and deterministic automation.
 - **Requirements:** INT-004. **Behavior authority:** [integrations-and-automation](docs/specs/integrations-and-automation.md).
 - **Build the feature:** Read selected calendars, busy-only privacy and external event/recurrence mappings with timezone exceptions.
@@ -1979,7 +1979,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F120 — Calendar export and invitations
 
-- **PR identity:** `[F120] Calendar export and invitations`; branch `feat/f120-calendar-export-and-invitations` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F120] Calendar export and invitations`; branch `feat/f120-calendar-export-and-invitations` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F119, F115 **Milestone:** P07 — Providers and deterministic automation.
 - **Requirements:** INT-004. **Behavior authority:** [integrations-and-automation](docs/specs/integrations-and-automation.md).
 - **Build the feature:** Add approved outbound event/update/invite with recipients, mapping/revision and explicit send evidence.
@@ -1993,7 +1993,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F121 — Verified outbound business email
 
-- **PR identity:** `[F121] Verified outbound business email`; branch `feat/f121-verified-outbound-business-email` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F121] Verified outbound business email`; branch `feat/f121-verified-outbound-business-email` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F114, F115, F097, F102 **Milestone:** P07 — Providers and deterministic automation.
 - **Requirements:** INT-005, FIN-009, FIN-027. **Behavior authority:** [finance](docs/specs/finance.md), [integrations-and-automation](docs/specs/integrations-and-automation.md).
 - **Build the feature:** Configure verified sender/reply-to/templates/locale and exact document recipient/version; distinguish queued/accepted/delivered/bounced/unknown.
@@ -2007,7 +2007,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F122 — Hosted payment links and checkout
 
-- **PR identity:** `[F122] Hosted payment links and checkout`; branch `feat/f122-hosted-payment-links-and-checkout` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F122] Hosted payment links and checkout`; branch `feat/f122-hosted-payment-links-and-checkout` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F114, F043, F103 **Milestone:** P07 — Providers and deterministic automation.
 - **Requirements:** INT-006, FIN-023. **Behavior authority:** [finance](docs/specs/finance.md), [integrations-and-automation](docs/specs/integrations-and-automation.md).
 - **Build the feature:** Create approved hosted checkout links bound to invoice/client/currency, with no raw card entry in app.
@@ -2021,7 +2021,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F123 — Verified payment webhooks and payout matching
 
-- **PR identity:** `[F123] Verified payment webhooks and payout matching`; branch `feat/f123-verified-payment-webhooks-and-payout-matching` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F123] Verified payment webhooks and payout matching`; branch `feat/f123-verified-payment-webhooks-and-payout-matching` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F122, F098, F100, F009 **Milestone:** P07 — Providers and deterministic automation.
 - **Requirements:** INT-006, FIN-023, FIN-024. **Behavior authority:** [finance](docs/specs/finance.md), [integrations-and-automation](docs/specs/integrations-and-automation.md).
 - **Build the feature:** Verify callback identity/replay, dedupe provider events, map capture/fees/payout to exact payment evidence and reconcile unmatched funds.
@@ -2035,7 +2035,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F124 — Provider refunds, disputes and chargebacks
 
-- **PR identity:** `[F124] Provider refunds, disputes and chargebacks`; branch `feat/f124-provider-refunds-disputes-and-chargebacks` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F124] Provider refunds, disputes and chargebacks`; branch `feat/f124-provider-refunds-disputes-and-chargebacks` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F123, F089, F101 **Milestone:** P07 — Providers and deterministic automation.
 - **Requirements:** INT-006, FIN-014, FIN-028. **Behavior authority:** [finance](docs/specs/finance.md), [integrations-and-automation](docs/specs/integrations-and-automation.md).
 - **Build the feature:** Add explicitly authorized refund initiation and async dispute/chargeback evidence distinct from recording corrections.
@@ -2049,7 +2049,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F125 — Read-only bank-feed connection
 
-- **PR identity:** `[F125] Read-only bank-feed connection`; branch `feat/f125-read-only-bank-feed-connection` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F125] Read-only bank-feed connection`; branch `feat/f125-read-only-bank-feed-connection` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F114, F098 **Milestone:** P07 — Providers and deterministic automation.
 - **Requirements:** INT-007, FIN-024. **Behavior authority:** [finance](docs/specs/finance.md), [integrations-and-automation](docs/specs/integrations-and-automation.md).
 - **Build the feature:** Connect approved read-only bank provider, account consent/expiry and deduped incremental transactions for matching.
@@ -2063,7 +2063,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F126 — Accounting-tool connector
 
-- **PR identity:** `[F126] Accounting-tool connector`; branch `feat/f126-accounting-tool-connector` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F126] Accounting-tool connector`; branch `feat/f126-accounting-tool-connector` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F114, F099, F123 **Milestone:** P07 — Providers and deterministic automation.
 - **Requirements:** INT-007, FIN-026. **Behavior authority:** [finance](docs/specs/finance.md), [integrations-and-automation](docs/specs/integrations-and-automation.md).
 - **Build the feature:** Version provider account/tax/currency mappings, send approved data with stable IDs/reversal links and reconcile acknowledgments.
@@ -2077,7 +2077,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F127 — Scoped developer API
 
-- **PR identity:** `[F127] Scoped developer API`; branch `feat/f127-scoped-developer-api` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F127] Scoped developer API`; branch `feat/f127-scoped-developer-api` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F009, F014, F114 **Milestone:** P07 — Providers and deterministic automation.
 - **Requirements:** INT-008. **Behavior authority:** [integrations-and-automation](docs/specs/integrations-and-automation.md).
 - **Build the feature:** Publish versioned bounded API contracts, scoped revocable tokens, cursor pagination and domain-command receipts/rate limits.
@@ -2091,7 +2091,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F128 — Signed outgoing webhooks
 
-- **PR identity:** `[F128] Signed outgoing webhooks`; branch `feat/f128-signed-outgoing-webhooks` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F128] Signed outgoing webhooks`; branch `feat/f128-signed-outgoing-webhooks` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F127, F115, F030 **Milestone:** P07 — Providers and deterministic automation.
 - **Requirements:** INT-008. **Behavior authority:** [integrations-and-automation](docs/specs/integrations-and-automation.md).
 - **Build the feature:** Deliver minimal authorized event payloads to validated HTTPS destinations with signature/rotation/retry/receipt controls.
@@ -2105,7 +2105,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F129 — Job and connector health/repair console
 
-- **PR identity:** `[F129] Job and connector health/repair console`; branch `feat/f129-job-and-connector-health-repair-console` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F129] Job and connector health/repair console`; branch `feat/f129-job-and-connector-health-repair-console` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F114, F115, F121 **Milestone:** P07 — Providers and deterministic automation.
 - **Requirements:** INT-012, INT-010. **Behavior authority:** [integrations-and-automation](docs/specs/integrations-and-automation.md).
 - **Build the feature:** Expose leases/backlog/retries/dead letters/last success/cost caps and safe pause/reconcile/resume without secrets.
@@ -2119,7 +2119,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F130 — Scheduled report delivery
 
-- **PR identity:** `[F130] Scheduled report delivery`; branch `feat/f130-scheduled-report-delivery` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F130] Scheduled report delivery`; branch `feat/f130-scheduled-report-delivery` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F112, F121, F129 **Milestone:** P07 — Providers and deterministic automation.
 - **Requirements:** INS-009, INT-011. **Behavior authority:** [insights-and-knowledge](docs/specs/insights-and-knowledge.md), [integrations-and-automation](docs/specs/integrations-and-automation.md).
 - **Build the feature:** Schedule snapshot reports with current recipient scope, locale/timezone/quiet hours and unique occurrences.
@@ -2133,7 +2133,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F131 — Scoped client portal authentication
 
-- **PR identity:** `[F131] Scoped client portal authentication`; branch `feat/f131-scoped-client-portal-authentication` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F131] Scoped client portal authentication`; branch `feat/f131-scoped-client-portal-authentication` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F010, F014, F015 **Milestone:** P08 — Client portal and external collaboration.
 - **Requirements:** CRM-011, NFR-004, NFR-006. **Behavior authority:** [requirements](docs/product/requirements.md), [client-lifecycle](docs/specs/client-lifecycle.md).
 - **Build the feature:** Deploy separate bilingual portal guest login or approved expiring verified-link policy scoped to client/project.
@@ -2147,7 +2147,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F132 — Exact-version external publication
 
-- **PR identity:** `[F132] Exact-version external publication`; branch `feat/f132-exact-version-external-publication` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F132] Exact-version external publication`; branch `feat/f132-exact-version-external-publication` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F131, F073, F055, F102 **Milestone:** P08 — Client portal and external collaboration.
 - **Requirements:** CRM-011, WRK-009. **Behavior authority:** [client-lifecycle](docs/specs/client-lifecycle.md), [work-management](docs/specs/work-management.md).
 - **Build the feature:** Publish selected immutable views/files to explicit guests; draft edits stay internal; withdraw/revoke governed by version.
@@ -2161,7 +2161,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F133 — Client deliverable feedback and approval
 
-- **PR identity:** `[F133] Client deliverable feedback and approval`; branch `feat/f133-client-deliverable-feedback-and-approval` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F133] Client deliverable feedback and approval`; branch `feat/f133-client-deliverable-feedback-and-approval` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F132, F074 **Milestone:** P08 — Client portal and external collaboration.
 - **Requirements:** CRM-011, WRK-009, WRK-010. **Behavior authority:** [client-lifecycle](docs/specs/client-lifecycle.md), [work-management](docs/specs/work-management.md).
 - **Build the feature:** Permit version-scoped client comment/change request/acceptance with identity and idempotent decision evidence.
@@ -2175,7 +2175,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F134 — Client proposal acceptance and signing adapter
 
-- **PR identity:** `[F134] Client proposal acceptance and signing adapter`; branch `feat/f134-client-proposal-acceptance-and-signing-adapter` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F134] Client proposal acceptance and signing adapter`; branch `feat/f134-client-proposal-acceptance-and-signing-adapter` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F132, F056, F057, F114 **Milestone:** P08 — Client portal and external collaboration.
 - **Requirements:** CRM-006, CRM-007, CRM-011. **Behavior authority:** [client-lifecycle](docs/specs/client-lifecycle.md).
 - **Build the feature:** Add authenticated proposal/contract decisions and selected legal-signature provider evidence with signer authority/version checks.
@@ -2189,7 +2189,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F135 — Client invoice balance and payment portal
 
-- **PR identity:** `[F135] Client invoice balance and payment portal`; branch `feat/f135-client-invoice-balance-and-payment-portal` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F135] Client invoice balance and payment portal`; branch `feat/f135-client-invoice-balance-and-payment-portal` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F132, F123, F103 **Milestone:** P08 — Client portal and external collaboration.
 - **Requirements:** CRM-011, FIN-023. **Behavior authority:** [client-lifecycle](docs/specs/client-lifecycle.md), [finance](docs/specs/finance.md).
 - **Build the feature:** Expose only published final invoice/credit/balance snapshots and approved hosted checkout links.
@@ -2203,7 +2203,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F136 — Client questionnaires and onboarding responses
 
-- **PR identity:** `[F136] Client questionnaires and onboarding responses`; branch `feat/f136-client-questionnaires-and-onboarding-responses` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F136] Client questionnaires and onboarding responses`; branch `feat/f136-client-questionnaires-and-onboarding-responses` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F131, F058, F023 **Milestone:** P08 — Client portal and external collaboration.
 - **Requirements:** CRM-008, CRM-011. **Behavior authority:** [client-lifecycle](docs/specs/client-lifecycle.md).
 - **Build the feature:** Publish assigned onboarding questions/files, save partial guest responses and internal verification/waivers.
@@ -2217,7 +2217,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F137 — Portal brand and notification preferences
 
-- **PR identity:** `[F137] Portal brand and notification preferences`; branch `feat/f137-portal-brand-and-notification-preferences` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F137] Portal brand and notification preferences`; branch `feat/f137-portal-brand-and-notification-preferences` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F132, F121 **Milestone:** P08 — Client portal and external collaboration.
 - **Requirements:** CRM-011, INT-011. **Behavior authority:** [client-lifecycle](docs/specs/client-lifecycle.md), [integrations-and-automation](docs/specs/integrations-and-automation.md).
 - **Build the feature:** Apply approved logo/theme/document locale, client notification controls, accessibility and branded-safe links.
@@ -2231,7 +2231,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F138 — Account and workspace closure workflow
 
-- **PR identity:** `[F138] Account and workspace closure workflow`; branch `feat/f138-account-and-workspace-closure-workflow` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F138] Account and workspace closure workflow`; branch `feat/f138-account-and-workspace-closure-workflow` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F020, F026, F027, F101, F015 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-018. **Behavior authority:** [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Online reauthenticated owner transfer/closure, obligations/export/retention preview and identity/session revocation with grace.
@@ -2245,7 +2245,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F139 — SoloDesk plan and seat entitlements
 
-- **PR identity:** `[F139] SoloDesk plan and seat entitlements`; branch `feat/f139-solodesk-plan-and-seat-entitlements` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F139] SoloDesk plan and seat entitlements`; branch `feat/f139-solodesk-plan-and-seat-entitlements` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F028, F124, F138 **Milestone:** P09 — Commercial readiness, supported distribution and operations.
 - **Requirements:** PLT-017, PLT-018. **Behavior authority:** [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Implement selected commercial product plans/trials/seats/guests/grace and server entitlements, separate from client subscriptions.
@@ -2259,7 +2259,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F140 — Privacy-safe diagnostics and support access
 
-- **PR identity:** `[F140] Privacy-safe diagnostics and support access`; branch `feat/f140-privacy-safe-diagnostics-and-support-access` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F140] Privacy-safe diagnostics and support access`; branch `feat/f140-privacy-safe-diagnostics-and-support-access` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F009, F014, F129 **Milestone:** P09 — Commercial readiness, supported distribution and operations.
 - **Requirements:** NFR-012, PLT-014. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Provide redacted support bundles, opt-in crash uploads and explicitly scoped temporary support grants with audit.
@@ -2273,7 +2273,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F141 — Cloud database/blob recovery drills
 
-- **PR identity:** `[F141] Cloud database/blob recovery drills`; branch `feat/f141-cloud-database-blob-recovery-drills` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F141] Cloud database/blob recovery drills`; branch `feat/f141-cloud-database-blob-recovery-drills` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F026, F123, F129 **Milestone:** P09 — Commercial readiness, supported distribution and operations.
 - **Requirements:** NFR-003. **Behavior authority:** [requirements](docs/product/requirements.md).
 - **Build the feature:** Independently back up DB/object bytes/required key metadata, test service restore and reconcile later provider jobs/receipts.
@@ -2287,7 +2287,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F142 — API/schema rolling compatibility
 
-- **PR identity:** `[F142] API/schema rolling compatibility`; branch `feat/f142-api-schema-rolling-compatibility` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F142] API/schema rolling compatibility`; branch `feat/f142-api-schema-rolling-compatibility` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F020, F043, F129 **Milestone:** P09 — Commercial readiness, supported distribution and operations.
 - **Requirements:** NFR-010. **Behavior authority:** [requirements](docs/product/requirements.md).
 - **Build the feature:** Add expand/contract migrations, supported protocol windows, old-client upgrade prompts and forward-repair rollback policy.
@@ -2301,7 +2301,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F143 — Performance and resource-budget verification
 
-- **PR identity:** `[F143] Performance and resource-budget verification`; branch `feat/f143-performance-and-resource-budget-verification` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F143] Performance and resource-budget verification`; branch `feat/f143-performance-and-resource-budget-verification` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F111, F112, F129 **Milestone:** P09 — Commercial readiness, supported distribution and operations.
 - **Requirements:** NFR-008, NFR-009. **Behavior authority:** [requirements](docs/product/requirements.md).
 - **Build the feature:** Measure cold launch/search/lists/sync/PDF/import/idle memory on declared hardware/data; fix query/index/worker bottlenecks without weakening rules.
@@ -2315,7 +2315,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F144 — Bilingual accessibility regression gate
 
-- **PR identity:** `[F144] Bilingual accessibility regression gate`; branch `feat/f144-bilingual-accessibility-regression-gate` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F144] Bilingual accessibility regression gate`; branch `feat/f144-bilingual-accessibility-regression-gate` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F137, F112, F005 **Milestone:** P09 — Commercial readiness, supported distribution and operations.
 - **Requirements:** NFR-006, NFR-007. **Behavior authority:** [requirements](docs/product/requirements.md).
 - **Build the feature:** Deliver complete string/RTL/bidi/font/error audit and repeatable keyboard/screen-reader/zoom/contrast/reduced-motion QA.
@@ -2329,7 +2329,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F145 — Signed Windows installer
 
-- **PR identity:** `[F145] Signed Windows installer`; branch `feat/f145-signed-windows-installer` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F145] Signed Windows installer`; branch `feat/f145-signed-windows-installer` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F029, F142, F143 **Milestone:** P09 — Commercial readiness, supported distribution and operations.
 - **Requirements:** NFR-011. **Behavior authority:** [requirements](docs/product/requirements.md).
 - **Build the feature:** Implement selected Windows architecture installer, trusted signing, native callback/credentials, uninstall data choices and reproducible artifacts.
@@ -2343,7 +2343,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F146 — Signed and notarized macOS distribution
 
-- **PR identity:** `[F146] Signed and notarized macOS distribution`; branch `feat/f146-signed-and-notarized-macos-distribution` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F146] Signed and notarized macOS distribution`; branch `feat/f146-signed-and-notarized-macos-distribution` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F029, F142, F143 **Milestone:** P09 — Commercial readiness, supported distribution and operations.
 - **Requirements:** NFR-011. **Behavior authority:** [requirements](docs/product/requirements.md).
 - **Build the feature:** Implement selected macOS DMG/ZIP, signing/notarization, Keychain continuity and callback/privacy behavior.
@@ -2357,7 +2357,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F147 — Supported Linux package distribution
 
-- **PR identity:** `[F147] Supported Linux package distribution`; branch `feat/f147-supported-linux-package-distribution` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F147] Supported Linux package distribution`; branch `feat/f147-supported-linux-package-distribution` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F029, F142, F143 **Milestone:** P09 — Commercial readiness, supported distribution and operations.
 - **Requirements:** NFR-011. **Behavior authority:** [requirements](docs/product/requirements.md).
 - **Build the feature:** Build selected AppImage/distro packages with checksum/signature, callbacks and GNOME/KDE secure vault behavior.
@@ -2371,7 +2371,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F148 — Verified updates and safe rollback/repair
 
-- **PR identity:** `[F148] Verified updates and safe rollback/repair`; branch `feat/f148-verified-updates-and-safe-rollback-repair` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F148] Verified updates and safe rollback/repair`; branch `feat/f148-verified-updates-and-safe-rollback-repair` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F145, F146, F147, F142 **Milestone:** P09 — Commercial readiness, supported distribution and operations.
 - **Requirements:** NFR-011, NFR-010. **Behavior authority:** [requirements](docs/product/requirements.md).
 - **Build the feature:** Add signed update manifest/artifacts, channels/staged rollout, invalid update rejection and timer/migration/key-rotation coordination.
@@ -2385,7 +2385,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F149 — Operational alerts, quotas and incident controls
 
-- **PR identity:** `[F149] Operational alerts, quotas and incident controls`; branch `feat/f149-operational-alerts-quotas-and-incident-controls` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F149] Operational alerts, quotas and incident controls`; branch `feat/f149-operational-alerts-quotas-and-incident-controls` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F140, F141, F148 **Milestone:** P09 — Commercial readiness, supported distribution and operations.
 - **Requirements:** NFR-009, NFR-012. **Behavior authority:** [requirements](docs/product/requirements.md).
 - **Build the feature:** Monitor auth/sync/finance/jobs/backup/blob quotas with redacted correlation, spend caps, degraded modes and incident response/runbooks.
@@ -2399,7 +2399,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F150 — Vendor exit and full workspace portability
 
-- **PR identity:** `[F150] Vendor exit and full workspace portability`; branch `feat/f150-vendor-exit-and-full-workspace-portability` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F150] Vendor exit and full workspace portability`; branch `feat/f150-vendor-exit-and-full-workspace-portability` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F099, F138, F141, F142 **Milestone:** P09 — Commercial readiness, supported distribution and operations.
 - **Requirements:** NFR-013, NFR-003. **Behavior authority:** [requirements](docs/product/requirements.md).
 - **Build the feature:** Rehearse portable DB/files/auth mapping/finance history/jobs export and controlled migration without old-secret reuse.
@@ -2413,7 +2413,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F151 — Stable release promotion and acceptance
 
-- **PR identity:** `[F151] Stable release promotion and acceptance`; branch `feat/f151-stable-release-promotion-and-acceptance` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; URL not yet created.
+- **PR identity:** `[F151] Stable release promotion and acceptance`; branch `feat/f151-stable-release-promotion-and-acceptance` → `main`; one PR; implementation in progress, local baseline/Linux smoke proven, security findings and hosted delivery obligations pending; [draft PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; security/final hosted acceptance remain blocked.
 - **Prerequisites:** F103, F139, F144, F148, F149, F150 **Milestone:** P09 — Commercial readiness, supported distribution and operations.
 - **Requirements:** NFR-001, NFR-004, NFR-005, NFR-006, NFR-007, NFR-011, NFR-014. **Behavior authority:** [requirements](docs/product/requirements.md).
 - **Build the feature:** Promote only enabled verified profiles/features to signed stable artifacts with release notes, user guides and known-limitations register.

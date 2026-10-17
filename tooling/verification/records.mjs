@@ -108,6 +108,25 @@ export function validateRecord(v) {
     (!v.counts.executed || v.counts.failed || v.counts.skipped || v.counts.todo)
   )
     throw new Error("suite-empty-or-incomplete");
+  if (kind === "report") {
+    if (
+      !v.counts ||
+      !["tests", "commands", "inputs"].includes(v.counts.kind) ||
+      Object.keys(v.counts).some(
+        (k) =>
+          !["kind", "executed", "passed", "failed", "skipped", "todo"].includes(
+            k,
+          ),
+      )
+    )
+      throw new Error("counts-invalid");
+    if (
+      v.status === "passed" &&
+      (!v.counts.executed ||
+        (v.counts.kind === "tests" && v.counts.passed !== v.counts.executed))
+    )
+      throw new Error("suite-empty-or-incomplete");
+  }
   if (kind === "report" && !statuses.includes(v.status))
     throw new Error("status-invalid");
   if (kind === "review") {

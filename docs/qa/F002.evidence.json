@@ -3,10 +3,10 @@
   "schema_version": 1,
   "phase": "F002",
   "context": {
-    "head": "7d692ef81fbaccb504c85daa4d27ed2af572d6b5",
+    "head": "df15d308c43f98e1d8da2bc0b875f90566f3eb8b",
     "base": "c66095e65e0b901aeeddf4f9e1d7274be5fdbf8a",
-    "scope": "Working implementation; exact producer contexts remain in their immutable run records",
-    "primary_pr": null
+    "scope": "Actual omission-trial source plus later repaired working implementation; final current provider outcomes pending",
+    "primary_pr": "https://github.com/m07amed25/SoloDesk/pull/2"
   },
   "automated_ready": false,
   "agent_qa": {
@@ -53,6 +53,31 @@
         "dependencies": 588,
         "high_findings": 7
       }
+    },
+    {
+      "id": "hosted-controlled-failure",
+      "source": "https://github.com/m07amed25/SoloDesk/actions/runs/39078873750",
+      "status": "failed",
+      "expected": "Named applicable assertion and gate fail",
+      "observed": "Unit assertion present in failing report; baseline and aggregate failure"
+    },
+    {
+      "id": "hosted-missing-report",
+      "source": "https://github.com/m07amed25/SoloDesk/actions/runs/39079290422",
+      "status": "failed",
+      "expected": "Successful baseline producer cannot replace missing lint report",
+      "observed": "required-missing lint; baseline provider success; aggregate failure"
+    },
+    {
+      "id": "hosted-native-three-targets",
+      "source": "https://github.com/m07amed25/SoloDesk/actions/runs/39079290422",
+      "status": "passed",
+      "counts": {
+        "targets": 3,
+        "shell_tests_per_target": 1
+      },
+      "scope": ["linux-x64", "windows-x64", "macos-arm64"],
+      "notice": "Actual trial source; final repaired source needs current-context inspection"
     }
   ],
   "findings": [
@@ -64,14 +89,6 @@
       "diagnostic": "GHSA-vfj7-8cjw-p6xm in existing braces/shadcn chain; no patched braces release observed",
       "owner": "Dependency maintainer/security reviewer",
       "next_action": "Upstream repair or individually reviewed permitted mitigation; rerun audit"
-    },
-    {
-      "id": "F002-native-hosted",
-      "blocking": true,
-      "status": "open",
-      "owner": "F002 maintainer",
-      "diagnostic": "Hosted matrix and final provider evidence pending",
-      "next_action": "Execute and inspect primary PR runs"
     },
     {
       "id": "F002-control-fork",
@@ -88,6 +105,14 @@
       "owner": "Repository owner",
       "diagnostic": "Final owner approval and merge not performed",
       "next_action": "Review concrete current PR only after blockers repaired"
+    },
+    {
+      "id": "F002-final-hosted",
+      "blocking": true,
+      "status": "open",
+      "owner": "F002 maintainer",
+      "diagnostic": "Final repaired-source current hosted inspection pending; audit already blocking",
+      "next_action": "Inspect final run and preserve audit blocker"
     }
   ],
   "adoption": {
@@ -110,10 +135,16 @@
       "preserve_stronger_constraints": true
     },
     "gaps": [
-      "Actual working check identity pending",
+      "Working check identity observed with honest failure; final successful readiness blocked",
       "No activation authorization/outcome"
     ],
-    "recovery": "Restore reviewed check identity before separately authorized protection adoption; preserve stronger existing controls"
+    "recovery": "Restore reviewed check identity before separately authorized protection adoption; preserve stronger existing controls",
+    "check_identity": {
+      "name": "F002 / automated-readiness",
+      "app_id": 15368,
+      "app_slug": "github-actions",
+      "observed_check_run_id": 117531872204
+    }
   },
   "limits": {
     "input_bytes": 2097152,
@@ -174,15 +205,15 @@
     },
     {
       "id": "FR-006",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked"
     },
     {
       "id": "FR-007",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked"
     },
     {
       "id": "FR-008",
@@ -192,39 +223,39 @@
     },
     {
       "id": "FR-009",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked"
     },
     {
       "id": "FR-010",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked"
     },
     {
       "id": "FR-011",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked"
     },
     {
       "id": "FR-012",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked"
     },
     {
       "id": "FR-013",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked"
     },
     {
       "id": "FR-014",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked"
     },
     {
       "id": "FR-015",
@@ -234,9 +265,9 @@
     },
     {
       "id": "FR-016",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked"
     },
     {
       "id": "FR-017",
@@ -252,9 +283,9 @@
     },
     {
       "id": "FR-019",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked"
     },
     {
       "id": "FR-020",
@@ -314,7 +345,7 @@
       "id": "FR-029",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped"
+      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked"
     },
     {
       "id": "FR-030",
@@ -326,75 +357,75 @@
   "acceptance": [
     {
       "id": "A-01",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
     },
     {
       "id": "A-02",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
     },
     {
       "id": "A-03",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
     },
     {
       "id": "A-04",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
     },
     {
       "id": "A-05",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
     },
     {
       "id": "A-06",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
     },
     {
       "id": "A-07",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
     },
     {
       "id": "A-08",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
     },
     {
       "id": "A-09",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
     },
     {
       "id": "A-10",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
     },
     {
       "id": "A-11",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
     },
     {
       "id": "A-12",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
     },
     {
       "id": "A-13",
@@ -404,21 +435,21 @@
     },
     {
       "id": "A-14",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
     },
     {
       "id": "A-15",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
     },
     {
       "id": "A-16",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
     },
     {
       "id": "A-17",
@@ -428,9 +459,9 @@
     },
     {
       "id": "A-18",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
     },
     {
       "id": "A-19",
@@ -440,21 +471,21 @@
     },
     {
       "id": "A-20",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
     },
     {
       "id": "A-21",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
     },
     {
       "id": "A-22",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
     },
     {
       "id": "A-23",
@@ -470,29 +501,29 @@
     },
     {
       "id": "A-25",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
     },
     {
       "id": "A-26",
       "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual assertion-failure and evidence-omission journeys proven; repaired full success blocked by unresolved audit"
     },
     {
       "id": "A-27",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
     }
   ],
   "success": [
     {
       "id": "SC-001",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual independent clean/hosted baseline, explicit scoped gate/native results or synthetic enrollment observations recorded in QA"
     },
     {
       "id": "SC-002",
@@ -508,15 +539,15 @@
     },
     {
       "id": "SC-004",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual independent clean/hosted baseline, explicit scoped gate/native results or synthetic enrollment observations recorded in QA"
     },
     {
       "id": "SC-005",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual independent clean/hosted baseline, explicit scoped gate/native results or synthetic enrollment observations recorded in QA"
     },
     {
       "id": "SC-006",
@@ -538,9 +569,9 @@
     },
     {
       "id": "SC-009",
-      "status": "not run",
+      "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Actual independent clean/hosted baseline, explicit scoped gate/native results or synthetic enrollment observations recorded in QA"
     },
     {
       "id": "SC-010",

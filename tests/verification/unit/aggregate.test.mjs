@@ -158,3 +158,28 @@ test("missing selected matrix target and wrong command argv remain blockers", ()
   bound.checks[0].expected_argv = ["required.mjs"];
   assert.equal(aggregate(context(), bound, [report()]).automated_ready, false);
 });
+test("ambiguous producer jobs and wrong provider attempt block even with a success", () => {
+  const c = {
+    ...context(),
+    execution_mode: "hosted-pr",
+    provider: { run_id: 1, attempt: 1 },
+  };
+  const p = {
+    authenticated: true,
+    context_ref: c.id,
+    run_id: 1,
+    attempt: 2,
+    current_head: c.proposal_head_sha,
+    current_base: c.base_sha,
+    tested_sha: c.tested_sha,
+    jobs: [
+      { name: "F002 / baseline", status: "completed", conclusion: "success" },
+      { name: "F002 / baseline", status: "completed", conclusion: "failure" },
+    ],
+    artifacts: [],
+  };
+  const s = aggregate(c, selection(), [report()], { provider: p });
+  assert.equal(s.automated_ready, false);
+  assert.ok(s.findings.some((f) => f.code === "producer-unsuccessful"));
+  assert.ok(s.findings.some((f) => f.code === "provider-context-stale"));
+});

@@ -62,13 +62,17 @@ export function aggregate(
         c.group === "desktop"
           ? `F002 / desktop (${c.target_id})`
           : `F002 / ${c.group}`;
+      const jobs = provider?.jobs.filter((j) => j.name === name) || [];
       if (
-        !provider?.jobs.some(
-          (j) => j.name === name && j.conclusion === "success",
-        )
+        jobs.length !== 1 ||
+        jobs[0].conclusion !== "success" ||
+        jobs[0].status !== "completed"
       )
         add("producer-unsuccessful", c.check_id);
       if (
+        provider?.context_ref !== context.id ||
+        String(provider?.run_id) !== String(context.provider?.run_id) ||
+        String(provider?.attempt) !== String(context.provider?.attempt) ||
         provider?.current_head !== context.proposal_head_sha ||
         provider?.current_base !== context.base_sha ||
         provider?.tested_sha !== context.tested_sha

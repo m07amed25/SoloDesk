@@ -57,3 +57,30 @@ test("base command minima cannot be changed or lowered by candidate registry", (
     }).findings.some((f) => f.code === "suite-downgrade"),
   );
 });
+test("candidate cannot remove an existing native target from base minimum", () => {
+  const base = policy(),
+    candidate = { ...policy(), targets: [] };
+  const s = selectChecks(
+    { ...context(), changed_paths: ["app/main/main.ts"] },
+    candidate,
+    manifest(),
+    { basePolicy: base },
+  );
+  assert.ok(
+    s.checks.some((c) => c.check_id === "desktop:linux-x64" && c.selected),
+  );
+  assert.ok(s.findings.some((f) => f.code === "target-policy-downgrade"));
+});
+test("candidate cannot append a disabling flag to an existing mandatory command", () => {
+  const base = manifest(),
+    candidate = manifest();
+  base.checks[0].kind = "command";
+  candidate.checks[0].kind = "command";
+  candidate.checks[0].argv.push("--noCheck");
+  assert.ok(
+    selectChecks(context(), policy(), candidate, {
+      basePolicy: policy(),
+      baseManifest: base,
+    }).findings.some((f) => f.code === "suite-downgrade"),
+  );
+});
