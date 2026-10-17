@@ -5,7 +5,7 @@ description: "Dependency-ordered F001 governance implementation and review tasks
 # Tasks: F001 — Delivery Governance and PR Standards
 
 **Input**: Design documents from `specs/001-delivery-governance/`.
-**Created**: 2026-10-17. **Status**: Technical verification complete through T047; publication/freeze in progress; owner/merge/outcome pending.
+**Created**: 2026-10-17. **Status**: Technical verification complete through T047; one PR published and final review prepared; owner/merge/outcome pending.
 **Prerequisites**: [plan](plan.md), [specification](spec.md), [research](research.md),
 [record model](data-model.md), [contracts](contracts/) and [validation guide](quickstart.md).
 **Parent requirement**: NFR-014. **Feature/milestone**: F001 / P00.
@@ -353,9 +353,9 @@ requirements; they are not actions authorized merely by generating this list.
 
 - [X] T047 Execute the actual agent policy audit and all 22 scenarios/ten approval cases/seven SC targets from `specs/001-delivery-governance/quickstart.md`, consolidate traceability and blockers in `docs/qa/F001.md`, and recheck constitution compliance; retain real SC-006 owner decision and SC-007 merge identity as pending until observed, while separately recording synthetic policy classifications. After recording the audit and regression results, run final `node tooling/check-governance.mjs --evidence docs/qa/F001.evidence.json --format json` validation and repair any failure before review. Depends on T046.
 
-- [ ] T048 Only when PR publication is authorized, open/update the single reviewable F001 PR to `main` using `.github/pull_request_template.md` content manually if needed, with current `docs/features/F001.md` and `docs/qa/F001.md` links; record real PR references before final review, attach the created PR to this chat and preserve Draft/incomplete status until QA is complete. Depends on T047; do not fabricate publication if access is unavailable.
+- [X] T048 Only when PR publication is authorized, open/update the single reviewable F001 PR to `main` using `.github/pull_request_template.md` content manually if needed, with current `docs/features/F001.md` and `docs/qa/F001.md` links; record real PR references before final review, attach the created PR to this chat and preserve Draft/incomplete status until QA is complete. Depends on T047; do not fabricate publication if access is unavailable.
 
-- [ ] T049 Freeze the final reviewed tree, inspect the actual PR head/base and mandatory remote constraints, resolve material-change/record-commit freshness using `docs/qa/F001.evidence.json` and `docs/qa/F001.md`, and present the concrete current scope/results/risks to the user; do not add an approval-transcription commit or infer remote constraints from editable fields. Depends on T048.
+- [X] T049 Freeze the final reviewed tree, inspect the actual PR head/base and mandatory remote constraints, resolve material-change/record-commit freshness using `docs/qa/F001.evidence.json` and `docs/qa/F001.md`, and present the concrete current scope/results/risks to the user; do not add an approval-transcription commit or infer remote constraints from editable fields. Depends on T048.
 
 - [ ] T050 Obtain the actual explicit final user decision for the identified PR/head/base/evidence referenced from `docs/qa/F001.md`; retain it at its trusted human source without changing the approved head merely to transcribe it, keep owner authorization separate from independent platform review and return to repair/re-review if rejected, withdrawn or stale. Depends on T049; this is a pending human action, never satisfied by agent QA or this task checkbox.
 
@@ -506,7 +506,7 @@ serial and parallel execution.
 | US4 — final approval policy | T031–T036 | 6 | A-14–A-18, AP-01–AP-10; only synthetic AP-01 eligible, real consent unclaimed |
 | US5 — lifecycle/recovery | T037–T041 | 5 | A-19–A-22; preserved history, proof-backed transitions and F002 boundaries |
 | Final review/outcomes | T042–T052 | 11 | Full current review, actual decision/merge only when observed, deferred reconciliation |
-| Total | T001–T052 | 52 | Technical work through T047 verified; publication/freeze and owner/outcome tasks tracked above |
+| Total | T001–T052 | 52 | Technical and publication work through T049 verified; T050–T052 owner/merge/outcome pending |
 
 | Requirements / outcomes | Owning tasks |
 | --- | --- |

@@ -312,7 +312,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F001 — Delivery governance and PR standards
 
-- **PR identity:** `[F001] Delivery governance and PR standards`; branch `feat/f001-delivery-governance-and-pr-standards` → `main`; one PR; implementation and local verification complete, publication being prepared; owner approval and merge pending.
+- **PR identity:** `[F001] Delivery governance and PR standards`; branch `feat/f001-delivery-governance-and-pr-standards` → `main`; one PR; [PR #1](https://github.com/m07amed25/SoloDesk/pull/1) open; local checks and agent QA passed, awaiting user final approval; merge pending.
 - **Prerequisites:** None; preserve existing working changes. **Milestone:** P00 — Product and development governance.
 - **Requirements:** NFR-014. **Behavior authority:** [requirements](docs/product/requirements.md).
 - **Build the feature:** Review the established constitution from confirmed principles; define branch/PR naming, feature evidence and review policy; preserve existing docs and requirement IDs.

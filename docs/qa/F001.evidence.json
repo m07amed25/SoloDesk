@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "pack_id": "F001-review-20261017",
+  "pack_id": "F001-published-review-20261017",
   "phase": {
     "id": "F001",
     "milestone": "P00",
@@ -25,12 +25,16 @@
       "reviewing agent",
       "user/owner"
     ],
-    "delivery_state": "building",
+    "delivery_state": "awaiting user approval",
     "condition": "active",
-    "last_valid_state": "building",
+    "last_valid_state": "awaiting user approval",
     "history_refs": [
       "F001-transition-1",
-      "F001-transition-2"
+      "F001-transition-2",
+      "F001-transition-3",
+      "F001-transition-4",
+      "F001-transition-5",
+      "F001-transition-6"
     ]
   },
   "proposal": {
@@ -38,7 +42,7 @@
     "title": "[F001] Delivery governance and PR standards",
     "branch": "feat/f001-delivery-governance-and-pr-standards",
     "target": "main",
-    "pr_url": null,
+    "pr_url": "https://github.com/m07amed25/SoloDesk/pull/1",
     "problem": "Delivery rules and evidence lacked an operational, locally verifiable contract",
     "result": "One bounded proposal with honest QA, current snapshot and explicit final owner review",
     "scope": {
@@ -58,9 +62,9 @@
       "docs/qa/F001.md",
       "docs/development/delivery-governance.md"
     ],
-    "head_revision": "dd4c2379402e9c0dcb1c6b581640c5142bf80ac9",
+    "head_revision": "5785cacd21f1fa212f7061e5efa3a8d25b97fa17",
     "base_revision": "dd4c2379402e9c0dcb1c6b581640c5142bf80ac9",
-    "snapshot_ref": "F001-reviewed-tree-1",
+    "snapshot_ref": "F001-reviewed-tree-2",
     "impact": {
       "security": "Inert bounded local tooling; no application authorization or secret storage changes",
       "financial": "No application money behavior",
@@ -68,13 +72,16 @@
     },
     "recovery": "Repair the same open PR; post-merge maintenance uses linked backout/review; retain history",
     "limitations": "Local advisory checks cannot authenticate human consent, enforce remote protection or establish product/native/Arabic acceptance",
-    "remote_constraints_ref": null,
+    "remote_constraints_ref": "docs/qa/F001.md",
     "fix_of": null,
-    "maintenance_of": null
+    "maintenance_of": null,
+    "primary_prs": [
+      "https://github.com/m07amed25/SoloDesk/pull/1"
+    ]
   },
   "snapshot": {
-    "id": "F001-reviewed-tree-1",
-    "observed_head": "dd4c2379402e9c0dcb1c6b581640c5142bf80ac9",
+    "id": "F001-reviewed-tree-2",
+    "observed_head": "5785cacd21f1fa212f7061e5efa3a8d25b97fa17",
     "comparison_base": "dd4c2379402e9c0dcb1c6b581640c5142bf80ac9",
     "reviewed_paths": [
       ".github/pull_request_template.md",
@@ -109,21 +116,21 @@
       "tooling/fixtures/governance/proposals.json",
       "tooling/fixtures/governance/snapshot-digests.json"
     ],
-    "content_digest": "947923c7b382ead966d319d18d380bc1645dce04cea83cf8b77e5a6f70a0aa68",
+    "content_digest": "14aafb4ad3a98bc4f8af78d4ce0518bbcd3933206f8a2eb757a82b96a661f432",
     "digest_format": "F001-review-v1",
     "working_tree_state": "uncommitted",
-    "created_at": "2026-10-17T17:03:02Z",
+    "created_at": "2026-10-17T17:04:41Z",
     "supersedes": null,
     "carry_forward": [
       {
-        "old_head": "dd4c2379402e9c0dcb1c6b581640c5142bf80ac9",
+        "old_head": "5785cacd21f1fa212f7061e5efa3a8d25b97fa17",
         "old_base": "dd4c2379402e9c0dcb1c6b581640c5142bf80ac9",
         "new_head": "content-bound",
         "new_base": "dd4c2379402e9c0dcb1c6b581640c5142bf80ac9",
-        "content_digest": "947923c7b382ead966d319d18d380bc1645dce04cea83cf8b77e5a6f70a0aa68",
-        "reason": "Agent reviewed the complete pending-owner uncommitted tree. Later commits may seal only the exact canonical bytes plus the two reviewed evidence containers. Changed scope/digest/base requires renewed review; no approval is transferred.",
+        "content_digest": "14aafb4ad3a98bc4f8af78d4ce0518bbcd3933206f8a2eb757a82b96a661f432",
+        "reason": "Reviewed PR-reference/task-status metadata update and all current F001 subjects. Repeated 74 governance tests, 5 launcher tests, policy, typecheck and build; all passed. Later commits may seal only these exact canonical bytes plus the two reviewed evidence containers. No approval is transferred.",
         "reviewer": "Codex agent",
-        "recorded_at": "2026-10-17T17:03:02Z",
+        "recorded_at": "2026-10-17T17:04:55Z",
         "prior_evidence_ids": [
           "F001-governance-suite",
           "F001-policy-audit"
@@ -210,7 +217,7 @@
   "evidence": [
     {
       "id": "F001-A-01",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [
         "A-01"
       ],
@@ -222,7 +229,7 @@
       "category": "documentation",
       "subject": "F001 A-01 policy/fixture classification",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -240,14 +247,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": false
     },
     {
       "id": "F001-A-02",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [
         "A-02"
       ],
@@ -258,7 +265,7 @@
       "category": "documentation",
       "subject": "F001 A-02 policy/fixture classification",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -276,14 +283,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": false
     },
     {
       "id": "F001-A-03",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [
         "A-03"
       ],
@@ -294,7 +301,7 @@
       "category": "documentation",
       "subject": "F001 A-03 policy/fixture classification",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -312,14 +319,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": false
     },
     {
       "id": "F001-A-04",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [
         "A-04"
       ],
@@ -330,7 +337,7 @@
       "category": "documentation",
       "subject": "F001 A-04 policy/fixture classification",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -348,14 +355,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": false
     },
     {
       "id": "F001-A-05",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [
         "A-05"
       ],
@@ -367,7 +374,7 @@
       "category": "documentation",
       "subject": "F001 A-05 policy/fixture classification",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -385,14 +392,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": false
     },
     {
       "id": "F001-A-06",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [
         "A-06"
       ],
@@ -404,7 +411,7 @@
       "category": "documentation",
       "subject": "F001 A-06 policy/fixture classification",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -422,14 +429,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": false
     },
     {
       "id": "F001-A-07",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [
         "A-07"
       ],
@@ -440,7 +447,7 @@
       "category": "documentation",
       "subject": "F001 A-07 policy/fixture classification",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -458,14 +465,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": false
     },
     {
       "id": "F001-A-08",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [
         "A-08"
       ],
@@ -476,7 +483,7 @@
       "category": "documentation",
       "subject": "F001 A-08 policy/fixture classification",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -494,14 +501,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": false
     },
     {
       "id": "F001-A-09",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [
         "A-09"
       ],
@@ -512,7 +519,7 @@
       "category": "evidence",
       "subject": "F001 A-09 policy/fixture classification",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -530,14 +537,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": false
     },
     {
       "id": "F001-A-10",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [
         "A-10"
       ],
@@ -548,7 +555,7 @@
       "category": "evidence",
       "subject": "F001 A-10 policy/fixture classification",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -566,14 +573,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": false
     },
     {
       "id": "F001-A-11",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [
         "A-11"
       ],
@@ -585,7 +592,7 @@
       "category": "evidence",
       "subject": "F001 A-11 policy/fixture classification",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -603,14 +610,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": false
     },
     {
       "id": "F001-A-12",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [
         "A-12"
       ],
@@ -622,7 +629,7 @@
       "category": "evidence",
       "subject": "F001 A-12 policy/fixture classification",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -640,14 +647,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": false
     },
     {
       "id": "F001-A-13",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [
         "A-13"
       ],
@@ -659,7 +666,7 @@
       "category": "evidence",
       "subject": "F001 A-13 policy/fixture classification",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -677,14 +684,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": false
     },
     {
       "id": "F001-A-14",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [
         "A-14"
       ],
@@ -696,7 +703,7 @@
       "category": "evidence",
       "subject": "F001 A-14 policy/fixture classification",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -714,14 +721,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": false
     },
     {
       "id": "F001-A-15",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [
         "A-15"
       ],
@@ -732,7 +739,7 @@
       "category": "evidence",
       "subject": "F001 A-15 policy/fixture classification",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -750,14 +757,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": true
     },
     {
       "id": "F001-A-16",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [
         "A-16"
       ],
@@ -769,7 +776,7 @@
       "category": "evidence",
       "subject": "F001 A-16 policy/fixture classification",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -787,14 +794,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": false
     },
     {
       "id": "F001-A-17",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [
         "A-17"
       ],
@@ -805,7 +812,7 @@
       "category": "evidence",
       "subject": "F001 A-17 policy/fixture classification",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -823,14 +830,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": true
     },
     {
       "id": "F001-A-18",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [
         "A-18"
       ],
@@ -841,7 +848,7 @@
       "category": "evidence",
       "subject": "F001 A-18 policy/fixture classification",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -859,14 +866,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": false
     },
     {
       "id": "F001-A-19",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [
         "A-19"
       ],
@@ -878,7 +885,7 @@
       "category": "recovery",
       "subject": "F001 A-19 policy/fixture classification",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -896,14 +903,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": true
     },
     {
       "id": "F001-A-20",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [
         "A-20"
       ],
@@ -914,7 +921,7 @@
       "category": "recovery",
       "subject": "F001 A-20 policy/fixture classification",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -932,14 +939,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": true
     },
     {
       "id": "F001-A-21",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [
         "A-21"
       ],
@@ -950,7 +957,7 @@
       "category": "recovery",
       "subject": "F001 A-21 policy/fixture classification",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -968,14 +975,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": false
     },
     {
       "id": "F001-A-22",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [
         "A-22"
       ],
@@ -987,7 +994,7 @@
       "category": "recovery",
       "subject": "F001 A-22 policy/fixture classification",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -1005,14 +1012,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": false
     },
     {
       "id": "F001-governance-suite",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [],
       "requirement_ids": [
         "NFR-014"
@@ -1020,7 +1027,7 @@
       "category": "evidence",
       "subject": "Local governance/CLI contract",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -1038,14 +1045,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": false
     },
     {
       "id": "F001-policy-audit",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [],
       "requirement_ids": [
         "NFR-014"
@@ -1053,7 +1060,7 @@
       "category": "documentation",
       "subject": "Actual policy links/clauses and source audit",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -1071,14 +1078,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": false
     },
     {
       "id": "F001-test-launcher",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [],
       "requirement_ids": [
         "NFR-014"
@@ -1086,7 +1093,7 @@
       "category": "regression",
       "subject": "Existing shell npm run test:launcher",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -1104,14 +1111,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": false
     },
     {
       "id": "F001-typecheck",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [],
       "requirement_ids": [
         "NFR-014"
@@ -1119,7 +1126,7 @@
       "category": "regression",
       "subject": "Existing shell npm run typecheck",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -1137,14 +1144,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": false
     },
     {
       "id": "F001-build",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [],
       "requirement_ids": [
         "NFR-014"
@@ -1152,7 +1159,7 @@
       "category": "regression",
       "subject": "Existing shell npm run build",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -1170,14 +1177,14 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": false
     },
     {
       "id": "F001-privacy",
-      "pack_id": "F001-review-20261017",
+      "pack_id": "F001-published-review-20261017",
       "scenario_ids": [],
       "requirement_ids": [
         "NFR-014"
@@ -1185,7 +1192,7 @@
       "category": "privacy",
       "subject": "Complete scope/preservation and diagnostic audit",
       "applicable": true,
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
       "fixtures_or_documents": [
         "docs/development/delivery-governance.md",
@@ -1203,7 +1210,7 @@
         "id": "Codex",
         "kind": "agent"
       },
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:55Z",
       "finding_refs": [],
       "supersedes": null,
       "synthetic_subject": false
@@ -1274,9 +1281,9 @@
   "approval": {
     "id": "F001-owner-pending",
     "phase_id": "F001",
-    "pr_url": null,
-    "snapshot_ref": "F001-reviewed-tree-1",
-    "evidence_pack_ref": "F001-review-20261017",
+    "pr_url": "https://github.com/m07amed25/SoloDesk/pull/1",
+    "snapshot_ref": "F001-reviewed-tree-2",
+    "evidence_pack_ref": "F001-published-review-20261017",
     "decision": "pending",
     "decision_maker": null,
     "decided_at": null,
@@ -1290,11 +1297,11 @@
       "id": "F001-transition-1",
       "from": "planned",
       "to": "decision-ready",
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:41Z",
       "actor": "Codex agent",
       "event": "preparation",
       "source_reference": "specs/001-delivery-governance/plan.md",
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "evidence_refs": [
         "F001-policy-audit"
       ],
@@ -1304,15 +1311,87 @@
       "id": "F001-transition-2",
       "from": "decision-ready",
       "to": "building",
-      "recorded_at": "2026-10-17T17:03:02Z",
+      "recorded_at": "2026-10-17T17:04:41Z",
       "actor": "Codex agent",
       "event": "implementation authorized",
       "source_reference": "User request: speckit-implement Start implementation",
-      "snapshot_ref": "F001-reviewed-tree-1",
+      "snapshot_ref": "F001-reviewed-tree-2",
       "evidence_refs": [
         "F001-policy-audit"
       ],
       "reason": "Observed preparation and explicitly authorized F001 implementation; no owner merge approval inferred."
+    },
+    {
+      "id": "F001-transition-3",
+      "from": "building",
+      "to": "PR open/draft",
+      "recorded_at": "2026-10-17T17:04:41Z",
+      "actor": "Codex agent",
+      "event": "Actual PR publication",
+      "source_reference": "https://github.com/m07amed25/SoloDesk/pull/1",
+      "snapshot_ref": "F001-reviewed-tree-2",
+      "evidence_refs": [
+        "F001-governance-suite",
+        "F001-policy-audit"
+      ],
+      "reason": "Actual publication/check/QA review; owner merge decision remains pending."
+    },
+    {
+      "id": "F001-transition-4",
+      "from": "PR open/draft",
+      "to": "automated checks passed",
+      "recorded_at": "2026-10-17T17:04:41Z",
+      "actor": "Codex agent",
+      "event": "Current local checks and unchanged-content association",
+      "source_reference": "docs/qa/F001.md",
+      "snapshot_ref": "F001-reviewed-tree-2",
+      "evidence_refs": [
+        "F001-governance-suite",
+        "F001-policy-audit"
+      ],
+      "reason": "Actual publication/check/QA review; owner merge decision remains pending."
+    },
+    {
+      "id": "F001-transition-5",
+      "from": "automated checks passed",
+      "to": "agent QA passed",
+      "recorded_at": "2026-10-17T17:04:41Z",
+      "actor": "Codex agent",
+      "event": "Actual governing policy/scenario audit",
+      "source_reference": "docs/qa/F001.md",
+      "snapshot_ref": "F001-reviewed-tree-2",
+      "evidence_refs": [
+        "F001-governance-suite",
+        "F001-policy-audit"
+      ],
+      "reason": "Actual publication/check/QA review; owner merge decision remains pending."
+    },
+    {
+      "id": "F001-transition-6",
+      "from": "agent QA passed",
+      "to": "awaiting user approval",
+      "recorded_at": "2026-10-17T17:04:41Z",
+      "actor": "Codex agent",
+      "event": "Concrete current result/evidence presented for owner review",
+      "source_reference": "docs/qa/F001.md",
+      "snapshot_ref": "F001-reviewed-tree-2",
+      "evidence_refs": [
+        "F001-governance-suite",
+        "F001-policy-audit"
+      ],
+      "reason": "Actual publication/check/QA review; owner merge decision remains pending."
     }
-  ]
+  ],
+  "historical_pack_reference": {
+    "pack_id": "F001-review-20261017",
+    "snapshot_id": "F001-reviewed-tree-1",
+    "content_digest": "947923c7b382ead966d319d18d380bc1645dce04cea83cf8b77e5a6f70a0aa68",
+    "revision": "5785cacd21f1fa212f7061e5efa3a8d25b97fa17",
+    "path": "docs/qa/F001.evidence.json",
+    "inspection": {
+      "observed": "Read original committed evidence pack with git show; original observations/findings and measured identities are retained unchanged in Git history.",
+      "reviewer": "Codex agent",
+      "recorded_at": "2026-10-17T17:04:41Z"
+    }
+  }
 }
