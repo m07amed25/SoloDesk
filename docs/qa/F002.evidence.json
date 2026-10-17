@@ -154,6 +154,20 @@
         "launcher": 5,
         "governance": 74
       }
+    },
+    {
+      "id": "security-repair-local",
+      "status": "passed",
+      "source": "run-9f6e1c32-8312-4dd5-b881-ec829b675884",
+      "scope": "11 baseline checks, four security scans and real Linux native; Windows/macOS remain hosted requirements",
+      "counts": {
+        "unit": 64,
+        "integration": 34,
+        "dependency_inputs": 350,
+        "license_inputs_including_vendor": 351,
+        "vulnerabilities": 0
+      },
+      "artifact_equivalence": "Existing Button and renderer JS/CSS byte hashes unchanged from before CLI removal"
     }
   ],
   "findings": [
@@ -161,10 +175,11 @@
       "id": "F002-audit",
       "severity": "high",
       "blocking": true,
-      "status": "open",
-      "diagnostic": "GHSA-vfj7-8cjw-p6xm in existing braces/shadcn chain; no patched braces release observed",
+      "status": "mitigated-awaiting-verification",
+      "diagnostic": "Vulnerable CLI graph removed; actual local all-dependency audit is clean; current hosted confirmation pending",
       "owner": "Dependency maintainer/security reviewer",
-      "next_action": "Upstream repair or individually reviewed permitted mitigation; rerun audit"
+      "next_action": "Inspect fresh hosted security and readiness results before closing",
+      "stage": "automated"
     },
     {
       "id": "F002-control-fork",
@@ -172,7 +187,8 @@
       "status": "open",
       "owner": "Repository owner/F002 maintainer",
       "diagnostic": "No existing unrelated control run and no actual fork trial",
-      "next_action": "Provide an authorized genuine control/fork context; do not fabricate isolation or cancellation proof"
+      "next_action": "Provide an authorized genuine control/fork context; do not fabricate isolation or cancellation proof",
+      "stage": "delivery"
     },
     {
       "id": "F002-owner",
@@ -180,7 +196,8 @@
       "status": "open",
       "owner": "Repository owner",
       "diagnostic": "Final owner approval and merge not performed",
-      "next_action": "Review concrete current PR only after blockers repaired"
+      "next_action": "Review concrete current PR only after blockers repaired",
+      "stage": "delivery"
     }
   ],
   "adoption": {

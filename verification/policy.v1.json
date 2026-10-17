@@ -18,7 +18,8 @@
     "secrets",
     "dependencies",
     "licenses",
-    "workflow-syntax"
+    "workflow-syntax",
+    "ui-configuration"
   ],
   "risk_rules": [
     {

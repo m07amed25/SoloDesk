@@ -4,6 +4,7 @@ import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
 import parseSPDX from "spdx-expression-parse";
+import { verifyStyleSources } from "../ui-info.mjs";
 import { runProcess, childEnvironment } from "./run-suite.mjs";
 import { safePath, digest, allocate } from "./artifacts.mjs";
 export function auditFindings(data) {
@@ -183,6 +184,12 @@ export async function securityCheck(root, kind) {
         license: m.license,
         licenses: m.licenses,
       }));
+    const vendor = verifyStyleSources(root);
+    packages.push({
+      name: vendor.name,
+      version: vendor.version,
+      license: vendor.license,
+    });
     findings = licenseFindings(packages);
     inputs = packages.length;
     source = "Complete locked dependency graph SPDX metadata";

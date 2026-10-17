@@ -42,3 +42,49 @@ test("synthetic later-feature entry actually passes and deliberate assertion def
   assert.notEqual(fail.code, 0);
   assert.match(fail.stdout, /not ok/);
 });
+test("passing automation can coexist with pending delivery evidence without granting approval", () => {
+  const rows = (prefix, n, width) =>
+    Array.from({ length: n }, (_, i) => ({
+      id: prefix + String(i + 1).padStart(width, "0"),
+      status: "not run",
+      source: "synthetic contract fixture",
+    }));
+  const p = {
+    schema: "solodesk.verification.pack",
+    schema_version: 1,
+    phase: "F002",
+    requirements: rows("FR-", 30, 3),
+    acceptance: rows("A-", 27, 2),
+    success: rows("SC-", 11, 3),
+    context: { head: "synthetic" },
+    observations: [],
+    owner: { status: "pending" },
+    automated_ready: true,
+    automated_summary: { automated_ready: true, source: "synthetic fixture" },
+    findings: [{ id: "owner", stage: "delivery", blocking: true }],
+  };
+  const result = validatePack(p);
+  assert.equal(result.structurally_valid, true);
+  assert.equal(result.complete, false);
+  assert.equal(result.owner_source_verification, "required");
+  assert.throws(
+    () =>
+      validatePack({
+        ...p,
+        automated_summary: { automated_ready: false, source: "synthetic" },
+      }),
+    /automation-readiness-contradiction/,
+  );
+  assert.throws(
+    () =>
+      validatePack({
+        ...p,
+        findings: [{ stage: "automated", blocking: true }],
+      }),
+    /automation-readiness-contradiction/,
+  );
+  assert.throws(
+    () => validatePack({ ...p, owner: { status: "approved" } }),
+    /owner-source-unverified/,
+  );
+});

@@ -151,10 +151,11 @@
         "tests/verification/unit/security.test.mjs",
         "tests/verification/unit/artifacts.test.mjs",
         "tests/verification/unit/workflow-security.test.mjs",
-        "tests/verification/unit/adoption.test.mjs"
+        "tests/verification/unit/adoption.test.mjs",
+        "tests/verification/unit/ui-info.test.mjs"
       ],
       "kind": "tests",
-      "min_tests": 62,
+      "min_tests": 64,
       "timeout_ms": 300000,
       "phase_ids": ["F002"],
       "requirement_ids": ["NFR-014"],
@@ -169,7 +170,8 @@
         "tests/verification/unit/security.test.mjs",
         "tests/verification/unit/artifacts.test.mjs",
         "tests/verification/unit/workflow-security.test.mjs",
-        "tests/verification/unit/adoption.test.mjs"
+        "tests/verification/unit/adoption.test.mjs",
+        "tests/verification/unit/ui-info.test.mjs"
       ]
     },
     {
@@ -192,7 +194,7 @@
         "tests/verification/integration/review.test.mjs"
       ],
       "kind": "tests",
-      "min_tests": 34,
+      "min_tests": 35,
       "timeout_ms": 300000,
       "phase_ids": ["F002"],
       "requirement_ids": ["NFR-014"],
@@ -296,6 +298,19 @@
       "requirement_ids": ["FR-009"],
       "scenario_ids": ["A-17", "A-22"],
       "entry_files": ["tooling/verification/security.mjs"]
+    },
+    {
+      "id": "ui-configuration",
+      "group": "baseline",
+      "executable": "$NODE",
+      "argv": ["tooling/ui-info.mjs"],
+      "kind": "command",
+      "min_tests": 1,
+      "timeout_ms": 30000,
+      "phase_ids": ["F002"],
+      "requirement_ids": ["NFR-015"],
+      "scenario_ids": ["A-01", "A-22"],
+      "entry_files": ["tooling/ui-info.mjs"]
     }
   ]
 }

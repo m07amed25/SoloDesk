@@ -43,6 +43,7 @@ export function selectChecks(
       "dependencies",
       "licenses",
       "workflow-syntax",
+      "ui-configuration",
     ];
     if (
       !builtin.includes(c.id) &&

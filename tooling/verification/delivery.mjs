@@ -77,20 +77,26 @@ export function validatePack(pack) {
     !pack.context
   )
     throw new Error("delivery-pack-incomplete");
+  const coverageComplete = [
+    ...pack.requirements,
+    ...pack.acceptance,
+    ...pack.success,
+  ].every((x) => ["passed", "not applicable"].includes(x.status));
   if (
     pack.automated_ready &&
-    ([...pack.requirements, ...pack.acceptance, ...pack.success].some(
-      (x) => !["passed", "not applicable"].includes(x.status),
-    ) ||
-      pack.findings.some((x) => x.blocking))
+    (pack.automated_summary?.automated_ready !== true ||
+      !pack.automated_summary.source ||
+      pack.findings.some((f) => f.blocking && f.stage !== "delivery"))
   )
-    throw new Error("delivery-readiness-contradiction");
+    throw new Error("automation-readiness-contradiction");
   if (pack.owner.status === "approved")
     throw new Error("owner-source-unverified");
   return {
     structurally_valid: true,
     complete:
-      pack.automated_ready === true && !pack.findings.some((f) => f.blocking),
+      pack.automated_ready === true &&
+      coverageComplete &&
+      !pack.findings.some((f) => f.blocking),
     owner_source_verification: "required",
   };
 }
