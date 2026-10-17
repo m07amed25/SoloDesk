@@ -1,0 +1,390 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-17T10:40:54.565396Z",
+  "title": "Design System: SoloDesk",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Action blue",
+        "tonalRamp": [
+          "oklch(15% 0.18277 263.05)",
+          "oklch(26% 0.18277 263.05)",
+          "oklch(37% 0.18277 263.05)",
+          "oklch(49% 0.18277 263.05)",
+          "oklch(60% 0.18277 263.05)",
+          "oklch(72% 0.18277 263.05)",
+          "oklch(84% 0.18277 263.05)",
+          "oklch(95% 0.18277 263.05)"
+        ]
+      },
+      "primary-hover": {
+        "role": "primary",
+        "displayName": "Action blue hover",
+        "tonalRamp": [
+          "oklch(15% 0.16297 262.88)",
+          "oklch(26% 0.16297 262.88)",
+          "oklch(37% 0.16297 262.88)",
+          "oklch(49% 0.16297 262.88)",
+          "oklch(60% 0.16297 262.88)",
+          "oklch(72% 0.16297 262.88)",
+          "oklch(84% 0.16297 262.88)",
+          "oklch(95% 0.16297 262.88)"
+        ]
+      },
+      "primary-pressed": {
+        "role": "primary",
+        "displayName": "Action blue pressed",
+        "tonalRamp": [
+          "oklch(15% 0.14509 263.12)",
+          "oklch(26% 0.14509 263.12)",
+          "oklch(37% 0.14509 263.12)",
+          "oklch(49% 0.14509 263.12)",
+          "oklch(60% 0.14509 263.12)",
+          "oklch(72% 0.14509 263.12)",
+          "oklch(84% 0.14509 263.12)",
+          "oklch(95% 0.14509 263.12)"
+        ]
+      },
+      "primary-ink": {
+        "role": "neutral",
+        "displayName": "White action text",
+        "tonalRamp": [
+          "oklch(15% 0.00000 0.00)",
+          "oklch(26% 0.00000 0.00)",
+          "oklch(37% 0.00000 0.00)",
+          "oklch(49% 0.00000 0.00)",
+          "oklch(60% 0.00000 0.00)",
+          "oklch(72% 0.00000 0.00)",
+          "oklch(84% 0.00000 0.00)",
+          "oklch(95% 0.00000 0.00)"
+        ]
+      },
+      "selected-ink": {
+        "role": "primary",
+        "displayName": "Selected blue text",
+        "tonalRamp": [
+          "oklch(15% 0.18050 263.66)",
+          "oklch(26% 0.18050 263.66)",
+          "oklch(37% 0.18050 263.66)",
+          "oklch(49% 0.18050 263.66)",
+          "oklch(60% 0.18050 263.66)",
+          "oklch(72% 0.18050 263.66)",
+          "oklch(84% 0.18050 263.66)",
+          "oklch(95% 0.18050 263.66)"
+        ]
+      },
+      "canvas": {
+        "role": "neutral",
+        "displayName": "Cool work canvas",
+        "tonalRamp": [
+          "oklch(15% 0.00453 258.32)",
+          "oklch(26% 0.00453 258.32)",
+          "oklch(37% 0.00453 258.32)",
+          "oklch(49% 0.00453 258.32)",
+          "oklch(60% 0.00453 258.32)",
+          "oklch(72% 0.00453 258.32)",
+          "oklch(84% 0.00453 258.32)",
+          "oklch(95% 0.00453 258.32)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "White working surface",
+        "tonalRamp": [
+          "oklch(15% 0.00000 0.00)",
+          "oklch(26% 0.00000 0.00)",
+          "oklch(37% 0.00000 0.00)",
+          "oklch(49% 0.00000 0.00)",
+          "oklch(60% 0.00000 0.00)",
+          "oklch(72% 0.00000 0.00)",
+          "oklch(84% 0.00000 0.00)",
+          "oklch(95% 0.00000 0.00)"
+        ]
+      },
+      "graphite": {
+        "role": "neutral",
+        "displayName": "Graphite text",
+        "tonalRamp": [
+          "oklch(15% 0.02987 259.06)",
+          "oklch(26% 0.02987 259.06)",
+          "oklch(37% 0.02987 259.06)",
+          "oklch(49% 0.02987 259.06)",
+          "oklch(60% 0.02987 259.06)",
+          "oklch(72% 0.02987 259.06)",
+          "oklch(84% 0.02987 259.06)",
+          "oklch(95% 0.02987 259.06)"
+        ]
+      },
+      "silver": {
+        "role": "neutral",
+        "displayName": "Silver shell plane",
+        "tonalRamp": [
+          "oklch(15% 0.01085 256.70)",
+          "oklch(26% 0.01085 256.70)",
+          "oklch(37% 0.01085 256.70)",
+          "oklch(49% 0.01085 256.70)",
+          "oklch(60% 0.01085 256.70)",
+          "oklch(72% 0.01085 256.70)",
+          "oklch(84% 0.01085 256.70)",
+          "oklch(95% 0.01085 256.70)"
+        ]
+      },
+      "secondary-ink": {
+        "role": "neutral",
+        "displayName": "Slate supporting text",
+        "tonalRamp": [
+          "oklch(15% 0.03378 254.82)",
+          "oklch(26% 0.03378 254.82)",
+          "oklch(37% 0.03378 254.82)",
+          "oklch(49% 0.03378 254.82)",
+          "oklch(60% 0.03378 254.82)",
+          "oklch(72% 0.03378 254.82)",
+          "oklch(84% 0.03378 254.82)",
+          "oklch(95% 0.03378 254.82)"
+        ]
+      },
+      "divider": {
+        "role": "neutral",
+        "displayName": "Cool divider",
+        "tonalRamp": [
+          "oklch(15% 0.01622 253.91)",
+          "oklch(26% 0.01622 253.91)",
+          "oklch(37% 0.01622 253.91)",
+          "oklch(49% 0.01622 253.91)",
+          "oklch(60% 0.01622 253.91)",
+          "oklch(72% 0.01622 253.91)",
+          "oklch(84% 0.01622 253.91)",
+          "oklch(95% 0.01622 253.91)"
+        ]
+      },
+      "control-border": {
+        "role": "neutral",
+        "displayName": "Slate control outline",
+        "tonalRamp": [
+          "oklch(15% 0.03510 255.65)",
+          "oklch(26% 0.03510 255.65)",
+          "oklch(37% 0.03510 255.65)",
+          "oklch(49% 0.03510 255.65)",
+          "oklch(60% 0.03510 255.65)",
+          "oklch(72% 0.03510 255.65)",
+          "oklch(84% 0.03510 255.65)",
+          "oklch(95% 0.03510 255.65)"
+        ]
+      },
+      "dark-canvas": {
+        "role": "neutral",
+        "displayName": "Deep graphite canvas",
+        "tonalRamp": [
+          "oklch(15% 0.01802 259.71)",
+          "oklch(26% 0.01802 259.71)",
+          "oklch(37% 0.01802 259.71)",
+          "oklch(49% 0.01802 259.71)",
+          "oklch(60% 0.01802 259.71)",
+          "oklch(72% 0.01802 259.71)",
+          "oklch(84% 0.01802 259.71)",
+          "oklch(95% 0.01802 259.71)"
+        ]
+      },
+      "dark-surface": {
+        "role": "neutral",
+        "displayName": "Graphite working surface",
+        "tonalRamp": [
+          "oklch(15% 0.02202 257.28)",
+          "oklch(26% 0.02202 257.28)",
+          "oklch(37% 0.02202 257.28)",
+          "oklch(49% 0.02202 257.28)",
+          "oklch(60% 0.02202 257.28)",
+          "oklch(72% 0.02202 257.28)",
+          "oklch(84% 0.02202 257.28)",
+          "oklch(95% 0.02202 257.28)"
+        ]
+      },
+      "dark-ink": {
+        "role": "neutral",
+        "displayName": "Pale silver text",
+        "tonalRamp": [
+          "oklch(15% 0.00967 252.81)",
+          "oklch(26% 0.00967 252.81)",
+          "oklch(37% 0.00967 252.81)",
+          "oklch(49% 0.00967 252.81)",
+          "oklch(60% 0.00967 252.81)",
+          "oklch(72% 0.00967 252.81)",
+          "oklch(84% 0.00967 252.81)",
+          "oklch(95% 0.00967 252.81)"
+        ]
+      },
+      "dark-primary": {
+        "role": "primary",
+        "displayName": "Pale action blue",
+        "tonalRamp": [
+          "oklch(15% 0.09915 264.04)",
+          "oklch(26% 0.09915 264.04)",
+          "oklch(37% 0.09915 264.04)",
+          "oklch(49% 0.09915 264.04)",
+          "oklch(60% 0.09915 264.04)",
+          "oklch(72% 0.09915 264.04)",
+          "oklch(84% 0.09915 264.04)",
+          "oklch(95% 0.09915 264.04)"
+        ]
+      },
+      "dark-primary-ink": {
+        "role": "neutral",
+        "displayName": "Deep blue action text",
+        "tonalRamp": [
+          "oklch(15% 0.03494 259.51)",
+          "oklch(26% 0.03494 259.51)",
+          "oklch(37% 0.03494 259.51)",
+          "oklch(49% 0.03494 259.51)",
+          "oklch(60% 0.03494 259.51)",
+          "oklch(72% 0.03494 259.51)",
+          "oklch(84% 0.03494 259.51)",
+          "oklch(95% 0.03494 259.51)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "title": {
+        "displayName": "Page title",
+        "purpose": "Screen identity. Recommended Inter/Noto Sans Arabic pairing; preview uses system-ui until font files are deliberately added."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Explanations, editors and roomy content; prose measure at most 70ch. Arabic glyph metrics require verification."
+      },
+      "label": {
+        "displayName": "Label/control",
+        "purpose": "Form labels, buttons and navigation. Sentence case, natural Arabic spacing, and wrapping labels."
+      }
+    },
+    "shadows": [
+      {
+        "name": "light-popover",
+        "value": "0 8px 24px rgba(24,33,47,0.14)",
+        "purpose": "Proposed light-theme floating popover; ordinary working panels remain flat."
+      },
+      {
+        "name": "light-dialog",
+        "value": "0 20px 64px rgba(24,33,47,0.20)",
+        "purpose": "Proposed light-theme floating dialog; ordinary working panels remain flat."
+      },
+      {
+        "name": "dark-popover",
+        "value": "0 8px 24px rgba(0,0,0,0.32)",
+        "purpose": "Proposed dark-theme floating popover; ordinary working panels remain flat."
+      },
+      {
+        "name": "dark-dialog",
+        "value": "0 20px 64px rgba(0,0,0,0.48)",
+        "purpose": "Proposed dark-theme floating dialog; ordinary working panels remain flat."
+      }
+    ],
+    "motion": [
+      {
+        "name": "instant",
+        "value": "0ms",
+        "purpose": "Immediate state change."
+      },
+      {
+        "name": "fast",
+        "value": "120ms",
+        "purpose": "Fast interaction feedback."
+      },
+      {
+        "name": "standard",
+        "value": "180ms",
+        "purpose": "Standard reveal."
+      },
+      {
+        "name": "panel",
+        "value": "240ms",
+        "purpose": "Larger panel transition."
+      },
+      {
+        "name": "exit",
+        "value": "120ms",
+        "purpose": "Transient surface exit."
+      },
+      {
+        "name": "easing",
+        "value": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+        "purpose": "Shared state-transition easing."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "no spatial motion; immediate state change; no skeleton shimmer",
+        "purpose": "Preserve feedback while removing spatial motion and shimmer."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "reflow",
+        "value": "720px"
+      },
+      {
+        "name": "sidebarCollapse",
+        "value": "1100px"
+      },
+      {
+        "name": "contextStack",
+        "value": "1400px"
+      },
+      {
+        "name": "wide",
+        "value": "1600px"
+      }
+    ],
+    "componentSpecification": {
+      "source": "docs/design/component-visual-specs.md",
+      "tokenSource": "docs/design/tokens.json",
+      "status": "Documentation-stage detail expansion; not applied to app or all reference specimens",
+      "covers": [
+        "button variants and full state matrix",
+        "border widths styles colors",
+        "focus width and offsets",
+        "radius and size recipes",
+        "padding icons and gaps",
+        "control and overlay anatomy"
+      ]
+    }
+  },
+  "components": [
+    {
+      "name": "Primary button — proposed reference",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Design-stage preview only, not an app component: 48px primary action with a 14/22px label, system font fallback, System light/dark response and visible keyboard focus. Literal values resolve the documentation tokens; no app runtime theme is assumed.",
+      "html": "<button class=\"ds-primary\" type=\"button\">Save draft</button>",
+      "css": ".ds-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; box-sizing: border-box; height: 48px; padding: 12px 16px; border: 0; border-radius: 8px; background: #285BCB; color: #FFFFFF; font: 500 14px/22px system-ui, sans-serif; text-align: center; cursor: pointer; transition: background-color 120ms cubic-bezier(0.2, 0.8, 0.2, 1); } .ds-primary:hover { background: #214EAF; } .ds-primary:active { background: #1B4195; } .ds-primary:focus-visible { outline: 2px solid #285BCB; outline-offset: 2px; } .ds-primary:disabled { background: #E9EEF5; color: #657389; cursor: default; } @media (prefers-color-scheme: dark) { .ds-primary { background: #9EBEFF; color: #101A2A; } .ds-primary:hover { background: #B7CEFF; } .ds-primary:active { background: #83A9F0; } .ds-primary:focus-visible { outline-color: #9EBEFF; } .ds-primary:disabled { background: #253143; color: #91A1B8; } } @media (prefers-reduced-motion: reduce) { .ds-primary { transition: none; } }"
+    },
+    {
+      "name": "Labeled input — proposed reference",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Design-stage preview only, not an app component: persistent wrapping label, 44px field, system font fallback and logical alignment that inherits LTR/RTL. System light/dark response; not evidence of full localization.",
+      "html": "<label class=\"ds-field\">Project name<input class=\"ds-input\" type=\"text\" placeholder=\"Enter project name\"></label>",
+      "css": ".ds-field { display: grid; gap: 8px; max-inline-size: 640px; color: #18212F; font: 500 14px/22px system-ui, sans-serif; text-align: start; } .ds-input { box-sizing: border-box; inline-size: 100%; min-inline-size: 0; height: 44px; padding: 10px 12px; border: 1px solid #77869A; border-radius: 8px; background: #FFFFFF; color: #18212F; font: 400 14px/22px system-ui, sans-serif; text-align: start; transition: border-color 120ms cubic-bezier(0.2, 0.8, 0.2, 1); } .ds-input:hover { border-color: #18212F; } .ds-input:focus-visible { outline: 2px solid #285BCB; outline-offset: 2px; } .ds-input::placeholder { color: #536173; opacity: 1; } .ds-input:disabled { background: #E9EEF5; color: #657389; } @media (prefers-color-scheme: dark) { .ds-field { color: #EDF2F8; } .ds-input { background: #171E28; color: #EDF2F8; border-color: #7889A3; } .ds-input:hover { border-color: #EDF2F8; } .ds-input:focus-visible { outline-color: #9EBEFF; } .ds-input::placeholder { color: #B1BED0; } .ds-input:disabled { background: #253143; color: #91A1B8; } } @media (prefers-reduced-motion: reduce) { .ds-input { transition: none; } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "familiar productivity-app direction",
+    "overview": "Version 1 proposal, 17 October 2026. **Design documentation and reference only; this system is not applied to the running app.** The supplied SoloDesk logo and confirmed product constraints are binding. The user selected a familiar productivity-app direction, with **Linear, Notion and GitHub** as quality references, **spacious controls**, **light and dark themes with System default**, and **English/Arabic with full RTL**. Exact token/font/geometry recommendations remain reviewable; no legal or financial policy is decided by visual design.\n\nSoloDesk should feel calm, precise and dependable over a full working day. The graphite-and-silver identity comes from the logo. Blue identifies actions and selection; semantic colors communicate meaningful conditions. Familiar sidebar navigation, accessible forms, stable tables and readable documents carry the product. Avoid decorative chrome that competes with work. Borrow reference products' consistency and care, not their brand assets or layouts wholesale.",
+    "keyCharacteristics": [],
+    "rules": [],
+    "dos": [
+      "Do preserve the supplied logo and use accessible text plus a light plate when the original cannot read on dark chrome.",
+      "Do keep spacious spacing, readable data and clear single primary actions; use shared Tailwind/shadcn tokens instead of feature-specific palettes.",
+      "Do give English and Arabic equal behavior, focus, typography, validation and document quality.",
+      "Do separate local durability, cloud acknowledgment, review, issuance, delivery and settlement states.",
+      "Do show currency, exact source/version, formula and as-of context wherever interpretation depends on them.",
+      "Do update tokens, component contracts, screen map, contrast evidence and relevant PR QA together."
+    ],
+    "donts": [
+      "Don't invent revenue, compliance, availability, free-service capacity or pricing claims in the reference or empty state.",
+      "Don't replace OS window controls with decorative renderer buttons, hide actions behind drag/hover alone, or let a custom titlebar block native interaction.",
+      "Don't reinterpret immutable issued documents as editable forms or retry unknown financial outcomes as new commands.",
+      "Don't add AI product features, install packages, provision services or implement the app as a side effect of this design specification.",
+      "Don't treat a static/generated mockup as proof of accessibility, RTL, security, persistence or financial correctness."
+    ]
+  }
+}

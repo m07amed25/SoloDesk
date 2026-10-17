@@ -1,6 +1,6 @@
 # UX, accessibility, English and Arabic
 
-Status: proposed interaction specification. English and Arabic with full RTL are confirmed first-release requirements. This defines behavior and content contracts, not an approved visual theme. Tailwind CSS and shadcn/ui remain mandatory.
+Status: proposed interaction specification. English and Arabic with full RTL are confirmed first-release requirements. This defines behavior and content contracts; the [UI design system](../../DESIGN.md) now supplies a reviewable visual proposal with the user's confirmed spacious, light/dark/System and familiar-productivity direction. Tailwind CSS and shadcn/ui remain mandatory.
 
 ## Locale and direction contract
 

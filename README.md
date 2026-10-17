@@ -2,7 +2,17 @@
 
 A desktop workspace for freelance software engineers and small teams: clients, delivery, time, invoices, payments and business operations.
 
+---
+
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/m07amed25/SoloDesk?utm_source=oss&utm_medium=github&utm_campaign=m07amed25%2FSoloDesk&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
+
+---
+
 **Current implementation: a minimal runnable Electron welcome shell. Current work: full phased documentation only.** Business features, backend, encryption, sync and portal are specified but unimplemented.
+
+## Agent development guidance
+
+[AGENT.md](AGENT.md) maps all available skills to the correct development tasks and records prerequisites. [AGENTS.md](AGENTS.md) is the short repository agent entry point.
 
 ## Documentation
 

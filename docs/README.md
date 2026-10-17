@@ -6,6 +6,14 @@ Updated 17 October 2026. Complete phased design set for the expanded product; **
 
 Freelancers and small teams from first release; Windows/macOS/Linux Electron; Tailwind/shadcn; required managed-cloud accounts with offline work; online invoice finalization; encrypted device/cloud storage with controlled server access; configurable finance; English/Arabic/full RTL; no AI for now; prefer low-cost efficient free services where suitable. Backend selection recommends a Supabase-first free development/pilot profile with explicit quota/recovery/upgrade gates.
 
+## Agent skill guide
+
+[AGENT.md](../AGENT.md) documents 34 local and 18 session-provided skills, task routing, Spec Kit/OpenSpec prerequisites and phase guidance. [AGENTS.md](../AGENTS.md) points repository agents to it.
+
+## UI design system
+
+[DESIGN.md](../DESIGN.md) defines the proposed logo-based visual foundations. The [complete UI design set](design/README.md) includes paired theme tokens, spacious component/interaction contracts, English/Arabic RTL, 73 screen families, all 151 feature-phase mappings, QA/handoff and a separate [visual reference](design/reference.html). This design is not applied to the running app.
+
 ## Document map
 
 | Document | Purpose |

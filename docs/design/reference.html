@@ -1,0 +1,2397 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>SoloDesk — UI design reference</title>
+    <style>
+      :root {
+        --background: #f5f7fa;
+        --foreground: #18212f;
+        --surface: #ffffff;
+        --surface-subtle: #eef2f7;
+        --surface-hover: #e7ecf3;
+        --muted: #e9eef5;
+        --muted-foreground: #536173;
+        --border: #d5dde7;
+        --input-border: #77869a;
+        --primary: #285bcb;
+        --primary-foreground: #ffffff;
+        --primary-hover: #214eaf;
+        --primary-pressed: #1b4195;
+        --secondary: #e9eef5;
+        --secondary-foreground: #26364d;
+        --accent: #e7eefe;
+        --accent-foreground: #214fbd;
+        --ring: #285bcb;
+        --link: #214fbd;
+        --destructive: #ae2e3b;
+        --destructive-foreground: #ffffff;
+        --destructive-hover: #942532;
+        --success: #176843;
+        --success-bg: #e6f5ed;
+        --warning: #815000;
+        --warning-bg: #fff2d4;
+        --danger: #a92e3a;
+        --danger-bg: #fceaec;
+        --info: #2458ad;
+        --info-bg: #eaf1ff;
+        --neutral-status: #4e5c70;
+        --neutral-status-bg: #e9eef5;
+        --sidebar: #e9eef5;
+        --sidebar-foreground: #26364d;
+        --sidebar-accent: #dae5fb;
+        --sidebar-accent-foreground: #214fbd;
+        --disabled: #e9eef5;
+        --disabled-foreground: #657389;
+        --selection: #d9e6ff;
+        --selection-foreground: #18212f;
+        --chart-1: #285bcb;
+        --chart-2: #187f69;
+        --chart-3: #8652b8;
+        --chart-4: #98600a;
+        --chart-5: #ad3f60;
+        --chart-6: #456f86;
+      }
+      [data-theme="dark"] {
+        --background: #10151d;
+        --foreground: #edf2f8;
+        --surface: #171e28;
+        --surface-subtle: #1d2633;
+        --surface-hover: #263244;
+        --muted: #253143;
+        --muted-foreground: #b1bed0;
+        --border: #344156;
+        --input-border: #7889a3;
+        --primary: #9ebeff;
+        --primary-foreground: #101a2a;
+        --primary-hover: #b7ceff;
+        --primary-pressed: #83a9f0;
+        --secondary: #253143;
+        --secondary-foreground: #e0e8f4;
+        --accent: #263d62;
+        --accent-foreground: #c5d8ff;
+        --ring: #9ebeff;
+        --link: #b7ceff;
+        --destructive: #ffacb6;
+        --destructive-foreground: #351018;
+        --destructive-hover: #ffc1c8;
+        --success: #86dfb1;
+        --success-bg: #17382b;
+        --warning: #f1c674;
+        --warning-bg: #3b2d16;
+        --danger: #ffadb8;
+        --danger-bg: #42232c;
+        --info: #adcaff;
+        --info-bg: #203652;
+        --neutral-status: #c0ccdd;
+        --neutral-status-bg: #293548;
+        --sidebar: #141d2b;
+        --sidebar-foreground: #d8e3f2;
+        --sidebar-accent: #263d62;
+        --sidebar-accent-foreground: #c5d8ff;
+        --disabled: #253143;
+        --disabled-foreground: #91a1b8;
+        --selection: #345485;
+        --selection-foreground: #ffffff;
+        --chart-1: #9ebeff;
+        --chart-2: #79d5ba;
+        --chart-3: #c2a4f2;
+        --chart-4: #e6be70;
+        --chart-5: #f0a2ba;
+        --chart-6: #8cc5df;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        font-size: 16px;
+        color-scheme: light;
+      }
+      html[data-theme="dark"] {
+        color-scheme: dark;
+      }
+      body {
+        margin: 0;
+        background: var(--background);
+        color: var(--foreground);
+        font:
+          16px/1.625 Inter,
+          "Noto Sans Arabic",
+          "Segoe UI",
+          system-ui,
+          sans-serif;
+      }
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+      button,
+      a,
+      input,
+      select {
+        touch-action: manipulation;
+      }
+      button {
+        cursor: pointer;
+      }
+      button:disabled {
+        cursor: not-allowed;
+      }
+      a {
+        color: var(--link);
+        text-underline-offset: 3px;
+      }
+      button,
+      input,
+      select {
+        border-radius: 8px;
+      }
+      button {
+        min-height: 44px;
+        padding: 10px 16px;
+        border: 1px solid var(--input-border);
+        background: var(--surface);
+        color: var(--foreground);
+        font-size: 14px;
+        font-weight: 500;
+      }
+      button:hover:not(:disabled) {
+        background: var(--surface-hover);
+      }
+      button:active:not(:disabled) {
+        background: var(--muted);
+      }
+      button:disabled {
+        background: var(--disabled);
+        color: var(--disabled-foreground);
+        border-color: var(--border);
+      }
+      :focus-visible {
+        outline: 2px solid var(--ring);
+        outline-offset: 2px;
+      }
+      ::selection {
+        background: var(--selection);
+        color: var(--selection-foreground);
+      }
+      input {
+        caret-color: var(--primary);
+      }
+      svg {
+        width: 20px;
+        height: 20px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.75;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        flex-shrink: 0;
+      }
+      .referencebar {
+        padding: 12px 24px;
+        background: var(--surface);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .referencebar strong {
+        font-size: 14px;
+      }
+      .ref-controls {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        margin-inline-start: auto;
+        flex-wrap: wrap;
+      }
+      .ref-controls label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        color: var(--muted-foreground);
+      }
+      select {
+        min-height: 44px;
+        padding: 8px 30px 8px 12px;
+        color: var(--foreground);
+        background: var(--surface);
+        border: 1px solid var(--input-border);
+      }
+      .windowline {
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--sidebar);
+        padding: 8px 24px;
+        border-bottom: 1px solid var(--border);
+        font-size: 12px;
+        color: var(--muted-foreground);
+      }
+      .shell {
+        display: grid;
+        grid-template-columns: 248px minmax(0, 1fr);
+        min-height: calc(100vh - 121px);
+      }
+      aside {
+        padding: 28px 16px 24px;
+        background: var(--sidebar);
+        color: var(--sidebar-foreground);
+        display: flex;
+        flex-direction: column;
+        border-inline-end: 1px solid var(--border);
+      }
+      .brand {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        padding: 0 12px;
+        margin-bottom: 28px;
+        color: inherit;
+        text-decoration: none;
+        font-weight: 650;
+        font-size: 22px;
+        letter-spacing: -0.02em;
+      }
+      .brandplate {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        padding: 5px;
+        border-radius: 8px;
+        background: #e9eef5;
+        flex-shrink: 0;
+      }
+      .brand img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      .workspace {
+        margin: 0 8px 28px;
+        padding: 12px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+      }
+      .workspace b {
+        font-size: 14px;
+        display: block;
+      }
+      .workspace small {
+        font-size: 12px;
+        color: var(--muted-foreground);
+      }
+      nav {
+        display: grid;
+        gap: 6px;
+      }
+      nav button {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: transparent;
+        border: 0;
+        width: 100%;
+        text-align: start;
+        min-height: 48px;
+        padding-inline: 16px;
+        color: inherit;
+      }
+      nav button[aria-current="page"] {
+        background: var(--sidebar-accent);
+        color: var(--sidebar-accent-foreground);
+        font-weight: 600;
+      }
+      nav button:hover {
+        background: var(--surface-hover);
+      }
+      .navbottom {
+        margin-top: auto;
+        padding-top: 40px;
+      }
+      .mainwrap {
+        min-width: 0;
+      }
+      .utilities {
+        min-height: 64px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 10px 32px;
+        background: var(--surface);
+      }
+      .breadcrumb {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        font-size: 14px;
+        color: var(--muted-foreground);
+        flex: 1;
+      }
+      .breadcrumb b {
+        color: var(--foreground);
+        font-weight: 500;
+      }
+      .timer {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border: 0;
+        background: var(--surface-subtle);
+        font-variant-numeric: tabular-nums;
+      }
+      .timer svg {
+        color: var(--primary);
+      }
+      .sync-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        color: var(--muted-foreground);
+      }
+      .avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--muted);
+        display: grid;
+        place-items: center;
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .iconbtn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        min-width: 44px;
+      }
+      .menu-toggle {
+        display: none;
+      }
+      main {
+        padding: 32px;
+        max-width: 1696px;
+        margin-inline: auto;
+      }
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+      h1 {
+        font-size: 28px;
+        line-height: 38px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+      h2 {
+        font-size: 20px;
+        line-height: 30px;
+        font-weight: 600;
+      }
+      h3 {
+        font-size: 16px;
+        line-height: 26px;
+        font-weight: 600;
+      }
+      .lead {
+        margin-top: 8px;
+        color: var(--muted-foreground);
+        max-width: 70ch;
+      }
+      .pagehead {
+        display: flex;
+        align-items: start;
+        gap: 24px;
+        justify-content: space-between;
+        margin-bottom: 32px;
+      }
+      .primary {
+        min-height: 48px;
+        background: var(--primary);
+        color: var(--primary-foreground);
+        border: 0;
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+        justify-content: center;
+      }
+      .primary:hover:not(:disabled) {
+        background: var(--primary-hover);
+      }
+      .primary:active:not(:disabled) {
+        background: var(--primary-pressed);
+      }
+      .pagehead button {
+        flex-shrink: 0;
+      }
+      .toolbar {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+      }
+      .search {
+        position: relative;
+        flex: 1;
+        min-width: 200px;
+        max-width: 360px;
+      }
+      .search svg {
+        position: absolute;
+        inset-inline-start: 12px;
+        top: 13px;
+        color: var(--muted-foreground);
+      }
+      input {
+        min-height: 44px;
+        border: 1px solid var(--input-border);
+        background: var(--surface);
+        color: var(--foreground);
+        padding: 10px 12px;
+        width: 100%;
+        font-size: 14px;
+      }
+      .search input {
+        padding-inline-start: 40px;
+      }
+      input::placeholder {
+        color: var(--muted-foreground);
+        opacity: 1;
+      }
+      .smalltext {
+        font-size: 12px;
+        color: var(--muted-foreground);
+      }
+      .panel {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--surface);
+        overflow: hidden;
+      }
+      .table-scroll {
+        overflow: auto;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        text-align: start;
+        font-size: 14px;
+        min-width: 700px;
+      }
+      caption {
+        text-align: start;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 24px;
+      }
+      thead {
+        background: var(--surface-subtle);
+        color: var(--muted-foreground);
+      }
+      th {
+        font-weight: 500;
+        padding: 16px;
+        text-align: start;
+        white-space: nowrap;
+      }
+      td {
+        padding: 18px 16px;
+        min-height: 64px;
+        border-top: 1px solid var(--border);
+        vertical-align: middle;
+      }
+      tbody tr:hover {
+        background: var(--surface-subtle);
+      }
+      td strong {
+        font-weight: 500;
+      }
+      td small {
+        display: block;
+        color: var(--muted-foreground);
+        font-size: 12px;
+        margin-top: 2px;
+      }
+      .identity {
+        min-width: 230px;
+      }
+      .numeric {
+        font-variant-numeric: tabular-nums;
+        text-align: end;
+        white-space: nowrap;
+      }
+      .badge {
+        display: inline-flex;
+        gap: 6px;
+        align-items: center;
+        font-size: 12px;
+        line-height: 20px;
+        padding: 3px 8px;
+        border-radius: 6px;
+        background: var(--neutral-status-bg);
+        color: var(--neutral-status);
+        white-space: nowrap;
+        font-weight: 500;
+      }
+      .badge svg {
+        height: 14px;
+        width: 14px;
+      }
+      .badge.info {
+        background: var(--info-bg);
+        color: var(--info);
+      }
+      .badge.success {
+        background: var(--success-bg);
+        color: var(--success);
+      }
+      .badge.warning {
+        background: var(--warning-bg);
+        color: var(--warning);
+      }
+      .badge.danger {
+        background: var(--danger-bg);
+        color: var(--danger);
+      }
+      .check {
+        width: 20px;
+        min-height: 20px;
+        height: 20px;
+        accent-color: var(--primary);
+        cursor: pointer;
+      }
+      .checkwrap {
+        display: grid;
+        place-items: center;
+        min-width: 44px;
+        min-height: 44px;
+      }
+      .row-link {
+        border: 0;
+        background: transparent;
+        padding: 0;
+        min-height: 44px;
+        text-align: start;
+        font-weight: 500;
+        color: var(--foreground);
+        display: flex;
+        align-items: center;
+      }
+      .row-link:hover {
+        color: var(--link);
+        background: transparent !important;
+        text-decoration: underline;
+      }
+      .tablefoot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 16px 24px;
+        border-top: 1px solid var(--border);
+        font-size: 12px;
+        color: var(--muted-foreground);
+      }
+      .banner {
+        display: flex;
+        gap: 12px;
+        align-items: start;
+        background: var(--info-bg);
+        color: var(--info);
+        padding: 16px 20px;
+        border-radius: 8px;
+        margin-bottom: 24px;
+        font-size: 14px;
+      }
+      .banner.warning {
+        background: var(--warning-bg);
+        color: var(--warning);
+      }
+      .banner.danger {
+        background: var(--danger-bg);
+        color: var(--danger);
+      }
+      .banner p {
+        margin-top: 4px;
+      }
+      .banner svg {
+        margin-top: 2px;
+      }
+      .section {
+        margin-top: 32px;
+      }
+      .section > h2 {
+        margin-bottom: 16px;
+      }
+      .split {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 320px;
+        gap: 32px;
+      }
+      .context {
+        border-top: 1px solid var(--border);
+        padding-top: 24px;
+      }
+      .context dl {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 16px;
+        font-size: 14px;
+        margin: 20px 0 0;
+      }
+      .context dt {
+        color: var(--muted-foreground);
+      }
+      .context dd {
+        margin: 0;
+      }
+      .trail {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        padding: 20px 0;
+        margin-top: 24px;
+        border-block: 1px solid var(--border);
+      }
+      .trail span {
+        min-width: 100px;
+        flex: 1;
+        font-size: 12px;
+        color: var(--muted-foreground);
+      }
+      .trail b {
+        display: block;
+        color: var(--foreground);
+        font-size: 14px;
+        font-weight: 500;
+      }
+      .stack {
+        display: grid;
+        gap: 24px;
+      }
+      .field {
+        display: grid;
+        gap: 8px;
+      }
+      .field label {
+        font-size: 14px;
+        font-weight: 500;
+      }
+      .field small {
+        font-size: 12px;
+        color: var(--muted-foreground);
+      }
+      .field .error {
+        color: var(--danger);
+      }
+      .field input[aria-invalid="true"] {
+        border-color: var(--danger);
+      }
+      .two {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+      .specimen {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        padding: 24px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .specimen h3 {
+        min-width: 140px;
+      }
+      .specimen button {
+        cursor: pointer;
+      }
+      .swatches {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 24px;
+        margin-top: 20px;
+      }
+      .swatch {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+        background: var(--surface);
+      }
+      .swatch div {
+        height: 64px;
+        border-bottom: 1px solid var(--border);
+      }
+      .swatch p {
+        padding: 10px 12px;
+        font-size: 12px;
+      }
+      .swatch code {
+        display: block;
+        color: var(--muted-foreground);
+      }
+      .paper {
+        background: #ffffff;
+        color: #18212f;
+        padding: 32px;
+        border-radius: 8px;
+        border: 1px solid #d5dde7;
+      }
+      .paper p {
+        color: #536173;
+      }
+      .paper .paperhead {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 32px;
+      }
+      .paper table {
+        min-width: 500px;
+      }
+      .paper thead {
+        background: #eef2f7;
+        color: #536173;
+      }
+      .paper th,
+      .paper td {
+        border-color: #d5dde7;
+      }
+      .paper tbody tr:hover {
+        background: transparent;
+      }
+      .paper .badge {
+        background: #e9eef5;
+        color: #4e5c70;
+      }
+      .totals {
+        max-width: 300px;
+        margin-inline-start: auto;
+        margin-top: 24px;
+        font-size: 14px;
+      }
+      .totals div {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 8px 0;
+      }
+      .totals .grand {
+        border-top: 1px solid #d5dde7;
+        font-size: 20px;
+        font-weight: 600;
+        margin-top: 8px;
+        padding-top: 16px;
+      }
+      .form-panel {
+        padding: 24px;
+        max-width: 640px;
+      }
+      .footer-note {
+        margin-top: 32px;
+        color: var(--muted-foreground);
+        font-size: 12px;
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .empty {
+        text-align: center;
+        padding: 48px 24px;
+        color: var(--muted-foreground);
+      }
+      dialog {
+        color: var(--foreground);
+        background: var(--surface);
+        border: 0;
+        border-radius: 16px;
+        width: min(560px, calc(100vw - 32px));
+        padding: 32px;
+        box-shadow: 0 20px 64px rgba(0, 0, 0, 0.25);
+        max-height: calc(100dvh - 32px);
+        overflow: auto;
+      }
+      dialog::backdrop {
+        background: rgba(10, 20, 32, 0.5);
+      }
+      dialog p {
+        margin-top: 16px;
+        max-width: 70ch;
+        color: var(--muted-foreground);
+      }
+      .dialog-actions {
+        display: flex;
+        justify-content: end;
+        margin-top: 24px;
+        gap: 12px;
+      }
+      .sr-only {
+        position: absolute;
+        inset-inline-start: 0;
+        top: 0;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+      .skip {
+        position: absolute;
+        inset-inline-start: 16px;
+        top: -100px;
+        background: var(--surface);
+        padding: 12px;
+        z-index: 100;
+      }
+      .skip:focus {
+        top: 8px;
+      }
+      .subtle {
+        color: var(--muted-foreground);
+      }
+      [dir="rtl"] h1 {
+        letter-spacing: normal;
+      }
+      [dir="rtl"] body {
+        line-height: 1.8;
+      }
+      [dir="rtl"] .forward {
+        transform: scaleX(-1);
+      }
+      @media (min-width: 1600px) {
+        main {
+          padding: 48px;
+        }
+      }
+      @media (max-width: 1400px) {
+        .split {
+          grid-template-columns: minmax(0, 1fr);
+        }
+        .context {
+          max-width: none;
+        }
+        .context dl {
+          grid-template-columns: 1fr 1fr;
+        }
+        .context h2 {
+          margin-top: 0;
+        }
+      }
+      @media (max-width: 1100px) {
+        .shell {
+          grid-template-columns: 72px minmax(0, 1fr);
+        }
+        aside {
+          padding-inline: 8px;
+        }
+        .brand {
+          padding: 0;
+          justify-content: center;
+        }
+        .brandname,
+        .workspace,
+        nav .navlabel {
+          display: none;
+        }
+        nav button {
+          padding: 12px;
+          justify-content: center;
+        }
+        .utilities {
+          padding-inline: 24px;
+        }
+        .sync-label span {
+          display: none;
+        }
+      }
+      @media (max-width: 720px) {
+        .referencebar {
+          padding: 12px 16px;
+          gap: 8px;
+        }
+        .ref-controls {
+          margin-inline-start: 0;
+          width: 100%;
+          gap: 8px;
+        }
+        .ref-controls label {
+          gap: 4px;
+        }
+        .ref-controls select {
+          max-width: 120px;
+        }
+        .windowline {
+          padding-inline: 16px;
+        }
+        .windowline .platform-note {
+          display: none;
+        }
+        .shell {
+          display: block;
+        }
+        aside {
+          display: none;
+        }
+        .nav-open aside {
+          display: flex;
+          position: absolute;
+          inset-inline-start: 0;
+          z-index: 30;
+          width: 248px;
+          min-height: 700px;
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+        .nav-open .brandname,
+        .nav-open .workspace,
+        .nav-open .navlabel {
+          display: block;
+        }
+        .nav-open nav button {
+          justify-content: start;
+        }
+        .nav-open .brand {
+          justify-content: start;
+        }
+        .utilities {
+          padding: 10px 16px;
+          gap: 8px;
+          flex-wrap: wrap;
+        }
+        .menu-toggle {
+          display: inline-flex;
+        }
+        .breadcrumb {
+          min-width: 120px;
+        }
+        .timer {
+          padding: 10px;
+          font-size: 12px;
+        }
+        .sync-label {
+          display: none;
+        }
+        .avatar {
+          display: none;
+        }
+        main {
+          padding: 24px 16px;
+        }
+        .pagehead {
+          gap: 16px;
+          flex-wrap: wrap;
+          margin-bottom: 24px;
+        }
+        .pagehead button {
+          min-height: 44px;
+        }
+        .two {
+          grid-template-columns: 1fr;
+        }
+        .paper {
+          padding: 24px 16px;
+        }
+        .paperhead {
+          flex-wrap: wrap;
+        }
+        .specimen h3 {
+          width: 100%;
+        }
+        h1 {
+          font-size: 26px;
+          line-height: 36px;
+        }
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        button {
+          transition: background-color 120ms cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+      }
+      @media (forced-colors: active) {
+        .badge,
+        .banner,
+        .panel,
+        .workspace,
+        .swatch {
+          border: 1px solid CanvasText;
+        }
+        nav button[aria-current="page"] {
+          outline: 2px solid Highlight;
+        }
+        .primary {
+          border: 1px solid ButtonText;
+        }
+      }
+      @media print {
+        .referencebar,
+        .windowline,
+        aside,
+        .utilities,
+        .footer-note,
+        .pagehead button,
+        .banner {
+          display: none;
+        }
+        .shell {
+          display: block;
+        }
+        main {
+          padding: 0;
+        }
+        .split {
+          display: block;
+        }
+        .context {
+          display: none;
+        }
+        .paper {
+          border: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#main" class="skip" data-t="skip">Skip to content</a>
+    <div class="referencebar">
+      <strong data-t="designReference">SoloDesk · Design reference</strong
+      ><span class="smalltext" data-t="sampleData"
+        >Illustrative data · Spacious layout</span
+      >
+      <div class="ref-controls">
+        <label
+          ><span data-t="theme">Theme</span
+          ><select id="theme">
+            <option value="system" data-t="system">System</option>
+            <option value="light" data-t="light">Light</option>
+            <option value="dark" data-t="dark">Dark</option>
+          </select></label
+        ><label
+          ><span data-t="language">Language</span
+          ><select id="language">
+            <option value="en">English</option>
+            <option value="ar">العربية</option>
+          </select></label
+        ><label
+          ><span data-t="state">State</span
+          ><select id="state">
+            <option value="online" data-t="online">Online</option>
+            <option value="offline" data-t="offline">Offline</option>
+            <option value="conflict" data-t="conflict">Conflict</option>
+          </select></label
+        ><a href="README.md" data-t="docs">Documentation</a>
+      </div>
+    </div>
+    <div class="windowline">
+      <span>SoloDesk</span
+      ><span class="platform-note" data-t="nativeNote"
+        >Native window controls belong to the operating system</span
+      >
+    </div>
+    <div class="shell">
+      <aside id="navigation">
+        <a class="brand" href="#work"
+          ><span class="brandplate"
+            ><img src="../../public/solodesk_no_bg_no_text.png" alt="" /></span
+          ><span class="brandname">SoloDesk</span></a
+        >
+        <div class="workspace">
+          <b data-t="studio">Studio workspace</b
+          ><small data-t="role">Owner · illustrative workspace</small>
+        </div>
+        <nav aria-label="Main navigation" id="primarynav"></nav>
+        <nav
+          class="navbottom"
+          id="secondarynav"
+          aria-label="Design reference navigation"
+        ></nav>
+      </aside>
+      <div class="mainwrap">
+        <div class="utilities">
+          <button
+            class="iconbtn menu-toggle"
+            id="menutoggle"
+            aria-controls="navigation"
+            aria-expanded="false"
+            aria-label="Open navigation"
+          ></button>
+          <div class="breadcrumb">
+            <span data-t="studioShort">Studio</span
+            ><span class="forward" aria-hidden="true" id="crumbicon"></span
+            ><b id="crumb">My work</b>
+          </div>
+          <button class="timer" data-spec="timer">
+            <span id="timericon"></span><bdi dir="ltr">00:42:18</bdi
+            ><span data-t="running">Running</span>
+          </button>
+          <div class="sync-label">
+            <span id="syncicon"></span><span id="synctext"></span>
+          </div>
+          <span class="avatar" aria-label="Sample account">MS</span>
+        </div>
+        <main id="main" tabindex="-1"></main>
+      </div>
+    </div>
+    <dialog id="specdialog" aria-labelledby="dialogtitle">
+      <h2 id="dialogtitle"></h2>
+      <p id="dialogbody"></p>
+      <div class="dialog-actions">
+        <button id="closedialog" data-t="close">Close</button>
+      </div>
+    </dialog>
+    <div class="sr-only" role="status" id="announce"></div>
+    <script>
+      const TOKENS = {
+        schemaVersion: 1,
+        status: "design specification; not imported by the app",
+        updated: "2026-10-17",
+        direction:
+          "Familiar productivity app; graphite/silver brand with blue actions",
+        preferences: {
+          themeDefault: "system",
+          themes: ["light", "dark"],
+          density: "spacious",
+          languages: ["en", "ar"],
+          references: ["Linear", "Notion", "GitHub"],
+        },
+        themes: {
+          light: {
+            background: "#F5F7FA",
+            foreground: "#18212F",
+            surface: "#FFFFFF",
+            "surface-subtle": "#EEF2F7",
+            "surface-hover": "#E7ECF3",
+            muted: "#E9EEF5",
+            "muted-foreground": "#536173",
+            border: "#D5DDE7",
+            "input-border": "#77869A",
+            primary: "#285BCB",
+            "primary-foreground": "#FFFFFF",
+            "primary-hover": "#214EAF",
+            "primary-pressed": "#1B4195",
+            secondary: "#E9EEF5",
+            "secondary-foreground": "#26364D",
+            accent: "#E7EEFE",
+            "accent-foreground": "#214FBD",
+            ring: "#285BCB",
+            link: "#214FBD",
+            destructive: "#AE2E3B",
+            "destructive-foreground": "#FFFFFF",
+            "destructive-hover": "#942532",
+            success: "#176843",
+            "success-bg": "#E6F5ED",
+            warning: "#815000",
+            "warning-bg": "#FFF2D4",
+            danger: "#A92E3A",
+            "danger-bg": "#FCEAEC",
+            info: "#2458AD",
+            "info-bg": "#EAF1FF",
+            "neutral-status": "#4E5C70",
+            "neutral-status-bg": "#E9EEF5",
+            sidebar: "#E9EEF5",
+            "sidebar-foreground": "#26364D",
+            "sidebar-accent": "#DAE5FB",
+            "sidebar-accent-foreground": "#214FBD",
+            disabled: "#E9EEF5",
+            "disabled-foreground": "#657389",
+            selection: "#D9E6FF",
+            "selection-foreground": "#18212F",
+            "chart-1": "#285BCB",
+            "chart-2": "#187F69",
+            "chart-3": "#8652B8",
+            "chart-4": "#98600A",
+            "chart-5": "#AD3F60",
+            "chart-6": "#456F86",
+          },
+          dark: {
+            background: "#10151D",
+            foreground: "#EDF2F8",
+            surface: "#171E28",
+            "surface-subtle": "#1D2633",
+            "surface-hover": "#263244",
+            muted: "#253143",
+            "muted-foreground": "#B1BED0",
+            border: "#344156",
+            "input-border": "#7889A3",
+            primary: "#9EBEFF",
+            "primary-foreground": "#101A2A",
+            "primary-hover": "#B7CEFF",
+            "primary-pressed": "#83A9F0",
+            secondary: "#253143",
+            "secondary-foreground": "#E0E8F4",
+            accent: "#263D62",
+            "accent-foreground": "#C5D8FF",
+            ring: "#9EBEFF",
+            link: "#B7CEFF",
+            destructive: "#FFACB6",
+            "destructive-foreground": "#351018",
+            "destructive-hover": "#FFC1C8",
+            success: "#86DFB1",
+            "success-bg": "#17382B",
+            warning: "#F1C674",
+            "warning-bg": "#3B2D16",
+            danger: "#FFADB8",
+            "danger-bg": "#42232C",
+            info: "#ADCAFF",
+            "info-bg": "#203652",
+            "neutral-status": "#C0CCDD",
+            "neutral-status-bg": "#293548",
+            sidebar: "#141D2B",
+            "sidebar-foreground": "#D8E3F2",
+            "sidebar-accent": "#263D62",
+            "sidebar-accent-foreground": "#C5D8FF",
+            disabled: "#253143",
+            "disabled-foreground": "#91A1B8",
+            selection: "#345485",
+            "selection-foreground": "#FFFFFF",
+            "chart-1": "#9EBEFF",
+            "chart-2": "#79D5BA",
+            "chart-3": "#C2A4F2",
+            "chart-4": "#E6BE70",
+            "chart-5": "#F0A2BA",
+            "chart-6": "#8CC5DF",
+          },
+        },
+        spacing: {
+          0: 0,
+          1: 4,
+          2: 8,
+          3: 12,
+          4: 16,
+          5: 20,
+          6: 24,
+          8: 32,
+          10: 40,
+          12: 48,
+          16: 64,
+        },
+        radii: { control: 8, panel: 12, dialog: 16, badge: 6, pill: 999 },
+        typography: {
+          latin: "Inter",
+          arabic: "Noto Sans Arabic",
+          fallback: "system-ui, sans-serif",
+          body: { size: 16, lineHeight: 26, weight: 400 },
+          label: { size: 14, lineHeight: 22, weight: 500 },
+          caption: { size: 12, lineHeight: 20, weight: 400 },
+          table: { size: 14, lineHeight: 22, weight: 400 },
+          section: { size: 20, lineHeight: 30, weight: 600 },
+          title: { size: 28, lineHeight: 38, weight: 600 },
+          onboardingTitle: { size: 36, lineHeight: 46, weight: 600 },
+          arabicLineHeightMultiplier: 1.12,
+        },
+        geometry: {
+          titlebar: 40,
+          utilitybar: 64,
+          sidebar: 248,
+          sidebarCollapsed: 72,
+          pagePadding: 32,
+          largePagePadding: 48,
+          controlHeight: 44,
+          primaryControlHeight: 48,
+          tableRowMin: 64,
+          navRowMin: 48,
+          inspector: 480,
+          contextColumn: 320,
+          proseMaxCh: 70,
+          formMax: 640,
+          contentMax: 1600,
+        },
+        motion: {
+          instant: 0,
+          fast: 120,
+          standard: 180,
+          panel: 240,
+          exit: 120,
+          easing: "cubic-bezier(0.2, 0.8, 0.2, 1)",
+          reducedMotion:
+            "no spatial motion; immediate state change; no skeleton shimmer",
+        },
+        zIndex: {
+          base: 0,
+          sticky: 10,
+          dropdown: 30,
+          backdrop: 40,
+          dialog: 50,
+          toast: 60,
+          tooltip: 70,
+        },
+        breakpoints: {
+          reflow: 720,
+          sidebarCollapse: 1100,
+          contextStack: 1400,
+          wide: 1600,
+        },
+        shadows: {
+          light: {
+            popover: "0 8px 24px rgba(24,33,47,0.14)",
+            dialog: "0 20px 64px rgba(24,33,47,0.20)",
+          },
+          dark: {
+            popover: "0 8px 24px rgba(0,0,0,0.32)",
+            dialog: "0 20px 64px rgba(0,0,0,0.48)",
+          },
+        },
+        contrastPairs: [
+          {
+            foreground: "foreground",
+            background: "background",
+            minimum: 4.5,
+            kind: "text",
+          },
+          {
+            foreground: "foreground",
+            background: "surface",
+            minimum: 4.5,
+            kind: "text",
+          },
+          {
+            foreground: "foreground",
+            background: "surface-subtle",
+            minimum: 4.5,
+            kind: "text",
+          },
+          {
+            foreground: "muted-foreground",
+            background: "background",
+            minimum: 4.5,
+            kind: "text",
+          },
+          {
+            foreground: "muted-foreground",
+            background: "surface",
+            minimum: 4.5,
+            kind: "text",
+          },
+          {
+            foreground: "muted-foreground",
+            background: "muted",
+            minimum: 4.5,
+            kind: "text",
+          },
+          {
+            foreground: "primary-foreground",
+            background: "primary",
+            minimum: 4.5,
+            kind: "text",
+          },
+          {
+            foreground: "primary-foreground",
+            background: "primary-hover",
+            minimum: 4.5,
+            kind: "text",
+          },
+          {
+            foreground: "primary-foreground",
+            background: "primary-pressed",
+            minimum: 4.5,
+            kind: "text",
+          },
+          {
+            foreground: "secondary-foreground",
+            background: "secondary",
+            minimum: 4.5,
+            kind: "text",
+          },
+          {
+            foreground: "accent-foreground",
+            background: "accent",
+            minimum: 4.5,
+            kind: "text",
+          },
+          {
+            foreground: "link",
+            background: "surface",
+            minimum: 4.5,
+            kind: "text",
+          },
+          {
+            foreground: "link",
+            background: "background",
+            minimum: 4.5,
+            kind: "text",
+          },
+          {
+            foreground: "destructive-foreground",
+            background: "destructive",
+            minimum: 4.5,
+            kind: "text",
+          },
+          {
+            foreground: "destructive-foreground",
+            background: "destructive-hover",
+            minimum: 4.5,
+            kind: "text",
+          },
+          {
+            foreground: "success",
+            background: "success-bg",
+            minimum: 4.5,
+            kind: "text",
+          },
+          {
+            foreground: "warning",
+            background: "warning-bg",
+            minimum: 4.5,
+            kind: "text",
+          },
+          {
+            foreground: "danger",
+            background: "danger-bg",
+            minimum: 4.5,
+            kind: "text",
+          },
+          {
+            foreground: "info",
+            background: "info-bg",
+            minimum: 4.5,
+            kind: "text",
+          },
+          {
+            foreground: "neutral-status",
+            background: "neutral-status-bg",
+            minimum: 4.5,
+            kind: "text",
+          },
+          {
+            foreground: "sidebar-foreground",
+            background: "sidebar",
+            minimum: 4.5,
+            kind: "text",
+          },
+          {
+            foreground: "sidebar-accent-foreground",
+            background: "sidebar-accent",
+            minimum: 4.5,
+            kind: "text",
+          },
+          {
+            foreground: "selection-foreground",
+            background: "selection",
+            minimum: 4.5,
+            kind: "text",
+          },
+          {
+            foreground: "input-border",
+            background: "surface",
+            minimum: 3,
+            kind: "nontext",
+          },
+          {
+            foreground: "input-border",
+            background: "background",
+            minimum: 3,
+            kind: "nontext",
+          },
+          {
+            foreground: "ring",
+            background: "surface",
+            minimum: 3,
+            kind: "nontext",
+          },
+          {
+            foreground: "ring",
+            background: "background",
+            minimum: 3,
+            kind: "nontext",
+          },
+          {
+            foreground: "ring",
+            background: "muted",
+            minimum: 3,
+            kind: "nontext",
+          },
+          {
+            foreground: "ring",
+            background: "sidebar",
+            minimum: 3,
+            kind: "nontext",
+          },
+          {
+            foreground: "chart-1",
+            background: "surface",
+            minimum: 3,
+            kind: "nontext",
+          },
+          {
+            foreground: "chart-2",
+            background: "surface",
+            minimum: 3,
+            kind: "nontext",
+          },
+          {
+            foreground: "chart-3",
+            background: "surface",
+            minimum: 3,
+            kind: "nontext",
+          },
+          {
+            foreground: "chart-4",
+            background: "surface",
+            minimum: 3,
+            kind: "nontext",
+          },
+          {
+            foreground: "chart-5",
+            background: "surface",
+            minimum: 3,
+            kind: "nontext",
+          },
+          {
+            foreground: "chart-6",
+            background: "surface",
+            minimum: 3,
+            kind: "nontext",
+          },
+        ],
+      };
+      const paths = {
+        home: '<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',
+        tasks:
+          '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="m8 9 2 2 5-5M8 16h8"/>',
+        folder:
+          '<path d="M3 7V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+        users:
+          '<circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M17 4a3 3 0 0 1 0 6M18 15a5 5 0 0 1 3 5"/>',
+        clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+        file: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M8 13h8M8 17h5"/>',
+        chart: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+        book: '<path d="M12 6c-3-3-7-3-10-1v15c3-2 7-2 10 1 3-3 7-3 10-1V5c-3-2-7-2-10 1zM12 6v15"/>',
+        search: '<circle cx="10" cy="10" r="7"/><path d="m16 16 5 5"/>',
+        arrow: '<path d="m9 5 7 7-7 7"/>',
+        plus: '<path d="M12 5v14M5 12h14"/>',
+        more: '<circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>',
+        check: '<path d="m4 12 5 5L20 6"/>',
+        alert: '<path d="m12 3 10 18H2zM12 9v4M12 17h.01"/>',
+        info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/>',
+        pause: '<circle cx="12" cy="12" r="9"/><path d="M9 8v8M15 8v8"/>',
+        cloud:
+          '<path d="M6 18a4 4 0 0 1-1-8 7 7 0 0 1 13-1 4.5 4.5 0 0 1 0 9z"/>',
+        palette: '<circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/>',
+        menu: '<path d="M4 6h16M4 12h16M4 18h16"/>',
+        settings:
+          '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/>',
+      };
+      const icon = (n) =>
+        `<svg viewBox="0 0 24 24" aria-hidden="true">${paths[n] || paths.file}</svg>`;
+      const words = {
+        en: {
+          skip: "Skip to content",
+          designReference: "SoloDesk · Design reference",
+          sampleData: "Illustrative data · Spacious layout",
+          theme: "Theme",
+          system: "System",
+          light: "Light",
+          dark: "Dark",
+          language: "Language",
+          state: "State",
+          online: "Online",
+          offline: "Offline",
+          conflict: "Conflict",
+          docs: "Documentation",
+          nativeNote: "Native window controls belong to the operating system",
+          studio: "Studio workspace",
+          studioShort: "Studio",
+          role: "Owner · illustrative workspace",
+          running: "Running",
+          close: "Close",
+          overview: "Overview",
+          work: "My work",
+          projects: "Projects",
+          clients: "Clients",
+          time: "Time",
+          finance: "Finance",
+          reports: "Reports",
+          knowledge: "Knowledge",
+          components: "Components",
+          colors: "Colors & type",
+          settings: "Settings",
+          workTitle: "Your work, clearly.",
+          workLead: "Focus on delivery. Keep the details close.",
+          newTask: "New task",
+          search: "Search tasks…",
+          allStates: "All states",
+          review: "In review",
+          progress: "In progress",
+          blocked: "Blocked",
+          todo: "To do",
+          task: "Task",
+          project: "Project",
+          status: "Status",
+          due: "Due",
+          assignee: "Assignee",
+          today: "Today",
+          tomorrow: "Tomorrow",
+          you: "You",
+          mona: "Mona",
+          apiTask: "Review API contract",
+          releaseTask: "Prepare release checklist",
+          accessTask: "Confirm onboarding access",
+          endpointTask: "Build billing endpoint",
+          testTask: "Verify Arabic invoice layout",
+          docsTask: "Update handover notes",
+          atlas: "Atlas API",
+          platform: "Client platform",
+          onboarding: "Client onboarding",
+          selected: "selected",
+          shown: "tasks shown",
+          attention: "Project context",
+          contextLead: "A clear handoff from agreed scope to reviewed billing.",
+          scope: "Scope",
+          agreed: "Agreed",
+          delivery: "Work",
+          timeLabel: "Time",
+          billing: "Billing",
+          draft: "Draft",
+          localSaved: "Saved on this device",
+          synced: "Synced",
+          offlineTitle: "Working offline",
+          offlineBody:
+            "Changes save on this device. Invoice drafts can be edited; issuance needs a connection.",
+          conflictTitle: "A change needs review",
+          conflictBody:
+            "Your local draft is safe. Compare authorized local and server values before syncing.",
+          reviewConflict: "Review conflict",
+          projectTitle: "Projects with a clear next step.",
+          projectLead:
+            "Delivery, ownership and commercial context stay connected.",
+          newProject: "New project",
+          client: "Client",
+          owner: "Owner",
+          next: "Next action",
+          acceptance: "Review milestone",
+          confirmAccess: "Confirm access",
+          prepareRelease: "Prepare release",
+          active: "Active",
+          paused: "Paused",
+          clientTitle: "Relationships that carry the work.",
+          clientLead:
+            "Contacts, agreements, projects and billing share one client history.",
+          newClient: "New client",
+          contact: "Contact",
+          languagePref: "Document language",
+          english: "English",
+          arabic: "Arabic",
+          financeTitle: "Review the work. Issue with confidence.",
+          financeLead:
+            "Drafts stay editable. Issued invoices keep their exact historical facts.",
+          reviewIssue: "Review issuance",
+          invoice: "Invoice draft",
+          numberLater: "Number assigned when issued",
+          seller: "Seller",
+          customer: "Client",
+          exampleSeller: "Sample engineering studio",
+          sampleClient: "Atlas Systems · sample client",
+          date: "Document date",
+          currency: "Currency",
+          line: "Description",
+          qty: "Qty",
+          price: "Unit price",
+          amount: "Amount",
+          sampleService: "API implementation service",
+          subtotal: "Subtotal",
+          discount: "Discount · 10%",
+          tax: "Tax · 15% exclusive",
+          total: "Total",
+          calcNote:
+            "Illustrative calculation profile. Confirm the applicable tax rules before issuance.",
+          issueTitle: "Before issuing",
+          issueCheck:
+            "Confirm seller, client, currency, dates, calculation profile and available sources.",
+          issueOnline: "Issuance requires an online authoritative transaction.",
+          deliverySeparate: "Issued, delivered and paid are separate states.",
+          timeTitle: "Time you can account for.",
+          timeLead: "Capture, review and allocation stay distinct.",
+          addTime: "Add time",
+          duration: "Duration",
+          reviewState: "Review",
+          allocation: "Allocation",
+          ready: "Ready",
+          needsReview: "Needs review",
+          unallocated: "Unallocated",
+          reserved: "Reserved by draft",
+          timeNote:
+            "An active timer is visible everywhere. Uncertain gaps need review before billing.",
+          reportsTitle: "Numbers with a clear basis.",
+          reportsLead:
+            "Every report identifies its scope, units, formula and completeness.",
+          metric: "Metric",
+          value: "Value",
+          basis: "Basis",
+          recorded: "Recorded time",
+          reviewed: "Reviewed time",
+          collected: "Cash collected",
+          outstanding: "Outstanding",
+          reportNote:
+            "Illustrative values in USD only. Missing data is never treated as zero.",
+          knowledgeTitle: "Shared knowledge, safely linked.",
+          knowledgeLead:
+            "Versioned notes connect to the work without exposing private material.",
+          note: "Note",
+          updated: "Updated",
+          apiNotes: "API handoff checklist",
+          billingNotes: "Client billing guidelines",
+          localeNotes: "Arabic UI review notes",
+          componentsTitle: "One consistent component language.",
+          componentsLead:
+            "Large targets, clear states, visible focus and predictable behavior.",
+          actions: "Actions",
+          primary: "Primary action",
+          secondary: "Secondary",
+          disabled: "Disabled specimen",
+          fields: "Form fields",
+          name: "Client name",
+          email: "Billing email",
+          emailError: "Enter a valid email address.",
+          fieldHint: "Specimen fields only; no client is created.",
+          statuses: "Status vocabulary",
+          saved: "Saved locally",
+          pending: "Waiting to sync",
+          rejected: "Rejected",
+          emptyTitle: "No tasks match these filters.",
+          emptyBody: "Try another search or reset the status filter.",
+          reset: "Reset filters",
+          colorsTitle: "Graphite. Silver. Purposeful blue.",
+          colorsLead:
+            "The logo anchors the identity. Color makes action and state clear.",
+          typeTitle: "A readable type scale",
+          typeBody:
+            "Body text stays calm and legible through a full working day.",
+          fontNote:
+            "Recommended: Inter + Noto Sans Arabic. This reference uses available system fallbacks; fonts are not installed by this artifact.",
+          typeLabel:
+            "Label / 14px · Body / 16px · Section / 20px · Title / 28px",
+          settingsTitle: "Preferences have a clear scope.",
+          settingsLead:
+            "Personal choices, device behavior and workspace policy stay separate.",
+          personal: "Personal",
+          device: "Device",
+          workspaceScope: "Workspace",
+          personalDesc: "Theme, language, digits, timezone, quiet hours",
+          deviceDesc: "Window placement, launch and tray behavior",
+          workspaceDesc: "Team access, currency defaults, financial profiles",
+          referenceNote:
+            "Design reference only · sample data · no app features are connected",
+          screenDocs: "Screen specifications",
+          specTitle: "Design interaction specimen",
+          specBody:
+            "This control demonstrates the visual and interaction contract. The app feature is not implemented here. Read the linked screen specifications for permissions, fields, states and recovery.",
+          timerBody:
+            "Timer contract: show running/paused state, persist before success, retain uncertain gaps for review, and keep keyboard-accessible controls.",
+          issueBody:
+            "Issue contract: review exact parties, currency, totals and sources; finalize online; look up the same operation after a lost response. This reference does not issue an invoice.",
+          conflictSpec:
+            "Conflict contract: compare permitted base, local and server values; preserve candidates; show a result preview. Financial facts never use last-write-wins.",
+          details: "View design contract",
+          menuOpen: "Open navigation",
+        },
+        ar: {
+          skip: "انتقل إلى المحتوى",
+          designReference: "SoloDesk · المرجع التصميمي",
+          sampleData: "بيانات توضيحية · تخطيط واسع",
+          theme: "المظهر",
+          system: "النظام",
+          light: "فاتح",
+          dark: "داكن",
+          language: "اللغة",
+          state: "الحالة",
+          online: "متصل",
+          offline: "دون اتصال",
+          conflict: "تعارض",
+          docs: "التوثيق",
+          nativeNote: "أزرار النافذة الأصلية تتبع نظام التشغيل",
+          studio: "مساحة عمل الاستوديو",
+          studioShort: "الاستوديو",
+          role: "المالك · مساحة عمل توضيحية",
+          running: "قيد التشغيل",
+          close: "إغلاق",
+          overview: "نظرة عامة",
+          work: "عملي",
+          projects: "المشاريع",
+          clients: "العملاء",
+          time: "الوقت",
+          finance: "المالية",
+          reports: "التقارير",
+          knowledge: "المعرفة",
+          components: "المكونات",
+          colors: "الألوان والخطوط",
+          settings: "الإعدادات",
+          workTitle: "عملك أمامك بوضوح.",
+          workLead: "ركّز على التسليم، واحتفظ بالتفاصيل قريبة.",
+          newTask: "مهمة جديدة",
+          search: "ابحث عن مهمة…",
+          allStates: "كل الحالات",
+          review: "قيد المراجعة",
+          progress: "قيد التنفيذ",
+          blocked: "متعذرة",
+          todo: "لم تبدأ",
+          task: "المهمة",
+          project: "المشروع",
+          status: "الحالة",
+          due: "الاستحقاق",
+          assignee: "المسؤول",
+          today: "اليوم",
+          tomorrow: "غدًا",
+          you: "أنت",
+          mona: "منى",
+          apiTask: "مراجعة عقد واجهة البرمجة",
+          releaseTask: "إعداد قائمة التحقق للإصدار",
+          accessTask: "تأكيد صلاحيات الوصول",
+          endpointTask: "إنشاء نقطة نهاية للفوترة",
+          testTask: "التحقق من تخطيط الفاتورة العربية",
+          docsTask: "تحديث ملاحظات تسليم العمل",
+          atlas: "واجهة Atlas البرمجية",
+          platform: "منصة العميل",
+          onboarding: "تهيئة العميل",
+          selected: "محددة",
+          shown: "مهام معروضة",
+          attention: "سياق المشروع",
+          contextLead:
+            "انتقال واضح من النطاق المتفق عليه إلى الفوترة المراجعة.",
+          scope: "النطاق",
+          agreed: "متفق عليه",
+          delivery: "العمل",
+          timeLabel: "الوقت",
+          billing: "الفوترة",
+          draft: "مسودة",
+          localSaved: "محفوظ على هذا الجهاز",
+          synced: "تمت المزامنة",
+          offlineTitle: "العمل دون اتصال",
+          offlineBody:
+            "تُحفظ التغييرات على هذا الجهاز. يمكن تعديل المسودات، ويتطلب إصدار الفاتورة اتصالًا.",
+          conflictTitle: "تغيير يحتاج إلى مراجعة",
+          conflictBody:
+            "مسودتك المحلية محفوظة. قارن القيم المحلية وقيم الخادم المسموح بها قبل المزامنة.",
+          reviewConflict: "مراجعة التعارض",
+          projectTitle: "مشاريع بخطوة تالية واضحة.",
+          projectLead: "التسليم والمسؤولية والسياق التجاري في مكان واحد.",
+          newProject: "مشروع جديد",
+          client: "العميل",
+          owner: "المالك",
+          next: "الخطوة التالية",
+          acceptance: "مراجعة مرحلة التسليم",
+          confirmAccess: "تأكيد الوصول",
+          prepareRelease: "إعداد الإصدار",
+          active: "نشط",
+          paused: "متوقف مؤقتًا",
+          clientTitle: "علاقات تدعم العمل.",
+          clientLead:
+            "جهات الاتصال والاتفاقات والمشاريع والفوترة ضمن سجل واحد للعميل.",
+          newClient: "عميل جديد",
+          contact: "جهة الاتصال",
+          languagePref: "لغة المستند",
+          english: "الإنجليزية",
+          arabic: "العربية",
+          financeTitle: "راجع العمل، ثم أصدر بثقة.",
+          financeLead:
+            "تبقى المسودات قابلة للتعديل، وتحتفظ الفواتير الصادرة ببياناتها التاريخية الدقيقة.",
+          reviewIssue: "مراجعة الإصدار",
+          invoice: "مسودة فاتورة",
+          numberLater: "يُعيَّن الرقم عند الإصدار",
+          seller: "البائع",
+          customer: "العميل",
+          exampleSeller: "استوديو هندسة توضيحي",
+          sampleClient: "Atlas Systems · عميل توضيحي",
+          date: "تاريخ المستند",
+          currency: "العملة",
+          line: "الوصف",
+          qty: "الكمية",
+          price: "سعر الوحدة",
+          amount: "المبلغ",
+          sampleService: "خدمة تطوير واجهة برمجية",
+          subtotal: "المجموع الفرعي",
+          discount: "خصم · ١٠٪",
+          tax: "ضريبة · ١٥٪ غير شاملة",
+          total: "الإجمالي",
+          calcNote:
+            "سياسة حساب توضيحية. يجب تأكيد القواعد الضريبية المطبقة قبل الإصدار.",
+          issueTitle: "قبل إصدار الفاتورة",
+          issueCheck:
+            "أكّد البائع والعميل والعملة والتواريخ وسياسة الحساب والمصادر المتاحة.",
+          issueOnline: "يتطلب الإصدار معاملة معتمدة عبر الإنترنت.",
+          deliverySeparate: "الإصدار والتسليم والسداد حالات مستقلة.",
+          timeTitle: "وقت يمكنك مراجعته.",
+          timeLead: "التسجيل والمراجعة والتخصيص حالات مستقلة.",
+          addTime: "إضافة وقت",
+          duration: "المدة",
+          reviewState: "المراجعة",
+          allocation: "التخصيص",
+          ready: "جاهز",
+          needsReview: "بحاجة إلى مراجعة",
+          unallocated: "غير مخصص",
+          reserved: "محجوز لمسودة",
+          timeNote:
+            "يظهر المؤقت في كل الشاشات. تحتاج الفترات غير المؤكدة إلى مراجعة قبل الفوترة.",
+          reportsTitle: "أرقام بأساس واضح.",
+          reportsLead:
+            "يحدد كل تقرير النطاق والوحدات والمعادلة واكتمال البيانات.",
+          metric: "المؤشر",
+          value: "القيمة",
+          basis: "الأساس",
+          recorded: "الوقت المسجل",
+          reviewed: "الوقت المراجع",
+          collected: "النقد المحصل",
+          outstanding: "المبلغ المستحق",
+          reportNote:
+            "قيم توضيحية بالدولار الأمريكي فقط. البيانات المفقودة لا تُحتسب صفرًا.",
+          knowledgeTitle: "معرفة مشتركة بروابط آمنة.",
+          knowledgeLead:
+            "ملاحظات ذات إصدارات مرتبطة بالعمل دون كشف المحتوى الخاص.",
+          note: "الملاحظة",
+          updated: "آخر تحديث",
+          apiNotes: "قائمة تسليم الواجهة البرمجية",
+          billingNotes: "إرشادات فوترة العملاء",
+          localeNotes: "ملاحظات مراجعة الواجهة العربية",
+          componentsTitle: "لغة موحدة للمكونات.",
+          componentsLead:
+            "مساحات تفاعل واسعة وحالات واضحة وتركيز مرئي وسلوك متوقع.",
+          actions: "الإجراءات",
+          primary: "إجراء أساسي",
+          secondary: "إجراء ثانوي",
+          disabled: "نموذج غير متاح",
+          fields: "حقول النموذج",
+          name: "اسم العميل",
+          email: "بريد الفوترة",
+          emailError: "أدخل عنوان بريد إلكتروني صالحًا.",
+          fieldHint: "حقول توضيحية فقط؛ لا يتم إنشاء عميل.",
+          statuses: "مفردات الحالات",
+          saved: "محفوظ محليًا",
+          pending: "بانتظار المزامنة",
+          rejected: "مرفوض",
+          emptyTitle: "لا توجد مهام تطابق عوامل التصفية.",
+          emptyBody: "جرّب بحثًا آخر أو أعد ضبط الحالة.",
+          reset: "إعادة ضبط التصفية",
+          colorsTitle: "جرافيت وفضي وأزرق ذو وظيفة.",
+          colorsLead: "الشعار أساس الهوية، واللون يوضح الإجراءات والحالات.",
+          typeTitle: "تدرّج خطوط واضح",
+          typeBody: "نصوص مريحة ومقروءة طوال يوم العمل.",
+          fontNote:
+            "الخطوط المقترحة: Inter وNoto Sans Arabic. يستخدم هذا المرجع خطوط النظام المتاحة؛ لم يتم تثبيت خطوط.",
+          typeLabel: "تسمية / ١٤ · نص / ١٦ · قسم / ٢٠ · عنوان / ٢٨",
+          settingsTitle: "نطاق واضح لكل تفضيل.",
+          settingsLead:
+            "خياراتك الشخصية وسلوك الجهاز وسياسة مساحة العمل مستقلة.",
+          personal: "شخصي",
+          device: "الجهاز",
+          workspaceScope: "مساحة العمل",
+          personalDesc: "المظهر واللغة والأرقام والمنطقة الزمنية وساعات الهدوء",
+          deviceDesc: "موضع النافذة والتشغيل وسلوك شريط النظام",
+          workspaceDesc: "صلاحيات الفريق والعملات الافتراضية والسياسات المالية",
+          referenceNote:
+            "مرجع تصميمي فقط · بيانات توضيحية · لا توجد ميزات متصلة",
+          screenDocs: "مواصفات الشاشات",
+          specTitle: "نموذج تفاعل تصميمي",
+          specBody:
+            "يوضح هذا العنصر الشكل وسلوك التفاعل. لم تُنفذ ميزة التطبيق هنا. راجع مواصفات الشاشات للصلاحيات والحقول والحالات والاسترداد.",
+          timerBody:
+            "سلوك المؤقت: حالة تشغيل أو توقف واضحة، حفظ قبل تأكيد النجاح، فترات غير مؤكدة للمراجعة، وتحكم بلوحة المفاتيح.",
+          issueBody:
+            "سلوك الإصدار: راجع الأطراف والعملة والإجماليات والمصادر، ثم أصدر عبر الإنترنت. عند فقدان الاستجابة تُراجع المعاملة نفسها. لا يصدر هذا المرجع فاتورة.",
+          conflictSpec:
+            "سلوك التعارض: مقارنة القيم الأصلية والمحلية وقيم الخادم المسموح بها، مع الاحتفاظ بالخيارات ومعاينة النتيجة. لا تُستبدل الحقائق المالية تلقائيًا.",
+          details: "عرض سلوك التصميم",
+          menuOpen: "فتح التنقل",
+        },
+      };
+      let lang = "en",
+        view = "work",
+        state = "online",
+        query = "",
+        filter = "",
+        selected = new Set();
+      const t = (k) => words[lang][k] || k;
+      const escape = (s) =>
+        String(s).replace(
+          /[&<>"']/g,
+          (c) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[c],
+        );
+      const badge = (key, kind = "") =>
+        `<span class="badge ${kind}">${icon(kind === "danger" ? "alert" : kind === "success" ? "check" : kind === "info" ? "clock" : "file")}${t(key)}</span>`;
+      const num = (x) => `<bdi dir="ltr">${x}</bdi>`;
+      const tasks = [
+        ["apiTask", "atlas", "review", "info", "today", "you"],
+        ["releaseTask", "platform", "progress", "info", "tomorrow", "mona"],
+        ["accessTask", "onboarding", "blocked", "danger", "19 Oct", "you"],
+        ["endpointTask", "atlas", "progress", "info", "20 Oct", "you"],
+        ["testTask", "platform", "todo", "", "21 Oct", "mona"],
+        ["docsTask", "atlas", "todo", "", "22 Oct", "you"],
+      ];
+      const navs = [
+        ["overview", "home"],
+        ["work", "tasks"],
+        ["projects", "folder"],
+        ["clients", "users"],
+        ["time", "clock"],
+        ["finance", "file"],
+        ["reports", "chart"],
+        ["knowledge", "book"],
+      ];
+      function dateLabel(value) {
+        let m = String(value).match(/^(\d{1,2}) Oct(?: (\d{4}))?$/);
+        return m
+          ? new Intl.DateTimeFormat(lang === "ar" ? "ar-EG" : "en-GB", {
+              day: "numeric",
+              month: "short",
+              ...(m[2] ? { year: "numeric" } : {}),
+              timeZone: "UTC",
+            }).format(new Date(Date.UTC(Number(m[2] || 2026), 9, Number(m[1]))))
+          : value;
+      }
+      function nav() {
+        for (const [id, list] of [
+          ["primarynav", navs],
+          [
+            "secondarynav",
+            [
+              ["components", "tasks"],
+              ["colors", "palette"],
+              ["settings", "settings"],
+            ],
+          ],
+        ])
+          document.getElementById(id).innerHTML = list
+            .map(
+              ([key, ic]) =>
+                `<button data-view="${key}" aria-label="${t(key)}" title="${t(key)}" ${view === key ? 'aria-current="page"' : ""}>${icon(ic)}<span class="navlabel">${t(key)}</span></button>`,
+            )
+            .join("");
+        document
+          .getElementById("primarynav")
+          .setAttribute(
+            "aria-label",
+            lang === "ar" ? "التنقل الرئيسي" : "Main navigation",
+          );
+        document
+          .getElementById("secondarynav")
+          .setAttribute(
+            "aria-label",
+            lang === "ar"
+              ? "التنقل في المرجع التصميمي"
+              : "Design reference navigation",
+          );
+      }
+      function head(title, lead, action = "", spec = "generic") {
+        return `<div class="pagehead"><div><h1 tabindex="-1">${t(title)}</h1><p class="lead">${t(lead)}</p></div>${action ? `<button class="primary" data-spec="${spec}">${icon(action === "reviewIssue" ? "file" : "plus")}${t(action)}</button>` : ""}</div>`;
+      }
+      function banner() {
+        return state === "online"
+          ? ""
+          : `<div class="banner ${state === "conflict" ? "danger" : "warning"}">${icon(state === "conflict" ? "alert" : "cloud")}<div><strong>${t(state === "conflict" ? "conflictTitle" : "offlineTitle")}</strong><p>${t(state === "conflict" ? "conflictBody" : "offlineBody")}</p>${state === "conflict" ? `<button data-spec="conflict">${t("reviewConflict")}</button>` : ""}</div></div>`;
+      }
+      function table(headers, rows, caption = "") {
+        return `<div class="panel table-scroll" tabindex="0" role="region" aria-label="${t("details")}"><table>${caption ? `<caption>${t(caption)}</caption>` : ""}<thead><tr>${headers.map((x) => `<th scope="col">${t(x)}</th>`).join("")}</tr></thead><tbody>${rows.map((r) => `<tr>${r.map((x) => `<td>${x}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+      }
+      function taskRows() {
+        return tasks
+          .map((a, i) => ({ a, i }))
+          .filter(
+            ({ a }) =>
+              (!query ||
+                [t(a[0]), t(a[1])]
+                  .join(" ")
+                  .toLocaleLowerCase()
+                  .includes(query.toLocaleLowerCase())) &&
+              (!filter || a[2] === filter),
+          );
+      }
+      function work() {
+        return (
+          head("workTitle", "workLead", "newTask") +
+          `<div class="toolbar"><div class="search">${icon("search")}<input id="tasksearch" type="search" aria-label="${t("search")}" placeholder="${t("search")}" value="${escape(query)}"></div><label class="sr-only" for="statusfilter">${t("status")}</label><select id="statusfilter"><option value="">${t("allStates")}</option>${["review", "progress", "blocked", "todo"].map((x) => `<option value="${x}" ${filter === x ? "selected" : ""}>${t(x)}</option>`).join("")}</select><span class="smalltext" id="selection"></span></div><div class="split"><section id="taskarea" aria-label="${t("work")}"></section><section class="context"><h2>${t("attention")}</h2><p class="lead">${t("contextLead")}</p><div class="trail"><span>${t("scope")}<b>${t("agreed")}</b></span><span>${t("delivery")}<b>${t("progress")}</b></span><span>${t("timeLabel")}<b>${t("review")}</b></span><span>${t("billing")}<b>${t("draft")}</b></span></div><dl><dt>${t("project")}</dt><dd>${t("atlas")}</dd><dt>${t("owner")}</dt><dd>${t("you")}</dd><dt>${t("next")}</dt><dd>${t("acceptance")}</dd></dl><p class="smalltext section">${t("fontNote")}</p></section></div>`
+        );
+      }
+      function drawTaskTable() {
+        let rows = taskRows();
+        document.getElementById("taskarea").innerHTML = rows.length
+          ? `<div class="panel"><div class="table-scroll" tabindex="0" role="region" aria-label="${t("work")}"><table aria-label="${t("work")}"><thead><tr><th scope="col"><span class="sr-only">${t("selected")}</span></th>${["task", "project", "status", "due"].map((x) => `<th scope="col">${t(x)}</th>`).join("")}<th scope="col"><span class="sr-only">${t("details")}</span></th></tr></thead><tbody>${rows.map(({ a, i }) => `<tr><td><label class="checkwrap"><input class="check" type="checkbox" data-select="${i}" aria-label="${escape(t(a[0]))}" ${selected.has(i) ? "checked" : ""}></label></td><td class="identity"><button class="row-link" data-spec="generic">${t(a[0])}</button><small>${t(a[5])}</small></td><td>${t(a[1])}</td><td>${badge(a[2], a[3])}</td><td>${words[lang][a[4]] ? t(a[4]) : dateLabel(a[4])}</td><td><button class="iconbtn" aria-label="${t("details")}: ${t(a[0])}" data-spec="generic">${icon("more")}</button></td></tr>`).join("")}</tbody></table></div><div class="tablefoot"><span>${rows.length} ${t("shown")}</span><span>${t("sampleData")}</span></div></div>`
+          : `<div class="panel empty"><h3>${t("emptyTitle")}</h3><p>${t("emptyBody")}</p><button class="section" id="resetfilters">${t("reset")}</button></div>`;
+        document.getElementById("selection").textContent = selected.size
+          ? `${selected.size} ${t("selected")}`
+          : "";
+      }
+      function finance() {
+        return (
+          head("financeTitle", "financeLead", "reviewIssue", "issue") +
+          `<div class="split"><article class="paper"><div class="paperhead"><div><h2>${t("invoice")}</h2><p>${t("numberLater")}</p></div>${badge("draft")}</div><div class="two"><div><h3>${t("seller")}</h3><p>${t("exampleSeller")}</p></div><div><h3>${t("customer")}</h3><p>${t("sampleClient")}</p></div></div><div class="two section"><p>${t("date")}<br>${dateLabel("17 Oct 2026")}</p><p>${t("currency")}<br>${num("USD")}</p></div><div class="table-scroll section" tabindex="0" role="region" aria-label="${t("invoice")}"><table><thead><tr>${["line", "qty", "price", "amount"].map((x) => `<th>${t(x)}</th>`).join("")}</tr></thead><tbody><tr><td>${t("sampleService")}</td><td class="numeric">${num("3")}</td><td class="numeric">${num("19.99")}</td><td class="numeric">${num("59.97")}</td></tr></tbody></table></div><div class="totals"><div><span>${t("subtotal")}</span>${num("USD 59.97")}</div><div><span>${t("discount")}</span>${num("−6.00")}</div><div><span>${t("tax")}</span>${num("8.10")}</div><div class="grand"><span>${t("total")}</span>${num("USD 62.07")}</div></div><p class="section smalltext">${t("calcNote")}</p></article><section class="context"><h2>${t("issueTitle")}</h2><p class="lead">${t("issueCheck")}</p><p class="section">${t("issueOnline")}</p><p class="section subtle">${t("deliverySeparate")}</p><div class="section">${badge(state === "online" ? "synced" : "localSaved", state === "online" ? "success" : "info")}</div></section></div>`
+        );
+      }
+      function content() {
+        if (view === "work" || view === "overview") return work();
+        if (view === "finance") return finance();
+        if (view === "projects")
+          return (
+            head("projectTitle", "projectLead", "newProject") +
+            table(
+              ["project", "client", "status", "owner", "next"],
+              [
+                ["atlas", "Atlas Systems", "active", "you", "acceptance"],
+                [
+                  "platform",
+                  "North Studio",
+                  "active",
+                  "mona",
+                  "prepareRelease",
+                ],
+                ["onboarding", "New client", "paused", "you", "confirmAccess"],
+              ].map((a) => [
+                t(a[0]),
+                escape(a[1]),
+                badge(a[2], a[2] === "active" ? "info" : ""),
+                t(a[3]),
+                `<button class="row-link" data-spec="generic">${t(a[4])}</button>`,
+              ]),
+            )
+          );
+        if (view === "clients")
+          return (
+            head("clientTitle", "clientLead", "newClient") +
+            table(
+              ["client", "contact", "languagePref"],
+              [
+                ["Atlas Systems", num("hello@example.test"), t("english")],
+                [
+                  "شركة مثال للبرمجيات",
+                  num("billing@example.test"),
+                  t("arabic"),
+                ],
+                ["North Studio", num("studio@example.test"), t("english")],
+              ],
+            )
+          );
+        if (view === "time")
+          return (
+            head("timeTitle", "timeLead", "addTime") +
+            table(
+              ["task", "project", "duration", "reviewState", "allocation"],
+              [
+                [
+                  t("apiTask"),
+                  t("atlas"),
+                  num("01:30:00"),
+                  badge("ready", "success"),
+                  badge("reserved", "info"),
+                ],
+                [
+                  t("releaseTask"),
+                  t("platform"),
+                  num("00:45:00"),
+                  badge("ready", "success"),
+                  badge("unallocated"),
+                ],
+                [
+                  t("accessTask"),
+                  t("onboarding"),
+                  num("00:12:00"),
+                  badge("needsReview", "warning"),
+                  badge("unallocated"),
+                ],
+              ],
+            ) +
+            `<p class="section subtle">${t("timeNote")}</p>`
+          );
+        if (view === "reports")
+          return (
+            head("reportsTitle", "reportsLead") +
+            table(
+              ["metric", "value", "basis"],
+              [
+                [t("recorded"), num("02:27:00"), t("duration")],
+                [t("reviewed"), num("02:15:00"), t("ready")],
+                [t("collected"), num("USD 40.00"), t("collected")],
+                [t("outstanding"), num("USD 22.07"), t("outstanding")],
+              ],
+            ) +
+            `<p class="section subtle">${t("reportNote")}</p>`
+          );
+        if (view === "knowledge")
+          return (
+            head("knowledgeTitle", "knowledgeLead") +
+            table(
+              ["note", "owner", "updated"],
+              ["apiNotes", "billingNotes", "localeNotes"].map((x, i) => [
+                `<button class="row-link" data-spec="generic">${t(x)}</button>`,
+                t("you"),
+                dateLabel(`${17 - i} Oct 2026`),
+              ]),
+            )
+          );
+        if (view === "settings")
+          return (
+            head("settingsTitle", "settingsLead") +
+            table(
+              ["state", "line"],
+              [
+                ["personal", "personalDesc"],
+                ["device", "deviceDesc"],
+                ["workspaceScope", "workspaceDesc"],
+              ].map((a) => [t(a[0]), t(a[1])]),
+            )
+          );
+        if (view === "colors") {
+          let colors = TOKENS.themes[document.documentElement.dataset.theme];
+          return (
+            head("colorsTitle", "colorsLead") +
+            `<div class="swatches">${["background", "surface", "foreground", "muted-foreground", "primary", "accent", "border", "input-border", "success", "warning", "danger", "info"].map((k) => `<div class="swatch"><div style="background:${colors[k]}"></div><p><bdi dir="ltr">${k}</bdi><code>${colors[k]}</code></p></div>`).join("")}</div><section class="section stack"><h2>${t("typeTitle")}</h2><p>${t("typeBody")}</p><p class="smalltext">${t("typeLabel")}</p><p class="subtle">${t("fontNote")}</p></section>`
+          );
+        }
+        return (
+          head("componentsTitle", "componentsLead") +
+          `<div class="specimen"><h3>${t("actions")}</h3><button class="primary" data-spec="generic">${t("primary")}</button><button data-spec="generic">${t("secondary")}</button><button disabled>${t("disabled")}</button></div><section class="section"><h2>${t("fields")}</h2><div class="two section"><div class="field"><label for="sample-name">${t("name")}</label><input id="sample-name" value="Atlas Systems" readonly><small>${t("fieldHint")}</small></div><div class="field"><label for="sample-email">${t("email")}</label><input id="sample-email" value="billing@" readonly aria-invalid="true" aria-describedby="email-error"><small class="error" id="email-error">${t("emailError")}</small></div></div></section><div class="specimen section"><h3>${t("statuses")}</h3>${badge("saved", "success")}${badge("pending", "info")}${badge("needsReview", "warning")}${badge("rejected", "danger")}${badge("draft")}</div><section class="section"><h2>${t("emptyTitle")}</h2><p class="lead">${t("emptyBody")}</p></section>`
+        );
+      }
+      function render(focus = false) {
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+        document
+          .querySelectorAll("[data-t]")
+          .forEach((el) => (el.textContent = t(el.dataset.t)));
+        document
+          .getElementById("menutoggle")
+          .setAttribute("aria-label", t("menuOpen"));
+        document
+          .querySelector(".avatar")
+          .setAttribute(
+            "aria-label",
+            lang === "ar" ? "حساب توضيحي" : "Sample account",
+          );
+        nav();
+        document.getElementById("crumb").textContent = t(view);
+        document.getElementById("crumbicon").innerHTML = icon("arrow");
+        document.getElementById("timericon").innerHTML = icon("pause");
+        document.getElementById("syncicon").innerHTML = icon(
+          state === "online"
+            ? "check"
+            : state === "conflict"
+              ? "alert"
+              : "cloud",
+        );
+        document.getElementById("synctext").textContent = t(
+          state === "online"
+            ? "synced"
+            : state === "conflict"
+              ? "needsReview"
+              : "localSaved",
+        );
+        document.getElementById("main").innerHTML =
+          banner() +
+          content() +
+          `<div class="footer-note"><span>${t("referenceNote")}</span><a href="screens.md">${t("screenDocs")}</a></div>`;
+        if (view === "work" || view === "overview") drawTaskTable();
+        if (focus) document.querySelector("main h1").focus();
+      }
+      const media = matchMedia("(prefers-color-scheme: dark)");
+      function theme() {
+        let val = document.getElementById("theme").value;
+        document.documentElement.dataset.theme =
+          val === "system" ? (media.matches ? "dark" : "light") : val;
+        if (view === "colors") render();
+      }
+      media.addEventListener("change", theme);
+      document.getElementById("theme").onchange = theme;
+      document.getElementById("language").onchange = (e) => {
+        lang = e.target.value;
+        render();
+      };
+      document.getElementById("state").onchange = (e) => {
+        state = e.target.value;
+        render();
+      };
+      let invoker;
+      function specimen(type, el) {
+        invoker = el;
+        document.getElementById("dialogtitle").textContent = t("specTitle");
+        document.getElementById("dialogbody").textContent = t(
+          type === "timer"
+            ? "timerBody"
+            : type === "issue"
+              ? "issueBody"
+              : type === "conflict"
+                ? "conflictSpec"
+                : "specBody",
+        );
+        document.getElementById("specdialog").showModal();
+        document.getElementById("closedialog").focus();
+      }
+      document.getElementById("closedialog").onclick = () =>
+        document.getElementById("specdialog").close();
+      document
+        .getElementById("specdialog")
+        .addEventListener("close", () => invoker?.focus());
+      document.getElementById("menutoggle").innerHTML = icon("menu");
+      document.getElementById("menutoggle").onclick = () => {
+        let open = document.body.classList.toggle("nav-open");
+        document
+          .getElementById("menutoggle")
+          .setAttribute("aria-expanded", String(open));
+      };
+      document.addEventListener("click", (e) => {
+        let b = e.target.closest("[data-view]");
+        if (b) {
+          view = b.dataset.view;
+          document.body.classList.remove("nav-open");
+          document
+            .getElementById("menutoggle")
+            .setAttribute("aria-expanded", "false");
+          render(true);
+        }
+        let s = e.target.closest("[data-spec]");
+        if (s) specimen(s.dataset.spec, s);
+        if (e.target.closest("#resetfilters")) {
+          query = "";
+          filter = "";
+          render();
+          document.getElementById("tasksearch").focus();
+        }
+      });
+      document.addEventListener("input", (e) => {
+        if (e.target.id === "tasksearch") {
+          query = e.target.value;
+          drawTaskTable();
+        }
+      });
+      document.addEventListener("change", (e) => {
+        if (e.target.id === "statusfilter") {
+          filter = e.target.value;
+          drawTaskTable();
+        }
+        if (e.target.matches("[data-select]")) {
+          let id = Number(e.target.dataset.select);
+          e.target.checked ? selected.add(id) : selected.delete(id);
+          document.getElementById("selection").textContent = selected.size
+            ? `${selected.size} ${t("selected")}`
+            : "";
+          document.getElementById("announce").textContent =
+            document.getElementById("selection").textContent;
+        }
+      });
+      document.querySelector(".brand").onclick = (e) => {
+        e.preventDefault();
+        view = "work";
+        render(true);
+      };
+      theme();
+      render();
+    </script>
+  </body>
+</html>

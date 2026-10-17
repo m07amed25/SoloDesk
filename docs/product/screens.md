@@ -1,6 +1,6 @@
 # Screen map and required states
 
-Status: information architecture proposal, not a visual design or implemented UI. Current app is one welcome screen. Tailwind/shadcn are required; English/Arabic RTL applies to all future surfaces.
+Status: information architecture proposal, not implemented UI. Current app is one welcome screen. Tailwind/shadcn are required; English/Arabic RTL applies to all future surfaces. The [UI design system](../../DESIGN.md) and [detailed screen contracts](../design/screens.md) expand this map with visual foundations, spacious geometry, paired themes and per-surface fields/actions/states.
 
 ## Navigation and screen responsibilities
 
