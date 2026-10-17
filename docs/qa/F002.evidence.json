@@ -3,10 +3,24 @@
   "schema_version": 1,
   "phase": "F002",
   "context": {
-    "head": "56a5f5d5a7156d84792c0a25426b2342e9e85685",
+    "head": "9f98f7b0eec38a0281e53ca3b5ba822b350628ad",
     "base": "c66095e65e0b901aeeddf4f9e1d7274be5fdbf8a",
-    "scope": "Repaired implementation; immutable measured source, with final hosted inspection pending",
-    "primary_pr": "https://github.com/m07amed25/SoloDesk/pull/2"
+    "scope": "Exact reviewed implementation source; subsequent evidence-only transcription preserves these measured identities",
+    "primary_pr": "https://github.com/m07amed25/SoloDesk/pull/2",
+    "tested": "b4c06fdd895d60c824653996084f99df5c2d5cf2",
+    "workflow": {
+      "path": ".github/workflows/verify.yml",
+      "sha256": "19cbce514a0138f7d5bb2de51763ed2e64a6a087f16e0436c95671f5a9f2e285",
+      "git_blob": "139a12c418e558a2d34604b1b4a5b4e9d5059603"
+    },
+    "manifest_digests": {
+      "algorithm": "F002-json-v1-sha256",
+      "values": {
+        "verification/policy.v1.json": "d6c6bc52b9d14ef646a8fe715d778176fe0711f6399224950060a03f4e4c1578",
+        "verification/suites.v1.json": "81ea2169351d4bc6bd0c366961511505ad25a1e2cb1b65005ac2c1d69633edea",
+        "verification/toolchain.v1.json": "756f57673fd51dba7bb4c190243a06b139873cef7715fa6a81c1ba639b8cb305"
+      }
+    }
   },
   "automated_ready": false,
   "agent_qa": {
@@ -90,6 +104,56 @@
         "launcher": 5,
         "governance": 74
       }
+    },
+    {
+      "id": "final-enrollment-repaired-run",
+      "source": "https://github.com/m07amed25/SoloDesk/actions/runs/39079707635",
+      "status": "failed",
+      "expected": "Actual audit remains blocking; every other implemented producer executes honestly",
+      "observed": {
+        "baseline": "passed",
+        "native_targets": "all three passed",
+        "security": "failed",
+        "aggregate": "failed",
+        "findings": [
+          {
+            "code": "producer-unsuccessful",
+            "check_id": "secrets"
+          },
+          {
+            "code": "required-unsuccessful",
+            "check_id": "dependencies"
+          },
+          {
+            "code": "producer-unsuccessful",
+            "check_id": "dependencies"
+          },
+          {
+            "code": "producer-unsuccessful",
+            "check_id": "licenses"
+          },
+          {
+            "code": "producer-unsuccessful",
+            "check_id": "workflow-syntax"
+          },
+          {
+            "code": "producer-unsuccessful",
+            "check_id": "security"
+          }
+        ]
+      }
+    },
+    {
+      "id": "final-local-enrollment-baseline",
+      "source": "run-ac551069-8877-4d69-ad31-f400154749c8",
+      "status": "passed",
+      "counts": {
+        "baseline_checks": 10,
+        "unit": 62,
+        "integration": 34,
+        "launcher": 5,
+        "governance": 74
+      }
     }
   ],
   "findings": [
@@ -117,14 +181,6 @@
       "owner": "Repository owner",
       "diagnostic": "Final owner approval and merge not performed",
       "next_action": "Review concrete current PR only after blockers repaired"
-    },
-    {
-      "id": "F002-final-hosted",
-      "blocking": true,
-      "status": "open",
-      "owner": "F002 maintainer",
-      "diagnostic": "Final repaired-source current hosted inspection pending; audit already blocking",
-      "next_action": "Inspect final run and preserve audit blocker"
     }
   ],
   "adoption": {
@@ -155,7 +211,7 @@
       "name": "F002 / automated-readiness",
       "app_id": 15368,
       "app_slug": "github-actions",
-      "observed_check_run_id": 117533052129
+      "observed_check_run_id": 117534200654
     }
   },
   "limits": {
@@ -733,5 +789,120 @@
       "expected": "The reviewed F002 pack records exact finite resource limits, observed use and enforcement coverage; it separately identifies every proposed, activated or unavailable enforcement rule, with zero claimed settings changes unsupported by inspected outcomes.",
       "proof_level": "incomplete-or-blocked"
     }
-  ]
+  ],
+  "current_provider": {
+    "run_id": 39079707635,
+    "attempt": 1,
+    "repository": "m07amed25/SoloDesk",
+    "current_head": "9f98f7b0eec38a0281e53ca3b5ba822b350628ad",
+    "current_base": "c66095e65e0b901aeeddf4f9e1d7274be5fdbf8a",
+    "tested_sha": "b4c06fdd895d60c824653996084f99df5c2d5cf2",
+    "observed_at": "2026-10-17T23:38:58.226Z",
+    "jobs": [
+      {
+        "id": 117533985855,
+        "name": "F002 / context",
+        "conclusion": "success",
+        "status": "completed"
+      },
+      {
+        "id": 117534011474,
+        "name": "F002 / baseline",
+        "conclusion": "success",
+        "status": "completed"
+      },
+      {
+        "id": 117534011503,
+        "name": "F002 / desktop (windows-x64)",
+        "conclusion": "success",
+        "status": "completed"
+      },
+      {
+        "id": 117534011504,
+        "name": "F002 / desktop (linux-x64)",
+        "conclusion": "success",
+        "status": "completed"
+      },
+      {
+        "id": 117534011542,
+        "name": "F002 / security",
+        "conclusion": "failure",
+        "status": "completed"
+      },
+      {
+        "id": 117534011575,
+        "name": "F002 / desktop (macos-arm64)",
+        "conclusion": "success",
+        "status": "completed"
+      },
+      {
+        "id": 117534200654,
+        "name": "F002 / automated-readiness",
+        "conclusion": "failure",
+        "status": "completed"
+      }
+    ],
+    "artifacts": [
+      {
+        "id": 12118750530,
+        "name": "F002-reports-39079707635-1-security",
+        "expired": false,
+        "size_bytes": 3212,
+        "expires_at": "2026-10-24T23:37:30Z"
+      },
+      {
+        "id": 12118697012,
+        "name": "F002-reports-39079707635-1-desktop-linux-x64",
+        "expired": false,
+        "size_bytes": 46265,
+        "expires_at": "2026-10-24T23:37:26Z"
+      },
+      {
+        "id": 12118296997,
+        "name": "F002-reports-39079707635-1-desktop-macos-arm64",
+        "expired": false,
+        "size_bytes": 44532,
+        "expires_at": "2026-10-24T23:38:02Z"
+      },
+      {
+        "id": 12118168472,
+        "name": "F002-reports-39079707635-1-baseline",
+        "expired": false,
+        "size_bytes": 14034,
+        "expires_at": "2026-10-24T23:37:41Z"
+      },
+      {
+        "id": 12117948283,
+        "name": "F002-summary-39079707635-1",
+        "expired": false,
+        "size_bytes": 3003,
+        "expires_at": "2026-10-24T23:38:19Z"
+      },
+      {
+        "id": 12117773669,
+        "name": "F002-context-39079707635-1",
+        "expired": false,
+        "size_bytes": 2880,
+        "expires_at": "2026-10-24T23:37:05Z"
+      },
+      {
+        "id": 12117549170,
+        "name": "F002-reports-39079707635-1-desktop-windows-x64",
+        "expired": false,
+        "size_bytes": 31980,
+        "expires_at": "2026-10-24T23:38:06Z"
+      }
+    ]
+  },
+  "transcription_assessment": {
+    "reviewed_code_head": "9f98f7b0eec38a0281e53ca3b5ba822b350628ad",
+    "scope": "Following commit changes only QA, root status and task transcription; runtime/toolchain/manifest/workflow/test source is unchanged",
+    "reviewer": "Codex",
+    "old_evidence_identity_preserved": true,
+    "required_rechecks": [
+      "documentation/governance/whitespace",
+      "fresh hosted workflow after publication"
+    ],
+    "owner_approval": "pending; no approval transferred"
+  }
 }
