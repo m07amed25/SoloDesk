@@ -1,6 +1,6 @@
 # SoloDesk documentation index
 
-Updated 17 October 2026. Complete phased design set for the expanded product; **documentation only**. Current implementation remains the minimal welcome shell. Confirmed product choices and proposed details are explicitly distinguished. Read [product brief](../PRODUCT.md), [roadmap](planning/roadmap.md), [coverage](planning/coverage.md), then [decisions](planning/decisions.md).
+Updated 17 October 2026. Complete phased design set for the expanded product; **business implementation deferred**. F001 governance documentation and local validation are implemented for review. Current implementation remains the minimal welcome shell. Confirmed product choices and proposed details are explicitly distinguished. Read [product brief](../PRODUCT.md), [roadmap](planning/roadmap.md), [coverage](planning/coverage.md), then [decisions](planning/decisions.md).
 
 ## Confirmed direction
 
@@ -9,6 +9,12 @@ Freelancers and small teams from first release; Windows/macOS/Linux Electron; Ta
 ## Agent skill guide
 
 [AGENT.md](../AGENT.md) documents 34 local and 18 session-provided skills, task routing, Spec Kit/OpenSpec prerequisites and phase guidance. [AGENTS.md](../AGENTS.md) points repository agents to it.
+
+## Delivery governance
+
+[Contributor policy](development/delivery-governance.md), [F001 feature guide](features/F001.md)
+and [F001 QA/evidence](qa/F001.md) describe the implemented local tooling and current review.
+Owner approval, merge and release are separate outcomes.
 
 ## UI design system
 
@@ -64,6 +70,6 @@ Freelancers and small teams from first release; Windows/macOS/Linux Electron; Ta
 
 ## Maintenance and implementation readiness
 
-Confirmed decisions are authoritative; recommendations and open policies must not be silently promoted to user choices. Update requirement, affected state/data/API, phase, acceptance, risk and decision links together. Stable IDs are never reused. Each enabled release slice needs actual evidence; never check a future gate from documentation alone. Financial legal profiles require selected markets/review. Current scope authorizes docs, not implementation, new packages, cloud provisioning or external communication.
+Confirmed decisions are authoritative; recommendations and open policies must not be silently promoted to user choices. Update requirement, affected state/data/API, phase, acceptance, risk and decision links together. Stable IDs are never reused. Each enabled release slice needs actual evidence; never check a future gate from documentation alone. Financial legal profiles require selected markets/review. Current scope authorizes F001 governance implementation and its PR publication. Business implementation, new packages, cloud provisioning and deployment remain deferred.
 
 Recommended reading paths: product owner → brief/decisions/roadmap/screens; engineer → architecture/data/API/sync/security/specs; QA → coverage/acceptance/test strategy/phases; operator → backend/data lifecycle/release/support. For running the existing shell, use development/setup.md.

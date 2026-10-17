@@ -60,7 +60,7 @@ These are future deliverables within the feature PR, not additional files create
 
 ### PR description contract
 
-Describe problem and resulting behavior; phase/requirement/dependency IDs; included/excluded scope; docs changed; test commands and results; QA evidence/artifact links; schema/API/security/financial impact; rollback/forward repair; flags/market/provider limitations; and approval status. Explain the concrete trigger/before-after behavior rather than recounting work history. Future PR template belongs to F001; it is not generated today.
+Describe problem and resulting behavior; phase/requirement/dependency IDs; included/excluded scope; docs changed; test commands and results; QA evidence/artifact links; schema/API/security/financial impact; rollback/forward repair; flags/market/provider limitations; and approval status. Explain the concrete trigger/before-after behavior rather than recounting work history. The [F001 PR template](.github/pull_request_template.md) now implements this description contract.
 
 ### Minimum automated verification
 
@@ -91,7 +91,7 @@ All included requirements implemented; applicable tests pass on the latest PR co
 
 ## 5. GitHub setup and cost-aware enforcement
 
-Read-only inspection found this repository public, default branch main, and the current authenticated viewer with ADMIN permission. Existing rulesets/checks/collaborators were not inspected or changed. F001/F002 will verify and configure an agreed merge policy when that implementation is requested.
+Read-only inspection found this repository public, default branch main, and the current authenticated viewer with ADMIN permission. F001 read-only inspection found no rulesets and no main branch protection; see [current QA](docs/qa/F001.md). No remote settings were changed. F002 owns separately authorized enforcement.
 
 Recommend PR-only main updates, no ordinary force-push/deletion, resolved conversations, current required checks and a single aggregate phase gate. Use uniquely named required checks; do not path-skip the only required workflow and leave it pending, or let skipped dependent jobs produce a false success. An always-running gate evaluates applicable jobs and evidence. Separate user final approval from CI automation. Add a mandatory independent human code review only if a real reviewer is available; agent review is not an independent GitHub human approval.
 
@@ -144,7 +144,7 @@ P00–P09 retain the original domain milestone meanings. They are organizational
 | Q-15 import sources/historic numbers/opening balances | Import real financial/customer records                     | Generic staged synthetic import/export                                        |
 | Q-16 service levels/RPO/RTO/support/budget            | Production availability/recovery promise                   | Restore drills and measured limited-pilot behavior                            |
 
-These gates are existing complex decisions, not reasons to ask the same global questions again. Ask focused questions just before the affected phase, record the answer, and continue unrelated ready phases. Spec Kit constitution is currently a template; F001 replaces it from confirmed principles. This root programme plan is not a claim that all future feature-specific Spec Kit gates are already passed. User preference for one root plan overrides creating a separate programme scaffold now.
+These gates are existing complex decisions, not reasons to ask the same global questions again. Ask focused questions just before the affected phase, record the answer, and continue unrelated ready phases. The concrete Spec Kit constitution is v1.0.0; F001 reviews it and completes the delivery/evidence policy. This root programme plan is not a claim that all future feature-specific Spec Kit gates are already passed. User preference for one root plan overrides creating a separate programme scaffold now.
 
 ## 9. Feature-phase index
 
@@ -312,10 +312,10 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F001 — Delivery governance and PR standards
 
-- **PR identity:** `[F001] Delivery governance and PR standards`; branch `feat/f001-delivery-governance-and-pr-standards` → `main`; one PR; status planned, URL not yet created.
+- **PR identity:** `[F001] Delivery governance and PR standards`; branch `feat/f001-delivery-governance-and-pr-standards` → `main`; one PR; implementation and local verification complete, publication being prepared; owner approval and merge pending.
 - **Prerequisites:** None; preserve existing working changes. **Milestone:** P00 — Product and development governance.
 - **Requirements:** NFR-014. **Behavior authority:** [requirements](docs/product/requirements.md).
-- **Build the feature:** Replace the placeholder constitution with confirmed principles; define branch/PR naming, feature evidence and review policy; preserve existing docs and requirement IDs.
+- **Build the feature:** Review the established constitution from confirmed principles; define branch/PR naming, feature evidence and review policy; preserve existing docs and requirement IDs.
 - **Automated tests:** Validate policy links, phase/requirement references and no undocumented approval bypass. Apply the shared relevant contract/permission/retry/RTL/regression checks.
 - **Agent QA:** Agent audits the policy; owner approves the first feature PR and its evidence convention. Record observed results and build/commit, not code-inspection assumptions.
 - **Documentation in this PR:** `docs/features/F001.md`, `docs/qa/F001.md`, affected specification/contract/user guidance and migration/rollback/runbook updates where applicable.

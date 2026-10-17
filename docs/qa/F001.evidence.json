@@ -1,0 +1,1318 @@
+{
+  "schema_version": 1,
+  "pack_id": "F001-review-20261017",
+  "phase": {
+    "id": "F001",
+    "milestone": "P00",
+    "parent_requirements": [
+      "NFR-014"
+    ],
+    "outcome": "Traceable delivery policy, bounded local validation and a concrete owner review package",
+    "included_scope": [
+      "Constitution and contributor/PR policy",
+      "Local validator and synthetic fixtures",
+      "F001 specifications, feature guide and actual QA records"
+    ],
+    "excluded_scope": [
+      "Business application features",
+      "New dependencies, CI/remote enforcement and cloud provisioning",
+      "Merge and release without later current authorization"
+    ],
+    "prerequisites": [],
+    "blocking_decisions": [],
+    "responsible_roles": [
+      "contributor",
+      "reviewing agent",
+      "user/owner"
+    ],
+    "delivery_state": "building",
+    "condition": "active",
+    "last_valid_state": "building",
+    "history_refs": [
+      "F001-transition-1",
+      "F001-transition-2"
+    ]
+  },
+  "proposal": {
+    "phase_id": "F001",
+    "title": "[F001] Delivery governance and PR standards",
+    "branch": "feat/f001-delivery-governance-and-pr-standards",
+    "target": "main",
+    "pr_url": null,
+    "problem": "Delivery rules and evidence lacked an operational, locally verifiable contract",
+    "result": "One bounded proposal with honest QA, current snapshot and explicit final owner review",
+    "scope": {
+      "included": [
+        "Constitution and contributor/PR policy",
+        "Local validator and synthetic fixtures",
+        "F001 specifications, feature guide and actual QA records"
+      ],
+      "excluded": [
+        "Business application features",
+        "New dependencies, CI/remote enforcement and cloud provisioning",
+        "Merge and release without later current authorization"
+      ]
+    },
+    "doc_refs": [
+      "docs/features/F001.md",
+      "docs/qa/F001.md",
+      "docs/development/delivery-governance.md"
+    ],
+    "head_revision": "dd4c2379402e9c0dcb1c6b581640c5142bf80ac9",
+    "base_revision": "dd4c2379402e9c0dcb1c6b581640c5142bf80ac9",
+    "snapshot_ref": "F001-reviewed-tree-1",
+    "impact": {
+      "security": "Inert bounded local tooling; no application authorization or secret storage changes",
+      "financial": "No application money behavior",
+      "schema": "No migrations or business data changes"
+    },
+    "recovery": "Repair the same open PR; post-merge maintenance uses linked backout/review; retain history",
+    "limitations": "Local advisory checks cannot authenticate human consent, enforce remote protection or establish product/native/Arabic acceptance",
+    "remote_constraints_ref": null,
+    "fix_of": null,
+    "maintenance_of": null
+  },
+  "snapshot": {
+    "id": "F001-reviewed-tree-1",
+    "observed_head": "dd4c2379402e9c0dcb1c6b581640c5142bf80ac9",
+    "comparison_base": "dd4c2379402e9c0dcb1c6b581640c5142bf80ac9",
+    "reviewed_paths": [
+      ".github/pull_request_template.md",
+      ".gitignore",
+      ".specify/memory/constitution.md",
+      "AGENT.md",
+      "AGENTS.md",
+      "README.md",
+      "docs/README.md",
+      "docs/development/delivery-governance.md",
+      "docs/features/F001.md",
+      "docs/planning/coverage.md",
+      "docs/product/requirements.md",
+      "plan.md",
+      "specs/001-delivery-governance/checklists/requirements.md",
+      "specs/001-delivery-governance/contracts/evidence-record.md",
+      "specs/001-delivery-governance/contracts/local-validation.md",
+      "specs/001-delivery-governance/contracts/pull-request.md",
+      "specs/001-delivery-governance/contracts/review-policy.md",
+      "specs/001-delivery-governance/data-model.md",
+      "specs/001-delivery-governance/plan.md",
+      "specs/001-delivery-governance/quickstart.md",
+      "specs/001-delivery-governance/research.md",
+      "specs/001-delivery-governance/spec.md",
+      "specs/001-delivery-governance/tasks.md",
+      "tooling/check-governance.mjs",
+      "tooling/check-governance.test.mjs",
+      "tooling/fixtures/governance/approvals.json",
+      "tooling/fixtures/governance/evidence-records.json",
+      "tooling/fixtures/governance/lifecycle.json",
+      "tooling/fixtures/governance/policy-references.json",
+      "tooling/fixtures/governance/proposals.json",
+      "tooling/fixtures/governance/snapshot-digests.json"
+    ],
+    "content_digest": "947923c7b382ead966d319d18d380bc1645dce04cea83cf8b77e5a6f70a0aa68",
+    "digest_format": "F001-review-v1",
+    "working_tree_state": "uncommitted",
+    "created_at": "2026-10-17T17:03:02Z",
+    "supersedes": null,
+    "carry_forward": [
+      {
+        "old_head": "dd4c2379402e9c0dcb1c6b581640c5142bf80ac9",
+        "old_base": "dd4c2379402e9c0dcb1c6b581640c5142bf80ac9",
+        "new_head": "content-bound",
+        "new_base": "dd4c2379402e9c0dcb1c6b581640c5142bf80ac9",
+        "content_digest": "947923c7b382ead966d319d18d380bc1645dce04cea83cf8b77e5a6f70a0aa68",
+        "reason": "Agent reviewed the complete pending-owner uncommitted tree. Later commits may seal only the exact canonical bytes plus the two reviewed evidence containers. Changed scope/digest/base requires renewed review; no approval is transferred.",
+        "reviewer": "Codex agent",
+        "recorded_at": "2026-10-17T17:03:02Z",
+        "prior_evidence_ids": [
+          "F001-governance-suite",
+          "F001-policy-audit"
+        ]
+      }
+    ],
+    "unrelated_paths": [
+      {
+        "path": "tooling/start.mjs",
+        "reason": "Existing separate formatting-only launcher edit preserved outside F001 staging."
+      },
+      {
+        "path": "tooling/start.test.mjs",
+        "reason": "Existing separate formatting-only launcher edit preserved outside F001 staging."
+      }
+    ],
+    "evidence_containers": [
+      "docs/qa/F001.evidence.json",
+      "docs/qa/F001.md"
+    ]
+  },
+  "categories": [
+    {
+      "id": "documentation",
+      "subject": "Governance sources and required links",
+      "applicable": true,
+      "reason": null
+    },
+    {
+      "id": "evidence",
+      "subject": "Current records, scope, provenance and negative fixtures",
+      "applicable": true,
+      "reason": null
+    },
+    {
+      "id": "regression",
+      "subject": "Existing launcher/TypeScript/build",
+      "applicable": true,
+      "reason": null
+    },
+    {
+      "id": "application",
+      "subject": "application unchanged runtime subject",
+      "applicable": false,
+      "reason": "No application/business state machine changed."
+    },
+    {
+      "id": "authorization",
+      "subject": "authorization unchanged runtime subject",
+      "applicable": false,
+      "reason": "No runtime authorization implementation changed; final-owner policy is reviewed as applicable documentation/evidence."
+    },
+    {
+      "id": "recovery",
+      "subject": "Repair, invalidation, history and F002 handoff",
+      "applicable": true,
+      "reason": null
+    },
+    {
+      "id": "localization",
+      "subject": "localization unchanged runtime subject",
+      "applicable": false,
+      "reason": "No customer UI/PDF change; Unicode tooling fixtures do not establish fluent Arabic/RTL acceptance."
+    },
+    {
+      "id": "native",
+      "subject": "native unchanged runtime subject",
+      "applicable": false,
+      "reason": "No installer/native lifecycle change; shell regressions are separate and mandatory."
+    },
+    {
+      "id": "migration",
+      "subject": "migration unchanged runtime subject",
+      "applicable": false,
+      "reason": "No stored business schema/protocol/data migration."
+    },
+    {
+      "id": "privacy",
+      "subject": "Inert synthetic/redacted fixtures and safe diagnostics",
+      "applicable": true,
+      "reason": null
+    }
+  ],
+  "evidence": [
+    {
+      "id": "F001-A-01",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [
+        "A-01"
+      ],
+      "requirement_ids": [
+        "FR-001",
+        "FR-002",
+        "NFR-014"
+      ],
+      "category": "documentation",
+      "subject": "F001 A-01 policy/fixture classification",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "Inspect actual governing policy and corresponding independently expected story tests",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Followed AGENTS → AGENT/constitution/product/decisions/root F001 and verified NFR-014 governance scope.",
+      "status": "passed",
+      "artifact_refs": [
+        "tooling/check-governance.test.mjs",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": false
+    },
+    {
+      "id": "F001-A-02",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [
+        "A-02"
+      ],
+      "requirement_ids": [
+        "FR-002",
+        "NFR-014"
+      ],
+      "category": "documentation",
+      "subject": "F001 A-02 policy/fixture classification",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "Inspect actual governing policy and corresponding independently expected story tests",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Open Q decisions remain open; recommended decisions are not promoted; malformed promotion fixture rejected.",
+      "status": "passed",
+      "artifact_refs": [
+        "tooling/check-governance.test.mjs",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": false
+    },
+    {
+      "id": "F001-A-03",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [
+        "A-03"
+      ],
+      "requirement_ids": [
+        "FR-003",
+        "NFR-014"
+      ],
+      "category": "documentation",
+      "subject": "F001 A-03 policy/fixture classification",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "Inspect actual governing policy and corresponding independently expected story tests",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Preserved the existing draft; corrected stale source observations and removed the temporary report without changing eight principles.",
+      "status": "passed",
+      "artifact_refs": [
+        "tooling/check-governance.test.mjs",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": false
+    },
+    {
+      "id": "F001-A-04",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [
+        "A-04"
+      ],
+      "requirement_ids": [
+        "FR-004",
+        "NFR-014"
+      ],
+      "category": "documentation",
+      "subject": "F001 A-04 policy/fixture classification",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "Inspect actual governing policy and corresponding independently expected story tests",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Reviewed amendment fields/version/date/owner rule; synthetic amendment is not an adopted product policy.",
+      "status": "passed",
+      "artifact_refs": [
+        "tooling/check-governance.test.mjs",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": false
+    },
+    {
+      "id": "F001-A-05",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [
+        "A-05"
+      ],
+      "requirement_ids": [
+        "FR-005",
+        "FR-006",
+        "NFR-014"
+      ],
+      "category": "documentation",
+      "subject": "F001 A-05 policy/fixture classification",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "Inspect actual governing policy and corresponding independently expected story tests",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Actual feature branch created from verified main; proposal identity tests enforce one primary PR/main, with real PR still pending.",
+      "status": "passed",
+      "artifact_refs": [
+        "tooling/check-governance.test.mjs",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": false
+    },
+    {
+      "id": "F001-A-06",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [
+        "A-06"
+      ],
+      "requirement_ids": [
+        "FR-007",
+        "FR-008",
+        "NFR-014"
+      ],
+      "category": "documentation",
+      "subject": "F001 A-06 policy/fixture classification",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "Inspect actual governing policy and corresponding independently expected story tests",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Read all ten template sections and guide links; required result omission fixture rejected.",
+      "status": "passed",
+      "artifact_refs": [
+        "tooling/check-governance.test.mjs",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": false
+    },
+    {
+      "id": "F001-A-07",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [
+        "A-07"
+      ],
+      "requirement_ids": [
+        "FR-005",
+        "NFR-014"
+      ],
+      "category": "documentation",
+      "subject": "F001 A-07 policy/fixture classification",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "Inspect actual governing policy and corresponding independently expected story tests",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Split-after-implementation fixture rejected; guide requires new IDs/dependencies before a split.",
+      "status": "passed",
+      "artifact_refs": [
+        "tooling/check-governance.test.mjs",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": false
+    },
+    {
+      "id": "F001-A-08",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [
+        "A-08"
+      ],
+      "requirement_ids": [
+        "FR-019",
+        "NFR-014"
+      ],
+      "category": "documentation",
+      "subject": "F001 A-08 policy/fixture classification",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "Inspect actual governing policy and corresponding independently expected story tests",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Inspected same-open-PR repair and linked-maintenance rules; no merged history rewritten or second PR created.",
+      "status": "passed",
+      "artifact_refs": [
+        "tooling/check-governance.test.mjs",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": false
+    },
+    {
+      "id": "F001-A-09",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [
+        "A-09"
+      ],
+      "requirement_ids": [
+        "FR-009",
+        "NFR-014"
+      ],
+      "category": "evidence",
+      "subject": "F001 A-09 policy/fixture classification",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "Inspect actual governing policy and corresponding independently expected story tests",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Complete synthetic pre-owner envelope passed; actual snapshot captures measured head/base, paths and canonical digest. Unicode/order/raw-byte digest matched an independently computed Python expectation.",
+      "status": "passed",
+      "artifact_refs": [
+        "tooling/check-governance.test.mjs",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": false
+    },
+    {
+      "id": "F001-A-10",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [
+        "A-10"
+      ],
+      "requirement_ids": [
+        "FR-010",
+        "NFR-014"
+      ],
+      "category": "evidence",
+      "subject": "F001 A-10 policy/fixture classification",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "Inspect actual governing policy and corresponding independently expected story tests",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Failed, not run, unavailable, stale and unjustified not-applicable required results each produced findings; unknown version exits 2, malformed JSON is inert.",
+      "status": "passed",
+      "artifact_refs": [
+        "tooling/check-governance.test.mjs",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": false
+    },
+    {
+      "id": "F001-A-11",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [
+        "A-11"
+      ],
+      "requirement_ids": [
+        "FR-012",
+        "FR-014",
+        "NFR-014"
+      ],
+      "category": "evidence",
+      "subject": "F001 A-11 policy/fixture classification",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "Inspect actual governing policy and corresponding independently expected story tests",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Missing artifact/coverage, duplicate IDs, dangling pack/snapshot references, omitted tooling and changed digest/base were rejected.",
+      "status": "passed",
+      "artifact_refs": [
+        "tooling/check-governance.test.mjs",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": false
+    },
+    {
+      "id": "F001-A-12",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [
+        "A-12"
+      ],
+      "requirement_ids": [
+        "FR-011",
+        "FR-025",
+        "NFR-014"
+      ],
+      "category": "evidence",
+      "subject": "F001 A-12 policy/fixture classification",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "Inspect actual governing policy and corresponding independently expected story tests",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Ten review subjects have individual applicability decisions; five mandatory governance subjects cannot be waived. Runtime categories have specific unchanged-subject reasons.",
+      "status": "passed",
+      "artifact_refs": [
+        "tooling/check-governance.test.mjs",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": false
+    },
+    {
+      "id": "F001-A-13",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [
+        "A-13"
+      ],
+      "requirement_ids": [
+        "FR-013",
+        "FR-024",
+        "NFR-014"
+      ],
+      "category": "evidence",
+      "subject": "F001 A-13 policy/fixture classification",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "Inspect actual governing policy and corresponding independently expected story tests",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Inspected guide/template/source authority and exercised all story groups. Product/native/financial behavior is not represented as executed by a document check.",
+      "status": "passed",
+      "artifact_refs": [
+        "tooling/check-governance.test.mjs",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": false
+    },
+    {
+      "id": "F001-A-14",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [
+        "A-14"
+      ],
+      "requirement_ids": [
+        "FR-015",
+        "FR-020",
+        "NFR-014"
+      ],
+      "category": "evidence",
+      "subject": "F001 A-14 policy/fixture classification",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "Inspect actual governing policy and corresponding independently expected story tests",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Real owner decision is pending. Pending packs can pass documentary checks while the policy requires awaiting-owner review and prohibits merge.",
+      "status": "passed",
+      "artifact_refs": [
+        "tooling/check-governance.test.mjs",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": false
+    },
+    {
+      "id": "F001-A-15",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [
+        "A-15"
+      ],
+      "requirement_ids": [
+        "FR-015",
+        "NFR-014"
+      ],
+      "category": "evidence",
+      "subject": "F001 A-15 policy/fixture classification",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "Inspect actual governing policy and corresponding independently expected story tests",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Attributed current human-source fixture is structurally valid; output still requires source verification. No live owner authorization is inferred.",
+      "status": "passed",
+      "artifact_refs": [
+        "tooling/check-governance.test.mjs",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": true
+    },
+    {
+      "id": "F001-A-16",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [
+        "A-16"
+      ],
+      "requirement_ids": [
+        "FR-015",
+        "FR-016",
+        "NFR-014"
+      ],
+      "category": "evidence",
+      "subject": "F001 A-16 policy/fixture classification",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "Inspect actual governing policy and corresponding independently expected story tests",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Agent, editable boolean, absent source, checkbox/silence and stale context cannot establish consent. Inspected policy explicitly rejects these substitutes.",
+      "status": "passed",
+      "artifact_refs": [
+        "tooling/check-governance.test.mjs",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": false
+    },
+    {
+      "id": "F001-A-17",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [
+        "A-17"
+      ],
+      "requirement_ids": [
+        "FR-017",
+        "NFR-014"
+      ],
+      "category": "evidence",
+      "subject": "F001 A-17 policy/fixture classification",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "Inspect actual governing policy and corresponding independently expected story tests",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Changed head/base without assessment and changed content produce stale/context findings; changed-head approval remains stale. Old records are retained.",
+      "status": "passed",
+      "artifact_refs": [
+        "tooling/check-governance.test.mjs",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": true
+    },
+    {
+      "id": "F001-A-18",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [
+        "A-18"
+      ],
+      "requirement_ids": [
+        "FR-016",
+        "NFR-014"
+      ],
+      "category": "evidence",
+      "subject": "F001 A-18 policy/fixture classification",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "Inspect actual governing policy and corresponding independently expected story tests",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Author decision mislabeled independent is rejected. Guide keeps owner authorization separate from mandatory remote review; remote facts inspected independently below.",
+      "status": "passed",
+      "artifact_refs": [
+        "tooling/check-governance.test.mjs",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": false
+    },
+    {
+      "id": "F001-A-19",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [
+        "A-19"
+      ],
+      "requirement_ids": [
+        "FR-018",
+        "FR-026",
+        "NFR-014"
+      ],
+      "category": "recovery",
+      "subject": "F001 A-19 policy/fixture classification",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "Inspect actual governing policy and corresponding independently expected story tests",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Blocked/failed overlays require reason/owner/action; skipped/out-of-order transitions and missing history refs are diagnosed. Tests do not mutate phase records.",
+      "status": "passed",
+      "artifact_refs": [
+        "tooling/check-governance.test.mjs",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": true
+    },
+    {
+      "id": "F001-A-20",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [
+        "A-20"
+      ],
+      "requirement_ids": [
+        "FR-021",
+        "NFR-014"
+      ],
+      "category": "recovery",
+      "subject": "F001 A-20 policy/fixture classification",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "Inspect actual governing policy and corresponding independently expected story tests",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Merge/release assertions without actual outcome events were rejected. The guide requires actual inspected merge identity and separate release authority. No real merge/release has occurred.",
+      "status": "passed",
+      "artifact_refs": [
+        "tooling/check-governance.test.mjs",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": true
+    },
+    {
+      "id": "F001-A-21",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [
+        "A-21"
+      ],
+      "requirement_ids": [
+        "FR-023",
+        "NFR-014"
+      ],
+      "category": "recovery",
+      "subject": "F001 A-21 policy/fixture classification",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "Inspect actual governing policy and corresponding independently expected story tests",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Actual local checks above are available. F002 owns later generalized scanning/CI/protection/authenticated provider integration and starts after actual F001 merge.",
+      "status": "passed",
+      "artifact_refs": [
+        "tooling/check-governance.test.mjs",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": false
+    },
+    {
+      "id": "F001-A-22",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [
+        "A-22"
+      ],
+      "requirement_ids": [
+        "FR-017",
+        "FR-022",
+        "NFR-014"
+      ],
+      "category": "recovery",
+      "subject": "F001 A-22 policy/fixture classification",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "Inspect actual governing policy and corresponding independently expected story tests",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Exact carry-forward passed; missing assessment and changed digest/base failed. Reviewed content sealing is limited to pending uncommitted snapshots and never transfers approval. Unrelated edits remain intact.",
+      "status": "passed",
+      "artifact_refs": [
+        "tooling/check-governance.test.mjs",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": false
+    },
+    {
+      "id": "F001-governance-suite",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [],
+      "requirement_ids": [
+        "NFR-014"
+      ],
+      "category": "evidence",
+      "subject": "Local governance/CLI contract",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "node --test tooling/check-governance.test.mjs",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Exit 0; 74 tests passed, zero failed. Ordinary isolated runner executed outside restrictive process sandbox.",
+      "status": "passed",
+      "artifact_refs": [
+        "tooling/check-governance.test.mjs",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": false
+    },
+    {
+      "id": "F001-policy-audit",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [],
+      "requirement_ids": [
+        "NFR-014"
+      ],
+      "category": "documentation",
+      "subject": "Actual policy links/clauses and source audit",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "node tooling/check-governance.mjs",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Exit 0, valid, zero findings; owner-source verification remains required. Agent inspected source meaning and all ten manual approval classifications.",
+      "status": "passed",
+      "artifact_refs": [
+        "tooling/check-governance.test.mjs",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": false
+    },
+    {
+      "id": "F001-test-launcher",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [],
+      "requirement_ids": [
+        "NFR-014"
+      ],
+      "category": "regression",
+      "subject": "Existing shell npm run test:launcher",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "npm run test:launcher",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Exit 0; 5 tests passed, 0 failed. Narrow existing launcher regression.",
+      "status": "passed",
+      "artifact_refs": [
+        "package.json",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": false
+    },
+    {
+      "id": "F001-typecheck",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [],
+      "requirement_ids": [
+        "NFR-014"
+      ],
+      "category": "regression",
+      "subject": "Existing shell npm run typecheck",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "npm run typecheck",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Exit 0; TypeScript shell configuration passed.",
+      "status": "passed",
+      "artifact_refs": [
+        "package.json",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": false
+    },
+    {
+      "id": "F001-build",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [],
+      "requirement_ids": [
+        "NFR-014"
+      ],
+      "category": "regression",
+      "subject": "Existing shell npm run build",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "npm run build",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "Exit 0; Vite main and renderer builds completed; output ignored.",
+      "status": "passed",
+      "artifact_refs": [
+        "package.json",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": false
+    },
+    {
+      "id": "F001-privacy",
+      "pack_id": "F001-review-20261017",
+      "scenario_ids": [],
+      "requirement_ids": [
+        "NFR-014"
+      ],
+      "category": "privacy",
+      "subject": "Complete scope/preservation and diagnostic audit",
+      "applicable": true,
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "environment": "Linux x64; Node v24.21.0; existing locked dependencies; English repository policy review",
+      "fixtures_or_documents": [
+        "docs/development/delivery-governance.md",
+        "specs/001-delivery-governance/spec.md"
+      ],
+      "procedure": "Inspect all changed F001 sources/fixtures, package and lock hashes, launcher diff and safe diagnostics",
+      "expected": "Current applicable policy/check matches the independently specified rule; synthetic cases do not establish live approval/merge.",
+      "observed": "No application/package/configuration hash changes; separate launcher formatting preserved outside staging. No credentials/customer data found in reviewed F001 files. URL credentials/path redacted, recorded commands inert; no external scanner claim.",
+      "status": "passed",
+      "artifact_refs": [
+        "tooling/check-governance.test.mjs",
+        "docs/qa/F001.md"
+      ],
+      "reviewer": {
+        "id": "Codex",
+        "kind": "agent"
+      },
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "finding_refs": [],
+      "supersedes": null,
+      "synthetic_subject": false
+    }
+  ],
+  "findings": [
+    {
+      "id": "F001-I1",
+      "evidence_refs": [
+        "F001-policy-audit"
+      ],
+      "affected_requirements": [
+        "FR-014"
+      ],
+      "severity": "major",
+      "blocking": true,
+      "observation": "Analysis found final pack validation before its mandatory evidence producers.",
+      "owner": "Codex agent",
+      "next_action": "Closed after ordering repair; retain history.",
+      "disposition": "fixed",
+      "closure_evidence": [
+        "F001-policy-audit",
+        "F001-governance-suite"
+      ],
+      "supersedes": null
+    },
+    {
+      "id": "F001-I2",
+      "evidence_refs": [
+        "F001-governance-suite"
+      ],
+      "affected_requirements": [
+        "FR-024"
+      ],
+      "severity": "major",
+      "blocking": true,
+      "observation": "Audit case exposed external URL credentials/path in diagnostics.",
+      "owner": "Codex agent",
+      "next_action": "Closed after redaction repair.",
+      "disposition": "fixed",
+      "closure_evidence": [
+        "F001-governance-suite",
+        "F001-privacy"
+      ],
+      "supersedes": null
+    },
+    {
+      "id": "F001-I3",
+      "evidence_refs": [
+        "F001-governance-suite"
+      ],
+      "affected_requirements": [
+        "FR-014"
+      ],
+      "severity": "major",
+      "blocking": true,
+      "observation": "Blocker severity could be contradicted by editable blocking false.",
+      "owner": "Codex agent",
+      "next_action": "Closed after independent blocker-severity check.",
+      "disposition": "fixed",
+      "closure_evidence": [
+        "F001-governance-suite"
+      ],
+      "supersedes": null
+    }
+  ],
+  "decisions": [],
+  "approval": {
+    "id": "F001-owner-pending",
+    "phase_id": "F001",
+    "pr_url": null,
+    "snapshot_ref": "F001-reviewed-tree-1",
+    "evidence_pack_ref": "F001-review-20261017",
+    "decision": "pending",
+    "decision_maker": null,
+    "decided_at": null,
+    "source_reference": null,
+    "kind": "owner authorization",
+    "supersedes": null,
+    "limitations": "PR publication is authorized; no final merge decision has been given."
+  },
+  "transitions": [
+    {
+      "id": "F001-transition-1",
+      "from": "planned",
+      "to": "decision-ready",
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "actor": "Codex agent",
+      "event": "preparation",
+      "source_reference": "specs/001-delivery-governance/plan.md",
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "evidence_refs": [
+        "F001-policy-audit"
+      ],
+      "reason": "Observed preparation and explicitly authorized F001 implementation; no owner merge approval inferred."
+    },
+    {
+      "id": "F001-transition-2",
+      "from": "decision-ready",
+      "to": "building",
+      "recorded_at": "2026-10-17T17:03:02Z",
+      "actor": "Codex agent",
+      "event": "implementation authorized",
+      "source_reference": "User request: speckit-implement Start implementation",
+      "snapshot_ref": "F001-reviewed-tree-1",
+      "evidence_refs": [
+        "F001-policy-audit"
+      ],
+      "reason": "Observed preparation and explicitly authorized F001 implementation; no owner merge approval inferred."
+    }
+  ]
+}

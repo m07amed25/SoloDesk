@@ -1,0 +1,27 @@
+{
+  "synthetic": true,
+  "states": [
+    "planned",
+    "decision-ready",
+    "building",
+    "PR open/draft",
+    "automated checks passed",
+    "agent QA passed",
+    "awaiting user approval",
+    "approved",
+    "merged",
+    "released"
+  ],
+  "cases": [
+    "blocked overlay",
+    "failed overlay",
+    "invalidation preserving history",
+    "withdrawn approval",
+    "missing merge event",
+    "missing release event",
+    "unavailable not passed",
+    "wrong transition order",
+    "unknown actor/source",
+    "F002 handoff is not implemented CI"
+  ]
+}

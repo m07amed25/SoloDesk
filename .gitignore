@@ -12,3 +12,8 @@ coverage/
 *.db-wal
 .DS_Store
 Thumbs.db
+build/
+*.tmp
+*.swp
+.idea/
+.vscode/
