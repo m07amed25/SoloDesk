@@ -7,3 +7,5 @@ SoloDesk keeps its official generated shadcn Button, Base UI primitives, Tailwin
 `npm run ui:info` inspects the local components configuration, component inventory and stylesheet/license integrity. It performs no registry request and does not add components. Review future upstream component/style updates as source changes; restore a generator dependency only after its full dependency graph passes the same security policy. Do not use an unpinned transient generator to bypass this repair.
 
 The license inventory includes this retained source in addition to every locked production/development/optional dependency. Missing or changed vendored files fail verification. The current component behavior and appearance are preserved.
+
+The root Git attributes keep the hash-verified stylesheet and license in LF format on every checkout, including Windows with automatic CRLF conversion enabled.
