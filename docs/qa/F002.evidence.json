@@ -3,11 +3,11 @@
   "schema_version": 1,
   "phase": "F002",
   "context": {
-    "head": "9f98f7b0eec38a0281e53ca3b5ba822b350628ad",
+    "head": "593a9ee51a533ab431ccfa1447afec36b5c2852e",
     "base": "c66095e65e0b901aeeddf4f9e1d7274be5fdbf8a",
-    "scope": "Exact reviewed implementation source; subsequent evidence-only transcription preserves these measured identities",
+    "scope": "Actual repaired passing hosted source; following evidence/line-ending transcription retains its exact identities",
     "primary_pr": "https://github.com/m07amed25/SoloDesk/pull/2",
-    "tested": "b4c06fdd895d60c824653996084f99df5c2d5cf2",
+    "tested": "bba569841e6816a5eeb0ce4932418bb535490027",
     "workflow": {
       "path": ".github/workflows/verify.yml",
       "sha256": "19cbce514a0138f7d5bb2de51763ed2e64a6a087f16e0436c95671f5a9f2e285",
@@ -16,13 +16,13 @@
     "manifest_digests": {
       "algorithm": "F002-json-v1-sha256",
       "values": {
-        "verification/policy.v1.json": "d6c6bc52b9d14ef646a8fe715d778176fe0711f6399224950060a03f4e4c1578",
-        "verification/suites.v1.json": "81ea2169351d4bc6bd0c366961511505ad25a1e2cb1b65005ac2c1d69633edea",
+        "verification/policy.v1.json": "720fd43fd8295d9bbded7cadc5c0de33a54363f6f1dce631f24ffb84c4695b73",
+        "verification/suites.v1.json": "7e8f79a611d06051cc20c0bc99d81cbb7632ca698d9c96f52870b9d0fbb16fef",
         "verification/toolchain.v1.json": "756f57673fd51dba7bb4c190243a06b139873cef7715fa6a81c1ba639b8cb305"
       }
     }
   },
-  "automated_ready": false,
+  "automated_ready": true,
   "agent_qa": {
     "status": "performed with explicit delivery blockers",
     "reviewer": "Codex",
@@ -168,18 +168,40 @@
         "vulnerabilities": 0
       },
       "artifact_equivalence": "Existing Button and renderer JS/CSS byte hashes unchanged from before CLI removal"
+    },
+    {
+      "id": "security-repair-hosted-success",
+      "status": "passed",
+      "source": "https://github.com/m07amed25/SoloDesk/actions/runs/39080497311",
+      "expected": "All mandatory producer evidence and actual provider jobs succeed after fixing dependency graph",
+      "observed": {
+        "jobs": 7,
+        "all_jobs": "success",
+        "automated_ready": true,
+        "findings": []
+      },
+      "counts": {
+        "baseline_checks": 11,
+        "unit": 64,
+        "integration": 35,
+        "dependency_inputs": 350,
+        "license_inputs": 351,
+        "native_targets": 3,
+        "vulnerabilities": 0
+      }
     }
   ],
   "findings": [
     {
       "id": "F002-audit",
       "severity": "high",
-      "blocking": true,
-      "status": "mitigated-awaiting-verification",
-      "diagnostic": "Vulnerable CLI graph removed; actual local all-dependency audit is clean; current hosted confirmation pending",
+      "blocking": false,
+      "status": "closed",
+      "diagnostic": "Vulnerable generator CLI graph removed, official shadcn UI source retained and verified; full local and hosted audit reports zero findings",
       "owner": "Dependency maintainer/security reviewer",
-      "next_action": "Inspect fresh hosted security and readiness results before closing",
-      "stage": "automated"
+      "next_action": "Retain complete scans and reviewed source updates; do not restore vulnerable generator",
+      "stage": "automated",
+      "evidence": "https://github.com/m07amed25/SoloDesk/actions/runs/39080497311"
     },
     {
       "id": "F002-control-fork",
@@ -412,9 +434,9 @@
     },
     {
       "id": "FR-020",
-      "status": "failed",
-      "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated",
+      "status": "passed",
+      "source": "https://github.com/m07amed25/SoloDesk/actions/runs/39080497311",
+      "observation": "Actual complete dependency/license/secret/workflow scans pass after dependency removal; no finding waiver",
       "expected": "Verification MUST include credential-exposure, dependency-risk and license checks with recorded tool coverage/limitations. Findings MUST receive explicit severity, responsible reviewer and disposition; blocking findings cannot be silently waived or hidden by a successful build.",
       "proof_level": "incomplete-or-blocked"
     },
@@ -702,11 +724,11 @@
     },
     {
       "id": "A-26",
-      "status": "not run",
-      "source": "docs/qa/F002.md",
-      "observation": "Actual assertion-failure and evidence-omission journeys proven; repaired full success blocked by unresolved audit",
+      "status": "passed",
+      "source": "https://github.com/m07amed25/SoloDesk/actions/runs/39080497311",
+      "observation": "Both controlled assertion and missing-report failures preserved; actual repaired full readiness now passes",
       "expected": "Real failure-to-repair journey: Given the one primary F002 proposal, When a controlled applicable-check failure and a controlled evidence omission are each introduced and then repaired, Then actual hosted outcomes demonstrate blocking followed by recovery on the current repaired revision, with all experimental revisions and final QA traceable.",
-      "proof_level": "incomplete-or-blocked"
+      "proof_level": "live-hosted"
     },
     {
       "id": "A-27",
@@ -736,11 +758,11 @@
     },
     {
       "id": "SC-003",
-      "status": "not run",
-      "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated",
+      "status": "passed",
+      "source": "https://github.com/m07amed25/SoloDesk/actions/runs/39080497311",
+      "observation": "Actual same-primary-PR failure, omission, repairs and current passing aggregate observed",
       "expected": "In the one primary F002 review proposal, the owner can inspect actual blocked results for an applicable-check failure and evidence omission, then inspect current successful automated results after both repairs, with all earlier attempts retained.",
-      "proof_level": "incomplete-or-blocked"
+      "proof_level": "live-hosted"
     },
     {
       "id": "SC-004",
@@ -808,118 +830,126 @@
     }
   ],
   "current_provider": {
-    "run_id": 39079707635,
+    "run_id": 39080497311,
     "attempt": 1,
     "repository": "m07amed25/SoloDesk",
-    "current_head": "9f98f7b0eec38a0281e53ca3b5ba822b350628ad",
+    "current_head": "593a9ee51a533ab431ccfa1447afec36b5c2852e",
     "current_base": "c66095e65e0b901aeeddf4f9e1d7274be5fdbf8a",
-    "tested_sha": "b4c06fdd895d60c824653996084f99df5c2d5cf2",
-    "observed_at": "2026-10-17T23:38:58.226Z",
+    "tested_sha": "bba569841e6816a5eeb0ce4932418bb535490027",
+    "observed_at": "2026-10-17T23:52:01.626Z",
     "jobs": [
       {
-        "id": 117533985855,
+        "id": 117536274843,
         "name": "F002 / context",
         "conclusion": "success",
         "status": "completed"
       },
       {
-        "id": 117534011474,
-        "name": "F002 / baseline",
+        "id": 117536307087,
+        "name": "F002 / security",
         "conclusion": "success",
         "status": "completed"
       },
       {
-        "id": 117534011503,
-        "name": "F002 / desktop (windows-x64)",
-        "conclusion": "success",
-        "status": "completed"
-      },
-      {
-        "id": 117534011504,
+        "id": 117536307095,
         "name": "F002 / desktop (linux-x64)",
         "conclusion": "success",
         "status": "completed"
       },
       {
-        "id": 117534011542,
-        "name": "F002 / security",
-        "conclusion": "failure",
+        "id": 117536307115,
+        "name": "F002 / desktop (windows-x64)",
+        "conclusion": "success",
         "status": "completed"
       },
       {
-        "id": 117534011575,
+        "id": 117536307128,
+        "name": "F002 / baseline",
+        "conclusion": "success",
+        "status": "completed"
+      },
+      {
+        "id": 117536307153,
         "name": "F002 / desktop (macos-arm64)",
         "conclusion": "success",
         "status": "completed"
       },
       {
-        "id": 117534200654,
+        "id": 117536544070,
         "name": "F002 / automated-readiness",
-        "conclusion": "failure",
+        "conclusion": "success",
         "status": "completed"
       }
     ],
     "artifacts": [
       {
-        "id": 12118750530,
-        "name": "F002-reports-39079707635-1-security",
+        "id": 12119000991,
+        "name": "F002-reports-39080497311-1-desktop-windows-x64",
         "expired": false,
-        "size_bytes": 3212,
-        "expires_at": "2026-10-24T23:37:30Z"
+        "size_bytes": 31868,
+        "expires_at": "2026-10-24T23:50:34Z"
       },
       {
-        "id": 12118697012,
-        "name": "F002-reports-39079707635-1-desktop-linux-x64",
+        "id": 12118866539,
+        "name": "F002-reports-39080497311-1-desktop-linux-x64",
         "expired": false,
-        "size_bytes": 46265,
-        "expires_at": "2026-10-24T23:37:26Z"
+        "size_bytes": 46307,
+        "expires_at": "2026-10-24T23:50:22Z"
       },
       {
-        "id": 12118296997,
-        "name": "F002-reports-39079707635-1-desktop-macos-arm64",
+        "id": 12118652634,
+        "name": "F002-summary-39080497311-1",
         "expired": false,
-        "size_bytes": 44532,
-        "expires_at": "2026-10-24T23:38:02Z"
+        "size_bytes": 2974,
+        "expires_at": "2026-10-24T23:51:27Z"
       },
       {
-        "id": 12118168472,
-        "name": "F002-reports-39079707635-1-baseline",
+        "id": 12118647496,
+        "name": "F002-reports-39080497311-1-baseline",
         "expired": false,
-        "size_bytes": 14034,
-        "expires_at": "2026-10-24T23:37:41Z"
+        "size_bytes": 15108,
+        "expires_at": "2026-10-24T23:50:29Z"
       },
       {
-        "id": 12117948283,
-        "name": "F002-summary-39079707635-1",
+        "id": 12118647440,
+        "name": "F002-context-39080497311-1",
         "expired": false,
-        "size_bytes": 3003,
-        "expires_at": "2026-10-24T23:38:19Z"
+        "size_bytes": 2981,
+        "expires_at": "2026-10-24T23:49:55Z"
       },
       {
-        "id": 12117773669,
-        "name": "F002-context-39079707635-1",
+        "id": 12118309282,
+        "name": "F002-reports-39080497311-1-security",
         "expired": false,
-        "size_bytes": 2880,
-        "expires_at": "2026-10-24T23:37:05Z"
+        "size_bytes": 2802,
+        "expires_at": "2026-10-24T23:50:22Z"
       },
       {
-        "id": 12117549170,
-        "name": "F002-reports-39079707635-1-desktop-windows-x64",
+        "id": 12117689974,
+        "name": "F002-reports-39080497311-1-desktop-macos-arm64",
         "expired": false,
-        "size_bytes": 31980,
-        "expires_at": "2026-10-24T23:38:06Z"
+        "size_bytes": 44438,
+        "expires_at": "2026-10-24T23:51:05Z"
       }
     ]
   },
   "transcription_assessment": {
-    "reviewed_code_head": "9f98f7b0eec38a0281e53ca3b5ba822b350628ad",
-    "scope": "Following commit changes only QA, root status and task transcription; runtime/toolchain/manifest/workflow/test source is unchanged",
+    "reviewed_code_head": "593a9ee51a533ab431ccfa1447afec36b5c2852e",
     "reviewer": "Codex",
+    "scope": "Following change records actual passing evidence and forces LF for the already-hashed vendor CSS/license; no component or style rule change",
     "old_evidence_identity_preserved": true,
     "required_rechecks": [
-      "documentation/governance/whitespace",
-      "fresh hosted workflow after publication"
+      "synthetic Git checkout with core.autocrlf=true and hash verification",
+      "documentation/governance/Prettier",
+      "fresh hosted checks after push"
     ],
-    "owner_approval": "pending; no approval transferred"
+    "owner_approval": "pending; automated green grants no merge authority"
+  },
+  "automated_summary": {
+    "automated_ready": true,
+    "source": "https://github.com/m07amed25/SoloDesk/actions/runs/39080497311",
+    "context_ref": "33206173-35c0-46f5-a43c-1d5bfee3afd0",
+    "run_ref": "run-39080497311-1",
+    "findings": []
   }
 }
