@@ -326,6 +326,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F002 — Automated CI and verification harness
 
+- **Feature specification:** [Full F002 specification](specs/002-ci-verification-harness/spec.md), [technical plan and design artifacts](specs/002-ci-verification-harness/plan.md), [dependency-ordered tasks](specs/002-ci-verification-harness/tasks.md) and [requirements-quality checklist](specs/002-ci-verification-harness/checklists/requirements.md). Specification/planning readiness does not change delivery status or authorize implementation.
 - **PR identity:** `[F002] Automated CI and verification harness`; branch `feat/f002-automated-ci-and-verification-harness` → `main`; one PR; status planned, URL not yet created.
 - **Prerequisites:** F001 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** NFR-008, NFR-014, NFR-015. **Behavior authority:** [requirements](docs/product/requirements.md).

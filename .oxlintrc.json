@@ -1,0 +1,30 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "react",
+    "typescript"
+  ],
+  "env": {
+    "node": true,
+    "browser": true
+  },
+  "rules": {
+    "no-debugger": "error",
+    "no-eval": "error",
+    "no-unreachable": "error",
+    "react/rules-of-hooks": "error",
+    "no-unused-vars": [
+      "error",
+      {
+        "caughtErrors": "none"
+      }
+    ]
+  },
+  "ignorePatterns": [
+    "node_modules/**",
+    ".vite/**",
+    ".verification/**",
+    "tests/verification/fixtures/**",
+    "app/renderer/components/ui/**"
+  ]
+}

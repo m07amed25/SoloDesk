@@ -2,7 +2,7 @@
   "name": "solodesk",
   "version": "0.0.0",
   "private": true,
-  "description": "SoloDesk desktop workspace — minimal runnable shell",
+  "description": "SoloDesk desktop workspace \u2014 minimal runnable shell",
   "main": ".vite/build/main.js",
   "scripts": {
     "start": "node tooling/start.mjs",
@@ -10,7 +10,12 @@
     "typecheck": "tsc --noEmit",
     "test:launcher": "node --test --test-isolation=none tooling/start.test.mjs",
     "ui:info": "shadcn info",
-    "setup:electron": "install-electron"
+    "setup:electron": "install-electron",
+    "lint": "oxlint --deny-warnings --threads 2 app tooling tests/verification vite.config.mts vite.main.config.mts forge.config.mjs",
+    "test:unit": "node tooling/verification/run-suite.mjs verification-unit",
+    "test:integration": "node tooling/verification/run-suite.mjs verification-integration",
+    "check:docs": "node tooling/verification/documentation.mjs",
+    "verify": "node tooling/verification/cli.mjs verify"
   },
   "engines": {
     "node": ">=24 <25"
@@ -40,11 +45,14 @@
     "@types/react-dom": "19.3.0",
     "@vitejs/plugin-react": "5.2.0",
     "electron": "44.8.0",
+    "oxlint": "1.88.0",
+    "spdx-expression-parse": "5.0.0",
     "tailwindcss": "4.3.3",
     "typescript": "7.0.2",
     "vite": "8.3.4"
   },
   "allowScripts": {
     "better-sqlite3@13.0.3": true
-  }
+  },
+  "packageManager": "npm@11.19.0"
 }

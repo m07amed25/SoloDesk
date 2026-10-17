@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "schema",
+    "schema_version",
+    "id",
+    "runtime",
+    "packages",
+    "actions",
+    "cli_binaries",
+    "runner_images",
+    "review_ref",
+    "updated_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "runtime": {
+      "type": "object"
+    },
+    "packages": {
+      "type": "object"
+    },
+    "actions": {
+      "type": "object"
+    },
+    "cli_binaries": {
+      "type": "array"
+    },
+    "runner_images": {
+      "type": "array"
+    },
+    "review_ref": {},
+    "updated_at": {},
+    "schema": {
+      "type": "string",
+      "const": "solodesk.verification.toolchain"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    }
+  }
+}

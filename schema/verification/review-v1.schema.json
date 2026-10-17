@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "schema",
+    "schema_version",
+    "id",
+    "severity",
+    "blocking",
+    "diagnostic",
+    "owner",
+    "next_action",
+    "status",
+    "reviewer",
+    "observed_at",
+    "source"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "phase_ids": {
+      "type": "array"
+    },
+    "requirement_ids": {
+      "type": "array"
+    },
+    "scenario_ids": {
+      "type": "array"
+    },
+    "check_ref": {},
+    "severity": {},
+    "blocking": {
+      "type": "boolean"
+    },
+    "diagnostic": {},
+    "owner": {},
+    "next_action": {},
+    "evidence": {
+      "type": "array"
+    },
+    "status": {},
+    "reviewer": {},
+    "observed_at": {},
+    "source": {},
+    "schema": {
+      "type": "string",
+      "const": "solodesk.verification.review"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    }
+  }
+}

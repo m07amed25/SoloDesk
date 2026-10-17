@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "schema",
+    "schema_version",
+    "id",
+    "context_ref",
+    "run_ref",
+    "check_id",
+    "command_id",
+    "producer",
+    "started_at",
+    "finished_at",
+    "status",
+    "expected",
+    "observed",
+    "counts",
+    "artifacts",
+    "findings",
+    "cleanup",
+    "tool_versions"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "context_ref": {},
+    "run_ref": {},
+    "check_id": {},
+    "target_id": {},
+    "command_id": {},
+    "argv": {
+      "type": "array"
+    },
+    "producer": {
+      "type": "object"
+    },
+    "started_at": {},
+    "finished_at": {},
+    "status": {
+      "type": "string",
+      "enum": [
+        "passed",
+        "failed",
+        "not run",
+        "unavailable",
+        "stale",
+        "not applicable"
+      ]
+    },
+    "reason_code": {},
+    "expected": {},
+    "observed": {},
+    "counts": {
+      "type": "object"
+    },
+    "artifacts": {
+      "type": "array"
+    },
+    "findings": {
+      "type": "array"
+    },
+    "cleanup": {
+      "type": "object"
+    },
+    "tool_versions": {
+      "type": "object"
+    },
+    "schema": {
+      "type": "string",
+      "const": "solodesk.verification.report"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    }
+  }
+}

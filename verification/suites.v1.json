@@ -1,0 +1,255 @@
+{
+  "schema": "solodesk.verification.suites",
+  "schema_version": 1,
+  "id": "F002-suites-v1",
+  "checks": [
+    {
+      "id": "typecheck",
+      "group": "baseline",
+      "executable": "$NODE",
+      "argv": [
+        "node_modules/typescript/bin/tsc",
+        "--noEmit"
+      ],
+      "kind": "command",
+      "min_tests": 1,
+      "timeout_ms": 300000,
+      "phase_ids": [
+        "F002"
+      ],
+      "requirement_ids": [
+        "NFR-014"
+      ],
+      "scenario_ids": [
+        "A-01"
+      ],
+      "entry_files": []
+    },
+    {
+      "id": "lint",
+      "group": "baseline",
+      "executable": "$NODE",
+      "argv": [
+        "node_modules/oxlint/bin/oxlint",
+        "--deny-warnings",
+        "--threads",
+        "2",
+        "app",
+        "tooling",
+        "tests/verification",
+        "vite.config.mts",
+        "vite.main.config.mts",
+        "forge.config.mjs"
+      ],
+      "kind": "command",
+      "min_tests": 1,
+      "timeout_ms": 300000,
+      "phase_ids": [
+        "F002"
+      ],
+      "requirement_ids": [
+        "NFR-014"
+      ],
+      "scenario_ids": [
+        "A-01"
+      ],
+      "entry_files": []
+    },
+    {
+      "id": "build",
+      "group": "baseline",
+      "executable": "$NODE",
+      "argv": [
+        "node_modules/vite/bin/vite.js",
+        "build",
+        "--config",
+        "vite.main.config.mts"
+      ],
+      "kind": "command",
+      "min_tests": 1,
+      "timeout_ms": 300000,
+      "phase_ids": [
+        "F002"
+      ],
+      "requirement_ids": [
+        "NFR-014"
+      ],
+      "scenario_ids": [
+        "A-01"
+      ],
+      "entry_files": []
+    },
+    {
+      "id": "build-renderer",
+      "group": "baseline",
+      "executable": "$NODE",
+      "argv": [
+        "node_modules/vite/bin/vite.js",
+        "build"
+      ],
+      "kind": "command",
+      "min_tests": 1,
+      "timeout_ms": 300000,
+      "phase_ids": [
+        "F002"
+      ],
+      "requirement_ids": [
+        "NFR-014"
+      ],
+      "scenario_ids": [
+        "A-01"
+      ],
+      "entry_files": []
+    },
+    {
+      "id": "launcher",
+      "group": "baseline",
+      "executable": "$NODE",
+      "argv": [
+        "--test",
+        "--test-reporter=tap",
+        "--test-isolation=none",
+        "tooling/start.test.mjs"
+      ],
+      "kind": "tests",
+      "min_tests": 5,
+      "timeout_ms": 300000,
+      "phase_ids": [
+        "F002"
+      ],
+      "requirement_ids": [
+        "NFR-014"
+      ],
+      "scenario_ids": [
+        "A-01"
+      ],
+      "entry_files": [
+        "--test-isolation=none",
+        "tooling/start.test.mjs"
+      ]
+    },
+    {
+      "id": "governance-policy",
+      "group": "baseline",
+      "executable": "$NODE",
+      "argv": [
+        "tooling/check-governance.mjs"
+      ],
+      "kind": "command",
+      "min_tests": 1,
+      "timeout_ms": 300000,
+      "phase_ids": [
+        "F002"
+      ],
+      "requirement_ids": [
+        "NFR-014"
+      ],
+      "scenario_ids": [
+        "A-01"
+      ],
+      "entry_files": []
+    },
+    {
+      "id": "governance-tests",
+      "group": "baseline",
+      "executable": "$NODE",
+      "argv": [
+        "--test",
+        "--test-reporter=tap",
+        "tooling/check-governance.test.mjs"
+      ],
+      "kind": "tests",
+      "min_tests": 74,
+      "timeout_ms": 300000,
+      "phase_ids": [
+        "F002"
+      ],
+      "requirement_ids": [
+        "NFR-014"
+      ],
+      "scenario_ids": [
+        "A-01"
+      ],
+      "entry_files": [
+        "tooling/check-governance.test.mjs"
+      ]
+    },
+    {
+      "id": "documentation",
+      "group": "baseline",
+      "executable": "$NODE",
+      "argv": [
+        "tooling/verification/documentation.mjs"
+      ],
+      "kind": "command",
+      "min_tests": 1,
+      "timeout_ms": 300000,
+      "phase_ids": [
+        "F002"
+      ],
+      "requirement_ids": [
+        "NFR-014"
+      ],
+      "scenario_ids": [
+        "A-01"
+      ],
+      "entry_files": []
+    },
+    {
+      "id": "verification-unit",
+      "group": "baseline",
+      "executable": "$NODE",
+      "argv": [
+        "--test",
+        "--test-reporter=tap",
+        "tests/verification/unit/records.test.mjs",
+        "tests/verification/unit/documentation.test.mjs"
+      ],
+      "kind": "tests",
+      "min_tests": 9,
+      "timeout_ms": 300000,
+      "phase_ids": [
+        "F002"
+      ],
+      "requirement_ids": [
+        "NFR-014"
+      ],
+      "scenario_ids": [
+        "A-01"
+      ],
+      "entry_files": [
+        "tests/verification/unit/records.test.mjs",
+        "tests/verification/unit/documentation.test.mjs"
+      ]
+    },
+    {
+      "id": "verification-integration",
+      "group": "baseline",
+      "executable": "$NODE",
+      "argv": [
+        "--test",
+        "--test-reporter=tap",
+        "tests/verification/integration/context.test.mjs",
+        "tests/verification/integration/setup.test.mjs",
+        "tests/verification/integration/runner.test.mjs"
+      ],
+      "kind": "tests",
+      "min_tests": 9,
+      "timeout_ms": 300000,
+      "phase_ids": [
+        "F002"
+      ],
+      "requirement_ids": [
+        "NFR-014"
+      ],
+      "scenario_ids": [
+        "A-01"
+      ],
+      "entry_files": [
+        "tests/verification/integration/context.test.mjs",
+        "tests/verification/integration/setup.test.mjs",
+        "tests/verification/integration/runner.test.mjs"
+      ]
+    }
+  ]
+}

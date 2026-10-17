@@ -1,0 +1,65 @@
+{
+  "schema": "solodesk.verification.policy",
+  "schema_version": 1,
+  "id": "F002-policy-v1",
+  "revision": "bootstrap-candidate",
+  "authority": "bootstrap-candidate",
+  "mandatory_checks": [
+    "typecheck",
+    "lint",
+    "build",
+    "launcher",
+    "governance-policy",
+    "governance-tests",
+    "documentation",
+    "verification-unit",
+    "verification-integration",
+    "secrets",
+    "dependencies",
+    "licenses",
+    "workflow-syntax"
+  ],
+  "risk_rules": [],
+  "targets": [
+    {
+      "id": "linux-x64",
+      "label": "ubuntu-24.04",
+      "os": "linux",
+      "arch": "x64"
+    },
+    {
+      "id": "windows-x64",
+      "label": "windows-2025",
+      "os": "win32",
+      "arch": "x64"
+    },
+    {
+      "id": "macos-arm64",
+      "label": "macos-15",
+      "os": "darwin",
+      "arch": "arm64"
+    }
+  ],
+  "limits": {
+    "input_bytes": 2097152,
+    "cumulative_bytes": 33554432,
+    "definitions": 512,
+    "records": 2048,
+    "local_ms": 2700000,
+    "hosted_ms": 3000000,
+    "baseline_minutes": 15,
+    "security_minutes": 10,
+    "desktop_minutes": 20,
+    "aggregate_minutes": 2,
+    "launch_ms": 30000,
+    "case_ms": 60000,
+    "grace_ms": 10000,
+    "cleanup_ms": 20000,
+    "cancel_ms": 360000,
+    "artifact_bytes": 104857600,
+    "retention_days": 7
+  },
+  "suite_manifest_ref": "F002-suites-v1",
+  "toolchain_ref": "F002-toolchain-v1",
+  "disposition_refs": []
+}

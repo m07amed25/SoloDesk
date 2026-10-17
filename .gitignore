@@ -17,3 +17,7 @@ build/
 *.swp
 .idea/
 .vscode/
+
+.verification/
+playwright-report/
+test-results/

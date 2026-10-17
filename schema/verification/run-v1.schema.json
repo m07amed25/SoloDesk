@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "schema",
+    "schema_version",
+    "id",
+    "context_ref",
+    "attempt_number",
+    "started_at",
+    "state",
+    "scratch",
+    "reports",
+    "cleanup"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "context_ref": {},
+    "provider_run_id": {},
+    "attempt_number": {},
+    "started_at": {},
+    "finished_at": {},
+    "supersedes": {},
+    "state": {
+      "type": "string",
+      "enum": [
+        "prepared",
+        "running",
+        "completed",
+        "failed",
+        "canceled",
+        "timed-out",
+        "superseded",
+        "unavailable"
+      ]
+    },
+    "selection_digest": {},
+    "limits": {
+      "type": "object"
+    },
+    "scratch": {},
+    "reports": {
+      "type": "array"
+    },
+    "cleanup": {
+      "type": "object"
+    },
+    "schema": {
+      "type": "string",
+      "const": "solodesk.verification.run"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    }
+  }
+}
