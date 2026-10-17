@@ -28,6 +28,33 @@ export function selectChecks(
       c.argv.some((a) => typeof a !== "string")
     )
       throw new Error("invalid-suite-definition");
+    const builtin = [
+      "typecheck",
+      "lint",
+      "build",
+      "build-renderer",
+      "launcher",
+      "governance-policy",
+      "governance-tests",
+      "documentation",
+      "verification-unit",
+      "verification-integration",
+      "secrets",
+      "dependencies",
+      "licenses",
+      "workflow-syntax",
+    ];
+    if (
+      !builtin.includes(c.id) &&
+      !c.id.startsWith("desktop:") &&
+      (!/^F\d{3,}:[a-z][a-z0-9-]*$/.test(c.id) ||
+        !c.phase_ids?.some((f) => c.id.startsWith(f + ":")) ||
+        c.kind !== "tests" ||
+        !c.entry_files?.length ||
+        !Number.isSafeInteger(c.min_tests) ||
+        c.min_tests < 1)
+    )
+      throw new Error("suite-enrollment-invalid");
     definitions.set(c.id, c);
   }
   if (baseManifest) {

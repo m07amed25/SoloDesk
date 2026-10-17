@@ -84,3 +84,18 @@ test("candidate cannot append a disabling flag to an existing mandatory command"
     }).findings.some((f) => f.code === "suite-downgrade"),
   );
 });
+test("future required suite needs an owned namespace and explicit nonempty test entry", () => {
+  const p = policy(),
+    m = manifest();
+  p.mandatory_checks.push("unowned");
+  m.checks.push({
+    id: "unowned",
+    group: "baseline",
+    executable: "$NODE",
+    argv: ["-e", "process.exit(0)"],
+    kind: "command",
+    entry_files: [],
+    phase_ids: ["F999"],
+  });
+  assert.throws(() => selectChecks(context(), p, m), /suite-enrollment/);
+});

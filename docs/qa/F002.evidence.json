@@ -3,14 +3,14 @@
   "schema_version": 1,
   "phase": "F002",
   "context": {
-    "head": "df15d308c43f98e1d8da2bc0b875f90566f3eb8b",
+    "head": "56a5f5d5a7156d84792c0a25426b2342e9e85685",
     "base": "c66095e65e0b901aeeddf4f9e1d7274be5fdbf8a",
-    "scope": "Actual omission-trial source plus later repaired working implementation; final current provider outcomes pending",
+    "scope": "Repaired implementation; immutable measured source, with final hosted inspection pending",
     "primary_pr": "https://github.com/m07amed25/SoloDesk/pull/2"
   },
   "automated_ready": false,
   "agent_qa": {
-    "status": "in progress",
+    "status": "performed with explicit delivery blockers",
     "reviewer": "Codex",
     "source": "docs/qa/F002.md"
   },
@@ -78,6 +78,18 @@
       },
       "scope": ["linux-x64", "windows-x64", "macos-arm64"],
       "notice": "Actual trial source; final repaired source needs current-context inspection"
+    },
+    {
+      "id": "final-local-baseline",
+      "status": "passed",
+      "source": "run-4d9cfbfd-cbd8-42bb-a570-9cbe7d3325f2",
+      "counts": {
+        "baseline_checks": 10,
+        "unit": 61,
+        "integration": 34,
+        "launcher": 5,
+        "governance": 74
+      }
     }
   ],
   "findings": [
@@ -143,7 +155,7 @@
       "name": "F002 / automated-readiness",
       "app_id": 15368,
       "app_slug": "github-actions",
-      "observed_check_run_id": 117531872204
+      "observed_check_run_id": 117533052129
     }
   },
   "limits": {
@@ -177,181 +189,241 @@
       "id": "FR-001",
       "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated",
+      "expected": "F002 MUST retain its phase, P01 milestone, NFR-008/NFR-014/NFR-015 links, F001 prerequisite and one-primary-proposal identity. Implementation readiness MUST require inspected actual F001 merge and the applicable entry decisions; specification quality alone cannot satisfy either.",
+      "proof_level": "incomplete-or-blocked"
     },
     {
       "id": "FR-002",
       "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated",
+      "expected": "Verification MUST publish reproducible local entry points and equivalent hosted execution for declared check categories, naming the runtime, environment prerequisites, configuration and recovery for unavailable prerequisites.",
+      "proof_level": "incomplete-or-blocked"
     },
     {
       "id": "FR-003",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped"
+      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped",
+      "expected": "Clean dependency setup MUST honor committed versions/resolution records, fail on inconsistency without rewriting them, and detect incompatible dependency/native-environment reuse. Optimization MUST NOT skip current checks or accept untrusted cache content.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "FR-004",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped"
+      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped",
+      "expected": "The baseline MUST execute type validation, lint, build, documentation/requirement-reference integrity, F001 governance validation and the existing launcher regressions. The new lint category MUST have meaningful enforced rules; an absent command cannot be reported as a pass.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "FR-005",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped"
+      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped",
+      "expected": "Reusable unit and integration runners MUST execute independently observable assertions, expose counts/results, detect deliberately failing cases and fail when a required suite contains zero tests. F002 MUST include real harness-contract tests, not invented future domain coverage.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "FR-006",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked"
+      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked",
+      "expected": "A desktop harness MUST launch the real existing application, observe its welcome state, collect safe failure evidence and close its owned processes. Browser-only rendering and successful compilation MUST NOT be labeled desktop end-to-end proof.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "FR-007",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked"
+      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked",
+      "expected": "Later authorized features MUST be able to enroll domain, storage, boundary, sync, UI/localization, document, provider and release suites with stable scenario IDs and applicability records. F002 MUST distinguish an available runner from an implemented and executed feature suite.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "FR-008",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped"
+      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped",
+      "expected": "A reviewed applicability policy MUST declare mandatory baseline checks, risk-triggered categories and individually justified omissions. Dependency, verification-policy and native-boundary changes MUST receive their relevant broader checks. Unclassified changes MUST use conservative coverage or block for review.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "FR-009",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked"
+      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked",
+      "expected": "Every relevant proposal revision, including documentation-only changes, MUST receive a stable uniquely identified aggregate result. Change filtering MUST NOT suppress the only required aggregate; it MUST assess unsuccessful prerequisites and conclude when those outcomes are available.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "FR-010",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked"
+      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked",
+      "expected": "The aggregate MUST pass only when all selected required automated results and required producer evidence are valid for the current context. Failed, missing, unavailable, canceled, timed-out, stale, conflicting or unexpectedly skipped results MUST prevent success. Policy-justified not-applicable results MUST remain individually visible.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "FR-011",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked"
+      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked",
+      "expected": "Results MUST distinguish passed, failed, not run, unavailable, stale and justified not applicable, and retain cancellation, timeout, unexpected skip or malformed-record reasons. Missing tools and collection errors MUST NOT be disguised as product-test failures or successful execution.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "FR-012",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked"
+      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked",
+      "expected": "Evidence MUST identify phase/requirements/scenarios, actual head/base and executed subject, environment/runtime, command or procedure, counts where relevant, expected/observed outcome, result, date, reviewer/producer, artifacts and defects. Unsupported evidence versions, missing mandatory fields, duplicate/conflicting results and broken required references MUST block readiness.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "FR-013",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked"
+      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked",
+      "expected": "Automated results MUST be associated with actual execution identity/context; contributor-editable assertions MUST NOT replace missing trusted run results. Validation MUST state its limits: record structure does not authenticate human consent, prove arbitrary prose true or replace agent QA.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "FR-014",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked"
+      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked",
+      "expected": "A new head/base or changed reviewed subject MUST invalidate affected results until repeated checks or a governance-permitted, documented no-impact assessment associates unchanged evidence with the current context. Prior observed identities/results MUST remain history, never be relabeled as newly executed.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "FR-015",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped"
+      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped",
+      "expected": "Automated readiness, completed agent QA, current owner approval, merge and release MUST remain separate states. The aggregate MUST NOT require future owner approval to report automated success, or infer it from success. Final merge readiness MUST require all F001 conditions and any mandatory remote constraints.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "FR-016",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked"
+      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked",
+      "expected": "Required native verification MUST name actual OS/architecture/runtime targets and report each separately. Risk selection MUST cover every affected declared target; missing required targets block that claim. Hosting availability MUST NOT silently define the product support matrix or close Q-11.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "FR-017",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped"
+      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped",
+      "expected": "Applicable future interactive changes MUST carry English/Arabic/RTL/accessibility evidence, including required manual/fluent review; finance, permission, sync, migration and document changes MUST carry their specialist cases. An unchanged-shell check or placeholder suite MUST NOT waive those categories.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "FR-018",
       "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated",
+      "expected": "Contribution verification MUST use minimum privileges, isolate untrusted execution from protected credentials and privileged write/signing/deployment operations, and use reviewed fixed external execution dependencies. Untrusted execution MUST NOT gain privilege through a different event, artifact, cache or follow-on consumer.",
+      "proof_level": "incomplete-or-blocked"
     },
     {
       "id": "FR-019",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked"
+      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked",
+      "expected": "Fixtures and artifacts MUST use synthetic/redacted data. Evidence collection MUST exclude credentials/customer content, constrain unsafe file references/content, and visibly report when required safe evidence could not be retained. Tests MUST prove isolation using synthetic sentinels rather than real secrets.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "FR-020",
       "status": "failed",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated",
+      "expected": "Verification MUST include credential-exposure, dependency-risk and license checks with recorded tool coverage/limitations. Findings MUST receive explicit severity, responsible reviewer and disposition; blocking findings cannot be silently waived or hidden by a successful build.",
+      "proof_level": "incomplete-or-blocked"
     },
     {
       "id": "FR-021",
       "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated",
+      "expected": "F002 MUST declare finite run/job/desktop-cleanup timeouts, cancellation bounds, parallelism and per-run artifact size/retention limits before implementation adoption. Limits MUST be reviewable, enforced and included in evidence; exceeding them MUST stop bounded work and surface the gap without purchasing resources automatically.",
+      "proof_level": "incomplete-or-blocked"
     },
     {
       "id": "FR-022",
       "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated",
+      "expected": "Newer runs MUST supersede older runs for the same proposal while preserving run history and allowing unrelated proposals to continue. Superseded results MUST NOT satisfy current readiness; shared resources and owned processes MUST be cleaned up within declared bounds.",
+      "proof_level": "incomplete-or-blocked"
     },
     {
       "id": "FR-023",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped"
+      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped",
+      "expected": "Failed checks MUST provide the failing subject, safe diagnostic, reproduction path and concrete next action. Reruns MUST preserve attempt history and require a declared policy; unresolved flakiness MUST remain a defect rather than be hidden through retries.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "FR-024",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped"
+      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped",
+      "expected": "Local verification MUST remain usable when hosted checks are unavailable, within its declared prerequisites. Equivalent local evidence MUST only replace a hosted requirement where the governance policy permits it and real execution/review establishes equivalence; it MUST NOT impersonate a required remote result or remove existing protection.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "FR-025",
       "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated",
+      "expected": "Separately authorized remote enforcement adoption MUST inspect current permissions/settings, verify actual available check identities and prepare concrete activation/recovery records. Adoption MUST preserve existing mandatory constraints, keep ordinary direct updates/force-push/deletion restricted under the adopted policy, and avoid a required check that cannot report.",
+      "proof_level": "incomplete-or-blocked"
     },
     {
       "id": "FR-026",
       "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated",
+      "expected": "Remote policy MUST keep automated checks, resolved-review requirements and final owner authorization distinct. Independent human review MUST NOT be invented when unavailable or misrepresented by agent/author approval. No automated merge, release, privileged service change or bypass is implied by F002.",
+      "proof_level": "incomplete-or-blocked"
     },
     {
       "id": "FR-027",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped"
+      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped",
+      "expected": "F002 delivery MUST include feature guidance, observed QA, applicability/enrollment instructions, current-check inventory, limits, failure recovery, and compatible rollback/forward-repair guidance. Necessary source/contract changes MUST retain F001 evidence compatibility or declare versioning/migration explicitly.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "FR-028",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped"
+      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped",
+      "expected": "Agent QA MUST exercise the actual one primary F002 proposal through controlled applicable-check failure, missing-evidence failure and repaired success, plus cancellation and secret-isolation cases. Synthetic validator tests alone MUST NOT be reported as real hosted operation.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "FR-029",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked"
+      "observation": "Actual local/hosted positive or negative observations linked in QA; final delivery readiness remains separately blocked",
+      "expected": "Automated gate tests MUST independently cover successful aggregation and every unsuccessful required-result state, documentation-only selection, stale context, evidence defects, unsafe trust reuse, empty suites and coverage-policy changes. Expected classifications MUST not be generated solely by the same logic being tested.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "FR-030",
       "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated",
+      "expected": "F002 MUST remain incomplete until delivered scope, current applicable checks, real agent QA, complete safe evidence, merged prerequisites, no blocking defects and current explicit user approval satisfy the common exit gate, followed by actual merge. Later phases and all release claims MUST remain unclaimed by specification or harness creation.",
+      "proof_level": "incomplete-or-blocked"
     }
   ],
   "acceptance": [
@@ -359,163 +431,217 @@
       "id": "A-01",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred",
+      "expected": "Clean baseline: Given a clean checkout and the declared runtime, When the contributor runs baseline verification, Then dependency installation honors the committed dependency record without changing it, and type, lint, build, documentation, governance and existing regression checks report individual results.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "A-02",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred",
+      "expected": "Dependency mismatch: Given inconsistent dependency declarations and their committed resolution record, When setup runs, Then it fails visibly before dependent checks, and no updated dependency record or reused successful result conceals the mismatch.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "A-03",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred",
+      "expected": "Known defect: Given separately introduced type, lint, compilation, broken-reference and launcher-regression defects, When each affected check runs, Then that check reports failure and a contributor can identify the affected subject and recovery action.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "A-04",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred",
+      "expected": "Meaningful runners: Given the reusable unit and integration runners, When known passing and failing assertions execute, Then both runners distinguish the outcomes, report test counts, and reject a required suite that discovers no tests.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "A-05",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred",
+      "expected": "Local/hosted agreement: Given the same revision, check selection and equivalent declared environments, When checks run locally and remotely, Then applicability and pass/fail classifications agree, with environment-specific differences explicitly identified rather than silently ignored.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "A-06",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred",
+      "expected": "All applicable checks pass: Given all required automated checks passed and their required evidence is valid for the current context, When aggregation finishes, Then it reports automated readiness and lists separately whether agent QA and owner approval are still pending.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "A-07",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred",
+      "expected": "Required result missing or unsuccessful: Given one required result is failed, missing, canceled, timed out, unavailable, stale or unexpectedly skipped, When aggregation evaluates the proposal, Then automated readiness is blocked and names that result; success from unrelated checks cannot override it.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "A-08",
-      "status": "passed",
+      "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
+      "observation": "Local contract/preparation exercised; full live scenario is not claimed. See QA for exact scope and missing obligation.",
+      "expected": "Documentation-only proposal: Given only documentation changes, When verification starts, Then the mandatory baseline, including documentation/governance checks, and aggregation execute, and each omitted risk-triggered category has an explicit policy-supported reason.",
+      "proof_level": "partial-local-contract"
     },
     {
       "id": "A-09",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred",
+      "expected": "Evidence omission or forgery: Given absent required evidence, a broken artifact reference, a mismatched revision, duplicate/conflicting results or an editable declaration that an unrun check passed, When aggregation validates the records, Then it blocks readiness and distinguishes the specific defect from a real executed failure.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "A-10",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred",
+      "expected": "Risk and selection changes: Given a verification-policy, dependency, native-runtime or otherwise unclassified change, When checks are selected, Then relevant broader checks are required or selection is blocked for review; an unrecognized path or a contributor's unsupported waiver cannot silently reduce coverage.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "A-11",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred",
+      "expected": "New revision or base: Given an earlier successful run, When the proposal head or comparison base changes, Then old evidence is retained as history but cannot establish current readiness without the governance-required impact assessment and repeated affected checks.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "A-12",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred",
+      "expected": "Desktop smoke: Given an available declared desktop test environment, When the harness launches the real application, Then it observes the welcome shell, captures safe diagnostics, shuts down owned processes and reports the actual OS/runtime tested.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "A-13",
       "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated",
+      "expected": "Launch or cleanup failure: Given a launch error, missing display/native prerequisite, timeout or leftover owned process, When the harness ends, Then it reports failure or unavailable as appropriate, performs bounded cleanup and cannot claim a successful desktop test.",
+      "proof_level": "incomplete-or-blocked"
     },
     {
       "id": "A-14",
-      "status": "passed",
+      "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
+      "observation": "Local contract/preparation exercised; full live scenario is not claimed. See QA for exact scope and missing obligation.",
+      "expected": "Coverage grows with the feature: Given a later authorized feature adds a suite and its applicable categories, When verification discovers/selects it, Then its actual tests contribute to readiness, while missing required coverage blocks rather than being replaced by an empty placeholder suite.",
+      "proof_level": "partial-local-contract"
     },
     {
       "id": "A-15",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred",
+      "expected": "Platform scope: Given a change affecting native behavior, When its verification scope is selected, Then each affected Windows, macOS and Linux target has an executed result or an explicit blocking gap; one OS result is never copied to another.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "A-16",
-      "status": "passed",
+      "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
+      "observation": "Local contract/preparation exercised; full live scenario is not claimed. See QA for exact scope and missing obligation.",
+      "expected": "Bilingual and specialist scope: Given a later change affecting user interaction, finance, permissions, sync or rendered documents, When its evidence is evaluated, Then applicable bilingual/RTL/accessibility and specialist scenarios are required; the unchanged welcome-shell smoke cannot satisfy them.",
+      "proof_level": "partial-local-contract"
     },
     {
       "id": "A-17",
       "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated",
+      "expected": "Untrusted contribution: Given a fork or otherwise untrusted proposal, When its checks execute, Then protected credentials and privileged write/signing/deployment actions are unavailable, and reports remain distinguishable from trusted operational evidence.",
+      "proof_level": "incomplete-or-blocked"
     },
     {
       "id": "A-18",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred",
+      "expected": "Diagnostic privacy: Given a synthetic sensitive value in failure output or an oversized artifact, When evidence is collected, Then unsafe content is excluded/redacted, collection respects configured bounds, and loss of required safe evidence remains visible rather than becoming a pass.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "A-19",
       "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated",
+      "expected": "Superseded run: Given two revisions of the same proposal, When the newer run supersedes the older one, Then the older run stops within the declared cancellation bound, unrelated proposals continue, and only current-context results contribute to readiness.",
+      "proof_level": "incomplete-or-blocked"
     },
     {
       "id": "A-20",
-      "status": "passed",
+      "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
+      "observation": "Local contract/preparation exercised; full live scenario is not claimed. See QA for exact scope and missing obligation.",
+      "expected": "Exhaustion and outage: Given a stuck job, exhausted allowance, unavailable runner or hosted-service outage, When configured bounds are reached, Then work terminates or reports unavailable, no paid capacity is purchased automatically, and readiness remains blocked unless a separately permitted equivalent result is actually executed and reviewed.",
+      "proof_level": "partial-local-contract"
     },
     {
       "id": "A-21",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred",
+      "expected": "Dependency/cache integrity: Given a changed dependency record, incompatible native environment or cache from a different trust context, When setup attempts reuse, Then it rejects incompatible/untrusted reuse and still performs current verification; a cache hit cannot count as a passed check.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "A-22",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
+      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred",
+      "expected": "Security findings: Given a detected credential exposure, dependency/license concern or unsafe verification permission, When results are summarized, Then the finding, severity, responsible reviewer and required action are recorded, with blocking risks preventing readiness and no silent acceptance.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "A-23",
       "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated",
+      "expected": "Reviewable pack: Given a completed verification attempt, When the owner opens its summary, Then phase/requirement/scenario IDs, actual revision/base, environment, selected checks, commands, counts, observed results, safe artifacts, limitations and next actions are available without reading chat history.",
+      "proof_level": "incomplete-or-blocked"
     },
     {
       "id": "A-24",
       "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated",
+      "expected": "Separate human stages: Given green automated checks but missing agent QA or current explicit owner approval, When delivery status is assessed, Then only the completed stage advances; no approval, merge, release or independent human review is inferred.",
+      "proof_level": "incomplete-or-blocked"
     },
     {
       "id": "A-25",
-      "status": "passed",
+      "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
+      "observation": "Local contract/preparation exercised; full live scenario is not claimed. See QA for exact scope and missing obligation.",
+      "expected": "Enforcement adoption: Given separately authorized remote enforcement work, When an operator prepares activation, Then current permissions/settings and available check identities are inspected, the concrete proposed changes and recovery are reviewable, and activation cannot require a nonexistent check or weaken an existing mandatory constraint.",
+      "proof_level": "partial-local-contract"
     },
     {
       "id": "A-26",
       "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Actual assertion-failure and evidence-omission journeys proven; repaired full success blocked by unresolved audit"
+      "observation": "Actual assertion-failure and evidence-omission journeys proven; repaired full success blocked by unresolved audit",
+      "expected": "Real failure-to-repair journey: Given the one primary F002 proposal, When a controlled applicable-check failure and a controlled evidence omission are each introduced and then repaired, Then actual hosted outcomes demonstrate blocking followed by recovery on the current repaired revision, with all experimental revisions and final QA traceable.",
+      "proof_level": "incomplete-or-blocked"
     },
     {
       "id": "A-27",
-      "status": "passed",
+      "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Actual bounded local contracts or hosted observations recorded in QA; specialist product features and activated protection are not inferred"
+      "observation": "Local contract/preparation exercised; full live scenario is not claimed. See QA for exact scope and missing obligation.",
+      "expected": "Unavailable protection or rollback: Given unavailable remote enforcement or a harmful verification configuration, When recovery is assessed, Then the precise gap and last valid policy are documented, automated-readiness claims remain separate from remotely enforced protection, and restoration does not waive required checks or user approval.",
+      "proof_level": "partial-local-contract"
     }
   ],
   "success": [
@@ -523,67 +649,89 @@
       "id": "SC-001",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual independent clean/hosted baseline, explicit scoped gate/native results or synthetic enrollment observations recorded in QA"
+      "observation": "Actual independent clean/hosted baseline, explicit scoped gate/native results or synthetic enrollment observations recorded in QA",
+      "expected": "A contributor completes two independent clean verification runs from the documented procedure without undocumented machine-specific steps; equivalent local and hosted contexts produce identical applicability and pass/fail classifications for the baseline and each injected defect.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "SC-002",
       "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated",
+      "expected": "All 27 acceptance scenarios have traceable expected/observed outcomes. Every required-result state and evidence-defect case in A-07/A-09 blocks automated readiness; there are zero false successful classifications in the controlled negative set.",
+      "proof_level": "incomplete-or-blocked"
     },
     {
       "id": "SC-003",
       "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated",
+      "expected": "In the one primary F002 review proposal, the owner can inspect actual blocked results for an applicable-check failure and evidence omission, then inspect current successful automated results after both repairs, with all earlier attempts retained.",
+      "proof_level": "incomplete-or-blocked"
     },
     {
       "id": "SC-004",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual independent clean/hosted baseline, explicit scoped gate/native results or synthetic enrollment observations recorded in QA"
+      "observation": "Actual independent clean/hosted baseline, explicit scoped gate/native results or synthetic enrollment observations recorded in QA",
+      "expected": "Every relevant reviewed revision, including a documentation-only revision, has an aggregate outcome or an explicit unavailable-service gap. Zero required checks disappear through selection, and zero omitted categories lack an individual policy-supported reason.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "SC-005",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual independent clean/hosted baseline, explicit scoped gate/native results or synthetic enrollment observations recorded in QA"
+      "observation": "Actual independent clean/hosted baseline, explicit scoped gate/native results or synthetic enrollment observations recorded in QA",
+      "expected": "Each declared affected desktop target is represented by an actual result or an explicit blocking gap. Every executed smoke observes the real welcome shell and either completes cleanup within its declared limit or reports a failure; zero results imply support for an untested target.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "SC-006",
       "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated",
+      "expected": "The controlled trust/privacy cases expose zero protected synthetic sentinels to untrusted execution or shared artifacts, enable zero privileged side effects, and reject all incompatible/untrusted reuse cases. Detected scan limitations and findings remain visible to the owner.",
+      "proof_level": "incomplete-or-blocked"
     },
     {
       "id": "SC-007",
       "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated",
+      "expected": "Every cancellation, timeout and artifact-budget trial meets its declared finite bound or reports a blocking defect; no trial silently adds paid capacity, and cancellation of one proposal leaves the unrelated control proposal running.",
+      "proof_level": "incomplete-or-blocked"
     },
     {
       "id": "SC-008",
       "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated",
+      "expected": "For every result required at review, the owner can retrieve its current context, selected check, actual outcome, limitation and recovery action from the summary and available safe evidence. Zero expired/missing required artifacts or old-context results are presented as current proof.",
+      "proof_level": "incomplete-or-blocked"
     },
     {
       "id": "SC-009",
       "status": "passed",
       "source": "docs/qa/F002.md",
-      "observation": "Actual independent clean/hosted baseline, explicit scoped gate/native results or synthetic enrollment observations recorded in QA"
+      "observation": "Actual independent clean/hosted baseline, explicit scoped gate/native results or synthetic enrollment observations recorded in QA",
+      "expected": "A contributor can enroll and execute one synthetic later-feature suite with a meaningful passing and failing case using the published instructions. Missing/empty coverage is rejected, and no enrollment claims an unimplemented business feature passed.",
+      "proof_level": "local-contract-and-observed-hosted-scope"
     },
     {
       "id": "SC-010",
       "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated",
+      "expected": "All five delivery-decision cases are classified correctly: automated success with agent QA pending; completed QA with owner decision pending; unverified editable approval; withdrawn/stale approval; and current explicit owner authorization with every other gate satisfied. Only the final case can be merge-ready.",
+      "proof_level": "incomplete-or-blocked"
     },
     {
       "id": "SC-011",
       "status": "not run",
       "source": "docs/qa/F002.md",
-      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated",
+      "expected": "The reviewed F002 pack records exact finite resource limits, observed use and enforcement coverage; it separately identifies every proposed, activated or unavailable enforcement rule, with zero claimed settings changes unsupported by inspected outcomes.",
+      "proof_level": "incomplete-or-blocked"
     }
   ]
 }

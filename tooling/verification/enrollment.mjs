@@ -8,6 +8,11 @@ export function validateEnrollment(suite, files) {
     "desktop",
     "unit",
     "integration",
+    "domain",
+    "storage",
+    "boundary",
+    "provider",
+    "release",
   ];
   if (
     !/^F\d{3,}:[a-z][a-z0-9-]*$/.test(suite.id) ||
