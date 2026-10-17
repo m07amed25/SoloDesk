@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
+import { parseRecord } from "./records.mjs";
 export function safePath(root, relative) {
   if (
     typeof relative !== "string" ||
@@ -16,7 +17,7 @@ export function safePath(root, relative) {
   let current = base;
   for (const bit of relative.split("/")) {
     current = path.join(current, bit);
-    if (fs.existsSync(current) && fs.lstatSync(current).isSymbolicLink())
+    if (fs.lstatSync(current, { throwIfNoEntry: false })?.isSymbolicLink())
       throw new Error("symlink-path");
   }
   return result;
@@ -62,6 +63,20 @@ export function writeRecord(root, relative, value) {
       ".owner.json",
     );
   if (!fs.existsSync(owner)) throw new Error("owned-output-required");
+  const identity = JSON.parse(
+    fs.readFileSync(
+      safePath(
+        root,
+        relative.split("/").slice(0, 2).join("/") + "/.owner.json",
+      ),
+      "utf8",
+    ),
+  );
+  if (
+    identity.root !== fs.realpathSync(root) ||
+    identity.id !== relative.split("/")[1]
+  )
+    throw new Error("owned-output-required");
   const data = JSON.stringify(value, null, 2) + "\n";
   if (Buffer.byteLength(data) > 2 * 1024 * 1024)
     throw new Error("artifact-oversize");
@@ -114,7 +129,7 @@ export function validateArtifact(root, relative, record) {
     const text = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
     if (text.includes("\u0000") || redact(text) !== text)
       throw new Error("artifact-unsafe");
-    if (relative.endsWith(".json")) JSON.parse(text);
+    if (relative.endsWith(".json")) parseRecord(text);
   }
   if (
     record &&

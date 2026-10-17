@@ -89,3 +89,41 @@ test("workflow unsafe privileges, floating actions and credential persistence bl
   ])
     assert.ok(workflowFindings(text).length);
 });
+test("scanner archive checksum pin failure stays blocking", async () => {
+  const fs = await import("node:fs"),
+    os = await import("node:os"),
+    path = await import("node:path");
+  const { scanner } =
+    await import("../../../tooling/verification/security.mjs");
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "F002-scanner-"));
+  try {
+    fs.mkdirSync(path.join(root, "verification"));
+    fs.mkdirSync(path.join(root, ".verification/tools/gitleaks"), {
+      recursive: true,
+    });
+    fs.writeFileSync(
+      path.join(root, ".verification/tools/gitleaks/fake.tar.gz"),
+      "synthetic archive",
+    );
+    fs.writeFileSync(
+      path.join(root, "verification/toolchain.v1.json"),
+      JSON.stringify({
+        cli_binaries: [
+          {
+            name: "gitleaks",
+            platform: "linux-x64",
+            version: "0.0.0",
+            url: "https://github.com/example/synthetic/fake.tar.gz",
+            sha256: "0".repeat(64),
+          },
+        ],
+      }),
+    );
+    await assert.rejects(
+      () => scanner(root, "gitleaks"),
+      /scanner-checksum|scanner-platform-unavailable/,
+    );
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});

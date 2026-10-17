@@ -75,6 +75,3 @@ test("timestamp and nested authority constraints cannot be bypassed", () => {
     /field/,
   );
 });
-
-test("F002 controlled applicable assertion failure A-26", () =>
-  assert.fail("Controlled primary-PR negative; repair before delivery"));

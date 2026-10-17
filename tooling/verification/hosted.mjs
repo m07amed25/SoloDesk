@@ -7,6 +7,7 @@ import {
   writeRecord,
   safePath,
   validateArtifact,
+  redact,
 } from "./artifacts.mjs";
 import { makeContext, git } from "./context.mjs";
 import { selectChecks } from "./selection.mjs";
@@ -144,6 +145,7 @@ async function main() {
         size += a.bytes;
       }
       const value = JSON.stringify(report);
+      if (redact(value) !== value) throw new Error("producer-redaction-failed");
       size += Buffer.byteLength(value);
       if (size > (mode === "desktop" ? 20971520 : 10485760))
         throw new Error("producer-artifact-limit");

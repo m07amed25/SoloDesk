@@ -60,8 +60,15 @@ try {
 } catch {
   /* Missing evidence blocks. */
 }
+const launchUnavailable = /Process failed to launch!/.test(run.stdout);
 console.log(
   JSON.stringify({
+    status: launchUnavailable
+      ? "unavailable"
+      : run.code === 0 && !run.reason
+        ? "passed"
+        : "failed",
+    code: launchUnavailable ? "native-launch-unavailable" : run.reason || null,
     target,
     os: process.platform,
     arch: process.arch,
