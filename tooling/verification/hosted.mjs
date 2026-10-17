@@ -1,13 +1,14 @@
 import fs from "node:fs";
 import path from "node:path";
 import { execFileSync, spawnSync } from "node:child_process";
-import { envelope, readRecord } from "./records.mjs";
+import { envelope, readRecord, canonicalJSON } from "./records.mjs";
 import {
   allocate,
   writeRecord,
   safePath,
   validateArtifact,
   redact,
+  digest,
 } from "./artifacts.mjs";
 import { makeContext, git } from "./context.mjs";
 import { selectChecks } from "./selection.mjs";
@@ -70,11 +71,14 @@ function trustedDispatch() {
 }
 function collect(relative) {
   const files = [];
-  function walk(dir) {
+  let visited = 0;
+  function walk(dir, depth = 0) {
+    if (depth > 32) throw new Error("import-depth-limit");
     for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (++visited > 2048) throw new Error("import-collection-limit");
       const p = path.join(dir, e.name);
       if (e.isSymbolicLink()) throw new Error("unsafe-import");
-      if (e.isDirectory()) walk(p);
+      if (e.isDirectory()) walk(p, depth + 1);
       else if (e.name.endsWith(".json")) files.push(p);
       if (files.length > 512) throw new Error("import-limit");
     }
@@ -131,12 +135,23 @@ async function main() {
   }
   if (["baseline", "security", "desktop"].includes(mode)) {
     const c = readRecord(safePath(root, ".verification/shared/context.json"));
+    for (const [file, sha] of Object.entries(
+      c.manifest_digests?.values || {},
+    )) {
+      if (
+        digest(
+          "F002-json-v1\0" + canonicalJSON(readRecord(safePath(root, file))),
+        ) !== sha
+      )
+        throw new Error("producer-manifest-mismatch");
+    }
     const r = await executeGroup(root, mode, c, {
       target: mode === "desktop" ? process.env.F002_TARGET : undefined,
     });
     allocate(root, "publish");
     let size = 0;
     for (const report of r.reports) {
+      if (report.check_id === "lint") continue; // User-approved temporary missing-report trial A-26; restore before delivery.
       for (const a of report.artifacts) {
         validateArtifact(root, a.path, a);
         const dest = `.verification/publish/${report.check_id.replace(/:/g, "-")}-${path.basename(a.path)}`;

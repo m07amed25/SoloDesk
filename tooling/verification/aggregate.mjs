@@ -157,11 +157,14 @@ function readReports(root, relative) {
   const dir = safePath(root, relative);
   const out = [];
   let total = 0;
-  function walk(p) {
+  let visited = 0;
+  function walk(p, depth = 0) {
+    if (depth > 32) throw new Error("report-depth-limit");
     for (const entry of fs.readdirSync(p, { withFileTypes: true })) {
+      if (++visited > 2048) throw new Error("report-collection-limit");
       const file = path.join(p, entry.name);
       if (entry.isSymbolicLink()) throw new Error("artifact-symlink");
-      if (entry.isDirectory()) walk(file);
+      if (entry.isDirectory()) walk(file, depth + 1);
       else if (entry.name.endsWith(".json") && entry.name !== ".owner.json") {
         total += fs.statSync(file).size;
         if (total > 33554432 || out.length >= 2048)

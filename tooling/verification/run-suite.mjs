@@ -131,11 +131,12 @@ export function runProcess(
     child.on("close", (code) => {
       if (closed || finishing) return;
       finishing = true;
+      clearTimeout(timers[0]);
       if (!alive()) {
         finish(code);
         return;
       }
-      stop(reason || "leftover-owned-process");
+      const graceful = Date.now() + 10000;
       const until = Date.now() + 20000;
       const poll = () => {
         if (closed) return;
@@ -144,9 +145,11 @@ export function runProcess(
           return;
         }
         if (Date.now() >= until) {
+          kill("SIGKILL");
           finish(2, "cleanup-failed");
           return;
         }
+        if (!reason && Date.now() >= graceful) stop("leftover-owned-process");
         timers.push(setTimeout(poll, 50));
       };
       poll();

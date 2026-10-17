@@ -30,7 +30,7 @@ export function redact(text) {
       /(?:gh[pousr]_[A-Za-z0-9_]{15,}|github_pat_[A-Za-z0-9_]+|sk-[A-Za-z0-9_-]{12,}|F002_SECRET_[A-Za-z0-9_]+)/g,
       "[REDACTED]",
     )
-    .replace(/https?:\/\/[^\s"'<>]+/g, (url) => {
+    .replace(/(?:https?|wss?):\/\/[^\s"'<>\\]+/g, (url) => {
       try {
         const u = new URL(url);
         return `${u.protocol}//${u.host}`;

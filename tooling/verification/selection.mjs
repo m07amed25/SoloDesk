@@ -11,6 +11,11 @@ export function selectChecks(
   if (basePolicy) validateRecord(basePolicy);
   if (baseManifest) validateRecord(baseManifest);
   if (manifest.checks.length > 512) throw new Error("definition-limit");
+  if (
+    context.execution_mode !== "local" &&
+    (!context.manifest_digests || !context.workflow_identity?.git_blob)
+  )
+    throw new Error("context-digests-required");
   const definitions = new Map(),
     findings = [];
   for (const c of manifest.checks) {

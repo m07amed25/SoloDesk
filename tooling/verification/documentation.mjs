@@ -23,20 +23,31 @@ function anchors(text) {
 }
 export function checkDocuments(root, files) {
   const findings = [];
-  let checked = 0;
+  let checked = 0,
+    total = 0;
+  const cache = new Map();
+  const boundedText = (file) => {
+    if (cache.has(file)) return cache.get(file);
+    const size = fs.statSync(file).size;
+    total += size;
+    if (size > 2097152 || total > 33554432) throw new Error("document-limit");
+    const text = fs.readFileSync(file, "utf8");
+    cache.set(file, text);
+    return text;
+  };
   for (const relative of files) {
     let text;
     try {
       const p = safePath(root, relative);
       if (fs.statSync(p).size > 2097152) throw new Error("document-limit");
-      text = fs.readFileSync(p, "utf8").replace(/```[\s\S]*?```/g, "");
+      text = boundedText(p).replace(/```[\s\S]*?```/g, "");
     } catch {
       findings.push({ code: "document-unreadable", path: relative });
       continue;
     }
     const owner = relative.match(/^(specs\/[^/]+)\//)?.[1];
     if (owner && fs.existsSync(path.join(root, owner, "spec.md"))) {
-      const spec = fs.readFileSync(safePath(root, `${owner}/spec.md`), "utf8");
+      const spec = boundedText(safePath(root, `${owner}/spec.md`));
       const definitions = [
         ...spec.matchAll(/\*\*((?:FR|SC)-\d{3}|A-\d{2})(?:\*\*| —)/g),
       ].map((m) => m[1]);
@@ -87,9 +98,7 @@ export function checkDocuments(root, files) {
         if (!fs.statSync(file).isFile()) throw new Error("target");
         if (
           fragment &&
-          !anchors(fs.readFileSync(file, "utf8")).has(
-            decodeURIComponent(fragment),
-          )
+          !anchors(boundedText(file)).has(decodeURIComponent(fragment))
         )
           throw new Error("anchor");
         checked++;

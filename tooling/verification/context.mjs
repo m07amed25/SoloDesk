@@ -2,7 +2,7 @@ import fs from "node:fs";
 import crypto from "node:crypto";
 import os from "node:os";
 import { execFileSync } from "node:child_process";
-import { envelope } from "./records.mjs";
+import { envelope, canonicalJSON, readRecord } from "./records.mjs";
 import { safePath } from "./artifacts.mjs";
 export function git(root, ...args) {
   return execFileSync("git", args, {
@@ -34,7 +34,15 @@ export function makeContext(
   if (!/^[a-f0-9]{40,64}$/.test(base) || /^0+$/.test(base))
     throw new Error("base-sha-required");
   git(root, "cat-file", "-e", `${base}^{commit}`);
-  const tracked = git(root, "diff", "--name-only", "-z", base, tested)
+  const tracked = git(
+    root,
+    "diff",
+    "--name-only",
+    "--no-renames",
+    "-z",
+    base,
+    tested,
+  )
     .split("\0")
     .filter(Boolean);
   const dirty = git(root, "status", "--porcelain");
@@ -55,6 +63,19 @@ export function makeContext(
   if (changed.length > 512) throw new Error("changed-path-limit");
   if (mode !== "local" && dirty)
     throw new Error("hosted-clean-checkout-required");
+  let inputBytes = 0;
+  const fileHash = (p) => {
+    const file = safePath(root, p);
+    if (!fs.existsSync(file) || !fs.statSync(file).isFile()) return null;
+    const size = fs.statSync(file).size;
+    inputBytes += size;
+    if (size > 2097152 || inputBytes > 33554432)
+      throw new Error("context-input-limit");
+    return crypto
+      .createHash("sha256")
+      .update(fs.readFileSync(file))
+      .digest("hex");
+  };
   const c = envelope("context", crypto.randomUUID(), {
     phase_ids: ["F002"],
     proposal: {
@@ -69,14 +90,7 @@ export function makeContext(
       state: dirty ? "dirty" : "clean",
       files: local.map((p) => ({
         path: p,
-        sha256:
-          fs.existsSync(safePath(root, p)) &&
-          fs.statSync(safePath(root, p)).isFile()
-            ? crypto
-                .createHash("sha256")
-                .update(fs.readFileSync(safePath(root, p)))
-                .digest("hex")
-            : null,
+        sha256: fileHash(p),
       })),
     },
     policy_ref: "F002-policy-v1",
@@ -92,6 +106,35 @@ export function makeContext(
       image: env.ImageVersion || "local",
     },
   });
+  c.manifest_digests = { algorithm: "F002-json-v1-sha256", values: {} };
+  for (const file of [
+    "verification/policy.v1.json",
+    "verification/suites.v1.json",
+    "verification/toolchain.v1.json",
+  ]) {
+    if (fs.existsSync(safePath(root, file)))
+      c.manifest_digests.values[file] = crypto
+        .createHash("sha256")
+        .update(
+          "F002-json-v1\0" + canonicalJSON(readRecord(safePath(root, file))),
+        )
+        .digest("hex");
+  }
+  if (fs.existsSync(safePath(root, ".github/workflows/verify.yml"))) {
+    c.workflow_identity.sha256 = crypto
+      .createHash("sha256")
+      .update(fs.readFileSync(safePath(root, ".github/workflows/verify.yml")))
+      .digest("hex");
+    try {
+      c.workflow_identity.git_blob = git(
+        root,
+        "rev-parse",
+        `${tested}:.github/workflows/verify.yml`,
+      );
+    } catch {
+      c.workflow_identity.git_blob = null;
+    }
+  }
   if (mode !== "local")
     c.provider = {
       repository_id: event.repository.id,
