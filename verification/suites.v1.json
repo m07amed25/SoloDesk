@@ -192,7 +192,7 @@
         "tests/verification/integration/review.test.mjs"
       ],
       "kind": "tests",
-      "min_tests": 30,
+      "min_tests": 34,
       "timeout_ms": 300000,
       "phase_ids": ["F002"],
       "requirement_ids": ["NFR-014"],

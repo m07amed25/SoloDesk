@@ -44,3 +44,18 @@ test("overdue incomplete attempt is blocked without imposing old completed run T
     normalizeProvider({ ...run, status: "completed" }, [], null, c, []),
   );
 });
+test("coordinator reserves cleanup and starts no work after its deadline", async () => {
+  const { executeGroup } =
+    await import("../../../tooling/verification/run-suite.mjs");
+  await assert.rejects(
+    () =>
+      executeGroup(process.cwd(), "baseline", context(), {
+        deadline: Date.now() - 1,
+      }),
+    /coordinator-timeout/,
+  );
+});
+test("unsupported cross-run cache request rejected before any install", async () => {
+  const { setup } = await import("../../../tooling/verification/setup.mjs");
+  assert.throws(() => setup(process.cwd(), { cache: true }), /cache-disabled/);
+});

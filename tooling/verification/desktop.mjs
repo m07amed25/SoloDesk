@@ -32,7 +32,7 @@ const run = await runProcess(
   {
     cwd: process.cwd(),
     timeout: 80000,
-    env: childEnvironment({ F002_REPORT_DIR: owned }),
+    env: childEnvironment({ F002_REPORT_DIR: owned, DEBUG: "pw:browser" }),
   },
 );
 let counts = null;

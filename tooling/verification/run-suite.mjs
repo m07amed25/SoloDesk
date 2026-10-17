@@ -14,6 +14,12 @@ import { makeContext } from "./context.mjs";
 export function childEnvironment(extra = {}) {
   const keys = [
     "PATH",
+    "HOME",
+    "USERPROFILE",
+    "APPDATA",
+    "LOCALAPPDATA",
+    "HOMEDRIVE",
+    "HOMEPATH",
     "SystemRoot",
     "COMSPEC",
     "PATHEXT",
@@ -199,33 +205,46 @@ export async function runCheck(root, check, context, run, remaining = 300000) {
       reason = "suite-empty-or-incomplete";
     }
   }
-  const artifacts = [];
-  if (
-    status === "passed" &&
-    (check.group === "desktop" || check.group === "security")
-  ) {
+  const artifacts = [],
+    tool_versions = { node: process.versions.node };
+  let scannerFindings = [];
+  if (check.group === "desktop" || check.group === "security") {
     try {
       const data = JSON.parse(result.stdout);
+      if (data.status === "unavailable") {
+        status = "unavailable";
+        reason = data.code || "scanner-unavailable";
+      }
       if (check.group === "desktop") {
-        if (
-          !data.counts?.executed ||
-          data.counts.passed !== data.counts.executed ||
-          data.counts.failed ||
-          data.counts.skipped
-        )
-          throw new Error("native-counts");
-        counts = { kind: "tests", ...data.counts, todo: 0 };
-        if (!data.screenshots?.length) throw new Error("screenshot-missing");
-        for (const file of data.screenshots)
-          artifacts.push(artifact(root, file, context.id, run, check.id));
+        if (data.counts) counts = { kind: "tests", ...data.counts, todo: 0 };
+        tool_versions.electron = data.electron || "unavailable";
+        if (status === "passed") {
+          if (
+            !counts.executed ||
+            counts.passed !== counts.executed ||
+            counts.failed ||
+            counts.skipped ||
+            !data.screenshots?.length
+          )
+            throw new Error("native-incomplete");
+          for (const file of data.screenshots)
+            artifacts.push(artifact(root, file, context.id, run, check.id));
+        }
       } else {
-        if (!data.inputs || data.status !== "passed" || data.findings?.length)
+        if (data.inputs) counts = { kind: "inputs", executed: data.inputs };
+        scannerFindings = data.findings || [];
+        tool_versions[check.id] = data.version || "unavailable";
+        if (
+          status === "passed" &&
+          (!data.inputs || data.status !== "passed" || scannerFindings.length)
+        )
           throw new Error("scanner-incomplete");
-        counts = { kind: "inputs", executed: data.inputs };
       }
     } catch {
-      status = "failed";
-      reason = "required-evidence-incomplete";
+      if (status === "passed") {
+        status = "failed";
+        reason = "required-evidence-incomplete";
+      }
     }
   }
   return validateRecord(
@@ -235,7 +254,7 @@ export async function runCheck(root, check, context, run, remaining = 300000) {
       check_id: check.id,
       target_id: check.target || null,
       command_id: check.id,
-      argv: [exe, ...args],
+      argv: [exe, ...args].map(redact),
       producer: {
         mode: context.execution_mode,
         job: process.env.GITHUB_JOB || "local",
@@ -257,9 +276,12 @@ export async function runCheck(root, check, context, run, remaining = 300000) {
       },
       counts,
       artifacts,
-      findings: status === "passed" ? [] : [{ code: reason || "check-failed" }],
+      findings:
+        status === "passed"
+          ? []
+          : [...scannerFindings, { code: reason || "check-failed" }],
       cleanup: { status: reason === "cleanup-failed" ? "failed" : "completed" },
-      tool_versions: { node: process.versions.node },
+      tool_versions,
     }),
   );
 }

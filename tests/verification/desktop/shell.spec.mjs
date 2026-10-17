@@ -26,6 +26,7 @@ test("real built shell has isolated paths, sandbox and working disclosure", asyn
         F002_ROOT: root,
       }),
     });
+    const window = await app.firstWindow({ timeout: 30000 });
     const identity = await app.evaluate(({ app, BrowserWindow }) => ({
       user: app.getPath("userData"),
       session: app.getPath("sessionData"),
@@ -39,7 +40,6 @@ test("real built shell has isolated paths, sandbox and working disclosure", asyn
     expect(identity.prefs.sandbox).toBe(true);
     expect(identity.prefs.contextIsolation).toBe(true);
     expect(identity.prefs.nodeIntegration).toBe(false);
-    const window = await app.firstWindow({ timeout: 30000 });
     window.on("pageerror", (e) => failures.push(e.message));
     window.on("crash", () => failures.push("renderer-crashed"));
     expect(await window.evaluate(() => typeof globalThis.require)).toBe(

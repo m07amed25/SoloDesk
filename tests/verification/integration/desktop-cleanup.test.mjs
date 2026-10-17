@@ -39,3 +39,26 @@ test("bootstrap rejects wrong profile before launching production entry", async 
   );
   assert.notEqual(r.code, 0);
 });
+test("owned leftover descendant is detected and terminated", async () => {
+  if (process.platform === "win32") return; // Windows tree termination is observed by its separate native producer.
+  const r = await runProcess(
+    process.execPath,
+    [
+      "-e",
+      "const {spawn}=require('node:child_process');spawn(process.execPath,['-e','setInterval(()=>{},1000)'],{stdio:'ignore'});process.exit(0)",
+    ],
+    { timeout: 1000 },
+  );
+  assert.ok(["leftover-owned-process", "cleanup-failed"].includes(r.reason));
+  assert.ok(r.elapsed_ms < 21000);
+});
+test("desktop refuses relabeled native targets and reports unavailable launch prerequisite", async () => {
+  const other = process.platform === "linux" ? "windows-x64" : "linux-x64";
+  const r = await runProcess(
+    process.execPath,
+    ["tooling/verification/desktop.mjs", other],
+    { cwd: process.cwd(), timeout: 1000 },
+  );
+  assert.notEqual(r.code, 0);
+  assert.match(r.stderr, /native-target-unavailable/);
+});
