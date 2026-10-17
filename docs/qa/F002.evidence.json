@@ -29,11 +29,17 @@
     "source": "docs/qa/F002.md"
   },
   "owner": {
-    "status": "pending",
-    "source": "No final owner decision requested or received"
+    "status": "observed-owner-merge",
+    "source": "Authenticated PR #2 merged_by m07amed25 at recorded head; no separate editable approval claim grants authority"
   },
   "merge": {
-    "status": "not performed"
+    "status": "merged",
+    "sha": "196555cc8fd05e9f8c5a5cf1d59dd38634440218",
+    "head": "593a9ee51a533ab431ccfa1447afec36b5c2852e",
+    "merged_at": "2026-10-17T23:51:55Z",
+    "actor": "m07amed25",
+    "source": "https://github.com/m07amed25/SoloDesk/pull/2",
+    "observation": "Authenticated provider inspection; owner-performed merge during repair evidence transcription"
   },
   "release": {
     "status": "not performed"
@@ -214,12 +220,13 @@
     },
     {
       "id": "F002-owner",
-      "blocking": true,
-      "status": "open",
+      "blocking": false,
+      "status": "closed",
       "owner": "Repository owner",
-      "diagnostic": "Final owner approval and merge not performed",
-      "next_action": "Review concrete current PR only after blockers repaired",
-      "stage": "delivery"
+      "diagnostic": "Actual repository owner performed merge of the passing repair; authenticated merge identity recorded",
+      "next_action": "No new merge or protection authorization inferred",
+      "stage": "delivery",
+      "evidence": "https://github.com/m07amed25/SoloDesk/pull/2"
     }
   ],
   "adoption": {
@@ -951,5 +958,10 @@
     "context_ref": "33206173-35c0-46f5-a43c-1d5bfee3afd0",
     "run_ref": "run-39080497311-1",
     "findings": []
+  },
+  "maintenance": {
+    "scope": "Record passing repair, real merge and preserve raw vendor hashes under Windows Git conversion",
+    "base": "196555cc8fd05e9f8c5a5cf1d59dd38634440218",
+    "status": "reviewable follow-up; not a second primary F002 proposal"
   }
 }
