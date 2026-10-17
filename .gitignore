@@ -1,0 +1,14 @@
+node_modules/
+.vite/
+dist/
+out/
+coverage/
+*.log
+.env
+.env.*
+!.env.example
+*.db
+*.db-shm
+*.db-wal
+.DS_Store
+Thumbs.db

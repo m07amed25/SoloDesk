@@ -1,0 +1,151 @@
+# Requirement coverage and phase traceability
+
+Generated from specification definitions on 17 October 2026. This is a **planning coverage register**, not test coverage or proof of implementation. 139 stable requirement IDs are defined: PLT 18, CRM 11, WRK 14, TIM 24, FIN 35, INS 10, INT 12, NFR 15.
+
+The detailed specification owns the full behavior, fields, transitions, validation and examples; summaries below are navigation aids. Acceptance families refer to [acceptance matrix](../quality/acceptance.md). Before implementation each enabled requirement needs concrete cases/evidence; phase checkboxes remain unchecked.
+
+| ID | Capability summary | Phase | Definition authority | Planned acceptance |
+| --- | --- | --- | --- | --- |
+| PLT-001 | First use requires internet, account registration/sign-in, verified identity according to the chosen provid… | P01 | [platform-and-workspaces](../specs/platform-and-workspaces.md) | A-PLT scenarios + spec examples |
+| PLT-002 | Sign-in uses the system browser, PKCE/state validation and a constrained callback. Account recovery, MFA se… | P01 | [platform-and-workspaces](../specs/platform-and-workspaces.md) | A-PLT scenarios + spec examples |
+| PLT-003 | Create a workspace with legal/profile defaults, timezone, currencies and language preferences; invite membe… | P01 | [platform-and-workspaces](../specs/platform-and-workspaces.md) | A-PLT scenarios + spec examples |
+| PLT-004 | Invite a specific recipient with role/scope/expiry; accept once while online with the intended identity. Pe… | P01 | [platform-and-workspaces](../specs/platform-and-workspaces.md) | A-PLT scenarios + spec examples |
+| PLT-005 | Authorize every service command/read/download/search by current membership plus resource/action grants. Rol… | P01 | [platform-and-workspaces](../specs/platform-and-workspaces.md) | A-PLT scenarios + spec examples |
+| PLT-006 | Enroll devices, show label/version/last contact, rotate credentials and revoke sessions. Revoked devices ca… | P01 | [platform-and-workspaces](../specs/platform-and-workspaces.md) | A-PLT scenarios + spec examples |
+| PLT-007 | Cache only permitted records in encrypted local storage with encrypted attachments/indexes. Lock on explici… | P01 | [platform-and-workspaces](../specs/platform-and-workspaces.md) | A-PLT scenarios + spec examples |
+| PLT-008 | Save eligible offline work and its outbox operation atomically; show local versus synchronized status. Rest… | P01 | [platform-and-workspaces](../specs/platform-and-workspaces.md) | A-PLT scenarios + spec examples |
+| PLT-009 | Conflict inbox shows authorized local/base/remote values, consequences, and resolution history. Same-field… | P01 | [platform-and-workspaces](../specs/platform-and-workspaces.md) | A-PLT scenarios + spec examples |
+| PLT-010 | An enrolled device may reopen cached work offline under a signed, time-limited authorization lease. Expired… | P01 | [platform-and-workspaces](../specs/platform-and-workspaces.md) | A-PLT scenarios + spec examples |
+| PLT-011 | Preferences distinguish per-device (window position), personal (language/notifications), workspace (currenc… | P01 | [platform-and-workspaces](../specs/platform-and-workspaces.md) | A-PLT scenarios + spec examples |
+| PLT-012 | One single-instance owner per local profile coordinates timers, migrations, outbox and window activation. D… | P01 | [platform-and-workspaces](../specs/platform-and-workspaces.md) | A-PLT scenarios + spec examples |
+| PLT-013 | Notification center has unread/read, snooze, source links, delivery channels and quiet hours. OS denial lea… | P01 | [platform-and-workspaces](../specs/platform-and-workspaces.md) | A-PLT scenarios + spec examples |
+| PLT-014 | Central audit records actor, workspace, operation, target, revision, occurred/received instants, reason, co… | P01 | [platform-and-workspaces](../specs/platform-and-workspaces.md) | A-PLT scenarios + spec examples |
+| PLT-015 | Accessible global search/command palette, keyboard shortcuts, theme/high contrast, resizing and English/Ara… | P01 | [platform-and-workspaces](../specs/platform-and-workspaces.md) | A-PLT scenarios + spec examples |
+| PLT-016 | Import/export and recovery follow the data-lifecycle specification. Offline restore does not replace the cl… | P01 | [platform-and-workspaces](../specs/platform-and-workspaces.md) | A-PLT scenarios + spec examples |
+| PLT-017 | Feature configuration declares dependencies, role requirements and online needs. Disabling taxes/recurrence… | P01 | [platform-and-workspaces](../specs/platform-and-workspaces.md) | A-PLT scenarios + spec examples |
+| PLT-018 | Account/workspace closure is an online, reauthenticated workflow with owner transfer, outstanding obligatio… | P01 | [platform-and-workspaces](../specs/platform-and-workspaces.md) | A-PLT scenarios + spec examples |
+| CRM-001 | Clients, contacts, and relationship integrity | P02 | [client-lifecycle](../specs/client-lifecycle.md) | A-CRM scenarios + spec examples |
+| CRM-002 | Opportunities, pipeline, and weighted forecast | P02 | [client-lifecycle](../specs/client-lifecycle.md) | A-CRM scenarios + spec examples |
+| CRM-003 | Activity timeline, follow-ups, and communication records | P02 | [client-lifecycle](../specs/client-lifecycle.md) | A-CRM scenarios + spec examples |
+| CRM-004 | Service catalog, estimates, and scenario comparison | P02 | [client-lifecycle](../specs/client-lifecycle.md) | A-CRM scenarios + spec examples |
+| CRM-005 | Proposals, document revisions, and sharing | P02 | [client-lifecycle](../specs/client-lifecycle.md) | A-CRM scenarios + spec examples |
+| CRM-006 | Decisions, acceptance evidence, and disagreement | P02 | [client-lifecycle](../specs/client-lifecycle.md) | A-CRM scenarios + spec examples |
+| CRM-007 | Contracts, statements of work, and obligation tracking | P02 | [client-lifecycle](../specs/client-lifecycle.md) | A-CRM scenarios + spec examples |
+| CRM-008 | Onboarding, questionnaires, and access readiness | P02 | [client-lifecycle](../specs/client-lifecycle.md) | A-CRM scenarios + spec examples |
+| CRM-009 | Accepted-engagement handoff, loss, and reopen | P02 | [client-lifecycle](../specs/client-lifecycle.md) | A-CRM scenarios + spec examples |
+| CRM-010 | Renewals, account reviews, and explainable health | P02 / P06 | [client-lifecycle](../specs/client-lifecycle.md) | A-CRM scenarios + spec examples |
+| CRM-011 | Client portal (P08) and controlled external review | P08 | [client-lifecycle](../specs/client-lifecycle.md) | A-CRM scenarios + spec examples |
+| WRK-001 | Project creation and lifecycle | P03 | [work-management](../specs/work-management.md) | A-WRK scenarios + spec examples |
+| WRK-002 | Tasks and hierarchy | P03 | [work-management](../specs/work-management.md) | A-WRK scenarios + spec examples |
+| WRK-003 | Dependencies and milestones | P03 | [work-management](../specs/work-management.md) | A-WRK scenarios + spec examples |
+| WRK-004 | Views and filters | P03 | [work-management](../specs/work-management.md) | A-WRK scenarios + spec examples |
+| WRK-005 | Scheduling, capacity and workload | P03 | [work-management](../specs/work-management.md) | A-WRK scenarios + spec examples |
+| WRK-006 | Sprints, cycles and recurring work | P03 | [work-management](../specs/work-management.md) | A-WRK scenarios + spec examples |
+| WRK-007 | Templates and custom fields | P03 | [work-management](../specs/work-management.md) | A-WRK scenarios + spec examples |
+| WRK-008 | Scope baseline and change requests | P03 | [work-management](../specs/work-management.md) | A-WRK scenarios + spec examples |
+| WRK-009 | Deliverables and acceptance | P03 | [work-management](../specs/work-management.md) | A-WRK scenarios + spec examples |
+| WRK-010 | Collaboration and activity | P03 | [work-management](../specs/work-management.md) | A-WRK scenarios + spec examples |
+| WRK-011 | Files, notes and knowledge links | P03 | [work-management](../specs/work-management.md) | A-WRK scenarios + spec examples |
+| WRK-012 | Budgets, rates and profitability context | P03 | [work-management](../specs/work-management.md) | A-WRK scenarios + spec examples |
+| WRK-013 | Portfolio, risks and decision records | P03 | [work-management](../specs/work-management.md) | A-WRK scenarios + spec examples |
+| WRK-014 | Archive, transfer and recovery | P03 | [work-management](../specs/work-management.md) | A-WRK scenarios + spec examples |
+| TIM-001 | Start a timer for an active project and optional task, with description and billable flag. The task must be… | P04 | [time-and-productivity](../specs/time-and-productivity.md) | A-TIM scenarios + spec examples |
+| TIM-002 | Permit one active timer per workspace user on a device. Starting another offers switch, cancel, or keep cur… | P04 | [time-and-productivity](../specs/time-and-productivity.md) | A-TIM scenarios + spec examples |
+| TIM-003 | Pause closes the active segment; resume creates a new segment. Paused time never contributes duration. Stop… | P04 | [time-and-productivity](../specs/time-and-productivity.md) | A-TIM scenarios + spec examples |
+| TIM-004 | Recover a persisted timer after application failure, forced termination, shutdown, or restart. Present the… | P04 | [time-and-productivity](../specs/time-and-productivity.md) | A-TIM scenarios + spec examples |
+| TIM-005 | Support manual duration-only entries and interval entries. Require project, work date, positive duration, a… | P04 | [time-and-productivity](../specs/time-and-productivity.md) | A-TIM scenarios + spec examples |
+| TIM-006 | Edit, split, merge, duplicate as a new unbilled record, and move unallocated entries with explicit preview.… | P04 | [time-and-productivity](../specs/time-and-productivity.md) | A-TIM scenarios + spec examples |
+| TIM-007 | Detect overlapping intervals for the same user. Explain the conflicting records; default to blocking billab… | P04 | [time-and-productivity](../specs/time-and-productivity.md) | A-TIM scenarios + spec examples |
+| TIM-008 | Separate a calendar work date from UTC instants and the entry timezone. Correctly display cross-midnight wo… | P04 | [time-and-productivity](../specs/time-and-productivity.md) | A-TIM scenarios + spec examples |
+| TIM-009 | Separate display rounding from billing rounding. Retain original integer seconds, raw segments, and policy… | P04 | [time-and-productivity](../specs/time-and-productivity.md) | A-TIM scenarios + spec examples |
+| TIM-010 | Resolve a rate explicitly using dated overrides; proposed precedence is entry override, task, project, clie… | P04 | [time-and-productivity](../specs/time-and-productivity.md) | A-TIM scenarios + spec examples |
+| TIM-011 | Mark billable/nonbillable independently from approval and allocation. Unbilled means eligible source second… | P04 | [time-and-productivity](../specs/time-and-productivity.md) | A-TIM scenarios + spec examples |
+| TIM-012 | Reserve selected time for an invoice draft and validate it again on finalization. Prevent duplicate consump… | P04 / P05 | [time-and-productivity](../specs/time-and-productivity.md) | A-TIM scenarios + spec examples |
+| TIM-013 | Lock allocated source facts. Correct billed work through an audited time adjustment and the applicable cred… | P04 / P05 | [time-and-productivity](../specs/time-and-productivity.md) | A-TIM scenarios + spec examples |
+| TIM-014 | Provide list, day/week calendar, project, task, client, tags, billable, review, approval, allocation, and s… | P04 | [time-and-productivity](../specs/time-and-productivity.md) | A-TIM scenarios + spec examples |
+| TIM-015 | Offer optional idle detection with a visible threshold setting and local processing. On return, choose keep… | P04 | [time-and-productivity](../specs/time-and-productivity.md) | A-TIM scenarios + spec examples |
+| TIM-016 | Configure app-close/tray behavior explicitly. Close with a running timer offers keep running in tray where… | P04 | [time-and-productivity](../specs/time-and-productivity.md) | A-TIM scenarios + spec examples |
+| TIM-017 | Compare recorded hours and cost against versioned task/project estimates and budgets. Show threshold alerts… | P04 | [time-and-productivity](../specs/time-and-productivity.md) | A-TIM scenarios + spec examples |
+| TIM-018 | Provide optional focus sessions, breaks, reminders, daily goals, and weekly review. Focus sessions referenc… | P04 | [time-and-productivity](../specs/time-and-productivity.md) | A-TIM scenarios + spec examples |
+| TIM-019 | Optional timesheet submission and approval use reviewer identity, covered period, source revisions, comment… | P04 | [time-and-productivity](../specs/time-and-productivity.md) | A-TIM scenarios + spec examples |
+| TIM-020 | Import time through a preview with field mapping, source identifiers, timezone, units, duplicate detection,… | P04 | [time-and-productivity](../specs/time-and-productivity.md) | A-TIM scenarios + spec examples |
+| TIM-021 | Provide utilization, billable ratio, estimated-versus-actual, unbilled aging, and effective earnings report… | P04 | [time-and-productivity](../specs/time-and-productivity.md) | A-TIM scenarios + spec examples |
+| TIM-022 | For the confirmed multi-device/team model, retain independent capture events, detect concurrent timers/over… | P04 | [time-and-productivity](../specs/time-and-productivity.md) | A-TIM scenarios + spec examples |
+| TIM-023 | Undo recent unallocated edits through a new revision. Delete unused entries with confirmation and recoverab… | P04 | [time-and-productivity](../specs/time-and-productivity.md) | A-TIM scenarios + spec examples |
+| TIM-024 | Keep a visible, keyboard-accessible timer indicator with project name and elapsed time. Global shortcuts, t… | P04 | [time-and-productivity](../specs/time-and-productivity.md) | A-TIM scenarios + spec examples |
+| FIN-001 | Maintain seller identity, billing address, optional registration identifiers, invoice contacts, payment ins… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-002 | Create estimate/quote versions with scope, quantities, rate assumptions, exclusions, validity date, payment… | P02 / P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-003 | Convert accepted estimate lines to invoice drafts or milestones with an explicit selection and preview. Tra… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-004 | Support hourly, fixed-fee, milestone, and mixed invoice lines when they share client and document currency.… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-005 | Create, edit, duplicate, preview, and discard drafts. Duplication creates a new draft without number, payme… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-006 | Finalize valid drafts atomically: revalidate references/rates/calculations, allocate number, freeze snapsho… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-007 | Configure unique numbering by seller identity, document type, optional period, prefix, and sequence. No reu… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-008 | Render printable, accessible PDFs and previews from the saved snapshot, with configurable layout, notes, cu… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-009 | Track delivery separately from issuance and settlement. Manual export/share remains supported; automated em… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-010 | Record multiple and partial payments with date, exact amount, currency, payer, method, reference, and optio… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-011 | Show unpaid, partially paid, settled, and overdue balances derived from posted settlement events. Overdue i… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-012 | Record overpayments as unapplied client credit; allocate or refund explicitly. Never hide excess payment in… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-013 | Issue partial/full credit notes against issued invoices with original line/tax/discount references and reas… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-014 | Record partial/full refunds linked to original payment allocations or available client credit. A refund is… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-015 | Reverse erroneous payment/refund/credit allocations through compensating events; retain original records an… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-016 | Support configurable tax labels/rates, exemption reason fields, inclusive/exclusive calculation, and permit… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-017 | Support fixed and percentage discounts at line or document level, with deterministic allocation across elig… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-018 | Use one currency per financial document. Support configured currency precision, separate currency balances,… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-019 | Generate recurring invoice drafts from versioned schedules and contract templates, with preview, pause/resu… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-020 | Track retainers as either prepaid money or included service units under an explicit agreement. Define reple… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-021 | Record expenses with supplier, date, category, original currency/amount, tax details if used, receipt, paym… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-022 | Convert approved billable expenses to invoice lines with markup or at-cost policy and immutable source refe… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-023 | Record receipt of client payments separately from payment processing. Payment links, provider webhooks, dis… | P05 / P07 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-024 | Reconcile imported bank/provider records against recorded payments and expenses through suggested matches,… | P05 / P07 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-025 | Provide revenue, receivables, cash collection, costs, project margin, effective rate, expense, tax-componen… | P05 / P06 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-026 | Export accounting-ready transaction data with stable IDs, source references, currency, exact amounts, dates… | P05 / P07 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-027 | Provide configurable reminder schedules, previewed text, suppression, and history. Do not send reminders on… | P05 / P07 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-028 | Record disputes, promised-payment dates, write-offs, and collection notes without changing the original inv… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-029 | Preserve audit history, calculation-policy versions, document hashes/render versions, actors, and idempoten… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-030 | Handle backup restoration, imports, multiple devices, and simultaneous finalization without duplicate numbe… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-031 | Offer versioned invoice/estimate/credit templates, localized dates/numbers, language selection, optional pa… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-032 | Support configurable deposits and milestone schedules: planned amount, due trigger, issued invoice, cash re… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-033 | Retain attachment metadata, checksum, source document link, and access policy. Missing or invalid receipts/… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-034 | Validate commercial transactions before committing and preserve drafts/input on failure. Long PDF/export/im… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| FIN-035 | Configure client service-subscription plans, periods, quantities, upgrades/downgrades, cancellation and exp… | P05 | [finance](../specs/finance.md) | A-FIN scenarios + spec examples |
+| INS-001 | Actionable home and saved views | P06 | [insights-and-knowledge](../specs/insights-and-knowledge.md) | A-INS scenarios + spec examples |
+| INS-002 | Reporting definitions and drill-down | P06 | [insights-and-knowledge](../specs/insights-and-knowledge.md) | A-INS scenarios + spec examples |
+| INS-003 | Profitability and effective rates | P06 | [insights-and-knowledge](../specs/insights-and-knowledge.md) | A-INS scenarios + spec examples |
+| INS-004 | Receivables, aging and cash forecast | P06 | [insights-and-knowledge](../specs/insights-and-knowledge.md) | A-INS scenarios + spec examples |
+| INS-005 | Capacity and delivery insights | P06 | [insights-and-knowledge](../specs/insights-and-knowledge.md) | A-INS scenarios + spec examples |
+| INS-006 | Multi-currency reporting | P06 | [insights-and-knowledge](../specs/insights-and-knowledge.md) | A-INS scenarios + spec examples |
+| INS-007 | Knowledge, notes and reusable material | P06 | [insights-and-knowledge](../specs/insights-and-knowledge.md) | A-INS scenarios + spec examples |
+| INS-008 | Global search and command palette | P06 | [insights-and-knowledge](../specs/insights-and-knowledge.md) | A-INS scenarios + spec examples |
+| INS-009 | Reports, schedules and exports | P06 | [insights-and-knowledge](../specs/insights-and-knowledge.md) | A-INS scenarios + spec examples |
+| INS-010 | Goals, health and alerts | P06 | [insights-and-knowledge](../specs/insights-and-knowledge.md) | A-INS scenarios + spec examples |
+| INT-001 | Connector lifecycle | P07 | [integrations-and-automation](../specs/integrations-and-automation.md) | A-INT scenarios + spec examples |
+| INT-002 | Authorization and secret handling | P07 | [integrations-and-automation](../specs/integrations-and-automation.md) | A-INT scenarios + spec examples |
+| INT-003 | GitHub/GitLab engineering context | P07 | [integrations-and-automation](../specs/integrations-and-automation.md) | A-INT scenarios + spec examples |
+| INT-004 | Calendar | P07 | [integrations-and-automation](../specs/integrations-and-automation.md) | A-INT scenarios + spec examples |
+| INT-005 | Email and document delivery | P07 | [integrations-and-automation](../specs/integrations-and-automation.md) | A-INT scenarios + spec examples |
+| INT-006 | Payment providers | P07 | [integrations-and-automation](../specs/integrations-and-automation.md) | A-INT scenarios + spec examples |
+| INT-007 | Accounting and bank context | P07 | [integrations-and-automation](../specs/integrations-and-automation.md) | A-INT scenarios + spec examples |
+| INT-008 | External API/webhooks | P07 | [integrations-and-automation](../specs/integrations-and-automation.md) | A-INT scenarios + spec examples |
+| INT-009 | Rule builder | P07 | [integrations-and-automation](../specs/integrations-and-automation.md) | A-INT scenarios + spec examples |
+| INT-010 | Safe job execution | P07 | [integrations-and-automation](../specs/integrations-and-automation.md) | A-INT scenarios + spec examples |
+| INT-011 | Notification delivery and preferences | P07 | [integrations-and-automation](../specs/integrations-and-automation.md) | A-INT scenarios + spec examples |
+| INT-012 | Reconciliation, audit and cost controls | P07 | [integrations-and-automation](../specs/integrations-and-automation.md) | A-INT scenarios + spec examples |
+| NFR-001 | Financial commands conserve exact value/source ownership, freeze history and commit atomically/idempotently | Every phase / P09 | [requirements](../product/requirements.md) | A-NFR scenarios + spec examples |
+| NFR-002 | Eligible offline changes survive restart with honest saved-local/sync/conflict status; issuance stays online | Every phase / P09 | [requirements](../product/requirements.md) | A-NFR scenarios + spec examples |
+| NFR-003 | Recover DB/files/keys/jobs from validated backups without stale money replay or number reuse | Every phase / P09 | [requirements](../product/requirements.md) | A-NFR scenarios + spec examples |
+| NFR-004 | Enforce tenant/project/action/guest scopes across reads/writes/counts/search/files/exports | Every phase / P09 | [requirements](../product/requirements.md) | A-NFR scenarios + spec examples |
+| NFR-005 | Encrypt cloud/device/backup data as specified; no silent unprotected cache/key fallback | Every phase / P09 | [requirements](../product/requirements.md) | A-NFR scenarios + spec examples |
+| NFR-006 | Equivalent English/Arabic workflows, RTL and correct localized artifacts/errors/numeric input | Every phase / P09 | [requirements](../product/requirements.md) | A-NFR scenarios + spec examples |
+| NFR-007 | Keyboard, focus, screen reader, contrast, zoom, reduced motion and drag alternatives | Every phase / P09 | [requirements](../product/requirements.md) | A-NFR scenarios + spec examples |
+| NFR-008 | Meet agreed benchmark budgets and bounded jobs/queries on declared reference data/hardware | Every phase / P09 | [requirements](../product/requirements.md) | A-NFR scenarios + spec examples |
+| NFR-009 | Surface provider/cost/quota limits; preserve work on outages; no unlimited free-service claim | Every phase / P09 | [requirements](../product/requirements.md) | A-NFR scenarios + spec examples |
+| NFR-010 | Compatible protocols/schema migrations preserve unknown/stale client data safely | Every phase / P09 | [requirements](../product/requirements.md) | A-NFR scenarios + spec examples |
+| NFR-011 | Signed verified distribution/updates and safe native lifecycle on each supported OS | Every phase / P09 | [requirements](../product/requirements.md) | A-NFR scenarios + spec examples |
+| NFR-012 | Redact diagnostics and constrain support/provider data access; opt-in product analytics | Every phase / P09 | [requirements](../product/requirements.md) | A-NFR scenarios + spec examples |
+| NFR-013 | Portable imports/exports with exact provenance, duplicate prevention and inert files | Every phase / P09 | [requirements](../product/requirements.md) | A-NFR scenarios + spec examples |
+| NFR-014 | Maintain traceable rules, audit, requirements, acceptance and operational runbooks | Every phase / P09 | [requirements](../product/requirements.md) | A-NFR scenarios + spec examples |
+| NFR-015 | Use Tailwind CSS and shadcn/ui; keep renderer unprivileged with narrow typed bridge | Every phase / P09 | [requirements](../product/requirements.md) | A-NFR scenarios + spec examples |
+
+## Cross-cutting review
+
+All families inherit workspace/project authorization, English/Arabic RTL, exact date/money/time types, offline/online state, idempotency, failure/input preservation, audit and migration/retention controls. Legal/provider-specific profiles are gated by the decision register. AI is excluded. Basic teams/sync are P01; portal is P08. Specified advanced capabilities do not imply all ship in the core pilot.

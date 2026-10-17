@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "skills": {
+    "electron": {
+      "source": "full-stack-skills/electron-skills",
+      "sourceType": "github",
+      "skillPath": "skills/electron/SKILL.md",
+      "computedHash": "94291332e3e33a239e7ef3ee6cc6021328620270efcf0ee45f38ff2b37b1765c"
+    },
+    "electron-egg": {
+      "source": "full-stack-skills/electron-skills",
+      "sourceType": "github",
+      "skillPath": "skills/electron-egg/SKILL.md",
+      "computedHash": "6638665dac00e394075a21741ac073939b596bf2d1885a821f07e78b873ad764"
+    },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "computedHash": "89496d5dd00f4810205f351759594fc2742bf8eea85a2f2b2d1de59f4bd91576"
+    },
+    "openspec-apply-change": {
+      "source": "full-stack-skills/electron-skills",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/openspec-apply-change/SKILL.md",
+      "computedHash": "314506a8db2aaf04e595eaf8c4f5c81613d6dfbf060f54d8eabbe94f3f567a22"
+    },
+    "openspec-archive-change": {
+      "source": "full-stack-skills/electron-skills",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/openspec-archive-change/SKILL.md",
+      "computedHash": "ffbd7f9c110d8c1e1f744db2e904854ce1cde02ca46c03849f6fac98bf14018f"
+    },
+    "openspec-explore": {
+      "source": "full-stack-skills/electron-skills",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/openspec-explore/SKILL.md",
+      "computedHash": "eea19567aeeec092628b3972b2b8c0fc433e0b9332fa4c3e935008784b6fb900"
+    },
+    "openspec-propose": {
+      "source": "full-stack-skills/electron-skills",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/openspec-propose/SKILL.md",
+      "computedHash": "406a71796ac111be0fddc8bc2a4137c91c967eaf43439bbcc3f2509aec7440db"
+    },
+    "upgrade-link": {
+      "source": "full-stack-skills/electron-skills",
+      "sourceType": "github",
+      "skillPath": "skills/upgrade-link/SKILL.md",
+      "computedHash": "f9b4176119c2ca168f808e1fbea39fc0ea9a7419937d4d354cbee72b7e8929be"
+    }
+  }
+}
