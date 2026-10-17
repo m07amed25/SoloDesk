@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "schema",
+    "schema_version",
+    "id",
+    "repository",
+    "observed_settings",
+    "proposed_settings",
+    "check_identities",
+    "authority",
+    "prerequisite_refs",
+    "recovery",
+    "outcome",
+    "operator",
+    "observed_at",
+    "gaps"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "repository": {},
+    "observed_settings": {
+      "type": "object"
+    },
+    "proposed_settings": {
+      "type": "object"
+    },
+    "after_settings": {
+      "type": "object"
+    },
+    "check_identities": {
+      "type": "array"
+    },
+    "authority": {},
+    "prerequisite_refs": {
+      "type": "array"
+    },
+    "recovery": {},
+    "outcome": {
+      "type": "string",
+      "enum": [
+        "prepared",
+        "blocked",
+        "authorized",
+        "activated",
+        "verified",
+        "reverted"
+      ]
+    },
+    "operator": {},
+    "observed_at": {},
+    "gaps": {
+      "type": "array"
+    },
+    "schema": {
+      "type": "string",
+      "const": "solodesk.verification.adoption"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "shadcn-ui-styles",
+  "version": "4.22.0",
+  "license": "MIT",
+  "source_package": "shadcn@4.22.0",
+  "source": "https://github.com/shadcn-ui/ui/tree/main/packages/shadcn",
+  "npm_integrity": "sha512-QKR3XUnatWlgo8IbZqGHrpsxjgdsfpPSAvJvLntQqAxPEf5U2sNsjDYLAS2xmFrOkC9lpj5UpZbrh/BuHrE2CQ==",
+  "upstream_css_sha256": "4c371f7a1ff5d219ae2f7ff28bd256b4346fd546fe46fbae22092e57db2f0fae",
+  "files": {
+    "tailwind.css": "9eb305186a1c01bff4a5b964ca7fbc468415608d34f6923a2e7ac29059fffe11",
+    "LICENSE.md": "1564074e13439397221ffd522e2e504d56561994a23d371aa5e3ad43e4f5423f"
+  },
+  "reason": "Keep official shadcn UI styles without the unpatched generator CLI dependency graph. Existing generated components remain unchanged."
+}

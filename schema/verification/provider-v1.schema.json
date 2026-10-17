@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "schema",
+    "schema_version",
+    "id",
+    "repository",
+    "run_id",
+    "attempt",
+    "workflow",
+    "jobs",
+    "observed_at",
+    "authenticated",
+    "findings"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "context_ref": {},
+    "repository": {},
+    "run_id": {},
+    "attempt": {},
+    "workflow": {},
+    "jobs": {
+      "type": "array"
+    },
+    "current_head": {},
+    "current_base": {},
+    "tested_sha": {},
+    "observed_at": {},
+    "authenticated": {
+      "type": "boolean"
+    },
+    "artifacts": {
+      "type": "array"
+    },
+    "findings": {
+      "type": "array"
+    },
+    "schema": {
+      "type": "string",
+      "const": "solodesk.verification.provider"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    }
+  }
+}

@@ -338,14 +338,14 @@ npm start
 
 ### Available Scripts
 
-| Command                  | Action & Purpose                                                                    |
-| :----------------------- | :---------------------------------------------------------------------------------- |
-| `npm start`              | Launches the Electron app via `tooling/start.mjs` with environment sanitization.    |
-| `npm run setup:electron` | Downloads and verifies the matching Electron prebuilt platform binary.              |
-| `npm run typecheck`      | Executes `tsc --noEmit` to validate TypeScript types across main and renderer code. |
-| `npm run test:launcher`  | Runs unit tests verifying the Linux environment launcher and path cleanup logic.    |
-| `npm run ui:info`        | Displays shadcn/ui configuration, registry status, and dependency alignment.        |
-| `npm run build`          | Compiles both Vite bundles (main process and renderer) for production validation.   |
+| Command                  | Action & Purpose                                                                                      |
+| :----------------------- | :---------------------------------------------------------------------------------------------------- |
+| `npm start`              | Launches the Electron app via `tooling/start.mjs` with environment sanitization.                      |
+| `npm run setup:electron` | Downloads and verifies the matching Electron prebuilt platform binary.                                |
+| `npm run typecheck`      | Executes `tsc --noEmit` to validate TypeScript types across main and renderer code.                   |
+| `npm run test:launcher`  | Runs unit tests verifying the Linux environment launcher and path cleanup logic.                      |
+| `npm run ui:info`        | Checks local shadcn/ui configuration, component inventory, and retained stylesheet/license integrity. |
+| `npm run build`          | Compiles both Vite bundles (main process and renderer) for production validation.                     |
 
 ### Platform Notes & Troubleshooting
 

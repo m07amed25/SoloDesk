@@ -1,0 +1,173 @@
+name: SoloDesk Verify
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+  push:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: solodesk-verify-${{ github.repository }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  context:
+    name: F002 / context
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      desktop: ${{ steps.selection.outputs.desktop }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: 24.21.0
+      - name: Resolve context and minimum policy
+        id: selection
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+        run: node tooling/verification/metadata.mjs context
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: F002-context-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .verification/shared/*.json
+          retention-days: 7
+          if-no-files-found: error
+  baseline:
+    name: F002 / baseline
+    needs: context
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: 24.21.0
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: F002-context-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .verification/shared
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: node tooling/verification/hosted.mjs baseline
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: F002-reports-${{ github.run_id }}-${{ github.run_attempt }}-baseline
+          path: .verification/publish/*
+          retention-days: 7
+          if-no-files-found: error
+  security:
+    name: F002 / security
+    needs: context
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: 24.21.0
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: F002-context-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .verification/shared
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: node tooling/verification/hosted.mjs security
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: F002-reports-${{ github.run_id }}-${{ github.run_attempt }}-security
+          path: .verification/publish/*
+          retention-days: 7
+          if-no-files-found: error
+  desktop:
+    name: F002 / desktop (${{ matrix.target }})
+    needs: context
+    if: needs.context.outputs.desktop == 'true'
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        include:
+          - target: linux-x64
+            runner: ubuntu-24.04
+          - target: windows-x64
+            runner: windows-2025
+          - target: macos-arm64
+            runner: macos-15
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: 24.21.0
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: F002-context-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .verification/shared
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npm run setup:electron
+      - name: Configure locked Linux sandbox helper
+        if: runner.os == 'Linux'
+        run: |
+          test -f node_modules/electron/dist/chrome-sandbox
+          sudo chown root:root node_modules/electron/dist/chrome-sandbox
+          sudo chmod 4755 node_modules/electron/dist/chrome-sandbox
+      - run: npm run build
+      - name: Native smoke
+        env:
+          F002_TARGET: ${{ matrix.target }}
+        run: node tooling/verification/hosted.mjs desktop
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: F002-reports-${{ github.run_id }}-${{ github.run_attempt }}-desktop-${{ matrix.target }}
+          path: .verification/publish/*
+          retention-days: 7
+          if-no-files-found: error
+  aggregate:
+    name: F002 / automated-readiness
+    needs: [context, baseline, security, desktop]
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: 24.21.0
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          pattern: F002-*-${{ github.run_id }}-${{ github.run_attempt }}*
+          path: .verification/imported
+      - name: Inspect actual producers and evaluate required evidence
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          F002_NEEDS: ${{ toJSON(needs) }}
+        run: node tooling/verification/metadata.mjs aggregate
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: F002-summary-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .verification/gate/*.json
+          retention-days: 7
+          if-no-files-found: error

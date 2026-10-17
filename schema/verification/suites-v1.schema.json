@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["schema", "schema_version", "id", "checks"],
+  "additionalProperties": false,
+  "properties": {
+    "checks": {
+      "type": "array"
+    },
+    "schema": {
+      "type": "string",
+      "const": "solodesk.verification.suites"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    }
+  }
+}

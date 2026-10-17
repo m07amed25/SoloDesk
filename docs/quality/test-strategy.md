@@ -4,17 +4,17 @@ Status: future verification specification. Existing shell/launcher checks remain
 
 ## Test layers
 
-| Layer | Target | Necessary failures/properties |
-| --- | --- | --- |
-| Pure domain/property | Money, seconds, allocation intervals, state machines, dates, tax/discount/credit math | Conservation, exact bounds, nonoverlap, reversal identity, locale independence, invalid transition rejection |
-| Storage integration | Local encryption/outbox, server transactions/constraints, migrations, files | Kill at commit boundaries; disk full/key failure; unique/cross-tenant constraints; no partial finance effect |
-| API/IPC/auth | Schema bounds, sender/session/role scopes, receipts/cursors | Forged actor/tenant, stale role, changed payload with same key, unauthorized search/export/download |
-| Sync/model | Two+ devices, accepted event logs and conflict candidates | Duplication/reorder/loss/partition/clock skew/tombstones/old-client/resnapshot; deterministic convergence where merge is defined |
-| Desktop end-to-end | Real Electron app/native OS integration | Install, sign-in, file dialogs, tray/close, crash/sleep/restart, native controls, Snap terminal startup |
-| Server/jobs/providers | Short batch runtime, leases, scheduler, callbacks, data recovery | Lost reply, lease expiry, duplicate/out-of-order webhook, revoked connection, dead letter, provider pause/quota |
-| UI/a11y/localization | English/Arabic, RTL, keyboard/screen readers, zoom | Mixed bidi content, focus, long forms/drag alternatives, Arabic numeric parsing and errors |
-| Document artifacts | Invoice/proposal/credit/report PDF + CSV/archive | Saved snapshot reconciliation, Arabic shaping/font embedding, multipage clipping, safe CSV, privacy filtering |
-| Release/operations | Signed installer/update, migration/restore, alerts | Tampered update, supported old versions, DB+blob restore, key recovery, independent export/vendor exit |
+| Layer                 | Target                                                                                | Necessary failures/properties                                                                                                    |
+| --------------------- | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Pure domain/property  | Money, seconds, allocation intervals, state machines, dates, tax/discount/credit math | Conservation, exact bounds, nonoverlap, reversal identity, locale independence, invalid transition rejection                     |
+| Storage integration   | Local encryption/outbox, server transactions/constraints, migrations, files           | Kill at commit boundaries; disk full/key failure; unique/cross-tenant constraints; no partial finance effect                     |
+| API/IPC/auth          | Schema bounds, sender/session/role scopes, receipts/cursors                           | Forged actor/tenant, stale role, changed payload with same key, unauthorized search/export/download                              |
+| Sync/model            | Two+ devices, accepted event logs and conflict candidates                             | Duplication/reorder/loss/partition/clock skew/tombstones/old-client/resnapshot; deterministic convergence where merge is defined |
+| Desktop end-to-end    | Real Electron app/native OS integration                                               | Install, sign-in, file dialogs, tray/close, crash/sleep/restart, native controls, Snap terminal startup                          |
+| Server/jobs/providers | Short batch runtime, leases, scheduler, callbacks, data recovery                      | Lost reply, lease expiry, duplicate/out-of-order webhook, revoked connection, dead letter, provider pause/quota                  |
+| UI/a11y/localization  | English/Arabic, RTL, keyboard/screen readers, zoom                                    | Mixed bidi content, focus, long forms/drag alternatives, Arabic numeric parsing and errors                                       |
+| Document artifacts    | Invoice/proposal/credit/report PDF + CSV/archive                                      | Saved snapshot reconciliation, Arabic shaping/font embedding, multipage clipping, safe CSV, privacy filtering                    |
+| Release/operations    | Signed installer/update, migration/restore, alerts                                    | Tampered update, supported old versions, DB+blob restore, key recovery, independent export/vendor exit                           |
 
 Financial fixtures include currencies with 0/2/3 decimal exponents; quantity/rate rational precision; half ties; many tiny lines; inclusive/exclusive taxes; document discount allocation; multiple partial credits exhausting original components; overpayment/unapplied credit; refunds with/without debt adjustment; FX/fees; deposit/final bill; retainers/overages and proration. Expected outcomes are approved independently of implementation. Use generated/property-based tests for conservation and example fixtures for policy interpretation.
 
@@ -37,14 +37,14 @@ Use isolated development/staging/provider sandboxes and synthetic labeled data. 
 
 Reference hardware must be agreed before a claim: proposed 4-core CPU, 8 GB RAM, SSD, current supported OS; record actual model and power mode. Dataset proposal: 50 members, 500 clients/projects, 10,000 tasks, 100,000 time entries and 10,000 issued financial documents with representative attachments. This is a benchmark fixture, not a supported service/seat limit.
 
-| Measurement | Proposed target / measurement |
-| --- | --- |
-| Cold desktop cached workspace usable | p95 ≤ 3 seconds over 30 launches, excluding first online enrollment |
-| Local filtered page/search | p95 ≤ 300 ms over 200 representative queries |
-| Cached navigation/form response | p95 ≤ 100 ms for visible feedback; heavy work off UI thread |
-| Online accepted ordinary command | p95 ≤ 1 second on declared 50-ms RTT baseline, excluding provider jobs |
-| Memory/CPU | Record idle/timer/import peak and leaks over 8-hour run; set numeric budgets from prototype measurements |
-| Sync catch-up / PDF / import | Benchmark by records/bytes/pages and publish limits; no invented unlimited throughput |
+| Measurement                          | Proposed target / measurement                                                                            |
+| ------------------------------------ | -------------------------------------------------------------------------------------------------------- |
+| Cold desktop cached workspace usable | p95 ≤ 3 seconds over 30 launches, excluding first online enrollment                                      |
+| Local filtered page/search           | p95 ≤ 300 ms over 200 representative queries                                                             |
+| Cached navigation/form response      | p95 ≤ 100 ms for visible feedback; heavy work off UI thread                                              |
+| Online accepted ordinary command     | p95 ≤ 1 second on declared 50-ms RTT baseline, excluding provider jobs                                   |
+| Memory/CPU                           | Record idle/timer/import peak and leaks over 8-hour run; set numeric budgets from prototype measurements |
+| Sync catch-up / PDF / import         | Benchmark by records/bytes/pages and publish limits; no invented unlimited throughput                    |
 
 Free shared services may not meet these service budgets; record measured behavior and adjust deployment or supported pilot promises. Do not weaken finance/security checks to improve timing. Performance regressions require evidence, not optimistic screenshots.
 
@@ -53,3 +53,5 @@ Free shared services may not meet these service budgets; record measured behavio
 A feature needs approved rules/fields/states, complete role/offline behavior, migration plan, positive/negative/retry/recovery tests, bilingual/RTL/accessibility checks, telemetry/redaction, user/support guidance and traceable IDs. Required release evidence records build/git identity where available, OS/CPU, database/protocol/policy versions, fixtures, exact commands/scenarios, result artifacts and unresolved defects. Phase checkboxes stay unchecked until evidence exists.
 
 Block release for tenant leakage, unauthorized financial effect, duplicate issue/settlement, unrecoverable data loss, plaintext fallback, broken critical keyboard/Arabic flow or incompatible destructive migration. Security findings need risk triage; no silent waivers. Run targeted suites on every relevant change, full platform/provider/recovery gates before each supported release and scheduled restore drills during operation. [Acceptance matrix](acceptance.md) owns user-visible scenarios.
+
+F002 implementation is authorized by the current user request. Its [verification commands, native/security scope and recovery](../features/F002.md) and actual QA remain distinct from business-feature implementation, owner approval, merge, protection activation and release.

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "schema",
+    "schema_version",
+    "id",
+    "context_ref",
+    "policy_ref",
+    "authority",
+    "checks",
+    "review_required"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "context_ref": {},
+    "policy_ref": {},
+    "authority": {},
+    "checks": {
+      "type": "array"
+    },
+    "review_required": {
+      "type": "boolean"
+    },
+    "schema": {
+      "type": "string",
+      "const": "solodesk.verification.selection"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "findings": {
+      "type": "array"
+    }
+  }
+}

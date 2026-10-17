@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "schema",
+    "schema_version",
+    "id",
+    "phase_ids",
+    "proposal",
+    "execution_mode",
+    "proposal_head_sha",
+    "base_sha",
+    "tested_sha",
+    "working_tree",
+    "policy_ref",
+    "policy_authority",
+    "workflow_identity",
+    "changed_paths",
+    "environment"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "phase_ids": {
+      "type": "array"
+    },
+    "proposal": {
+      "type": "object"
+    },
+    "execution_mode": {
+      "type": "string",
+      "enum": ["local", "hosted-pr", "hosted-push"]
+    },
+    "proposal_head_sha": {},
+    "base_sha": {},
+    "tested_sha": {},
+    "working_tree": {
+      "type": "object"
+    },
+    "policy_ref": {},
+    "policy_authority": {},
+    "workflow_identity": {
+      "type": "object"
+    },
+    "provider": {
+      "type": "object"
+    },
+    "changed_paths": {
+      "type": "array"
+    },
+    "environment": {
+      "type": "object"
+    },
+    "schema": {
+      "type": "string",
+      "const": "solodesk.verification.context"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "manifest_digests": {
+      "type": "object"
+    }
+  }
+}
