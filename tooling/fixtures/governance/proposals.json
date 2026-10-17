@@ -1,0 +1,40 @@
+{
+  "synthetic": true,
+  "valid": {
+    "phase_id": "F001",
+    "title": "[F001] Delivery governance and PR standards",
+    "branch": "feat/f001-delivery-governance-and-pr-standards",
+    "target": "main",
+    "pr_url": null,
+    "problem": "Ambiguous delivery evidence",
+    "result": "Traceable review",
+    "scope": { "included": ["governance"], "excluded": ["CI"] },
+    "doc_refs": ["feature.md"],
+    "head_revision": null,
+    "base_revision": null,
+    "snapshot_ref": null,
+    "impact": { "security": "Inert local tooling" },
+    "recovery": "Repair in same PR",
+    "limitations": "No remote enforcement",
+    "remote_constraints_ref": null,
+    "fix_of": null,
+    "maintenance_of": null
+  },
+  "cases": [
+    { "patch": { "target": "release" }, "expected": "proposal-identity" },
+    {
+      "patch": { "branch": "feat/f002-wrong" },
+      "expected": "proposal-identity"
+    },
+    {
+      "patch": { "primary_prs": ["one", "two"] },
+      "expected": "proposal-primary"
+    },
+    { "patch": { "pr_url": "F001" }, "expected": "proposal-url" },
+    { "patch": { "result": "" }, "expected": "missing-field" },
+    {
+      "patch": { "split_after_implementation": true },
+      "expected": "proposal-split"
+    }
+  ]
+}

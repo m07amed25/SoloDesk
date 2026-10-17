@@ -1,0 +1,59 @@
+{
+  "synthetic": true,
+  "cases": [
+    {
+      "name": "valid HTML anchor",
+      "text": "[phase](target.md#f001)",
+      "target": "<a id=\"f001\"></a>",
+      "expected": []
+    },
+    {
+      "name": "missing file",
+      "text": "[missing](absent.md)",
+      "target": "# Safe",
+      "expected": ["missing-target"]
+    },
+    {
+      "name": "missing anchor",
+      "text": "[missing](target.md#absent)",
+      "target": "# Safe",
+      "expected": ["missing-anchor"]
+    },
+    {
+      "name": "Unicode heading",
+      "text": "[Arabic](target.md#مرحبا)",
+      "target": "# مرحبا",
+      "expected": []
+    },
+    {
+      "name": "repeated heading",
+      "text": "[second](target.md#safe-1)",
+      "target": "# Safe\n# Safe",
+      "expected": []
+    },
+    {
+      "name": "fenced future example",
+      "text": "```md\n[future](absent.md)\n```",
+      "target": "# Safe",
+      "expected": []
+    },
+    {
+      "name": "reference link",
+      "text": "[scope][s]\n[s]: target.md#safe",
+      "target": "# Safe",
+      "expected": []
+    },
+    {
+      "name": "unsafe path",
+      "text": "[escape](../outside.md)",
+      "target": "# Safe",
+      "expected": ["unsafe-target"]
+    },
+    {
+      "name": "unsupported link whitespace",
+      "text": "[bad](target file.md)",
+      "target": "# Safe",
+      "expected": ["unsupported-link"]
+    }
+  ]
+}

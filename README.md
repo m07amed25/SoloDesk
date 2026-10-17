@@ -440,13 +440,18 @@ SoloDesk maintains an exhaustive, authoritative documentation suite. Explore spe
 
 ## Development & Contribution Workflow
 
+Follow [delivery governance](docs/development/delivery-governance.md), the
+[F001 feature guide](docs/features/F001.md) and [observed QA](docs/qa/F001.md).
+The [PR template](.github/pull_request_template.md) records scope, evidence and owner decision.
+F001 implements local governance; remote CI enforcement belongs to F002.
+
 To maintain absolute software stability and financial accuracy, SoloDesk adheres to a structured, disciplined development cycle:
 
 ```text
 Select Feature Phase (plan.md)
   │
   ▼
-Create Dedicated Branch (feature/fXXX-short-title)
+Create Dedicated Branch (feat/f###-short-slug)
   │
   ▼
 Implement Bounded Code + Comprehensive Unit/Integration Tests
@@ -458,7 +463,7 @@ Verify TypeScript Types (`npm run typecheck`) & Tests (`npm run test:launcher`)
 Open Pull Request with Evidence & QA Checklist
   │
   ▼
-Automated CodeRabbit Review & Maintainer Approval
+Current Automated Checks → Agent QA → Explicit User Final Approval
   │
   ▼
 Merge to Main

@@ -1,0 +1,20 @@
+{
+  "synthetic": true,
+  "files": {
+    "policy.md": "# Safe\n",
+    "مرحبا.md": "نص\r\n"
+  },
+  "expected_digest": "3813c914038dcd18538f5ef71fd7fb56f24cbbcbc52fd63a1567372932fc0721",
+  "cases": [
+    "order",
+    "Unicode",
+    "raw-line-endings",
+    "omitted-tooling",
+    "changed-new-file",
+    "two-evidence-exclusions",
+    "changed-base",
+    "changed-head",
+    "explicit-carry-forward",
+    "symlink-escape"
+  ]
+}

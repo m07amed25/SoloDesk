@@ -1,0 +1,75 @@
+{
+  "synthetic": true,
+  "cases": [
+    {
+      "id": "AP-01",
+      "context": "current human source assumed only in fixture",
+      "manual_expected": "eligible",
+      "decision": "approved",
+      "variant": null
+    },
+    {
+      "id": "AP-02",
+      "context": "missing approval",
+      "manual_expected": "blocked",
+      "decision": "pending",
+      "variant": null
+    },
+    {
+      "id": "AP-03",
+      "context": "agent-only decision",
+      "manual_expected": "blocked",
+      "decision": "approved",
+      "variant": "agent"
+    },
+    {
+      "id": "AP-04",
+      "context": "silence/checkbox",
+      "manual_expected": "blocked",
+      "decision": "pending",
+      "variant": null
+    },
+    {
+      "id": "AP-05",
+      "context": "uninspected source",
+      "manual_expected": "blocked",
+      "decision": "approved",
+      "variant": "uninspected"
+    },
+    {
+      "id": "AP-06",
+      "context": "old snapshot",
+      "manual_expected": "blocked",
+      "decision": "approved",
+      "variant": "stale"
+    },
+    {
+      "id": "AP-07",
+      "context": "withdrawn decision",
+      "manual_expected": "blocked",
+      "decision": "withdrawn",
+      "variant": null
+    },
+    {
+      "id": "AP-08",
+      "context": "blocking finding",
+      "manual_expected": "blocked",
+      "decision": "approved",
+      "variant": "finding"
+    },
+    {
+      "id": "AP-09",
+      "context": "author mislabeled independent",
+      "manual_expected": "blocked",
+      "decision": "approved",
+      "variant": "independent"
+    },
+    {
+      "id": "AP-10",
+      "context": "unmet remote review",
+      "manual_expected": "blocked",
+      "decision": "approved",
+      "variant": "remote"
+    }
+  ]
+}
