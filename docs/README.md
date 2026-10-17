@@ -22,38 +22,38 @@ Owner approval, merge and release are separate outcomes.
 
 ## Document map
 
-| Document | Purpose |
-| --- | --- |
-| [Product brief](../PRODUCT.md) | Audience, goals, confirmed boundaries, first release versus complete roadmap |
-| [Requirements](product/requirements.md) | Requirement families, nonfunctional rules and earlier-ID migration |
-| [Workflows](product/workflows.md) | Cross-domain actions, states, retries and recovery |
-| [Screens](product/screens.md) | Navigation, permissions, online/offline and required UI states |
-| [UX/localization](product/ux-and-localization.md) | English/Arabic, RTL, numeric/bidi/PDF, keyboard/accessibility |
-| [Glossary](product/glossary.md) | Domain meanings and Arabic terminology seed |
-| [Platform/workspaces](specs/platform-and-workspaces.md) | Identity, teams, permissions, offline, devices, settings and closure |
-| [Client lifecycle](specs/client-lifecycle.md) | CRM, contacts, catalog, proposals, agreements, onboarding and portal handoff |
-| [Work management](specs/work-management.md) | Tasks, dependencies, capacity, scope changes, delivery and collaboration |
-| [Time/productivity](specs/time-and-productivity.md) | Timer evidence/recovery, rates, rounding, approvals and allocations |
-| [Finance](specs/finance.md) | Exact money, invoices/payments/credits, expenses, retainers/subscriptions, reconciliation |
-| [Insights/knowledge](specs/insights-and-knowledge.md) | Reports, forecasts, profitability, knowledge and search |
-| [Integrations/automation](specs/integrations-and-automation.md) | Provider scopes, deterministic rules, durable jobs and external evidence |
-| [Architecture](architecture/overview.md) | Desktop/cloud/portal responsibilities and authority |
-| [Backend/cost selection](architecture/backend-stack.md) | Supabase recommendation, verified free limits, alternatives and cost triggers |
-| [Data model](architecture/data-model.md) | Entities, relationships, types, constraints, migrations and invariants |
-| [API/IPC contracts](architecture/api-contracts.md) | Commands, validation, idempotency, errors, pagination and files |
-| [Sync/collaboration](architecture/sync-and-collaboration.md) | Conflicts/cursors/tombstones, revocation, financial authority and client portal |
-| [Security/privacy](architecture/security-and-privacy.md) | Threats, keys, tenant isolation, retention, support and release controls |
-| [Data lifecycle](architecture/data-lifecycle.md) | Persistence, migrations, imports/exports, encrypted backup and safe recovery |
-| [Proposed source structure](architecture/project-structure.md) | Future desktop/shared/backend/portal folders and dependencies |
-| [Module ownership](modules/responsibilities.md) | Rule owners, contracts and event boundaries |
-| [Acceptance](quality/acceptance.md) | User-visible expected outcomes and evidence format |
-| [Test strategy](quality/test-strategy.md) | Domain/integration/OS/RTL/security/recovery/load verification |
-| [Release/support](operations/release-and-support.md) | Installers, signed updates, incident response, quotas, recovery and user guidance |
-| [Current development setup](development/setup.md) | Installed shell/tooling and checks already performed |
-| [Roadmap](planning/roadmap.md) | Ten phases, dependencies, core/advanced/connected release slices |
-| [Decisions](planning/decisions.md) | Confirmed answers, recommendations, complex unresolved gates |
-| [Risks](planning/risks.md) | Integrity, privacy, deployment, Arabic and scope risks |
-| [Coverage](planning/coverage.md) | Every requirement mapped to source, phase and acceptance family |
+| Document                                                        | Purpose                                                                                   |
+| --------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| [Product brief](../PRODUCT.md)                                  | Audience, goals, confirmed boundaries, first release versus complete roadmap              |
+| [Requirements](product/requirements.md)                         | Requirement families, nonfunctional rules and earlier-ID migration                        |
+| [Workflows](product/workflows.md)                               | Cross-domain actions, states, retries and recovery                                        |
+| [Screens](product/screens.md)                                   | Navigation, permissions, online/offline and required UI states                            |
+| [UX/localization](product/ux-and-localization.md)               | English/Arabic, RTL, numeric/bidi/PDF, keyboard/accessibility                             |
+| [Glossary](product/glossary.md)                                 | Domain meanings and Arabic terminology seed                                               |
+| [Platform/workspaces](specs/platform-and-workspaces.md)         | Identity, teams, permissions, offline, devices, settings and closure                      |
+| [Client lifecycle](specs/client-lifecycle.md)                   | CRM, contacts, catalog, proposals, agreements, onboarding and portal handoff              |
+| [Work management](specs/work-management.md)                     | Tasks, dependencies, capacity, scope changes, delivery and collaboration                  |
+| [Time/productivity](specs/time-and-productivity.md)             | Timer evidence/recovery, rates, rounding, approvals and allocations                       |
+| [Finance](specs/finance.md)                                     | Exact money, invoices/payments/credits, expenses, retainers/subscriptions, reconciliation |
+| [Insights/knowledge](specs/insights-and-knowledge.md)           | Reports, forecasts, profitability, knowledge and search                                   |
+| [Integrations/automation](specs/integrations-and-automation.md) | Provider scopes, deterministic rules, durable jobs and external evidence                  |
+| [Architecture](architecture/overview.md)                        | Desktop/cloud/portal responsibilities and authority                                       |
+| [Backend/cost selection](architecture/backend-stack.md)         | Supabase recommendation, verified free limits, alternatives and cost triggers             |
+| [Data model](architecture/data-model.md)                        | Entities, relationships, types, constraints, migrations and invariants                    |
+| [API/IPC contracts](architecture/api-contracts.md)              | Commands, validation, idempotency, errors, pagination and files                           |
+| [Sync/collaboration](architecture/sync-and-collaboration.md)    | Conflicts/cursors/tombstones, revocation, financial authority and client portal           |
+| [Security/privacy](architecture/security-and-privacy.md)        | Threats, keys, tenant isolation, retention, support and release controls                  |
+| [Data lifecycle](architecture/data-lifecycle.md)                | Persistence, migrations, imports/exports, encrypted backup and safe recovery              |
+| [Proposed source structure](architecture/project-structure.md)  | Future desktop/shared/backend/portal folders and dependencies                             |
+| [Module ownership](modules/responsibilities.md)                 | Rule owners, contracts and event boundaries                                               |
+| [Acceptance](quality/acceptance.md)                             | User-visible expected outcomes and evidence format                                        |
+| [Test strategy](quality/test-strategy.md)                       | Domain/integration/OS/RTL/security/recovery/load verification                             |
+| [Release/support](operations/release-and-support.md)            | Installers, signed updates, incident response, quotas, recovery and user guidance         |
+| [Current development setup](development/setup.md)               | Installed shell/tooling and checks already performed                                      |
+| [Roadmap](planning/roadmap.md)                                  | Ten phases, dependencies, core/advanced/connected release slices                          |
+| [Decisions](planning/decisions.md)                              | Confirmed answers, recommendations, complex unresolved gates                              |
+| [Risks](planning/risks.md)                                      | Integrity, privacy, deployment, Arabic and scope risks                                    |
+| [Coverage](planning/coverage.md)                                | Every requirement mapped to source, phase and acceptance family                           |
 
 ## Phase plans
 
@@ -73,3 +73,5 @@ Owner approval, merge and release are separate outcomes.
 Confirmed decisions are authoritative; recommendations and open policies must not be silently promoted to user choices. Update requirement, affected state/data/API, phase, acceptance, risk and decision links together. Stable IDs are never reused. Each enabled release slice needs actual evidence; never check a future gate from documentation alone. Financial legal profiles require selected markets/review. Current scope authorizes F001 governance implementation and its PR publication. Business implementation, new packages, cloud provisioning and deployment remain deferred.
 
 Recommended reading paths: product owner → brief/decisions/roadmap/screens; engineer → architecture/data/API/sync/security/specs; QA → coverage/acceptance/test strategy/phases; operator → backend/data lifecycle/release/support. For running the existing shell, use development/setup.md.
+
+F002 implementation is authorized by the current user request. Its [verification commands, native/security scope and recovery](features/F002.md) and actual QA remain distinct from business-feature implementation, owner approval, merge, protection activation and release.

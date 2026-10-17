@@ -2,7 +2,7 @@
   "name": "solodesk",
   "version": "0.0.0",
   "private": true,
-  "description": "SoloDesk desktop workspace \u2014 minimal runnable shell",
+  "description": "SoloDesk desktop workspace — minimal runnable shell",
   "main": ".vite/build/main.js",
   "scripts": {
     "start": "node tooling/start.mjs",
@@ -15,7 +15,9 @@
     "test:unit": "node tooling/verification/run-suite.mjs verification-unit",
     "test:integration": "node tooling/verification/run-suite.mjs verification-integration",
     "check:docs": "node tooling/verification/documentation.mjs",
-    "verify": "node tooling/verification/cli.mjs verify"
+    "verify": "node tooling/verification/cli.mjs verify",
+    "test:desktop": "node tooling/verification/desktop.mjs",
+    "check:security": "node tooling/verification/cli.mjs run --group security"
   },
   "engines": {
     "node": ">=24 <25"

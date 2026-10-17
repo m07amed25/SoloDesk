@@ -1,0 +1,558 @@
+{
+  "schema": "solodesk.verification.pack",
+  "schema_version": 1,
+  "phase": "F002",
+  "context": {
+    "head": "7d692ef81fbaccb504c85daa4d27ed2af572d6b5",
+    "base": "c66095e65e0b901aeeddf4f9e1d7274be5fdbf8a",
+    "scope": "Working implementation; exact producer contexts remain in their immutable run records",
+    "primary_pr": null
+  },
+  "automated_ready": false,
+  "agent_qa": {
+    "status": "in progress",
+    "reviewer": "Codex",
+    "source": "docs/qa/F002.md"
+  },
+  "owner": {
+    "status": "pending",
+    "source": "No final owner decision requested or received"
+  },
+  "merge": {
+    "status": "not performed"
+  },
+  "release": {
+    "status": "not performed"
+  },
+  "observations": [
+    {
+      "id": "baseline-local",
+      "status": "passed",
+      "source": "run-27ceff84-2044-42e7-92d6-afd56274715f",
+      "counts": {
+        "baseline_commands": 10,
+        "launcher_tests": 5,
+        "governance_tests": 74,
+        "verification_unit": 55,
+        "verification_integration": 30
+      }
+    },
+    {
+      "id": "linux-native-local",
+      "status": "passed",
+      "source": "docs/qa/F002.md",
+      "counts": {
+        "tests": 1
+      }
+    },
+    {
+      "id": "audit",
+      "status": "failed",
+      "source": "npm audit registry observation 2026-10-18",
+      "counts": {
+        "dependencies": 588,
+        "high_findings": 7
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F002-audit",
+      "severity": "high",
+      "blocking": true,
+      "status": "open",
+      "diagnostic": "GHSA-vfj7-8cjw-p6xm in existing braces/shadcn chain; no patched braces release observed",
+      "owner": "Dependency maintainer/security reviewer",
+      "next_action": "Upstream repair or individually reviewed permitted mitigation; rerun audit"
+    },
+    {
+      "id": "F002-native-hosted",
+      "blocking": true,
+      "status": "open",
+      "owner": "F002 maintainer",
+      "diagnostic": "Hosted matrix and final provider evidence pending",
+      "next_action": "Execute and inspect primary PR runs"
+    },
+    {
+      "id": "F002-control-fork",
+      "blocking": true,
+      "status": "open",
+      "owner": "Repository owner/F002 maintainer",
+      "diagnostic": "No existing unrelated control run and no actual fork trial",
+      "next_action": "Provide an authorized genuine control/fork context; do not fabricate isolation or cancellation proof"
+    },
+    {
+      "id": "F002-owner",
+      "blocking": true,
+      "status": "open",
+      "owner": "Repository owner",
+      "diagnostic": "Final owner approval and merge not performed",
+      "next_action": "Review concrete current PR only after blockers repaired"
+    }
+  ],
+  "adoption": {
+    "state": "prepared",
+    "activated": false,
+    "observed_at": "2026-10-17T23:18:57.869Z",
+    "before": {
+      "repository": "m07amed25/SoloDesk",
+      "visibility": "public",
+      "default_branch": "main",
+      "protection": "absent HTTP404",
+      "rulesets": [],
+      "workflow_token": "read",
+      "fork_approval": "first_time_contributors"
+    },
+    "proposed": {
+      "required_check": "F002 / automated-readiness",
+      "strict": true,
+      "resolved_conversations": true,
+      "preserve_stronger_constraints": true
+    },
+    "gaps": [
+      "Actual working check identity pending",
+      "No activation authorization/outcome"
+    ],
+    "recovery": "Restore reviewed check identity before separately authorized protection adoption; preserve stronger existing controls"
+  },
+  "limits": {
+    "input_bytes": 2097152,
+    "cumulative_bytes": 33554432,
+    "definitions": 512,
+    "records": 2048,
+    "local_ms": 2700000,
+    "hosted_ms": 3000000,
+    "baseline_minutes": 15,
+    "security_minutes": 10,
+    "desktop_minutes": 20,
+    "aggregate_minutes": 2,
+    "launch_ms": 30000,
+    "case_ms": 60000,
+    "grace_ms": 10000,
+    "cleanup_ms": 20000,
+    "cancel_ms": 360000,
+    "artifact_bytes": 104857600,
+    "retention_days": 7,
+    "log_bytes": 2097152,
+    "screenshot_bytes": 5242880,
+    "job_bytes": 26214400,
+    "baseline_artifact_bytes": 10485760,
+    "security_artifact_bytes": 10485760,
+    "desktop_artifact_bytes": 20971520,
+    "metadata_artifact_bytes": 10485760
+  },
+  "requirements": [
+    {
+      "id": "FR-001",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "FR-002",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "FR-003",
+      "status": "passed",
+      "source": "docs/qa/F002.md",
+      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped"
+    },
+    {
+      "id": "FR-004",
+      "status": "passed",
+      "source": "docs/qa/F002.md",
+      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped"
+    },
+    {
+      "id": "FR-005",
+      "status": "passed",
+      "source": "docs/qa/F002.md",
+      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped"
+    },
+    {
+      "id": "FR-006",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "FR-007",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "FR-008",
+      "status": "passed",
+      "source": "docs/qa/F002.md",
+      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped"
+    },
+    {
+      "id": "FR-009",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "FR-010",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "FR-011",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "FR-012",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "FR-013",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "FR-014",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "FR-015",
+      "status": "passed",
+      "source": "docs/qa/F002.md",
+      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped"
+    },
+    {
+      "id": "FR-016",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "FR-017",
+      "status": "passed",
+      "source": "docs/qa/F002.md",
+      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped"
+    },
+    {
+      "id": "FR-018",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "FR-019",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "FR-020",
+      "status": "failed",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "FR-021",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "FR-022",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "FR-023",
+      "status": "passed",
+      "source": "docs/qa/F002.md",
+      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped"
+    },
+    {
+      "id": "FR-024",
+      "status": "passed",
+      "source": "docs/qa/F002.md",
+      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped"
+    },
+    {
+      "id": "FR-025",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "FR-026",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "FR-027",
+      "status": "passed",
+      "source": "docs/qa/F002.md",
+      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped"
+    },
+    {
+      "id": "FR-028",
+      "status": "passed",
+      "source": "docs/qa/F002.md",
+      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped"
+    },
+    {
+      "id": "FR-029",
+      "status": "passed",
+      "source": "docs/qa/F002.md",
+      "observation": "Local contract/baseline regression observed; hosted/native/manual scope remains separately mapped"
+    },
+    {
+      "id": "FR-030",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    }
+  ],
+  "acceptance": [
+    {
+      "id": "A-01",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-02",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-03",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-04",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-05",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-06",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-07",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-08",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-09",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-10",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-11",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-12",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-13",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-14",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-15",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-16",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-17",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-18",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-19",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-20",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-21",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-22",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-23",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-24",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-25",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-26",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "A-27",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    }
+  ],
+  "success": [
+    {
+      "id": "SC-001",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "SC-002",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "SC-003",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "SC-004",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "SC-005",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "SC-006",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "SC-007",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "SC-008",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "SC-009",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "SC-010",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    },
+    {
+      "id": "SC-011",
+      "status": "not run",
+      "source": "docs/qa/F002.md",
+      "observation": "Partial local implementation/observations exist; complete acceptance not yet demonstrated"
+    }
+  ]
+}

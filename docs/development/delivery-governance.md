@@ -129,3 +129,5 @@ A changed digest/base, an unreviewed file, missing assessment or claimed owner a
 this sealing rule. Final owner review always identifies the actual published head/base separately.
 Exact old/new revisions remain required for all other carry-forward assessments. This is content
 association of pre-approval evidence, never a new test run or transfer of human authorization.
+
+F002 implementation is authorized by the current user request. Its [verification commands, native/security scope and recovery](../features/F002.md) and actual QA remain distinct from business-feature implementation, owner approval, merge, protection activation and release.

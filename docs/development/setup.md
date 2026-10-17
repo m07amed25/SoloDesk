@@ -6,19 +6,19 @@ Scope: a minimal runnable Electron shell, explicitly authorized after dependency
 
 ## Stack
 
-| Package/tool | Responsibility |
-| --- | --- |
-| Electron | Desktop runtime and native window |
-| React and React DOM | Welcome-screen renderer |
-| TypeScript and type packages | Type checking |
-| Vite and React plugin | Renderer tooling |
-| Tailwind CSS and @tailwindcss/vite | Utility CSS compilation through Vite |
-| shadcn | Component CLI and shared Tailwind utilities |
-| class-variance-authority, cn, lucide-react, tw-animate-css | Current shadcn manual-setup dependencies |
-| @base-ui/react | Primitive used by the generated shadcn Button |
-| Electron Forge CLI and Vite plugin | Desktop development launcher and build integration |
-| better-sqlite3 | Native SQLite adapter, not a database service |
-| @electron/rebuild | Rebuild native adapters against the Electron runtime when needed |
+| Package/tool                                               | Responsibility                                                   |
+| ---------------------------------------------------------- | ---------------------------------------------------------------- |
+| Electron                                                   | Desktop runtime and native window                                |
+| React and React DOM                                        | Welcome-screen renderer                                          |
+| TypeScript and type packages                               | Type checking                                                    |
+| Vite and React plugin                                      | Renderer tooling                                                 |
+| Tailwind CSS and @tailwindcss/vite                         | Utility CSS compilation through Vite                             |
+| shadcn                                                     | Component CLI and shared Tailwind utilities                      |
+| class-variance-authority, cn, lucide-react, tw-animate-css | Current shadcn manual-setup dependencies                         |
+| @base-ui/react                                             | Primitive used by the generated shadcn Button                    |
+| Electron Forge CLI and Vite plugin                         | Desktop development launcher and build integration               |
+| better-sqlite3                                             | Native SQLite adapter, not a database service                    |
+| @electron/rebuild                                          | Rebuild native adapters against the Electron runtime when needed |
 
 Versions are pinned in package.json; package-lock.json records transitive versions. The setup targets the installed Node 24 LTS line and npm. No global npm packages are needed.
 
@@ -27,7 +27,7 @@ The React Vite plugin is pinned to 5.2.0: it declares Vite 8 support while remai
 ## Tooling files
 
 - components.json: shadcn metadata, renderer aliases, and stylesheet location. base-nova/neutral are replaceable setup defaults, not an approved interface design.
-- tsconfig.json: strict TypeScript across main/renderer/config files, JSX support, and @/* mapped to app/renderer/*.
+- tsconfig.json: strict TypeScript across main/renderer/config files, JSX support, and @/_ mapped to app/renderer/_.
 - vite.config.mts: renderer React and Tailwind plugins, matching alias, and relative asset URLs for future Electron file loading.
 - vite.main.config.mts: builds the main process; Forge supplies development URL definitions while standalone builds use local files.
 - forge.config.mjs: connects the main-process entry and Vite renderer; native-module rebuilding is deferred while no native adapter is loaded.
@@ -105,3 +105,5 @@ Title-bar correction: type checking and builds passed; an isolated production wi
 VS Code Snap startup regression: the first correction relied on SNAP_NAME=code and was tested with the Code parent process's GTK settings. The actual integrated bash terminal retained Snap GTK/schema paths but had removed SNAP_NAME, so that correction skipped cleanup. Launching with the terminal's GTK settings reproduced SIGSEGV and the missing font-antialiasing schema-key error. Cleanup now matches the bundled paths directly, without requiring SNAP_NAME.
 
 After the correction, npm run test:launcher passed all five tests, including the missing-SNAP_NAME regression, preservation of host paths/display variables, source immutability, and unchanged Windows/macOS inputs. npm run typecheck passed. An actual npm start launch using the integrated terminal's inherited GTK/display settings with SNAP_NAME absent rendered the welcome screen, displayed the native controls overlay, exercised the planned-features button, and retained its native window through a 15-second observation. The test temporarily hid and then restored the window to avoid manual closure during observation. No sandbox-disabling flags were used. Native Windows/macOS startup was not tested.
+
+F002 implementation is authorized by the current user request. Its [verification commands, native/security scope and recovery](../features/F002.md) and actual QA remain distinct from business-feature implementation, owner approval, merge, protection activation and release.

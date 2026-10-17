@@ -123,3 +123,5 @@ Fields: observed repository/default branch/settings/access/entitlement, expected
 | All delivery gates and current owner authority satisfied   | No auto-merge                                      | Actual authorized merge remains separate  |
 
 F002 introduces no customer data lifecycle or rollback of financial state. Version compatibility, scratch cleanup, currentness and evidence repair are its data-evolution responsibilities.
+
+The implemented manual delivery container uses `solodesk.verification.pack` version 1, separately validated by `delivery.mjs`: complete 30 FR/27 acceptance/11 outcome maps, actual contexts/observations/findings and separate agent/owner/merge/adoption stages. Structural validity of an incomplete pack exits 1 and never authenticates approval. Producer record families remain unchanged.

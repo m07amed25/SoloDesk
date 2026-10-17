@@ -28,11 +28,7 @@
     },
     "execution_mode": {
       "type": "string",
-      "enum": [
-        "local",
-        "hosted-pr",
-        "hosted-push"
-      ]
+      "enum": ["local", "hosted-pr", "hosted-push"]
     },
     "proposal_head_sha": {},
     "base_sha": {},

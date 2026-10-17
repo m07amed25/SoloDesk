@@ -1,6 +1,6 @@
 # F002 Validation Quickstart
 
-**Status**: Future implementation validation guide. Only the existing-baseline commands below exist today. Planning did not install tools, run the proposed workflow, validate native targets or change service settings.
+**Status**: Implemented local commands and hosted workflow under validation. Consult [current QA](../../docs/qa/F002.md) for actually executed scope and blockers; this procedure alone is not evidence.
 
 **Read first**: [plan](plan.md), [CLI contract](contracts/verification-cli.md), [workflow/selection](contracts/workflow-and-selection.md), [evidence/gate](contracts/evidence-and-gate.md), [security/limits](contracts/security-and-limits.md), [adoption](contracts/enforcement-adoption.md).
 
@@ -37,7 +37,7 @@ npm run setup:electron
 
 Expected: manifest and lock hashes unchanged, actual Node/npm/Electron identities match the reviewed toolchain, platform optional build/lint binaries resolve, and unused native database install/rebuild scripts remain disabled. `setup:electron` is required only for desktop execution; fast baseline jobs need not download its runtime. A missing native binary/checksum mismatch is an error, not permission to use latest or approve all scripts.
 
-Configure verified Gitleaks/actionlint binaries at reviewed fixed paths before scanner execution. Dependency/license scans report their full declared coverage and source/version; no automated dependency repair occurs.
+Scanner setup verifies/downloads only official pinned archives at reviewed fixed paths before execution; network/checksum/version failure blocks. Dependency/license scans report their full declared coverage and source/version; no automated dependency repair occurs.
 
 ## Local Reproducibility — A-01–A-05
 
@@ -83,7 +83,7 @@ Run the unit/integration gate fixture groups through their enrolled entry points
 Fixtures validate classification only; they do not prove live provider outcomes. After the workflow exists, use future read-only inspection with the actual observed integer run/attempt/PR identities:
 
 ```bash
-node tooling/verification/cli.mjs inspect --run-id REPLACE_WITH_RUN_ID --attempt REPLACE_WITH_ATTEMPT --pr REPLACE_WITH_PR_NUMBER --out .verification/inspection-F002/provider-observation.json
+node tooling/verification/cli.mjs inspect --context .verification/review/context.json --run-id REPLACE_WITH_RUN_ID --attempt REPLACE_WITH_ATTEMPT --pr REPLACE_WITH_PR_NUMBER --out .verification/inspection-F002/provider-observation.json
 ```
 
 The final path must be inside a fresh verifier-owned scratch allocation; `inspect` must exclusively allocate/validate `inspection-F002` before writing and reject an existing directory owned by a different run. Use `--help` for the implementation's validated path conventions. Expected output compares actual current proposal head/base, recorded tested merge subject, workflow and job identities; ambiguous/raw provider SHA differences remain explicit. Provider credentials are supplied only through approved authentication for this separate read-only invocation, never as command arguments or record data.

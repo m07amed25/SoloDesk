@@ -8,6 +8,7 @@
     "typecheck",
     "lint",
     "build",
+    "build-renderer",
     "launcher",
     "governance-policy",
     "governance-tests",
@@ -19,7 +20,19 @@
     "licenses",
     "workflow-syntax"
   ],
-  "risk_rules": [],
+  "risk_rules": [
+    {
+      "id": "native-and-unknown",
+      "rule": "runtime, dependency, verification-policy or unclassified path",
+      "targets": "all"
+    },
+    {
+      "id": "documents",
+      "rule": "known prose-only paths",
+      "baseline": "mandatory",
+      "native": "not applicable"
+    }
+  ],
   "targets": [
     {
       "id": "linux-x64",
@@ -57,9 +70,16 @@
     "cleanup_ms": 20000,
     "cancel_ms": 360000,
     "artifact_bytes": 104857600,
-    "retention_days": 7
+    "retention_days": 7,
+    "log_bytes": 2097152,
+    "screenshot_bytes": 5242880,
+    "job_bytes": 26214400,
+    "baseline_artifact_bytes": 10485760,
+    "security_artifact_bytes": 10485760,
+    "desktop_artifact_bytes": 20971520,
+    "metadata_artifact_bytes": 10485760
   },
   "suite_manifest_ref": "F002-suites-v1",
   "toolchain_ref": "F002-toolchain-v1",
-  "disposition_refs": []
+  "disposition_refs": ["verification/scanner-dispositions.v1.json"]
 }

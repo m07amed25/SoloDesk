@@ -7,22 +7,13 @@
       "id": "typecheck",
       "group": "baseline",
       "executable": "$NODE",
-      "argv": [
-        "node_modules/typescript/bin/tsc",
-        "--noEmit"
-      ],
+      "argv": ["node_modules/typescript/bin/tsc", "--noEmit"],
       "kind": "command",
       "min_tests": 1,
       "timeout_ms": 300000,
-      "phase_ids": [
-        "F002"
-      ],
-      "requirement_ids": [
-        "NFR-014"
-      ],
-      "scenario_ids": [
-        "A-01"
-      ],
+      "phase_ids": ["F002"],
+      "requirement_ids": ["NFR-014"],
+      "scenario_ids": ["A-01"],
       "entry_files": []
     },
     {
@@ -44,15 +35,9 @@
       "kind": "command",
       "min_tests": 1,
       "timeout_ms": 300000,
-      "phase_ids": [
-        "F002"
-      ],
-      "requirement_ids": [
-        "NFR-014"
-      ],
-      "scenario_ids": [
-        "A-01"
-      ],
+      "phase_ids": ["F002"],
+      "requirement_ids": ["NFR-014"],
+      "scenario_ids": ["A-01"],
       "entry_files": []
     },
     {
@@ -68,37 +53,22 @@
       "kind": "command",
       "min_tests": 1,
       "timeout_ms": 300000,
-      "phase_ids": [
-        "F002"
-      ],
-      "requirement_ids": [
-        "NFR-014"
-      ],
-      "scenario_ids": [
-        "A-01"
-      ],
+      "phase_ids": ["F002"],
+      "requirement_ids": ["NFR-014"],
+      "scenario_ids": ["A-01"],
       "entry_files": []
     },
     {
       "id": "build-renderer",
       "group": "baseline",
       "executable": "$NODE",
-      "argv": [
-        "node_modules/vite/bin/vite.js",
-        "build"
-      ],
+      "argv": ["node_modules/vite/bin/vite.js", "build"],
       "kind": "command",
       "min_tests": 1,
       "timeout_ms": 300000,
-      "phase_ids": [
-        "F002"
-      ],
-      "requirement_ids": [
-        "NFR-014"
-      ],
-      "scenario_ids": [
-        "A-01"
-      ],
+      "phase_ids": ["F002"],
+      "requirement_ids": ["NFR-014"],
+      "scenario_ids": ["A-01"],
       "entry_files": []
     },
     {
@@ -107,6 +77,7 @@
       "executable": "$NODE",
       "argv": [
         "--test",
+        "--test-timeout=30000",
         "--test-reporter=tap",
         "--test-isolation=none",
         "tooling/start.test.mjs"
@@ -114,39 +85,22 @@
       "kind": "tests",
       "min_tests": 5,
       "timeout_ms": 300000,
-      "phase_ids": [
-        "F002"
-      ],
-      "requirement_ids": [
-        "NFR-014"
-      ],
-      "scenario_ids": [
-        "A-01"
-      ],
-      "entry_files": [
-        "--test-isolation=none",
-        "tooling/start.test.mjs"
-      ]
+      "phase_ids": ["F002"],
+      "requirement_ids": ["NFR-014"],
+      "scenario_ids": ["A-01"],
+      "entry_files": ["tooling/start.test.mjs"]
     },
     {
       "id": "governance-policy",
       "group": "baseline",
       "executable": "$NODE",
-      "argv": [
-        "tooling/check-governance.mjs"
-      ],
+      "argv": ["tooling/check-governance.mjs"],
       "kind": "command",
       "min_tests": 1,
       "timeout_ms": 300000,
-      "phase_ids": [
-        "F002"
-      ],
-      "requirement_ids": [
-        "NFR-014"
-      ],
-      "scenario_ids": [
-        "A-01"
-      ],
+      "phase_ids": ["F002"],
+      "requirement_ids": ["NFR-014"],
+      "scenario_ids": ["A-01"],
       "entry_files": []
     },
     {
@@ -155,44 +109,29 @@
       "executable": "$NODE",
       "argv": [
         "--test",
+        "--test-timeout=30000",
         "--test-reporter=tap",
         "tooling/check-governance.test.mjs"
       ],
       "kind": "tests",
       "min_tests": 74,
       "timeout_ms": 300000,
-      "phase_ids": [
-        "F002"
-      ],
-      "requirement_ids": [
-        "NFR-014"
-      ],
-      "scenario_ids": [
-        "A-01"
-      ],
-      "entry_files": [
-        "tooling/check-governance.test.mjs"
-      ]
+      "phase_ids": ["F002"],
+      "requirement_ids": ["NFR-014"],
+      "scenario_ids": ["A-01"],
+      "entry_files": ["tooling/check-governance.test.mjs"]
     },
     {
       "id": "documentation",
       "group": "baseline",
       "executable": "$NODE",
-      "argv": [
-        "tooling/verification/documentation.mjs"
-      ],
+      "argv": ["tooling/verification/documentation.mjs"],
       "kind": "command",
       "min_tests": 1,
       "timeout_ms": 300000,
-      "phase_ids": [
-        "F002"
-      ],
-      "requirement_ids": [
-        "NFR-014"
-      ],
-      "scenario_ids": [
-        "A-01"
-      ],
+      "phase_ids": ["F002"],
+      "requirement_ids": ["NFR-014"],
+      "scenario_ids": ["A-01"],
       "entry_files": []
     },
     {
@@ -201,25 +140,36 @@
       "executable": "$NODE",
       "argv": [
         "--test",
+        "--test-timeout=30000",
         "--test-reporter=tap",
         "tests/verification/unit/records.test.mjs",
-        "tests/verification/unit/documentation.test.mjs"
+        "tests/verification/unit/documentation.test.mjs",
+        "tests/verification/unit/selection.test.mjs",
+        "tests/verification/unit/aggregate.test.mjs",
+        "tests/verification/unit/workflow.test.mjs",
+        "tests/verification/unit/enrollment.test.mjs",
+        "tests/verification/unit/security.test.mjs",
+        "tests/verification/unit/artifacts.test.mjs",
+        "tests/verification/unit/workflow-security.test.mjs",
+        "tests/verification/unit/adoption.test.mjs"
       ],
       "kind": "tests",
-      "min_tests": 9,
+      "min_tests": 55,
       "timeout_ms": 300000,
-      "phase_ids": [
-        "F002"
-      ],
-      "requirement_ids": [
-        "NFR-014"
-      ],
-      "scenario_ids": [
-        "A-01"
-      ],
+      "phase_ids": ["F002"],
+      "requirement_ids": ["NFR-014"],
+      "scenario_ids": ["A-01"],
       "entry_files": [
         "tests/verification/unit/records.test.mjs",
-        "tests/verification/unit/documentation.test.mjs"
+        "tests/verification/unit/documentation.test.mjs",
+        "tests/verification/unit/selection.test.mjs",
+        "tests/verification/unit/aggregate.test.mjs",
+        "tests/verification/unit/workflow.test.mjs",
+        "tests/verification/unit/enrollment.test.mjs",
+        "tests/verification/unit/security.test.mjs",
+        "tests/verification/unit/artifacts.test.mjs",
+        "tests/verification/unit/workflow-security.test.mjs",
+        "tests/verification/unit/adoption.test.mjs"
       ]
     },
     {
@@ -228,28 +178,124 @@
       "executable": "$NODE",
       "argv": [
         "--test",
+        "--test-timeout=30000",
         "--test-reporter=tap",
         "tests/verification/integration/context.test.mjs",
         "tests/verification/integration/setup.test.mjs",
-        "tests/verification/integration/runner.test.mjs"
+        "tests/verification/integration/runner.test.mjs",
+        "tests/verification/integration/baseline-defects.test.mjs",
+        "tests/verification/integration/provider.test.mjs",
+        "tests/verification/integration/aggregate-cli.test.mjs",
+        "tests/verification/integration/desktop-cleanup.test.mjs",
+        "tests/verification/integration/limits.test.mjs",
+        "tests/verification/integration/trust.test.mjs",
+        "tests/verification/integration/review.test.mjs"
       ],
       "kind": "tests",
-      "min_tests": 9,
+      "min_tests": 30,
       "timeout_ms": 300000,
-      "phase_ids": [
-        "F002"
-      ],
-      "requirement_ids": [
-        "NFR-014"
-      ],
-      "scenario_ids": [
-        "A-01"
-      ],
+      "phase_ids": ["F002"],
+      "requirement_ids": ["NFR-014"],
+      "scenario_ids": ["A-01"],
       "entry_files": [
         "tests/verification/integration/context.test.mjs",
         "tests/verification/integration/setup.test.mjs",
-        "tests/verification/integration/runner.test.mjs"
+        "tests/verification/integration/runner.test.mjs",
+        "tests/verification/integration/baseline-defects.test.mjs",
+        "tests/verification/integration/provider.test.mjs",
+        "tests/verification/integration/aggregate-cli.test.mjs",
+        "tests/verification/integration/desktop-cleanup.test.mjs",
+        "tests/verification/integration/limits.test.mjs",
+        "tests/verification/integration/trust.test.mjs",
+        "tests/verification/integration/review.test.mjs"
       ]
+    },
+    {
+      "id": "desktop:linux-x64",
+      "group": "desktop",
+      "target": "linux-x64",
+      "executable": "$NODE",
+      "argv": ["tooling/verification/desktop.mjs", "linux-x64"],
+      "kind": "command",
+      "timeout_ms": 180000,
+      "phase_ids": ["F002"],
+      "requirement_ids": ["FR-006"],
+      "scenario_ids": ["A-12", "A-13"],
+      "entry_files": ["tests/verification/desktop/shell.spec.mjs"]
+    },
+    {
+      "id": "desktop:windows-x64",
+      "group": "desktop",
+      "target": "windows-x64",
+      "executable": "$NODE",
+      "argv": ["tooling/verification/desktop.mjs", "windows-x64"],
+      "kind": "command",
+      "timeout_ms": 180000,
+      "phase_ids": ["F002"],
+      "requirement_ids": ["FR-006"],
+      "scenario_ids": ["A-12", "A-13"],
+      "entry_files": ["tests/verification/desktop/shell.spec.mjs"]
+    },
+    {
+      "id": "desktop:macos-arm64",
+      "group": "desktop",
+      "target": "macos-arm64",
+      "executable": "$NODE",
+      "argv": ["tooling/verification/desktop.mjs", "macos-arm64"],
+      "kind": "command",
+      "timeout_ms": 180000,
+      "phase_ids": ["F002"],
+      "requirement_ids": ["FR-006"],
+      "scenario_ids": ["A-12", "A-13"],
+      "entry_files": ["tests/verification/desktop/shell.spec.mjs"]
+    },
+    {
+      "id": "secrets",
+      "group": "security",
+      "executable": "$NODE",
+      "argv": ["tooling/verification/security.mjs", "secrets"],
+      "kind": "command",
+      "timeout_ms": 250000,
+      "phase_ids": ["F002"],
+      "requirement_ids": ["FR-009"],
+      "scenario_ids": ["A-17", "A-22"],
+      "entry_files": ["tooling/verification/security.mjs"]
+    },
+    {
+      "id": "dependencies",
+      "group": "security",
+      "executable": "$NODE",
+      "argv": ["tooling/verification/security.mjs", "dependencies"],
+      "kind": "command",
+      "timeout_ms": 250000,
+      "phase_ids": ["F002"],
+      "requirement_ids": ["FR-009"],
+      "scenario_ids": ["A-17", "A-22"],
+      "entry_files": ["tooling/verification/security.mjs"]
+    },
+    {
+      "id": "licenses",
+      "group": "security",
+      "executable": "$NODE",
+      "argv": ["tooling/verification/security.mjs", "licenses"],
+      "kind": "command",
+      "timeout_ms": 250000,
+      "phase_ids": ["F002"],
+      "requirement_ids": ["FR-009"],
+      "scenario_ids": ["A-17", "A-22"],
+      "entry_files": ["tooling/verification/security.mjs"]
+    },
+    {
+      "id": "workflow-syntax",
+      "group": "security",
+      "executable": "$NODE",
+      "argv": ["tooling/verification/security.mjs", "workflow-syntax"],
+      "kind": "command",
+      "timeout_ms": 250000,
+      "phase_ids": ["F002"],
+      "requirement_ids": ["FR-009"],
+      "scenario_ids": ["A-17", "A-22"],
+      "entry_files": ["tooling/verification/security.mjs"]
     }
   ]
 }

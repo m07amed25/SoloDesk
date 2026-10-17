@@ -19,10 +19,7 @@
     "revision": {},
     "authority": {
       "type": "string",
-      "enum": [
-        "reviewed-base",
-        "bootstrap-candidate"
-      ]
+      "enum": ["reviewed-base", "bootstrap-candidate"]
     },
     "mandatory_checks": {
       "type": "array"

@@ -1,0 +1,17 @@
+[extend]
+useDefault = true
+[[rules]]
+id = "f002-synthetic-sentinel"
+description = "Synthetic safety sentinel"
+regex = '''F002_SECRET_[A-Za-z0-9_]+'''
+[[allowlists]]
+description = "Exact reviewed synthetic test sentinels only"
+condition = "AND"
+paths = ['''tests/verification/(unit/artifacts|integration/runner|integration/trust|unit/security)\.test\.mjs$''']
+regexes = ['''F002_SECRET_(fixture|synthetic|sentinel)\b''']
+[[allowlists]]
+description = "Documented attachment lifecycle phrase, not credential material"
+condition = "AND"
+paths = ['''docs/architecture/data-model\.md$''']
+regexTarget = "secret"
+regexes = ['''^staged/verified/published$''']
