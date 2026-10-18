@@ -33,6 +33,8 @@ export function selectChecks(
       "lint",
       "build",
       "build-renderer",
+      "build-preload",
+      "lint-f004",
       "launcher",
       "governance-policy",
       "governance-tests",

@@ -18,6 +18,8 @@ Monitor database/blob/egress/function/auth/email quotas, job backlog and estimat
 
 ## Observability and incident response
 
+F004 desktop recovery baseline: on Windows/Linux the last window close drains and quits; on macOS dock activation recreates a closed view. Explicit Quit rejects new desktop actions, reports synthetic work as completed or interrupted within a provisional five-second budget and does not claim a hidden timer or durable save. A renderer/asset startup failure exits with safe English/Arabic restart guidance rather than creating a new empty protected profile. For a native incident, record the exact candidate build, OS/CPU/display, locale, profile fixture, expected/observed result and redacted artifact in [F004 QA](../qa/F004.md). Q-04 controls any later tray/timer policy and Q-11 the final support matrix.
+
 Collect essential redacted service metrics: API error/latency, auth failures, denied tenant access, sync lag/conflicts/rejections, job retries/dead letters, provider callback health, backup age/restore success, key failures and quota usage. Correlation IDs join user-visible failures to logs without client content. Product analytics/crash memory upload is opt-in and distinct from essential operations. Define retention/access before enabling external monitoring.
 
 Incident flow: detect/triage → appoint responder → contain (pause unsafe financial/provider action, revoke compromised credentials, isolate tenant where justified) → preserve audit/evidence → communicate through approved status/support channels → repair/reconcile → validate recovery → post-incident actions. Data leak/duplicate money/irrecoverable corruption are highest severity; exact paging/support hours are Q-16. This document does not authorize sending messages now.

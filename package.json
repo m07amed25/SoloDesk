@@ -6,12 +6,12 @@
   "main": ".vite/build/main.js",
   "scripts": {
     "start": "node tooling/start.mjs",
-    "build": "vite build --config vite.main.config.mts && vite build",
+    "build": "vite build --config vite.main.config.mts && vite build --config vite.preload.config.mts && vite build",
     "typecheck": "tsc --noEmit",
     "test:launcher": "node --test --test-isolation=none tooling/start.test.mjs",
     "ui:info": "node tooling/ui-info.mjs",
     "setup:electron": "install-electron",
-    "lint": "oxlint --deny-warnings --threads 2 app tooling tests/verification vite.config.mts vite.main.config.mts forge.config.mjs",
+    "lint": "oxlint --deny-warnings --threads 2 app tooling tests/verification tests/f004 vite.config.mts vite.main.config.mts vite.preload.config.mts forge.config.mjs",
     "test:unit": "node tooling/verification/run-suite.mjs verification-unit",
     "test:integration": "node tooling/verification/run-suite.mjs verification-integration",
     "check:docs": "node tooling/verification/documentation.mjs",
@@ -24,7 +24,8 @@
     "test:f003:adapters": "node tooling/f003/verify.mjs F003:adapters",
     "test:f003:errors": "node tooling/f003/verify.mjs F003:errors",
     "test:f003:source-quality": "node tooling/f003/verify.mjs F003:source-quality",
-    "test:f003:runtime": "node tooling/f003/verify.mjs F003:runtime"
+    "test:f003:runtime": "node tooling/f003/verify.mjs F003:runtime",
+    "test:f004": "node tooling/f004/verify.mjs"
   },
   "engines": {
     "node": ">=24 <25"

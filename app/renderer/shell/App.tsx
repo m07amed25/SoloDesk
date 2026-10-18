@@ -1,10 +1,70 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Braces, ChevronDown, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { guidance } from "../../shared/desktop-contracts.ts";
 
 export function App() {
   const [showPlan, setShowPlan] = useState(false);
+  const [windowState, setWindowState] = useState("ready");
+  const [notice, setNotice] = useState("");
+  const [locale, setLocale] = useState<"en" | "ar">(
+    document.documentElement.lang === "ar" ? "ar" : "en",
+  );
   const isMac = navigator.userAgent.includes("Macintosh");
+  const desktop = typeof window.solodesk !== "undefined";
+
+  useEffect(() => {
+    if (!desktop) return;
+    let active = true;
+    void window.solodesk.window.getState().then((result) => {
+      if (active && result.status === "ok" && "visible" in result.data)
+        setWindowState(result.data.visible ? "visible" : "hidden");
+    });
+    const unsubscribe = window.solodesk.lifecycle.onState((event) => {
+      if (
+        active &&
+        event &&
+        typeof event === "object" &&
+        "state" in event &&
+        typeof event.state === "string"
+      )
+        setWindowState(event.state);
+    });
+    const stopLinks = window.solodesk.links.onDecision((event) => {
+      if (
+        active &&
+        event &&
+        typeof event === "object" &&
+        "status" in event &&
+        event.status === "denied"
+      )
+        setNotice(guidance[locale].linkDenied);
+      else if (
+        active &&
+        event &&
+        typeof event === "object" &&
+        "status" in event &&
+        event.status === "unavailable"
+      )
+        setNotice(guidance[locale].linkUnavailable);
+    });
+    return () => {
+      active = false;
+      unsubscribe();
+      stopLinks();
+    };
+  }, [desktop, locale]);
+
+  async function desktopAction(
+    action: "minimize" | "restore" | "requestClose",
+  ) {
+    const result = await window.solodesk.window[action]();
+    if (result.status === "rejected") setNotice(guidance[locale].denied);
+    else if (result.status === "outcome_unknown")
+      setNotice(guidance[locale].interrupted);
+    else if (action === "minimize") setWindowState("minimized");
+    else if (action === "restore") setWindowState("visible");
+  }
 
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
@@ -14,19 +74,73 @@ export function App() {
       >
         <span>SoloDesk</span>
       </div>
-      <header className="flex items-center justify-between border-b border-border px-8 py-5 sm:px-12">
-        <div className="flex items-center gap-3">
+      <header className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-8 py-5 sm:px-12">
+        <div className="flex flex-wrap items-center gap-3">
           <span className="flex size-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
             <Braces className="size-5" aria-hidden="true" />
           </span>
           <span className="text-lg font-semibold tracking-tight">SoloDesk</span>
         </div>
-        <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
-          <Check className="size-4" aria-hidden="true" /> Desktop shell ready
-        </span>
+        <div className="flex items-center gap-3">
+          <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
+            <Check className="size-4" aria-hidden="true" /> Desktop shell ready
+          </span>
+          {desktop && (
+            <div
+              className="flex flex-wrap items-center gap-1"
+              aria-label="Window controls"
+            >
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => void desktopAction("minimize")}
+              >
+                Minimize
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => void desktopAction("restore")}
+              >
+                Restore
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => void desktopAction("requestClose")}
+              >
+                Close
+              </Button>
+            </div>
+          )}
+          {desktop && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setLocale(locale === "en" ? "ar" : "en")}
+              aria-label="Switch language"
+            >
+              {locale === "en" ? "العربية" : "English"}
+            </Button>
+          )}
+        </div>
       </header>
 
       <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col justify-center px-8 py-14 sm:px-12">
+        {desktop && (
+          <p className="sr-only" role="status">
+            Window {windowState}
+          </p>
+        )}
+        {notice && (
+          <p
+            className="mb-5 rounded-md border border-border p-3 text-sm"
+            role="alert"
+            dir={locale === "ar" ? "rtl" : "ltr"}
+          >
+            {notice}
+          </p>
+        )}
         <h1 className="max-w-xl text-4xl leading-tight font-semibold tracking-tight sm:text-5xl">
           A workspace for your independent work.
         </h1>

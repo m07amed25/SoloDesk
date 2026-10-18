@@ -1,6 +1,6 @@
 # Security, privacy and trust model
 
-Status: proposed controls, not current assurance. Confirmed model: required managed-cloud accounts, teams, offline support, encryption in transit/at rest, encrypted devices and controlled server access. No end-to-end encryption or AI is selected. P01 establishes trust boundaries; each later phase extends the threat model.
+Status: F004 implements the local Electron boundary described below; other controls remain proposed rather than current assurance. Confirmed model: required managed-cloud accounts, teams, offline support, encryption in transit/at rest, encrypted devices and controlled server access. No end-to-end encryption or AI is selected. P01 establishes trust boundaries; each later phase extends the threat model.
 
 ## Assets and adversaries
 
@@ -26,6 +26,8 @@ Protect identities/tokens, tenant records, private costs/notes, legal/financial 
 Renderer has no SQL/filesystem/shell/raw IPC access; preload exposes narrow validated methods. Main validates sender/frame/origin and payload, not only channel name. External navigation/window creation is allowlisted; `openExternal` validates allowed schemes/destinations and user intent. Never expose arbitrary file operations or trust a renderer path. PDFs render bounded sanitized snapshot content without arbitrary remote fetches. IPC errors return stable redacted codes. [Electron security](https://www.electronjs.org/docs/latest/tutorial/security), [context isolation](https://www.electronjs.org/docs/latest/tutorial/context-isolation).
 
 CSP differs narrowly for local dev tooling versus release; release does not inherit unsafe development settings. Importing notes/HTML/code never executes them. Use utility/worker boundaries for heavy privileged jobs while preserving validation. Single-instance, callback/deep-link and protocol registration tests include malicious and unexpected targets.
+
+F004 implements the first local Electron boundary: an app-wide owner lock, per-profile in-memory sessions, asset-only `solodesk-app://ui` release content, exact loopback development origin and a frozen named preload facade. Main rejects requests unless the current sender webContents, live main frame, document URL, origin and profile epoch match; subscriptions are disposed when that context ends. The sole production deep link is `solodesk://open/home`. Protected links, auth callbacks and external destinations remain disabled. Renderer attempts to create windows, navigate or load remote executable content are denied. The [F004 guide](../features/F004.md) and [observed evidence](../qa/F004.md) distinguish implemented controls from native target gaps.
 
 ## Identity, secrets and keys
 

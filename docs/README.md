@@ -15,6 +15,7 @@ Freelancers and small teams from first release; Windows/macOS/Linux Electron; Ta
 [Contributor policy](development/delivery-governance.md), [F001 feature guide](features/F001.md)
 and [F001 QA/evidence](qa/F001.md) describe the implemented local tooling and current review.
 Owner approval, merge and release are separate outcomes. [F003 guide](features/F003.md) and [F003 QA](qa/F003.md) cover current shared contracts and synthetic conformance.
+[F004 guide](features/F004.md) and [F004 QA](qa/F004.md) cover the secure desktop owner, preload, links and lifecycle candidate with native evidence gaps.
 
 ## UI design system
 

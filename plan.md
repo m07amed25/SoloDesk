@@ -356,7 +356,8 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F004 — Secure Electron lifecycle and preload bridge
 
-- **PR identity:** `[F004] Secure Electron lifecycle and preload bridge`; branch `feat/f004-secure-electron-lifecycle-and-preload-bridge` → `main`; one PR; implementation and baseline/three-target native QA executed; security repaired and hosted readiness passed; fork/control delivery evidence pending; [PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; hosted readiness passed; manual delivery evidence and owner approval pending.
+- **Specification and design:** [F004 feature specification](specs/004-secure-electron-lifecycle/spec.md), [requirements quality checklist](specs/004-secure-electron-lifecycle/checklists/requirements.md), and [implementation plan](specs/004-secure-electron-lifecycle/plan.md). These artifacts define acceptance and design; they do not establish implementation, native QA or approval.
+- **PR identity:** `[F004] Secure Electron lifecycle and preload bridge`; proposed branch `feat/f004-secure-electron-lifecycle-and-preload-bridge` → `main`; one future PR. F004 implementation, automated/native QA, delivery evidence, owner approval and merge are not established in the checked-out baseline. The previously linked [PR #2](https://github.com/m07amed25/SoloDesk/pull/2) is the merged F002 verification-harness PR, not F004.
 - **Prerequisites:** F003 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-012, NFR-015. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Add single-instance/profile ownership, narrow validated preload IPC, sender/origin checks, safe deep links/external URLs and shutdown/window behavior.

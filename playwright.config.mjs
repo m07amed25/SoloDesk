@@ -4,7 +4,7 @@ if (!/^\.verification\/desktop-report-[\w-]+$/.test(owned || ""))
   throw new Error("owned-report-required");
 export default defineConfig({
   testDir: "./tests/verification/desktop",
-  testMatch: ["shell.spec.mjs", "f003-runtime.spec.mjs"],
+  testMatch: ["shell.spec.mjs", "f003-runtime.spec.mjs", "f004-ownership.spec.mjs", "f004-bridge.spec.mjs", "f004-links.spec.mjs", "f004-lifecycle.spec.mjs"],
   timeout: 60000,
   expect: { timeout: 10000 },
   workers: 1,

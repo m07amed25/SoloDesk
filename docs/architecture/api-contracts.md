@@ -1,6 +1,6 @@
 # Command, query, IPC and synchronization contracts
 
-Status: logical API specification, no endpoints or preload API implemented. P01 owns transport/error conventions; each domain spec owns business validation. Concrete OpenAPI/JSON schemas are an implementation deliverable after rules are approved.
+Status: logical API specification with the F004 local preload boundary implemented; business/server endpoints remain future work. P01 owns transport/error conventions; each domain spec owns business validation. Concrete OpenAPI/JSON schemas are an implementation deliverable after rules are approved.
 
 ## Common request/result envelope
 
@@ -56,3 +56,9 @@ Push of a local dependency graph orders creates before references; partial batch
 Acceptance fixtures: duplicate issue command; changed payload with reused key; request while role is revoked; cross-tenant object ID in a valid tenant request; expired signed file link; unknown event version; interrupted push/pull; Arabic validation; cursor refresh during edits; offline stop retry. These join the [test strategy](../quality/test-strategy.md).
 
 F003 implements shared pure request/result validation and codecs under packages/contracts; conformance operations remain synthetic fixtures. No production endpoint or preload handler is introduced. See [F003 guide](../features/F003.md).
+
+## Implemented F004 desktop boundary
+
+F004 now supplies the local shell's closed version-1 preload surface; see [F004 guide](../features/F004.md) and its [bridge contract](../../specs/004-secure-electron-lifecycle/contracts/desktop-bridge.md). `window.solodesk.window` offers only current-window state/minimize/restore/requestClose. `window.solodesk.lifecycle.onState` and `links.onDecision` return unsubscribe functions. Each private transport request has exactly version, tagged requestId and a closed method payload; main applies F003-bounds-v1 and per-method limits, then current sender/frame/origin/document/profile-epoch checks. The public response is a closed ok, accepted, rejected or outcome_unknown alternative with F003-compatible safe errors. Request IDs correlate attempts and are not financial or durable receipts.
+
+Production protected actions, F003 synthetic registry operations and external URL opening have no renderer entry point. Future server/domain methods require their own approved authority, persistence and compatibility contracts; F004 profile routing alone never grants a workspace read.
