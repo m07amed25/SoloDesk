@@ -28,9 +28,11 @@ export function instant(input: unknown): Result<string> {
     return fail("out_of_range");
   return ok(input);
 }
+export type LookupTimeZone = (zone: string) => boolean;
+
 export function timeContext(
   input: unknown,
-  lookup: (zone: string) => boolean,
+  lookup: LookupTimeZone,
 ): Result<
   Readonly<{ zone?: string; offsetMinutes?: number; offsetKnown: boolean }>
 > {

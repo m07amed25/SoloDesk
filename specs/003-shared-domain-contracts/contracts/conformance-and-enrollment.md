@@ -16,7 +16,7 @@ Enroll these additive definitions in `verification/suites.v1.json`, with feature
 
 Test argv begins `--test --test-timeout=30000 --test-reporter=tap`, followed by the exact owned entry list. Runtime wrapper uses a specifically declared longer per-test timeout up to 60,000 ms, with suite deadline no more than 300,000 ms. No glob-only enrollment, shell interpolation, empty success, test skip or flaky automatic retries. If implementation needs different floors, revise the reviewed manifest/design with rationale before adoption; never reduce existing F002 minima or disguise a smaller executed set.
 
-Add future scripts `test:f003:unit`, `test:f003:adapters`, `test:f003:errors`, `test:f003:quality` and `test:f003:runtime` dispatching each fixed manifest suite through the existing runner. `test:f003` invokes a fixed sequential feature coordinator and fails on any nonpassed/empty suite. Existing `test:unit` and `test:integration` continue to run only their named F002 suites; their success does not imply F003 coverage.
+Add future scripts `test:f003:unit`, `test:f003:adapters`, `test:f003:errors`, `test:f003:source-quality` and `test:f003:runtime` dispatching each fixed manifest suite through the existing runner. `test:f003` invokes a fixed sequential feature coordinator and fails on any nonpassed/empty suite. Existing `test:unit` and `test:integration` continue to run only their named F002 suites; their success does not imply F003 coverage.
 
 ## Source Quality and Trusted Policy Floors
 
@@ -55,3 +55,5 @@ Proposed validation budgets, to review with the entry profile: p95 bounded maxim
 F003 evidence records actual head/base, contract/intent/bounds/error/fixture versions, runtime/tool/OS identities, scenario IDs, executed counts, expected/observed results, failure injection, timings/work counters, safe artifacts, defects and reviewer/date. Agent QA exercises actual current serialization/denial/exactness/retry/error samples and compatibility recovery. Fluent Arabic review, final user approval, merge and release remain separate recorded outcomes.
 
 Recovery preserves original versioned intent and failed evidence; repair/backout repeats affected suites and current QA. Owned generated scratch can be cleaned within F002 cleanup limits; no unrelated profile/process/files may be removed. No customer schema, credentials, hosted service, finance transaction or paid runner is part of this conformance plan.
+
+Implementation observations and current command choices are recorded in [F003 QA](../../../docs/qa/F003.md). The runtime pack now has 53 fixed cases; the mandatory adapter floor is 13 after performance enrollment. This contract remains requirements authority; historical planning language is not an implementation-status claim.

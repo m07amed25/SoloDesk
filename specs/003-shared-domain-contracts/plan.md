@@ -210,3 +210,5 @@ Task-generation follow-up (2026-10-18): [tasks.md](tasks.md) now contains 104 un
 ## Complexity Tracking
 
 No constitutional violations or exception requests. Three private modules, one limited decoder and independent conformance doubles are the minimum selected separation for exact rules, portable boundary validation and user-safe errors. A workspace migration, new runtime dependency, cloud service, production screen or generalized execution framework would add unrelated scope and is excluded.
+
+Implementation status: the authorized pure foundation and its verification are now implemented in [PR #4](https://github.com/m07amed25/SoloDesk/pull/4). See [current QA and open review gates](../../docs/qa/F003.md), [usage](../../docs/features/F003.md) and [tasks](tasks.md); the design-time statements above remain planning history.
