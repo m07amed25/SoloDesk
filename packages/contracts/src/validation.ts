@@ -2,6 +2,7 @@ import { ISSUE_KEYS, ISSUE_PATHS } from "./issues.ts";
 import { ok, fail, record, type Result } from "../../domain/src/integers.ts";
 import { id, type Id, type IdKind } from "../../domain/src/ids.ts";
 import { BOUNDS, unicodeSize, validKey, utf8Length } from "./bounds.ts";
+
 export type Data =
   | null
   | boolean
@@ -9,6 +10,7 @@ export type Data =
   | number
   | readonly Data[]
   | Readonly<{ [key: string]: Data }>;
+
 export function plainData(input: unknown): Result<Data> {
   let nodes = 0;
   const ancestors = new Set<object>();
@@ -72,11 +74,13 @@ export function plainData(input: unknown): Result<Data> {
     return fail("invalid_format");
   }
 }
+
 export type ScopedReference = Readonly<{
   kind: IdKind;
   id: Id;
   workspaceId: Id<"workspace">;
 }>;
+
 export function scopedReference(
   input: unknown,
   kind: IdKind,

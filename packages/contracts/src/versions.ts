@@ -10,6 +10,7 @@ import { instant } from "../../domain/src/dates.ts";
 import { plainData, scopedReference, type Data } from "./validation.ts";
 import { BOUNDS } from "./bounds.ts";
 import type { Registry } from "./registry.ts";
+
 export function supported(registry: Registry) {
   return Object.freeze(
     registry.catalogue().map((d) =>
@@ -23,12 +24,15 @@ export function supported(registry: Registry) {
     ),
   );
 }
+
 export function acceptedEvent(
   input: unknown,
   eventKinds: readonly string[],
 ): Result<Data> {
   const safe = plainData(input);
+
   if (!safe.ok) return safe;
+
   input = safe.value;
   if (
     !record(
@@ -64,6 +68,7 @@ export function acceptedEvent(
     )
   )
     return fail("invalid_type");
+
   if (
     input.protocolVersion !== 1 ||
     input.eventVersion !== 1 ||
@@ -73,7 +78,9 @@ export function acceptedEvent(
     input.eventKind.length > 64
   )
     return fail("invalid_format");
+
   const workspace = id(input.workspaceId, "workspace");
+
   if (!workspace.ok) return workspace;
   if (
     !scopedReference(input.entity, "project", workspace.value).ok ||
@@ -84,9 +91,12 @@ export function acceptedEvent(
     !input.progressToken
   )
     return fail("invalid_format");
+
   if (Object.hasOwn(input, "actorId") && !id(input.actorId, "actor").ok)
     return fail("invalid_format");
+
   if (Object.hasOwn(input, "occurredAt") && !instant(input.occurredAt).ok)
     return fail("invalid_format");
+
   return ok(input as Data);
 }
