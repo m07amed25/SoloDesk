@@ -35,7 +35,13 @@ test("cleans inherited VS Code Snap paths when the integrated terminal has no SN
 });
 
 test("cleans inherited paths when SNAP_NAME identifies VS Code", () => {
-  assertCleaned(launchEnvironment({ ...snapEnvironment(), SNAP_NAME: "code" }, "linux", userHome));
+  assertCleaned(
+    launchEnvironment(
+      { ...snapEnvironment(), SNAP_NAME: "code" },
+      "linux",
+      userHome,
+    ),
+  );
 });
 
 test("preserves custom host paths in a normal Linux environment", () => {
