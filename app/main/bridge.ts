@@ -116,6 +116,7 @@ type BridgeOptions = {
 export class DesktopBridge {
   private readonly bindings = new WeakMap<WebContents, NativeBinding>();
   private readonly subscriptions = new SubscriptionRegistry();
+  private readonly pendingLinkDecision = new WeakMap<WebContents, unknown>();
   private readonly options: BridgeOptions;
 
   constructor(options: BridgeOptions) {
@@ -153,6 +154,7 @@ export class DesktopBridge {
 
   private invalidate(binding: NativeBinding): void {
     this.subscriptions.invalidate(binding);
+    this.pendingLinkDecision.delete(binding.contents);
     this.bindings.delete(binding.contents);
   }
 
@@ -200,6 +202,17 @@ export class DesktopBridge {
     if (method === "lifecycle.onState" || method === "links.onDecision") {
       const family = method === "lifecycle.onState" ? "lifecycle" : "links";
       const subscriptionId = this.subscriptions.add(binding, family);
+      if (family === "links") {
+        const pending = this.pendingLinkDecision.get(binding.contents);
+        if (pending) {
+          binding.contents.send("f004:event", {
+            family,
+            subscriptionId,
+            data: pending,
+          });
+          this.pendingLinkDecision.delete(binding.contents);
+        }
+      }
       return { ...base, status: "ok", data: { subscriptionId } };
     }
 
@@ -262,7 +275,10 @@ export class DesktopBridge {
   emit(bindingContents: WebContents, family: EventFamily, data: unknown): void {
     const binding = this.bindings.get(bindingContents);
     const current = this.context(binding);
-    if (family === "lifecycle" && ["draining", "failed"].includes(current.state))
+    if (
+      family === "lifecycle" &&
+      ["draining", "failed"].includes(current.state)
+    )
       current.state = "ready";
     if (
       !binding ||
@@ -273,7 +289,12 @@ export class DesktopBridge {
       )
     )
       return;
-    for (const event of this.subscriptions.deliver(binding, family, data))
+    const events = this.subscriptions.deliver(binding, family, data);
+    if (family === "links" && events.length === 0) {
+      const safe = boundedEvent(data);
+      if (safe !== null) this.pendingLinkDecision.set(binding.contents, safe);
+    }
+    for (const event of events)
       binding.contents.send("f004:event", { family, ...event });
   }
 }

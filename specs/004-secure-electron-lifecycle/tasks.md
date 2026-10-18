@@ -149,9 +149,9 @@
 
 - [x] T045 [US5] Integrate focused F004 selection, deterministic native fixture setup and redacted result artifact capture with the existing runner in `tooling/verification/desktop.mjs` and `tooling/f004/verify.mjs`; avoid inferred passes for unavailable hosts.
 - [x] T046 [US5] Update `.github/workflows/verify.yml` only as needed to run the enrolled F004 suites on the declared Linux x64, Windows x64 and macOS arm64 candidate matrix; retain existing F002/F003 gates and record runner limitations in `docs/qa/F004.md`.
-- [x] T047 [US5] Execute the F004 candidate on actual declared Windows, macOS and Linux hosts, including 100 same-profile simultaneous-launch trials per target, and record build/commit, OS/version/CPU/display, locale, fixture, expected/observed, safe artifact hash, defect, reviewer and date in `docs/qa/F004.md`; mark missing access unverified.
-- [x] T048 [US5] Execute Linux Snap integrated-terminal launch/second-launch regression where supported, inspect sandbox/navigation/usable-window behavior, and record environment and recovery guidance or an explicit blocker in `docs/qa/F004.md`.
-- [x] T049 [US5] Review representative denied action/link and failure flows in English and Arabic with keyboard and mixed-direction identifiers; obtain fluent Arabic reviewer evidence for language quality and record next-step comprehension, focus and defects in `docs/qa/F004.md`.
+- [ ] T047 [US5] Execute the F004 candidate on actual declared Windows, macOS and Linux hosts, including 100 same-profile simultaneous-launch trials per target, and record build/commit, OS/version/CPU/display, locale, fixture, expected/observed, safe artifact hash, defect, reviewer and date in `docs/qa/F004.md`; mark missing access unverified.
+- [ ] T048 [US5] Execute Linux Snap integrated-terminal launch/second-launch regression where supported, inspect sandbox/navigation/usable-window behavior, and record environment and recovery guidance or an explicit blocker in `docs/qa/F004.md`.
+- [ ] T049 [US5] Review representative denied action/link and failure flows in English and Arabic with keyboard and mixed-direction identifiers; obtain fluent Arabic reviewer evidence for language quality and record next-step comprehension, focus and defects in `docs/qa/F004.md`.
 - [x] T050 [US5] Trace all FR-001–FR-021, A-01–A-23 and SC-001–SC-008 to observed tests/agent QA or explicit blockers in `docs/qa/F004.md`; keep implementation, automated verification, native QA, owner approval, merge and release as distinct statuses.
 
 **Checkpoint**: Evidence is complete only for actually observed targets; any missing native host, Arabic review or security failure blocks delivery approval.
@@ -165,8 +165,8 @@
 - [x] T051 [P] Document the delivered bridge methods, profile ownership, home-link policy, disabled protected/external routes and compatibility boundary in `docs/features/F004.md` and `docs/architecture/api-contracts.md`.
 - [x] T052 [P] Update trusted origin/CSP, navigation, sandbox, diagnostic redaction and incident guidance in `docs/architecture/security-and-privacy.md` and `docs/operations/release-and-support.md` without claiming encryption or authentication delivered by F004.
 - [x] T053 Check the implemented code and docs against F004 `specs/004-secure-electron-lifecycle/spec.md`, `plan.md`, `data-model.md` and all three `contracts/` files; record any deliberate contract revision or unresolved discrepancy in `docs/qa/F004.md` before review.
-- [x] T054 Run the commands and focused/manual scenarios in `specs/004-secure-electron-lifecycle/quickstart.md`, plus the repository typecheck, lint, build, launcher, desktop, security, docs and baseline verification gates; record exact commands, artifacts, failures and repairs in `docs/qa/F004.md`.
-- [x] T055 Prepare the F004 review packet and final status in `docs/qa/F004.md`, including remaining Q-04/Q-11 and F003/native/Arabic blockers, compatibility/recovery notes, traceability and separate owner-approval/merge/release fields; seek final owner approval only after the concrete candidate is reviewable.
+- [ ] T054 Run the commands and focused/manual scenarios in `specs/004-secure-electron-lifecycle/quickstart.md`, plus the repository typecheck, lint, build, launcher, desktop, security, docs and baseline verification gates; record exact commands, artifacts, failures and repairs in `docs/qa/F004.md`.
+- [ ] T055 Prepare the F004 review packet and final status in `docs/qa/F004.md`, including remaining Q-04/Q-11 and F003/native/Arabic blockers, compatibility/recovery notes, traceability and separate owner-approval/merge/release fields; seek final owner approval only after the concrete candidate is reviewable.
 
 ---
 

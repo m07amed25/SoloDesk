@@ -6,7 +6,7 @@ import { guidance } from "../../shared/desktop-contracts.ts";
 export function App() {
   const [showPlan, setShowPlan] = useState(false);
   const [windowState, setWindowState] = useState("ready");
-  const [notice, setNotice] = useState("");
+  const [notice, setNotice] = useState<keyof typeof guidance.en | "">("");
   const [locale, setLocale] = useState<"en" | "ar">(
     document.documentElement.lang === "ar" ? "ar" : "en",
   );
@@ -38,7 +38,7 @@ export function App() {
         "status" in event &&
         event.status === "denied"
       )
-        setNotice(guidance[locale].linkDenied);
+        setNotice("linkDenied");
       else if (
         active &&
         event &&
@@ -46,22 +46,22 @@ export function App() {
         "status" in event &&
         event.status === "unavailable"
       )
-        setNotice(guidance[locale].linkUnavailable);
+        setNotice("linkUnavailable");
     });
     return () => {
       active = false;
       unsubscribe();
       stopLinks();
     };
-  }, [desktop, locale]);
+  }, [desktop]);
 
   async function desktopAction(
     action: "minimize" | "restore" | "requestClose",
   ) {
     const result = await window.solodesk.window[action]();
-    if (result.status === "rejected") setNotice(guidance[locale].denied);
+    if (result.status === "rejected") setNotice("denied");
     else if (result.status === "outcome_unknown")
-      setNotice(guidance[locale].interrupted);
+      setNotice("interrupted");
     else if (action === "minimize") setWindowState("minimized");
     else if (action === "restore") setWindowState("visible");
   }
@@ -138,7 +138,7 @@ export function App() {
             role="alert"
             dir={locale === "ar" ? "rtl" : "ltr"}
           >
-            {notice}
+            {guidance[locale][notice]}
           </p>
         )}
         <h1 className="max-w-xl text-4xl leading-tight font-semibold tracking-tight sm:text-5xl">

@@ -96,13 +96,18 @@ test("synthetic A/B views use distinct sessions and restart without a stale owne
     expect(distinct).toBe(3);
     await app.close();
     app = undefined;
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     app = await playwright._electron.launch({
       args: [path.join(root, "tooling/verification/electron-bootstrap.cjs")],
       chromiumSandbox: true,
       timeout: 30000,
       env: fixtureEnv,
     });
-    await app.firstWindow();
+    const restarted = await Promise.race([
+      app.firstWindow().then(() => true),
+      new Promise((resolve) => app.process().once("exit", () => resolve(false))),
+    ]);
+    expect(restarted, "restarted owner exited before creating a window").toBe(true);
     expect(await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows().length)).toBe(1);
   } finally {
     if (app) await app.close().catch(() => {});

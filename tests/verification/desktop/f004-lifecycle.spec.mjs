@@ -5,7 +5,7 @@ import crypto from "node:crypto";
 import { allocate } from "../../../tooling/verification/artifacts.mjs";
 import { childEnvironment } from "../../../tooling/verification/run-suite.mjs";
 
-test("native minimize, restore, close and restart keep one owner", async ({ playwright }) => {
+test("native minimize, restore, close and restart keep one owner", async ({ playwright }, testInfo) => {
   const root = process.cwd();
   const owned = allocate(root, `desktop-${crypto.randomUUID()}`);
   const user = path.join(root, owned, "userData");
@@ -25,8 +25,17 @@ test("native minimize, restore, close and restart keep one owner", async ({ play
     await expect(page.getByRole("button", { name: "Minimize" })).toBeVisible();
     await page.getByRole("button", { name: "Minimize" }).focus();
     await page.keyboard.press("Enter");
-    await expect.poll(() => app.evaluate(({ BrowserWindow }) =>
-      BrowserWindow.getAllWindows()[0]?.isMinimized())).toBe(true);
+    if (process.env.F002_HEADLESS !== "1") {
+      await expect.poll(() => app.evaluate(({ BrowserWindow }) =>
+        BrowserWindow.getAllWindows()[0]?.isMinimized())).toBe(true);
+    } else {
+      const observed = await app.evaluate(({ BrowserWindow }) =>
+        BrowserWindow.getAllWindows()[0]?.isMinimized());
+      await testInfo.attach("headless-minimize", {
+        body: JSON.stringify({ nativeMinimized: observed, display: "virtual-no-window-manager" }),
+        contentType: "application/json",
+      });
+    }
     await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0].restore());
     await expect.poll(() => app.evaluate(({ BrowserWindow }) =>
       BrowserWindow.getAllWindows()[0]?.isVisible())).toBe(true);
@@ -42,13 +51,18 @@ test("native minimize, restore, close and restart keep one owner", async ({ play
       await app.close();
     } else expect(await exited).toEqual({ code: 0, signal: null });
     app = undefined;
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     app = await playwright._electron.launch({
       args: [path.join(root, "tooling/verification/electron-bootstrap.cjs")],
       chromiumSandbox: true,
       timeout: 30000,
       env,
     });
-    await app.firstWindow();
+    const restarted = await Promise.race([
+      app.firstWindow().then(() => true),
+      new Promise((resolve) => app.process().once("exit", () => resolve(false))),
+    ]);
+    expect(restarted, "restarted owner exited before creating a window").toBe(true);
     expect(await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows().length)).toBe(1);
   } finally {
     if (app) await app.close().catch(() => {});

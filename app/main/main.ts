@@ -71,10 +71,20 @@ if (!lockHeld) {
         },
         onCreated: (window, origin, documentUrl) => {
           bridge.bind(window, id, epoch, origin, documentUrl);
-          window.on("show", () => bridge.emit(window.webContents, "lifecycle", { state: "visible" }));
-          window.on("minimize", () => bridge.emit(window.webContents, "lifecycle", { state: "minimized" }));
-          window.on("restore", () => bridge.emit(window.webContents, "lifecycle", { state: "visible" }));
-          window.on("close", () => bridge.emit(window.webContents, "lifecycle", { state: "closing" }));
+          window.on("show", () =>
+            bridge.emit(window.webContents, "lifecycle", { state: "visible" }),
+          );
+          window.on("minimize", () =>
+            bridge.emit(window.webContents, "lifecycle", {
+              state: "minimized",
+            }),
+          );
+          window.on("restore", () =>
+            bridge.emit(window.webContents, "lifecycle", { state: "visible" }),
+          );
+          window.on("close", () =>
+            bridge.emit(window.webContents, "lifecycle", { state: "closing" }),
+          );
         },
       });
       view = {
@@ -100,9 +110,9 @@ if (!lockHeld) {
       randomUUID(),
     );
     if (decision.status !== "accepted") {
-      const current = profiles.current(intent.profileId);
-      if (current)
-        bridge.emit(current.contents, "links", { status: decision.status });
+      const view = await activate(intent.profileId);
+      if (view)
+        bridge.emit(view.contents, "links", { status: decision.status });
       return;
     }
     const view = await activate(intent.profileId);
@@ -138,7 +148,8 @@ if (!lockHeld) {
       owner.onState((state) => {
         for (const view of profiles.views()) {
           bridge.emit(view.contents, "lifecycle", { state });
-          if (state === "draining" || state === "failed") bridge.dispose(view.contents);
+          if (state === "draining" || state === "failed")
+            bridge.dispose(view.contents);
         }
       });
       owner.ready();
