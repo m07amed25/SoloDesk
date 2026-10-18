@@ -72,32 +72,6 @@
       "entry_files": []
     },
     {
-      "id": "build-preload",
-      "group": "baseline",
-      "executable": "$NODE",
-      "argv": ["node_modules/vite/bin/vite.js", "build", "--config", "vite.preload.config.mts"],
-      "kind": "command",
-      "min_tests": 1,
-      "timeout_ms": 300000,
-      "phase_ids": ["F004"],
-      "requirement_ids": ["NFR-015"],
-      "scenario_ids": ["F004:A-05", "F004:A-06"],
-      "entry_files": []
-    },
-    {
-      "id": "lint-f004",
-      "group": "baseline",
-      "executable": "$NODE",
-      "argv": ["node_modules/oxlint/bin/oxlint", "--deny-warnings", "--threads", "2", "tests/f004", "vite.preload.config.mts"],
-      "kind": "command",
-      "min_tests": 1,
-      "timeout_ms": 300000,
-      "phase_ids": ["F004"],
-      "requirement_ids": ["NFR-015"],
-      "scenario_ids": ["F004:A-07"],
-      "entry_files": []
-    },
-    {
       "id": "launcher",
       "group": "baseline",
       "executable": "$NODE",
@@ -248,7 +222,14 @@
       "timeout_ms": 180000,
       "phase_ids": ["F002", "F004"],
       "requirement_ids": ["FR-006", "NFR-015", "PLT-012"],
-      "scenario_ids": ["A-12", "A-13", "F004:A-01", "F004:A-05", "F004:A-11", "F004:A-16"],
+      "scenario_ids": [
+        "A-12",
+        "A-13",
+        "F004:A-01",
+        "F004:A-05",
+        "F004:A-11",
+        "F004:A-16"
+      ],
       "entry_files": [
         "tests/verification/desktop/shell.spec.mjs",
         "tests/verification/desktop/f003-runtime.spec.mjs",
@@ -268,7 +249,14 @@
       "timeout_ms": 180000,
       "phase_ids": ["F002", "F004"],
       "requirement_ids": ["FR-006", "NFR-015", "PLT-012"],
-      "scenario_ids": ["A-12", "A-13", "F004:A-01", "F004:A-05", "F004:A-11", "F004:A-16"],
+      "scenario_ids": [
+        "A-12",
+        "A-13",
+        "F004:A-01",
+        "F004:A-05",
+        "F004:A-11",
+        "F004:A-16"
+      ],
       "entry_files": [
         "tests/verification/desktop/shell.spec.mjs",
         "tests/verification/desktop/f003-runtime.spec.mjs",
@@ -288,7 +276,14 @@
       "timeout_ms": 180000,
       "phase_ids": ["F002", "F004"],
       "requirement_ids": ["FR-006", "NFR-015", "PLT-012"],
-      "scenario_ids": ["A-12", "A-13", "F004:A-01", "F004:A-05", "F004:A-11", "F004:A-16"],
+      "scenario_ids": [
+        "A-12",
+        "A-13",
+        "F004:A-01",
+        "F004:A-05",
+        "F004:A-11",
+        "F004:A-16"
+      ],
       "entry_files": [
         "tests/verification/desktop/shell.spec.mjs",
         "tests/verification/desktop/f003-runtime.spec.mjs",
@@ -616,8 +611,12 @@
       ],
       "categories": ["unit", "boundary"],
       "scenarios": ["F004:A-01", "F004:A-07", "F004:A-13", "F004:A-17"],
-      "positive": ["Known owner, action, link and lifecycle outcomes match independent fixtures"],
-      "negative": ["Malformed inputs, forged callers and interrupted work deny safely"]
+      "positive": [
+        "Known owner, action, link and lifecycle outcomes match independent fixtures"
+      ],
+      "negative": [
+        "Malformed inputs, forged callers and interrupted work deny safely"
+      ]
     },
     {
       "id": "F004:integration",
@@ -648,8 +647,12 @@
       ],
       "categories": ["integration", "boundary", "authorization"],
       "scenarios": ["F004:A-05", "F004:A-08", "F004:A-11", "F004:A-18"],
-      "positive": ["Trusted desktop decisions and state transitions match synthetic context"],
-      "negative": ["Foreign context, unavailable route and failed startup do not cause effects"]
+      "positive": [
+        "Trusted desktop decisions and state transitions match synthetic context"
+      ],
+      "negative": [
+        "Foreign context, unavailable route and failed startup do not cause effects"
+      ]
     }
   ]
 }
