@@ -31,8 +31,12 @@ const run = await runProcess(
   headless ? ["-a", process.execPath, ...argv] : argv,
   {
     cwd: process.cwd(),
-    timeout: 80000,
-    env: childEnvironment({ F002_REPORT_DIR: owned, DEBUG: "pw:browser" }),
+    timeout: 150000,
+    env: childEnvironment({
+      F002_REPORT_DIR: owned,
+      F002_HEADLESS: headless ? "1" : "0",
+      DEBUG: "pw:browser",
+    }),
   },
 );
 let counts = null;

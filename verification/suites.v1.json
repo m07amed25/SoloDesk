@@ -220,12 +220,23 @@
       "argv": ["tooling/verification/desktop.mjs", "linux-x64"],
       "kind": "command",
       "timeout_ms": 180000,
-      "phase_ids": ["F002"],
-      "requirement_ids": ["FR-006"],
-      "scenario_ids": ["A-12", "A-13"],
+      "phase_ids": ["F002", "F004"],
+      "requirement_ids": ["FR-006", "NFR-015", "PLT-012"],
+      "scenario_ids": [
+        "A-12",
+        "A-13",
+        "F004:A-01",
+        "F004:A-05",
+        "F004:A-11",
+        "F004:A-16"
+      ],
       "entry_files": [
         "tests/verification/desktop/shell.spec.mjs",
-        "tests/verification/desktop/f003-runtime.spec.mjs"
+        "tests/verification/desktop/f003-runtime.spec.mjs",
+        "tests/verification/desktop/f004-ownership.spec.mjs",
+        "tests/verification/desktop/f004-bridge.spec.mjs",
+        "tests/verification/desktop/f004-links.spec.mjs",
+        "tests/verification/desktop/f004-lifecycle.spec.mjs"
       ]
     },
     {
@@ -236,12 +247,23 @@
       "argv": ["tooling/verification/desktop.mjs", "windows-x64"],
       "kind": "command",
       "timeout_ms": 180000,
-      "phase_ids": ["F002"],
-      "requirement_ids": ["FR-006"],
-      "scenario_ids": ["A-12", "A-13"],
+      "phase_ids": ["F002", "F004"],
+      "requirement_ids": ["FR-006", "NFR-015", "PLT-012"],
+      "scenario_ids": [
+        "A-12",
+        "A-13",
+        "F004:A-01",
+        "F004:A-05",
+        "F004:A-11",
+        "F004:A-16"
+      ],
       "entry_files": [
         "tests/verification/desktop/shell.spec.mjs",
-        "tests/verification/desktop/f003-runtime.spec.mjs"
+        "tests/verification/desktop/f003-runtime.spec.mjs",
+        "tests/verification/desktop/f004-ownership.spec.mjs",
+        "tests/verification/desktop/f004-bridge.spec.mjs",
+        "tests/verification/desktop/f004-links.spec.mjs",
+        "tests/verification/desktop/f004-lifecycle.spec.mjs"
       ]
     },
     {
@@ -252,12 +274,23 @@
       "argv": ["tooling/verification/desktop.mjs", "macos-arm64"],
       "kind": "command",
       "timeout_ms": 180000,
-      "phase_ids": ["F002"],
-      "requirement_ids": ["FR-006"],
-      "scenario_ids": ["A-12", "A-13"],
+      "phase_ids": ["F002", "F004"],
+      "requirement_ids": ["FR-006", "NFR-015", "PLT-012"],
+      "scenario_ids": [
+        "A-12",
+        "A-13",
+        "F004:A-01",
+        "F004:A-05",
+        "F004:A-11",
+        "F004:A-16"
+      ],
       "entry_files": [
         "tests/verification/desktop/shell.spec.mjs",
-        "tests/verification/desktop/f003-runtime.spec.mjs"
+        "tests/verification/desktop/f003-runtime.spec.mjs",
+        "tests/verification/desktop/f004-ownership.spec.mjs",
+        "tests/verification/desktop/f004-bridge.spec.mjs",
+        "tests/verification/desktop/f004-links.spec.mjs",
+        "tests/verification/desktop/f004-lifecycle.spec.mjs"
       ]
     },
     {
@@ -546,6 +579,80 @@
       "scenarios": ["F003:A-05", "F003:A-29", "F003:A-30", "F003:A-31"],
       "positive": ["Declared independent outcomes succeed"],
       "negative": ["Invalid input or unavailable evidence blocks success"]
+    },
+    {
+      "id": "F004:unit",
+      "feature": "F004",
+      "group": "baseline",
+      "executable": "$NODE",
+      "argv": [
+        "--test",
+        "--test-timeout=60000",
+        "--test-reporter=tap",
+        "--test-isolation=none",
+        "tests/f004/unit/desktop-contracts.test.mjs",
+        "tests/f004/unit/bridge-contracts.test.mjs",
+        "tests/f004/unit/profiles.test.mjs",
+        "tests/f004/unit/links.test.mjs",
+        "tests/f004/unit/lifecycle.test.mjs"
+      ],
+      "kind": "tests",
+      "min_tests": 5,
+      "timeout_ms": 300000,
+      "phase_ids": ["F004"],
+      "requirement_ids": ["PLT-012", "NFR-015"],
+      "scenario_ids": ["F004:A-01", "F004:A-07", "F004:A-13", "F004:A-17"],
+      "entry_files": [
+        "tests/f004/unit/desktop-contracts.test.mjs",
+        "tests/f004/unit/bridge-contracts.test.mjs",
+        "tests/f004/unit/profiles.test.mjs",
+        "tests/f004/unit/links.test.mjs",
+        "tests/f004/unit/lifecycle.test.mjs"
+      ],
+      "categories": ["unit", "boundary"],
+      "scenarios": ["F004:A-01", "F004:A-07", "F004:A-13", "F004:A-17"],
+      "positive": [
+        "Known owner, action, link and lifecycle outcomes match independent fixtures"
+      ],
+      "negative": [
+        "Malformed inputs, forged callers and interrupted work deny safely"
+      ]
+    },
+    {
+      "id": "F004:integration",
+      "feature": "F004",
+      "group": "baseline",
+      "executable": "$NODE",
+      "argv": [
+        "--test",
+        "--test-timeout=60000",
+        "--test-reporter=tap",
+        "--test-isolation=none",
+        "tests/f004/integration/trusted-assets.test.mjs",
+        "tests/f004/integration/bridge.test.mjs",
+        "tests/f004/integration/links.test.mjs",
+        "tests/f004/integration/lifecycle.test.mjs"
+      ],
+      "kind": "tests",
+      "min_tests": 4,
+      "timeout_ms": 300000,
+      "phase_ids": ["F004"],
+      "requirement_ids": ["PLT-012", "NFR-015"],
+      "scenario_ids": ["F004:A-05", "F004:A-08", "F004:A-11", "F004:A-18"],
+      "entry_files": [
+        "tests/f004/integration/trusted-assets.test.mjs",
+        "tests/f004/integration/bridge.test.mjs",
+        "tests/f004/integration/links.test.mjs",
+        "tests/f004/integration/lifecycle.test.mjs"
+      ],
+      "categories": ["integration", "boundary", "authorization"],
+      "scenarios": ["F004:A-05", "F004:A-08", "F004:A-11", "F004:A-18"],
+      "positive": [
+        "Trusted desktop decisions and state transitions match synthetic context"
+      ],
+      "negative": [
+        "Foreign context, unavailable route and failed startup do not cause effects"
+      ]
     }
   ]
 }
