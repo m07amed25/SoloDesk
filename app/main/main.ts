@@ -53,8 +53,11 @@ if (!lockHeld) {
   function fail(reason?: unknown): void {
     if (failureShown) return;
     failureShown = true;
-    if (process.env.F002_ROOT)
+    if (process.env.F002_ROOT) {
       console.error("[F004 verification] startup failure:", reason);
+      app.exit(1);
+      return;
+    }
     owner.fail("startup");
     dialog.showErrorBox(
       "SoloDesk could not open",

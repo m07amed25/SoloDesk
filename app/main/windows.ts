@@ -209,9 +209,9 @@ export async function createTrustedWindow(
   options.onCreated?.(window, developmentOrigin || ASSET_ORIGIN, documentUrl);
   try {
     await window.loadURL(documentUrl);
-  } catch {
+  } catch (reason) {
     window.destroy();
-    throw new Error("trusted-document-unavailable");
+    throw new Error("trusted-document-unavailable", { cause: reason });
   }
   return {
     window,
