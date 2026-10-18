@@ -11,17 +11,18 @@ export function runtimeExecutable(engine,root=process.cwd()){
  return {executable,version:pins.deno};
 }
 export async function probe(engine,prepared,root=process.cwd()){
+ const deadline=Date.now()+60000;
  const built=prepared||await buildFixtures(root),pin=runtimeExecutable(engine,root);
  if(crypto.createHash('sha256').update(fs.readFileSync(built.bundle)).digest('hex')!==built.sha256)throw new Error('stale-bundle');
  const entry=safePath(root,`${built.owned}/${engine}.mjs`);
  const fingerprint=engine==='deno'?"{engine:'deno',version:Deno.version.deno}":`{engine:'${engine}',version:${engine==='electron'?'process.versions.electron':'process.versions.node'},node:process.versions.node}`;
- fs.writeFileSync(entry,`import {runFixtures} from './bundle/conformance.mjs';console.log(JSON.stringify({...runFixtures(),...${fingerprint}}));`,{flag:'wx',mode:0o600});
+ fs.writeFileSync(entry,`import {runFixtures} from './bundle/conformance.mjs';const codec={encode:t=>new TextEncoder().encode(t),decode:b=>new TextDecoder('utf-8',{fatal:true,ignoreBOM:true}).decode(b)};console.log(JSON.stringify({...runFixtures(codec),...${fingerprint}}));`,{flag:'wx',mode:0o600});
  if(engine==='deno'){
-  const check=await runProcess(pin.executable,['check','--no-config','--no-lock',path.join(root,'tests/f003/runtime/conformance.ts')],{cwd:root,timeout:60000,env:childEnvironment({DENO_DIR:safePath(root,`${built.owned}/deno-cache`)})});
+  const check=await runProcess(pin.executable,['check','--no-config','--no-lock',path.join(root,'tests/f003/runtime/conformance.ts')],{cwd:root,timeout:Math.max(1,deadline-Date.now()),env:childEnvironment({DENO_DIR:safePath(root,`${built.owned}/deno-cache`)})});
   if(check.code!==0||check.reason)throw new Error('deno-source-check');
  }
  const args=engine==='deno'?['run','--no-config','--no-lock','--cached-only','--no-prompt',entry]:[entry];
- const result=await runProcess(pin.executable,args,{cwd:root,timeout:60000,env:childEnvironment(engine==='electron'?{ELECTRON_RUN_AS_NODE:'1'}:{})});
+ const result=await runProcess(pin.executable,args,{cwd:root,timeout:Math.max(1,deadline-Date.now()),env:childEnvironment(engine==='electron'?{ELECTRON_RUN_AS_NODE:'1'}:{})});
  if(result.code!==0||result.reason)throw new Error(`runtime-${engine}-${result.reason||'failed'}`);
  const observation=validateObservation(JSON.parse(result.stdout),engine,pin.version);
  writeRecord(root,`${built.owned}/${engine}.json`,{...observation,bundle_sha256:built.sha256});return observation;

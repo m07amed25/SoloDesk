@@ -1,6 +1,5 @@
 // Setup only. Test execution never downloads a missing runtime.
 import fs from 'node:fs';
-import path from 'node:path';
 import crypto from 'node:crypto';
 import {execFileSync} from 'node:child_process';
 import {safePath} from '../verification/artifacts.mjs';
@@ -8,7 +7,7 @@ const root=process.cwd(),pins=JSON.parse(fs.readFileSync('verification/f003-runt
 const asset=pins.deno_assets[`${process.platform}-${process.arch}`];
 if(!asset||process.platform!=='linux')throw new Error('pinned-setup-target-unavailable');
 const dir=safePath(root,'.verification/f003-tools');fs.mkdirSync(dir,{recursive:true,mode:0o700});
-const archive=path.join(dir,'deno.zip'),executable=path.join(dir,'deno');
+const archive=safePath(root,'.verification/f003-tools/deno.zip'),executable=safePath(root,'.verification/f003-tools/deno');
 const hash=b=>crypto.createHash('sha256').update(b).digest('hex');
 let bytes=fs.existsSync(archive)?fs.readFileSync(archive):null;
 if(!bytes||hash(bytes)!==asset.zip_sha256){

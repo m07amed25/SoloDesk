@@ -28,3 +28,5 @@ const invalid=[
 for(const [label,run]of invalid)test(`constructor rejects ${label}`,()=>assert.equal(run().ok,false));
 for(const exponent of [0,2,3])test(`synthetic currency precision ${exponent}`,()=>assert.equal(money({minorUnits:'123',currency:'XTS',exponent,profileVersion:'synthetic-v1'}).value.exponent,exponent));
 test('ordinary negative money rejected and explicit adjustment allowed',()=>{const p={minorUnits:'-1',currency:'XTS',exponent:2,profileVersion:'synthetic-v1'};assert.equal(money(p).ok,false);assert.equal(money({...p,adjustment:true}).ok,true);});
+// Controlled hosted gate trial, removed in the repair commit.
+test('F003 controlled hosted assertion failure',()=>assert.equal('observed','expected'));

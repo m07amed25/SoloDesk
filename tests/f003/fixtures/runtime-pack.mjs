@@ -1,8 +1,18 @@
 // Fixed reviewed inventory; observations cannot define their own coverage.
 export const pack = Object.freeze({
   "id": "F003-runtime-v1",
-  "count": 43,
+  "count": 53,
   "ids": [
+    "tag-substitution",
+    "plain-data",
+    "duplicate-key",
+    "utf8-roundtrip",
+    "invalid-utf8",
+    "valid-request",
+    "forged-actor",
+    "unknown-request-version",
+    "raw-exception",
+    "unknown-event",
     "exact-large",
     "decimal-sum",
     "third",
