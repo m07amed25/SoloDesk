@@ -32,6 +32,8 @@ const lockHeld = app.requestSingleInstanceLock({
   ...(startupLink ? { link: startupLink } : {}),
 });
 owner.lockHeld = lockHeld;
+if (process.env.F002_ROOT)
+  console.error(`[F004 verification] single-instance lock: ${lockHeld}`);
 
 if (!lockHeld) {
   // Electron forwards additionalData to the existing owner. A contender creates no view or job.
@@ -48,9 +50,11 @@ if (!lockHeld) {
   const startedAt = Date.now();
   let failureShown = false;
 
-  function fail(): void {
+  function fail(reason?: unknown): void {
     if (failureShown) return;
     failureShown = true;
+    if (process.env.F002_ROOT)
+      console.error("[F004 verification] startup failure:", reason);
     owner.fail("startup");
     dialog.showErrorBox(
       "SoloDesk could not open",
@@ -153,6 +157,8 @@ if (!lockHeld) {
         }
       });
       owner.ready();
+      if (process.env.F002_ROOT)
+        console.error("[F004 verification] owner ready");
       await route({
         profileId: requestedProfile,
         ...(startupLink ? { link: startupLink } : {}),

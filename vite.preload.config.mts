@@ -7,7 +7,7 @@ export default defineConfig({
     lib: {
       entry: "app/preload/preload.ts",
       formats: ["cjs"],
-      fileName: () => "preload.js",
+      fileName: () => "preload.cjs",
     },
     rolldownOptions: { external: [/^node:/, "electron"] },
   },

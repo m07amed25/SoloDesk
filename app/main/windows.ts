@@ -148,6 +148,9 @@ export async function createTrustedWindow(
   });
   const bundleRoot = path.join(__dirname, "../renderer/main_window");
   if (!developmentOrigin) await registerAssetHandler(viewSession, bundleRoot);
+  const preloadPath = path.join(__dirname, "preload.cjs");
+  if (!fs.existsSync(preloadPath))
+    throw new Error("trusted-preload-unavailable");
   viewSession.setPermissionRequestHandler((_contents, _permission, callback) =>
     callback(false),
   );
@@ -177,7 +180,7 @@ export async function createTrustedWindow(
       contextIsolation: true,
       nodeIntegration: false,
       sandbox: true,
-      preload: path.join(__dirname, "preload.js"),
+      preload: preloadPath,
       session: viewSession,
     },
   });
