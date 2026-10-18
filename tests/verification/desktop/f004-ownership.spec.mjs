@@ -103,11 +103,15 @@ test("synthetic A/B views use distinct sessions and restart without a stale owne
       timeout: 30000,
       env: fixtureEnv,
     });
-    const restarted = await Promise.race([
-      app.firstWindow().then(() => true),
-      new Promise((resolve) => app.process().once("exit", () => resolve(false))),
-    ]);
-    expect(restarted, "restarted owner exited before creating a window").toBe(true);
+    const child = app.process();
+    const restarted = child.exitCode !== null || child.signalCode !== null
+      ? null
+      : await Promise.race([
+          app.firstWindow(),
+          new Promise((resolve) => child.once("exit", () => resolve(null))),
+        ]);
+    expect(restarted, "restarted owner exited before creating a window").not.toBeNull();
+    await expect(restarted.getByRole("heading", { name: "A workspace for your independent work." })).toBeVisible();
     expect(await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows().length)).toBe(1);
   } finally {
     if (app) await app.close().catch(() => {});

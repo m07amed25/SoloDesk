@@ -94,23 +94,39 @@ export async function registerAssetHandler(
   const { net } = await import("electron");
   const root = fs.realpathSync(bundleRoot);
   viewSession.protocol.handle(ASSET_SCHEME, async (request) => {
+    if (process.env.F002_ROOT)
+      console.error("[F004 verification] asset request:", request.url);
     const target = assetPath(request.url, request.method, root);
-    if (!target) return new Response("Unavailable", { status: 404 });
+    if (!target) {
+      if (process.env.F002_ROOT)
+        console.error("[F004 verification] asset path denied");
+      return new Response("Unavailable", { status: 404 });
+    }
     try {
       const actual = await fs.promises.realpath(target);
       if (
         !actual.startsWith(root + path.sep) ||
         !(await fs.promises.stat(actual)).isFile()
-      )
+      ) {
+        if (process.env.F002_ROOT)
+          console.error("[F004 verification] asset file denied");
         return new Response("Unavailable", { status: 404 });
+      }
       const fetched = await net.fetch(pathToFileURL(actual).toString());
+      if (process.env.F002_ROOT)
+        console.error(
+          "[F004 verification] asset fetch status:",
+          fetched.status,
+        );
       return request.method === "HEAD"
         ? new Response(null, {
             status: fetched.status,
             headers: fetched.headers,
           })
         : fetched;
-    } catch {
+    } catch (reason) {
+      if (process.env.F002_ROOT)
+        console.error("[F004 verification] asset handler failure:", reason);
       return new Response("Unavailable", { status: 404 });
     }
   });
