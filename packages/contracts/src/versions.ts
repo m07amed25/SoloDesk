@@ -12,17 +12,15 @@ import { BOUNDS } from "./bounds.ts";
 import type { Registry } from "./registry.ts";
 export function supported(registry: Registry) {
   return Object.freeze(
-    registry
-      .catalogue()
-      .map((d) =>
-        Object.freeze({
-          ...d,
-          protocolVersion: 1,
-          boundsProfile: BOUNDS.id,
-          intentVersion: "F003-intent-v1",
-          eventVersions: Object.freeze([1]),
-        }),
-      ),
+    registry.catalogue().map((d) =>
+      Object.freeze({
+        ...d,
+        protocolVersion: 1,
+        boundsProfile: BOUNDS.id,
+        intentVersion: "F003-intent-v1",
+        eventVersions: Object.freeze([1]),
+      }),
+    ),
   );
 }
 export function acceptedEvent(
