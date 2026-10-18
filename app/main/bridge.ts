@@ -146,9 +146,24 @@ export class DesktopBridge {
     contents.once("did-finish-load", () => {
       loaded = true;
     });
-    contents.on("did-start-navigation", () => {
-      if (loaded) this.invalidate(binding);
+    contents.on("did-start-navigation", (details) => {
+      if (!loaded || !details.isMainFrame || details.isSameDocument) return;
+      if (details.url !== documentUrl) {
+        this.invalidate(binding);
+        return;
+      }
+      // Vite reloads the same trusted page during startup and after edits.
+      // Its old renderer subscriptions must not survive the new document.
+      this.subscriptions.invalidate(binding);
     });
+    contents.on(
+      "did-frame-navigate",
+      (_event, url, _code, _text, isMainFrame) => {
+        if (!isMainFrame || this.bindings.get(contents) !== binding) return;
+        if (url !== documentUrl) this.invalidate(binding);
+        else binding.frame = contents.mainFrame;
+      },
+    );
     window.once("closed", () => this.invalidate(binding));
   }
 

@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import path from "node:path";
 import {
   assetPath,
+  trustedDevelopmentDocumentUrl,
   trustedDevelopmentOrigin,
 } from "../../../app/main/windows.ts";
 
@@ -30,4 +31,12 @@ test("development origin is exact loopback", () => {
   );
   assert.equal(trustedDevelopmentOrigin("https://example.com/"), null);
   assert.equal(trustedDevelopmentOrigin("http://localhost.evil:5173/"), null);
+  assert.equal(
+    trustedDevelopmentDocumentUrl("http://127.0.0.1:5173"),
+    "http://127.0.0.1:5173/",
+  );
+  assert.equal(
+    trustedDevelopmentDocumentUrl("http://localhost.evil:5173"),
+    null,
+  );
 });
