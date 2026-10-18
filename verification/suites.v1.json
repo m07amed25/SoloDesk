@@ -223,7 +223,7 @@
       "phase_ids": ["F002"],
       "requirement_ids": ["FR-006"],
       "scenario_ids": ["A-12", "A-13"],
-      "entry_files": ["tests/verification/desktop/shell.spec.mjs"]
+      "entry_files": ["tests/verification/desktop/shell.spec.mjs", "tests/verification/desktop/f003-runtime.spec.mjs"]
     },
     {
       "id": "desktop:windows-x64",
@@ -236,7 +236,7 @@
       "phase_ids": ["F002"],
       "requirement_ids": ["FR-006"],
       "scenario_ids": ["A-12", "A-13"],
-      "entry_files": ["tests/verification/desktop/shell.spec.mjs"]
+      "entry_files": ["tests/verification/desktop/shell.spec.mjs", "tests/verification/desktop/f003-runtime.spec.mjs"]
     },
     {
       "id": "desktop:macos-arm64",
@@ -249,7 +249,7 @@
       "phase_ids": ["F002"],
       "requirement_ids": ["FR-006"],
       "scenario_ids": ["A-12", "A-13"],
-      "entry_files": ["tests/verification/desktop/shell.spec.mjs"]
+      "entry_files": ["tests/verification/desktop/shell.spec.mjs", "tests/verification/desktop/f003-runtime.spec.mjs"]
     },
     {
       "id": "secrets",
@@ -311,6 +311,321 @@
       "requirement_ids": ["NFR-015"],
       "scenario_ids": ["A-01", "A-22"],
       "entry_files": ["tooling/ui-info.mjs"]
+    },
+    {
+      "id": "F003:unit",
+      "feature": "F003",
+      "group": "baseline",
+      "executable": "$NODE",
+      "argv": [
+        "--test",
+        "--test-timeout=60000",
+        "--test-reporter=tap",
+        "--test-isolation=none",
+        "tests/f003/unit/constructors.test.mjs",
+        "tests/f003/unit/codec.test.mjs",
+        "tests/f003/unit/contracts.test.mjs",
+        "tests/f003/unit/dates.test.mjs",
+        "tests/f003/unit/primitives.test.mjs",
+        "tests/f003/unit/identities.test.mjs",
+        "tests/f003/unit/request-authority.test.mjs",
+        "tests/f003/unit/versions.test.mjs"
+      ],
+      "kind": "tests",
+      "min_tests": 48,
+      "timeout_ms": 300000,
+      "phase_ids": [
+        "F003"
+      ],
+      "requirement_ids": [
+        "NFR-001",
+        "NFR-015",
+        "PLT-008"
+      ],
+      "scenario_ids": [
+        "F003:A-01",
+        "F003:A-02",
+        "F003:A-03",
+        "F003:A-04",
+        "F003:A-05",
+        "F003:A-06",
+        "F003:A-07",
+        "F003:A-08",
+        "F003:A-09",
+        "F003:A-10",
+        "F003:A-11",
+        "F003:A-12",
+        "F003:A-13",
+        "F003:A-14",
+        "F003:A-15",
+        "F003:A-16",
+        "F003:A-17",
+        "F003:A-18",
+        "F003:A-19",
+        "F003:A-20",
+        "F003:A-21",
+        "F003:A-22"
+      ],
+      "entry_files": [
+        "tests/f003/unit/constructors.test.mjs",
+        "tests/f003/unit/codec.test.mjs",
+        "tests/f003/unit/contracts.test.mjs",
+        "tests/f003/unit/dates.test.mjs",
+        "tests/f003/unit/primitives.test.mjs",
+        "tests/f003/unit/identities.test.mjs",
+        "tests/f003/unit/request-authority.test.mjs",
+        "tests/f003/unit/versions.test.mjs"
+      ],
+      "categories": [
+        "unit",
+        "domain",
+        "boundary"
+      ],
+      "scenarios": [
+        "F003:A-01",
+        "F003:A-02",
+        "F003:A-03",
+        "F003:A-04",
+        "F003:A-05",
+        "F003:A-06",
+        "F003:A-07",
+        "F003:A-08",
+        "F003:A-09",
+        "F003:A-10",
+        "F003:A-11",
+        "F003:A-12",
+        "F003:A-13",
+        "F003:A-14",
+        "F003:A-15",
+        "F003:A-16",
+        "F003:A-17",
+        "F003:A-18",
+        "F003:A-19",
+        "F003:A-20",
+        "F003:A-21",
+        "F003:A-22"
+      ],
+      "positive": [
+        "Declared independent outcomes succeed"
+      ],
+      "negative": [
+        "Invalid input or unavailable evidence blocks success"
+      ]
+    },
+    {
+      "id": "F003:adapters",
+      "feature": "F003",
+      "group": "baseline",
+      "executable": "$NODE",
+      "argv": [
+        "--test",
+        "--test-timeout=60000",
+        "--test-reporter=tap",
+        "--test-isolation=none",
+        "tests/f003/integration/authority.test.mjs",
+        "tests/f003/integration/adapters.test.mjs",
+        "tests/f003/integration/intent.test.mjs",
+        "tests/f003/integration/repair.test.mjs",
+        "tests/f003/integration/performance.test.mjs"
+      ],
+      "kind": "tests",
+      "min_tests": 13,
+      "timeout_ms": 300000,
+      "phase_ids": [
+        "F003"
+      ],
+      "requirement_ids": [
+        "NFR-001",
+        "NFR-015",
+        "PLT-008"
+      ],
+      "scenario_ids": [
+        "F003:A-15",
+        "F003:A-16",
+        "F003:A-17",
+        "F003:A-21",
+        "F003:A-22",
+        "F003:A-28",
+        "F003:A-30",
+        "F003:A-32"
+      ],
+      "entry_files": [
+        "tests/f003/integration/authority.test.mjs",
+        "tests/f003/integration/adapters.test.mjs",
+        "tests/f003/integration/intent.test.mjs",
+        "tests/f003/integration/repair.test.mjs",
+        "tests/f003/integration/performance.test.mjs"
+      ],
+      "categories": [
+        "integration",
+        "authorization",
+        "boundary"
+      ],
+      "scenarios": [
+        "F003:A-15",
+        "F003:A-16",
+        "F003:A-17",
+        "F003:A-21",
+        "F003:A-22",
+        "F003:A-28",
+        "F003:A-30",
+        "F003:A-32"
+      ],
+      "positive": [
+        "Declared independent outcomes succeed"
+      ],
+      "negative": [
+        "Invalid input or unavailable evidence blocks success"
+      ]
+    },
+    {
+      "id": "F003:errors",
+      "feature": "F003",
+      "group": "baseline",
+      "executable": "$NODE",
+      "argv": [
+        "--test",
+        "--test-timeout=60000",
+        "--test-reporter=tap",
+        "--test-isolation=none",
+        "tests/f003/unit/errors.test.mjs",
+        "tests/f003/unit/localization.test.mjs"
+      ],
+      "kind": "tests",
+      "min_tests": 30,
+      "timeout_ms": 300000,
+      "phase_ids": [
+        "F003"
+      ],
+      "requirement_ids": [
+        "NFR-001",
+        "NFR-015",
+        "PLT-008"
+      ],
+      "scenario_ids": [
+        "F003:A-23",
+        "F003:A-24",
+        "F003:A-25",
+        "F003:A-26",
+        "F003:A-27"
+      ],
+      "entry_files": [
+        "tests/f003/unit/errors.test.mjs",
+        "tests/f003/unit/localization.test.mjs"
+      ],
+      "categories": [
+        "unit",
+        "bilingual",
+        "boundary"
+      ],
+      "scenarios": [
+        "F003:A-23",
+        "F003:A-24",
+        "F003:A-25",
+        "F003:A-26",
+        "F003:A-27"
+      ],
+      "positive": [
+        "Declared independent outcomes succeed"
+      ],
+      "negative": [
+        "Invalid input or unavailable evidence blocks success"
+      ]
+    },
+    {
+      "id": "F003:source-quality",
+      "feature": "F003",
+      "group": "baseline",
+      "executable": "$NODE",
+      "argv": [
+        "--test",
+        "--test-timeout=60000",
+        "--test-reporter=tap",
+        "--test-isolation=none",
+        "tests/f003/integration/source-quality.test.mjs"
+      ],
+      "kind": "tests",
+      "min_tests": 3,
+      "timeout_ms": 300000,
+      "phase_ids": [
+        "F003"
+      ],
+      "requirement_ids": [
+        "NFR-001",
+        "NFR-015",
+        "PLT-008"
+      ],
+      "scenario_ids": [
+        "F003:A-29",
+        "F003:A-31"
+      ],
+      "entry_files": [
+        "tests/f003/integration/source-quality.test.mjs"
+      ],
+      "categories": [
+        "unit",
+        "boundary"
+      ],
+      "scenarios": [
+        "F003:A-29",
+        "F003:A-31"
+      ],
+      "positive": [
+        "Declared independent outcomes succeed"
+      ],
+      "negative": [
+        "Invalid input or unavailable evidence blocks success"
+      ]
+    },
+    {
+      "id": "F003:runtime",
+      "feature": "F003",
+      "group": "baseline",
+      "executable": "$NODE",
+      "argv": [
+        "--test",
+        "--test-timeout=60000",
+        "--test-reporter=tap",
+        "--test-isolation=none",
+        "tests/f003/integration/runtime.test.mjs"
+      ],
+      "kind": "tests",
+      "min_tests": 3,
+      "timeout_ms": 300000,
+      "phase_ids": [
+        "F003"
+      ],
+      "requirement_ids": [
+        "NFR-001",
+        "NFR-015",
+        "PLT-008"
+      ],
+      "scenario_ids": [
+        "F003:A-05",
+        "F003:A-29",
+        "F003:A-30",
+        "F003:A-31"
+      ],
+      "entry_files": [
+        "tests/f003/integration/runtime.test.mjs"
+      ],
+      "categories": [
+        "integration",
+        "boundary",
+        "desktop"
+      ],
+      "scenarios": [
+        "F003:A-05",
+        "F003:A-29",
+        "F003:A-30",
+        "F003:A-31"
+      ],
+      "positive": [
+        "Declared independent outcomes succeed"
+      ],
+      "negative": [
+        "Invalid input or unavailable evidence blocks success"
+      ]
     }
   ]
 }

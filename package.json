@@ -17,7 +17,14 @@
     "check:docs": "node tooling/verification/documentation.mjs",
     "verify": "node tooling/verification/cli.mjs verify",
     "test:desktop": "node tooling/verification/desktop.mjs",
-    "check:security": "node tooling/verification/cli.mjs run --group security"
+    "check:security": "node tooling/verification/cli.mjs run --group security",
+    "setup:f003": "node tooling/f003/setup-runtime.mjs",
+    "test:f003": "node tooling/f003/verify.mjs",
+    "test:f003:unit": "node tooling/f003/verify.mjs F003:unit",
+    "test:f003:adapters": "node tooling/f003/verify.mjs F003:adapters",
+    "test:f003:errors": "node tooling/f003/verify.mjs F003:errors",
+    "test:f003:source-quality": "node tooling/f003/verify.mjs F003:source-quality",
+    "test:f003:runtime": "node tooling/f003/verify.mjs F003:runtime"
   },
   "engines": {
     "node": ">=24 <25"

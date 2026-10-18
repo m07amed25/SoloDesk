@@ -99,3 +99,11 @@ test("future required suite needs an owned namespace and explicit nonempty test 
   });
   assert.throws(() => selectChecks(context(), p, m), /suite-enrollment/);
 });
+import fs from 'node:fs';
+test('F003 producer removal blocks and existing protected commands stay unchanged',()=>{
+ const actual=JSON.parse(fs.readFileSync('verification/suites.v1.json','utf8'));
+ const selected=selectChecks(context(),policy(),actual);
+ for(const id of ['unit','adapters','errors','source-quality','runtime'])assert.ok(selected.checks.some(c=>c.check_id===`F003:${id}`&&c.selected));
+ const candidate=structuredClone(actual);candidate.checks=candidate.checks.filter(c=>c.id!=='F003:runtime');
+ assert.ok(selectChecks(context(),policy(),candidate,{baseManifest:actual}).findings.some(f=>f.code==='suite-downgrade'&&f.check_id==='F003:runtime'));
+});

@@ -51,3 +51,10 @@ test("specialist categories remain explicit obligations, never a future placehol
     ),
   );
 });
+import fs from 'node:fs';
+import path from 'node:path';
+test('all five real F003 suites have owned entries, reviewed floors and obligations',()=>{
+ const checks=JSON.parse(fs.readFileSync('verification/suites.v1.json','utf8')).checks.filter(c=>c.id.startsWith('F003:'));
+ assert.equal(checks.length,5);const floors={'F003:unit':48,'F003:adapters':13,'F003:errors':30,'F003:source-quality':3,'F003:runtime':3};
+ for(const check of checks){assert.ok(check.min_tests>=floors[check.id]);assert.equal(validateEnrollment(check,check.entry_files.filter(p=>fs.statSync(path.resolve(p)).isFile())),true);assert.ok(check.argv.includes('--test-isolation=none'));}
+});

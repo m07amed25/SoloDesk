@@ -89,7 +89,7 @@ console.log(
 process.exitCode =
   run.code === 0 &&
   !run.reason &&
-  counts?.executed > 0 &&
+  counts?.executed >= 2 &&
   counts.passed === counts.executed &&
   !counts.failed &&
   !counts.skipped

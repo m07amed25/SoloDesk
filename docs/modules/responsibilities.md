@@ -26,3 +26,8 @@ Accepted events carry workspace/actor/operation/entity/revision/schema/commit me
 ## Dependency rule
 
 Domain → pure types/policies only. Application → domain + ports. Adapters → application ports. Renderer → typed bridge/contracts. Server → application/domain/adapters. Shared contracts contain serializable shapes and stable errors, not secret keys or general-purpose privileged methods. Provider adapters and UI components never become a second owner of finance/security logic.
+
+
+## F003 implementation — 18 October 2026
+
+F003 owns implemented pure primitives, transport bounds/version/intent/error contracts and draft paired localization. Domain imports only domain; contracts may import domain; localization may import contracts. Test doubles and runtime/setup tools live outside packages. Trusted registration/resolution/authorization/effects belong to future composition boundaries; the shell exposes none. See [F003](../features/F003.md).

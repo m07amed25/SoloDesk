@@ -341,14 +341,15 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F003 — Shared typed commands and domain primitives
 
-- **PR identity:** `[F003] Shared typed commands and domain primitives`; branch `feat/f003-shared-typed-commands-and-domain-primitives` → `main`; one PR; implementation and baseline/three-target native QA executed; security repaired and hosted readiness passed; fork/control delivery evidence pending; [PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; hosted readiness passed; manual delivery evidence and owner approval pending.
+- **Feature specification:** [Full F003 specification](specs/003-shared-domain-contracts/spec.md), [technical plan and design artifacts](specs/003-shared-domain-contracts/plan.md), [dependency-ordered tasks](specs/003-shared-domain-contracts/tasks.md) and [requirements-quality checklist](specs/003-shared-domain-contracts/checklists/requirements.md). Implementation authorized by the user’s speckit-implement request. Pure packages, exact arithmetic, bounded serialization, bilingual errors and synthetic adapter/runtime suites are implemented; engineering bounds/version profiles are adopted. [Actual QA](docs/qa/F003.md) and [feature guide](docs/features/F003.md) retain pending fluent/native/hosted/approval gates.
+- **PR identity:** `[F003] Shared typed commands and domain primitives`; branch `feat/f003-shared-typed-commands-and-domain-primitives` → `main`; one primary PR in preparation. Status: building, local automated conformance passed; final approval/merge/release pending. PR #2 and PR #3 belong to F002.
 - **Prerequisites:** F002 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** NFR-001, NFR-015, PLT-008. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Define versioned DTOs, IDs, exact decimal/money and integer-second types, stable localized error codes, validation bounds and adapter ports.
 - **Automated tests:** Reject malformed/oversized payloads, cross-tenant references, unsupported versions and float-based authoritative amounts. Apply the shared relevant contract/permission/retry/RTL/regression checks.
 - **Agent QA:** Review representative English/Arabic error displays and serializable contracts without exposing internals. Record observed results and build/commit, not code-inspection assumptions.
 - **Documentation in this PR:** `docs/features/F003.md`, `docs/qa/F003.md`, affected specification/contract/user guidance and migration/rollback/runbook updates where applicable.
-- **Entry decisions/limits:** Approve numeric bounds and protocol version policy.
+- **Entry decisions/limits:** Engineering F003-bounds-v1 and protocol/payload/event version 1 adopted for this implementation; Q-03/Q-04 financial/timer policies remain open.
 - **Exit gate:** all included acceptance and applicable tests/QA pass, docs complete, dependencies merged, no blocking defect, **user final approval**, then merge this one PR. Never mark this card done merely from its plan.
 
 <a id="f004"></a>

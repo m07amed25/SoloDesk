@@ -1,6 +1,6 @@
 # SoloDesk documentation index
 
-Updated 17 October 2026. Complete phased design set for the expanded product; **business implementation deferred**. F001 governance documentation and local validation are implemented for review. Current implementation remains the minimal welcome shell. Confirmed product choices and proposed details are explicitly distinguished. Read [product brief](../PRODUCT.md), [roadmap](planning/roadmap.md), [coverage](planning/coverage.md), then [decisions](planning/decisions.md).
+Updated 17 October 2026. Complete phased design set for the expanded product; **business implementation deferred**. F001 governance documentation and local validation are implemented for review. Current implementation includes the welcome shell, F001/F002 delivery tooling and the authorized F003 pure-contract foundation in review. Business workflows remain deferred. Confirmed product choices and proposed details are explicitly distinguished. Read [product brief](../PRODUCT.md), [roadmap](planning/roadmap.md), [coverage](planning/coverage.md), then [decisions](planning/decisions.md).
 
 ## Confirmed direction
 
@@ -14,7 +14,7 @@ Freelancers and small teams from first release; Windows/macOS/Linux Electron; Ta
 
 [Contributor policy](development/delivery-governance.md), [F001 feature guide](features/F001.md)
 and [F001 QA/evidence](qa/F001.md) describe the implemented local tooling and current review.
-Owner approval, merge and release are separate outcomes.
+Owner approval, merge and release are separate outcomes. [F003 guide](features/F003.md) and [F003 QA](qa/F003.md) cover current shared contracts and synthetic conformance.
 
 ## UI design system
 

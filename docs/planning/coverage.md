@@ -151,3 +151,8 @@ The detailed specification owns the full behavior, fields, transitions, validati
 All families inherit workspace/project authorization, English/Arabic RTL, exact date/money/time types, offline/online state, idempotency, failure/input preservation, audit and migration/retention controls. Legal/provider-specific profiles are gated by the decision register. AI is excluded. Basic teams/sync are P01; portal is P08. Specified advanced capabilities do not imply all ship in the core pilot.
 
 F002 implementation is authorized by the current user request. Its [verification commands, native/security scope and recovery](../features/F002.md) and actual QA remain distinct from business-feature implementation, owner approval, merge, protection activation and release.
+
+
+## F003 implementation — 18 October 2026
+
+F003 now supplies tested pure foundations for NFR-001 (exact values/intent), NFR-015 (portable contracts/narrow port types) and PLT-008 (distinct local/queued/authoritative/unknown outcome contracts). Actual storage atomicity, production authorization and synchronization remain later-feature obligations. [F003 QA](../qa/F003.md) maps all FR-001–FR-034, A-01–A-32 and SC-001–SC-010 to observations or explicit blocking gaps; implementation does not establish approval, merge or release.

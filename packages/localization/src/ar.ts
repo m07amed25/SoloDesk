@@ -1,0 +1,37 @@
+// Initial catalogue; Arabic fluent review is recorded separately in F003 QA.
+export const ar: Readonly<Record<string, string>> = Object.freeze({
+  "error.validation": "راجع الحقول المحددة.",
+  "error.auth_required": "سجّل الدخول للمتابعة.",
+  "error.session_revoked": "انتهت جلستك. سجّل الدخول مرة أخرى.",
+  "error.forbidden": "ليس لديك إذن لتنفيذ هذا الإجراء.",
+  "error.resource_unavailable": "هذا العنصر غير متاح.",
+  "error.revision_conflict": "تغيّر هذا العنصر. راجع النسخة الحالية.",
+  "error.financial_lock": "هذا السجل مقفل. استخدم إجراء التصحيح المسموح به.",
+  "error.allocation_conflict": "تغيّر تخصيص المصدر. راجعه قبل المتابعة.",
+  "error.online_required": "اتصل بالإنترنت لإكمال هذا الإجراء.",
+  "error.outcome_unknown":
+    "لم تتأكد نتيجة العملية. تحقّق من العملية الحالية أولاً.",
+  "error.rate_limited": "يُرجى الانتظار قبل المحاولة مرة أخرى.",
+  "error.upgrade_required": "حدّث التطبيق قبل المتابعة.",
+  "error.schema_unsupported":
+    "هذا الإصدار من البيانات غير مدعوم. حدّث التطبيق أو استخدم الاسترداد.",
+  "error.storage_unavailable": "التخزين المحمي غير متاح. استخدم الاسترداد.",
+  "error.key_unavailable":
+    "مفتاح الحماية غير متاح. افتح القفل أو استردّ الوصول.",
+  "error.provider_failure": "تعذّر على الخدمة المتصلة تأكيد الإجراء.",
+  "error.service_unavailable": "الخدمة غير متاحة. لم يتأكد تنفيذ الإجراء.",
+  "issue.required": "هذا الحقل مطلوب.",
+  "issue.unknown_field": "هذا الحقل غير مدعوم.",
+  "issue.invalid_type": "أدخل قيمة من النوع المطلوب.",
+  "issue.invalid_format": "تحقّق من تنسيق القيمة.",
+  "issue.invalid_enum": "اختر خيارًا مدعومًا.",
+  "issue.unsupported_version": "هذا الإصدار غير مدعوم.",
+  "issue.noncanonical": "استخدم التمثيل الدقيق المطلوب.",
+  "issue.out_of_range": "تتجاوز القيمة النطاق المسموح به.",
+  "issue.division_by_zero": "يجب ألا يكون المقسوم عليه صفرًا.",
+  "issue.incompatible_unit": "لا يمكن دمج هذه الوحدات أو ملفات الإعداد.",
+  "issue.non_representable": "لا يمكن تمثيل هذه القيمة بدقة هنا.",
+  "issue.work_limit": "تتجاوز هذه العملية حدّ المعالجة المسموح به.",
+  "issue.duplicate_field": "يظهر أحد الحقول أكثر من مرة.",
+  "error.unknown": "تعذّر تأكيد الإجراء. استخدم الرقم المرجعي لطلب المساعدة.",
+});

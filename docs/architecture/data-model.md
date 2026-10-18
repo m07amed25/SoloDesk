@@ -80,3 +80,8 @@ Diagram shows selected authoritative relationships, not every table. Drafts can 
 Index from query plans: workspace+scope+status/date, parent/project/assignee, due date, normalized search, source allocation, unique external/operation IDs, recurrence occurrence and server cursor. Partial financial/allocation constraints supplement transactional locks. Specify maximum numeric/string/blob sizes before schema approval. Do not claim complete scalability from conceptual indexes.
 
 Separate local/server schema histories with protocol compatibility; additive migrations first, data backfills validated, destructive cleanup last. Backup, retry, checksum and rollback/forward-repair plans accompany every migration. [Finance](../specs/finance.md) owns equations; [data lifecycle](data-lifecycle.md) owns restore/import; [test strategy](../quality/test-strategy.md) owns required evidence.
+
+
+## F003 implementation — 18 October 2026
+
+F003 now implements bounded immutable decimal/rational/money/seconds/date/instant/identity values under `packages/domain/src`, and versioned plain-data envelope/intent/error schemas under `packages/contracts/src`. This is a pure value model; no SQL tables, migration, storage or financial posting exists. See [F003](../features/F003.md) and [evidence](../qa/F003.md).
