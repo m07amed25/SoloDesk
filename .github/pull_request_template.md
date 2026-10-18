@@ -4,7 +4,7 @@ Describe the concrete problem and resulting behavior, including a before/after e
 
 ## Identity and prerequisites
 
-Phase: F___; milestone: P__; requirements: ___. Target: `main`.
+Phase: `F___`; milestone: `P__`; requirements: `___`. Target: `main`.
 Identify prerequisite merged phases and resolved blocking decisions. One phase, one primary PR.
 
 ## Included and excluded scope
