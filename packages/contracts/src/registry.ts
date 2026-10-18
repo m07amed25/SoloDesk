@@ -1,6 +1,7 @@
 import { fail, type Result } from "../../domain/src/integers.ts";
 import type { Id } from "../../domain/src/ids.ts";
 import type { Data } from "./validation.ts";
+
 export type OperationDefinition = Readonly<{
   owner: string;
   name: string;
@@ -11,6 +12,7 @@ export type OperationDefinition = Readonly<{
   occurrence: boolean;
   payload: (input: unknown, workspace: Id<"workspace">) => Result<Data>;
 }>;
+
 /** Definitions are trusted developer registrations, never executable input from a request. */
 export class Registry {
   private operations = new Map<string, OperationDefinition>();

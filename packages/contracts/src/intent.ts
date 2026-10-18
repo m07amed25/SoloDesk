@@ -3,9 +3,11 @@ import { id } from "../../domain/src/ids.ts";
 import { request } from "./envelopes.ts";
 import { plainData, type Data } from "./validation.ts";
 import type { Registry } from "./registry.ts";
+
 export function canonical(input: unknown): Result<string> {
   const safe = plainData(input);
   if (!safe.ok) return safe;
+
   const write = (v: Data): string =>
     Array.isArray(v)
       ? "[" + v.map(write).join(",") + "]"
