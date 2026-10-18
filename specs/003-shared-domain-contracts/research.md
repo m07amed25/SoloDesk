@@ -4,18 +4,18 @@
 
 ## Research Closure
 
-| Planning unknown | Resolution | Authoritative design |
-| --- | --- | --- |
-| Shared code layout and dependency direction | Three small private source modules; no workspace migration or new runtime dependency | R-01, R-02 |
-| Exact numbers and bounded computation | Checked BigInt-backed integers/decimals/ratios; exact strings at boundaries | R-03, [primitives](contracts/primitives-and-bounds.md) |
-| Finite input/numeric bounds | Concrete proposed F003-bounds-v1 profile with approval before adoption | R-04, [bounds](contracts/primitives-and-bounds.md) |
-| Runtime validation and ambiguous serialization | Closed registry-driven runtime validators plus bounded duplicate-aware text decoder | R-05, [messages](contracts/commands-and-results.md) |
-| Versions, intent identity and compatibility | Protocol/payload version 1; explicit allowlist; canonical semantic intent, no automatic downgrade | R-06, [evolution](contracts/compatibility-and-intent.md) |
-| ID kinds and trusted authority | Runtime tags plus opaque UUIDv4 values; ownership/current grants resolved separately | R-07, [ports](contracts/ports-and-authority.md) |
-| Bilingual errors and parameter privacy | Closed paired catalogue with typed safe parameters and explicit recovery discriminants | R-08, [errors](contracts/errors-and-localization.md) |
-| Service/desktop portability | Same pure bundle in Node, locked Electron and proposed Deno 2.9.7 fixture runtime | R-09, [conformance](contracts/conformance-and-enrollment.md) |
-| Actual F002 enrollment | Add fixed mandatory F003 baseline suites; preserve existing argv floors | R-10, [enrollment](contracts/conformance-and-enrollment.md) |
-| Dates, repair and approval | Pure explicit Gregorian/UTC rules; preserve original pending intent; separate planning from adoption | R-11, R-12 |
+| Planning unknown                               | Resolution                                                                                           | Authoritative design                                         |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| Shared code layout and dependency direction    | Three small private source modules; no workspace migration or new runtime dependency                 | R-01, R-02                                                   |
+| Exact numbers and bounded computation          | Checked BigInt-backed integers/decimals/ratios; exact strings at boundaries                          | R-03, [primitives](contracts/primitives-and-bounds.md)       |
+| Finite input/numeric bounds                    | Concrete proposed F003-bounds-v1 profile with approval before adoption                               | R-04, [bounds](contracts/primitives-and-bounds.md)           |
+| Runtime validation and ambiguous serialization | Closed registry-driven runtime validators plus bounded duplicate-aware text decoder                  | R-05, [messages](contracts/commands-and-results.md)          |
+| Versions, intent identity and compatibility    | Protocol/payload version 1; explicit allowlist; canonical semantic intent, no automatic downgrade    | R-06, [evolution](contracts/compatibility-and-intent.md)     |
+| ID kinds and trusted authority                 | Runtime tags plus opaque UUIDv4 values; ownership/current grants resolved separately                 | R-07, [ports](contracts/ports-and-authority.md)              |
+| Bilingual errors and parameter privacy         | Closed paired catalogue with typed safe parameters and explicit recovery discriminants               | R-08, [errors](contracts/errors-and-localization.md)         |
+| Service/desktop portability                    | Same pure bundle in Node, locked Electron and proposed Deno 2.9.7 fixture runtime                    | R-09, [conformance](contracts/conformance-and-enrollment.md) |
+| Actual F002 enrollment                         | Add fixed mandatory F003 baseline suites; preserve existing argv floors                              | R-10, [enrollment](contracts/conformance-and-enrollment.md)  |
+| Dates, repair and approval                     | Pure explicit Gregorian/UTC rules; preserve original pending intent; separate planning from adoption | R-11, R-12                                                   |
 
 No unresolved technical design question remains. Approval of the proposed bounds/version profile and authorization for implementation are future entry conditions, not unanswered research questions. Q-01–Q-16 retain their existing status.
 

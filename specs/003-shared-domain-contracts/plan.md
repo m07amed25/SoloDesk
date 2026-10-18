@@ -42,16 +42,16 @@ All exact numerical limits and version identifiers are concrete proposals in thi
 
 Gate review applies to the authorized planning work first, then to the proposed implementation. No exception is requested. An unexecuted implementation gate is not a planning violation if its responsibility and blocking consequence remain explicit.
 
-| Principle | Before Phase 0 | After Phase 1 design / future implementation gate |
-| --- | --- | --- |
-| I — Scope and traceability | PASS: only active F003 planning; parent IDs and existing decisions retained | PASS: artifacts/FR/A/SC traceability, one proposed PR and no implementation authority inferred; entry review records adoption |
-| II — Platform and trust | PASS: installed stack retained; shared rules independent of UI/native/storage | PASS: tagged IDs, closed validation, pure modules, narrow trusted ports; actual F004 sender/preload enforcement remains deferred |
-| III — Offline/cloud authority | PASS: offline semantics specified without durable-save claims | PASS: stages/receipt intent/unknown outcomes explicit; later local/outbox/service adapters still must prove durability and current authorization |
-| IV — Exact immutable finance | PASS: exact values required; Q-03 remains open | PASS: bounded checked BigInt core, no rounding/FX/tax/minimum policy; no invoice/posting/source ownership implementation or mutable accepted history |
-| V — Fail-closed security | PASS: no credentials/customer data/privileged services | PASS: current trusted resolution, public privacy/error bounds and no arbitrary ports; fake adapters cannot certify auth/encryption |
-| VI — English/Arabic/accessibility | PASS: paired error meaning required | PASS: complete draft catalogue and inert bidi-aware test review; future fluent/native/UI evidence explicitly required, never claimed here |
-| VII — Compatible recovery | PASS: no data migrations authorized | PASS: version allowlists, original pending intent preserved, supported-reader repair/backout tests; real encrypted migrations/retention deferred |
-| VIII — Evidence before completion | PASS: specs/plans separate from runtime results | PASS: real suite enrollment/independent fixtures, current QA and owner decision gates; no skipped/native/fluent result represented as pass |
+| Principle                         | Before Phase 0                                                                | After Phase 1 design / future implementation gate                                                                                                    |
+| --------------------------------- | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| I — Scope and traceability        | PASS: only active F003 planning; parent IDs and existing decisions retained   | PASS: artifacts/FR/A/SC traceability, one proposed PR and no implementation authority inferred; entry review records adoption                        |
+| II — Platform and trust           | PASS: installed stack retained; shared rules independent of UI/native/storage | PASS: tagged IDs, closed validation, pure modules, narrow trusted ports; actual F004 sender/preload enforcement remains deferred                     |
+| III — Offline/cloud authority     | PASS: offline semantics specified without durable-save claims                 | PASS: stages/receipt intent/unknown outcomes explicit; later local/outbox/service adapters still must prove durability and current authorization     |
+| IV — Exact immutable finance      | PASS: exact values required; Q-03 remains open                                | PASS: bounded checked BigInt core, no rounding/FX/tax/minimum policy; no invoice/posting/source ownership implementation or mutable accepted history |
+| V — Fail-closed security          | PASS: no credentials/customer data/privileged services                        | PASS: current trusted resolution, public privacy/error bounds and no arbitrary ports; fake adapters cannot certify auth/encryption                   |
+| VI — English/Arabic/accessibility | PASS: paired error meaning required                                           | PASS: complete draft catalogue and inert bidi-aware test review; future fluent/native/UI evidence explicitly required, never claimed here            |
+| VII — Compatible recovery         | PASS: no data migrations authorized                                           | PASS: version allowlists, original pending intent preserved, supported-reader repair/backout tests; real encrypted migrations/retention deferred     |
+| VIII — Evidence before completion | PASS: specs/plans separate from runtime results                               | PASS: real suite enrollment/independent fixtures, current QA and owner decision gates; no skipped/native/fluent result represented as pass           |
 
 **Planning gate result**: PASS before research and PASS after design. No unresolved technical clarification or unjustified violation. **Implementation entry remains conditional** on actual F002 prerequisite review, no blocking inherited defect, existing authorization for the proposed implementation, and reviewed bounds/version adoption. The root plan records F002 merged but remaining fork/control evidence unexecuted; planning does not independently reverify remote outcomes or close those gaps.
 
@@ -139,16 +139,16 @@ Key decisions are exact textual boundary values backed by bounded BigInt; explic
 
 ## Phase 1 — Design Output
 
-| Artifact | Review purpose |
-| --- | --- |
-| [data-model.md](data-model.md) | Fields, relationships, readonly values, result transitions, privacy and absence of customer schema/migrations |
-| [commands/results](contracts/commands-and-results.md) | Decoder pipeline, tagged IDs, request/result/event shapes and synthetic-only registry |
-| [primitives/bounds](contracts/primitives-and-bounds.md) | Concrete proposed limits, exact arithmetic/normalization, dates and independent expectations |
-| [compatibility/intent](contracts/compatibility-and-intent.md) | Initial supported versions, intent canonical bytes, retry processing order and compatible repair |
-| [ports/authority](contracts/ports-and-authority.md) | Trusted context, current reference/grant resolution, narrow effect obligations and two independent doubles |
-| [errors/localization](contracts/errors-and-localization.md) | 17 public codes, 13 field keys, paired draft messages, safe parameters, fallback and recovery |
-| [conformance/enrollment](contracts/conformance-and-enrollment.md) | Actual F002 integration, future check identities, runtime probes, resource budgets and evidence |
-| [quickstart.md](quickstart.md) | Existing runnable documentation checks and future authorized setup/validation/QA procedures |
+| Artifact                                                          | Review purpose                                                                                                |
+| ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| [data-model.md](data-model.md)                                    | Fields, relationships, readonly values, result transitions, privacy and absence of customer schema/migrations |
+| [commands/results](contracts/commands-and-results.md)             | Decoder pipeline, tagged IDs, request/result/event shapes and synthetic-only registry                         |
+| [primitives/bounds](contracts/primitives-and-bounds.md)           | Concrete proposed limits, exact arithmetic/normalization, dates and independent expectations                  |
+| [compatibility/intent](contracts/compatibility-and-intent.md)     | Initial supported versions, intent canonical bytes, retry processing order and compatible repair              |
+| [ports/authority](contracts/ports-and-authority.md)               | Trusted context, current reference/grant resolution, narrow effect obligations and two independent doubles    |
+| [errors/localization](contracts/errors-and-localization.md)       | 17 public codes, 13 field keys, paired draft messages, safe parameters, fallback and recovery                 |
+| [conformance/enrollment](contracts/conformance-and-enrollment.md) | Actual F002 integration, future check identities, runtime probes, resource budgets and evidence               |
+| [quickstart.md](quickstart.md)                                    | Existing runnable documentation checks and future authorized setup/validation/QA procedures                   |
 
 Post-design constitution review passes as recorded above. No new customer persistence, real command endpoint or interface implementation is implied by a contract document.
 
@@ -169,31 +169,31 @@ After shared coverage/primitives are settled, error catalogue drafting and primi
 
 ## Verification and Requirement Coverage
 
-| Requirement group | Acceptance | Main planned proof | Success criteria |
-| --- | --- | --- | --- |
-| FR-001–FR-006 | A-01–A-05, A-18–A-19, A-28–A-29 | Closed registry/round-trip, all raw/object bounds, invalid/duplicate/unsupported cases, pure runtime bytes | SC-001–SC-005, SC-010 |
-| FR-007–FR-010 | A-04, A-13–A-17 | Runtime kind substitutions, two-tenant actual lookup, revoked/action denial, private receipt/error negatives | SC-002, SC-004 |
-| FR-011–FR-017 | A-06–A-12 | Literal independent mathematics, 0/2/3 profiles, overflow/intermediate work/date/locale fixtures | SC-003–SC-005 |
-| FR-018–FR-024 | A-18–A-22, A-30, A-32 | Exact version lists, canonical intent goldens, same receipt/changed reuse, unknown and repair transitions | SC-006, SC-009 |
-| FR-025–FR-028 | A-23–A-27 | 17-code/13-key catalogue, parameter parity, bounded redaction/fallback, inert bidi and fluent review | SC-007–SC-008 |
-| FR-029–FR-031 | A-28–A-30 | Module/type dependency review, independent adapters and three actual runtime consumers | SC-004, SC-010 |
-| FR-032–FR-034 | A-03, A-19, A-21, A-23, A-28, A-31–A-32 | Current docs/entry/version records, real aggregate failure/repair, actual QA, repair and separate approval | SC-001, SC-009–SC-010 |
+| Requirement group | Acceptance                              | Main planned proof                                                                                           | Success criteria      |
+| ----------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------ | --------------------- |
+| FR-001–FR-006     | A-01–A-05, A-18–A-19, A-28–A-29         | Closed registry/round-trip, all raw/object bounds, invalid/duplicate/unsupported cases, pure runtime bytes   | SC-001–SC-005, SC-010 |
+| FR-007–FR-010     | A-04, A-13–A-17                         | Runtime kind substitutions, two-tenant actual lookup, revoked/action denial, private receipt/error negatives | SC-002, SC-004        |
+| FR-011–FR-017     | A-06–A-12                               | Literal independent mathematics, 0/2/3 profiles, overflow/intermediate work/date/locale fixtures             | SC-003–SC-005         |
+| FR-018–FR-024     | A-18–A-22, A-30, A-32                   | Exact version lists, canonical intent goldens, same receipt/changed reuse, unknown and repair transitions    | SC-006, SC-009        |
+| FR-025–FR-028     | A-23–A-27                               | 17-code/13-key catalogue, parameter parity, bounded redaction/fallback, inert bidi and fluent review         | SC-007–SC-008         |
+| FR-029–FR-031     | A-28–A-30                               | Module/type dependency review, independent adapters and three actual runtime consumers                       | SC-004, SC-010        |
+| FR-032–FR-034     | A-03, A-19, A-21, A-23, A-28, A-31–A-32 | Current docs/entry/version records, real aggregate failure/repair, actual QA, repair and separate approval   | SC-001, SC-009–SC-010 |
 
 The test set is nonempty and independently expected. Bounded generated tests retain seeds and independent algebraic properties; they cannot approve financial policy or replace literal examples. Every selected required check or environment has actual evidence or a blocking gap. All native/Arabic/security/finance/sync categories are separately scoped; synthetic conformance never claims complete future product behavior.
 
 ## Risks, Adoption and Backout
 
-| Risk | Concrete mitigation / blocking consequence |
-| --- | --- |
-| Incorrect exact arithmetic or unbounded growth | Preflight/input/output/work ceilings, independent literal and property fixtures; any silent rounding or overflow blocks adoption |
-| Decoder ambiguity/duplicate escape/parser bug | One bounded token path, decoded-key duplicate tests, malformed corpus, own-property rules and explicit review; inability to prove safety blocks rather than weakens validation |
-| Tags mistaken for authentication | Trusted resource/current-action ports, negative resolver tests and distinct validated/authorized types; no actual permission claim from fixtures |
-| Retry changes an accepted effect | Versioned semantic intent including revision/policy/occurrence, current access before receipt, identical receipt before stale-revision rejection; unknown reconciles |
-| New code invisible to verification | Add shared include/isolated config and fixed mandatory F003 checks; validate actual aggregation, not enrollment metadata alone |
-| Runtime probe confused with native security | Same pure bundle plus separately labeled real shell smoke/native targets; no IPC, sandbox or signing certification inferred |
-| Draft Arabic assumed approved | Automated parity plus actual fluent review/agent observations; missing fluent evidence remains explicit |
-| New bounds/version treated as confirmed policy | Entry record distinguishes proposal/adoption, technical ceilings from Q policies and no real market/profile promise |
-| Backout loses pending data | Keep original contract/intent, verify supported readers; otherwise stop writes and use forward repair; no silent queued-data rewrite |
+| Risk                                           | Concrete mitigation / blocking consequence                                                                                                                                     |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Incorrect exact arithmetic or unbounded growth | Preflight/input/output/work ceilings, independent literal and property fixtures; any silent rounding or overflow blocks adoption                                               |
+| Decoder ambiguity/duplicate escape/parser bug  | One bounded token path, decoded-key duplicate tests, malformed corpus, own-property rules and explicit review; inability to prove safety blocks rather than weakens validation |
+| Tags mistaken for authentication               | Trusted resource/current-action ports, negative resolver tests and distinct validated/authorized types; no actual permission claim from fixtures                               |
+| Retry changes an accepted effect               | Versioned semantic intent including revision/policy/occurrence, current access before receipt, identical receipt before stale-revision rejection; unknown reconciles           |
+| New code invisible to verification             | Add shared include/isolated config and fixed mandatory F003 checks; validate actual aggregation, not enrollment metadata alone                                                 |
+| Runtime probe confused with native security    | Same pure bundle plus separately labeled real shell smoke/native targets; no IPC, sandbox or signing certification inferred                                                    |
+| Draft Arabic assumed approved                  | Automated parity plus actual fluent review/agent observations; missing fluent evidence remains explicit                                                                        |
+| New bounds/version treated as confirmed policy | Entry record distinguishes proposal/adoption, technical ceilings from Q policies and no real market/profile promise                                                            |
+| Backout loses pending data                     | Keep original contract/intent, verify supported readers; otherwise stop writes and use forward repair; no silent queued-data rewrite                                           |
 
 No database migration is needed for F003 itself. Consumer adoption is gated by the reviewed catalogue, compatible supported version and current tests. Backout may remove unused new library wiring if no pending consumer requires it; after persistence exists, later owners must use compatibility/forward repair rules. Restore only owned generated artifacts; never remove customer data or change remote policy/protection as recovery.
 

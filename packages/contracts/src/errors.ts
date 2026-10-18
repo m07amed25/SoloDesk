@@ -25,8 +25,21 @@ export const CODES = [
 
 export type Code = (typeof CODES)[number];
 
-export {ISSUE_KEYS} from "./issues.ts";
-import {ISSUE_KEYS,ISSUE_PATHS} from "./issues.ts";
+export const ISSUE_KEYS = [
+  "required",
+  "unknown_field",
+  "invalid_type",
+  "invalid_format",
+  "invalid_enum",
+  "unsupported_version",
+  "noncanonical",
+  "out_of_range",
+  "division_by_zero",
+  "incompatible_unit",
+  "non_representable",
+  "work_limit",
+  "duplicate_field",
+] as const;
 
 export const RECOVERY = [
   "correct_fields",
@@ -129,15 +142,19 @@ export function publicError(input: unknown): Result<PublicError> {
     !["not_applied", "applied", "unknown"].includes(input.outcomeCertainty)
   )
     return fail("invalid_format");
+
   const diagnostic = id(input.diagnosticId, "diagnostic");
   if (!diagnostic.ok) return diagnostic;
+
   if (
     input.outcomeCertainty === "unknown" &&
     ["retry_after", "correct_fields"].includes(String(input.recovery))
   )
     return fail("invalid_format");
+
   if (code === "OUTCOME_UNKNOWN" && input.outcomeCertainty !== "unknown")
     return fail("invalid_format");
+
   if (input.recovery === "retry_after") {
     if (
       input.outcomeCertainty !== "not_applied" ||
@@ -149,6 +166,7 @@ export function publicError(input: unknown): Result<PublicError> {
       return fail("out_of_range");
   } else if (Object.hasOwn(input, "retryAfterMs"))
     return fail("invalid_format");
+
   if (
     Object.hasOwn(input, "issues") &&
     (!Array.isArray(input.issues) ||
@@ -156,15 +174,18 @@ export function publicError(input: unknown): Result<PublicError> {
       code !== "VALIDATION")
   )
     return fail("out_of_range");
+
   if (
     Object.hasOwn(input, "issuesTruncated") &&
     typeof input.issuesTruncated !== "boolean"
   )
     return fail("invalid_type");
+
   const issues: Readonly<{
     key: (typeof ISSUE_KEYS)[number];
     path: readonly (string | number)[];
   }>[] = [];
+
   for (const issue of (input.issues as unknown[] | undefined) || []) {
     if (
       !record(issue, ["key", "path"]) ||
@@ -175,10 +196,32 @@ export function publicError(input: unknown): Result<PublicError> {
         typeof s === "number"
           ? !Number.isInteger(s) || s < 0 || s >= 1000
           : typeof s !== "string" ||
-            !(ISSUE_PATHS as readonly string[]).includes(s),
+            ![
+              "payload",
+              "unknownField",
+              "coefficient",
+              "scale",
+              "numerator",
+              "denominator",
+              "minorUnits",
+              "currency",
+              "exponent",
+              "profileVersion",
+              "seconds",
+              "date",
+              "instant",
+              "reference",
+              "id",
+              "workspaceId",
+              "kind",
+              "value",
+              "version",
+              "operation",
+            ].includes(s),
       )
     )
       return fail("invalid_format");
+
     issues.push(
       Object.freeze({
         key: issue.key as (typeof ISSUE_KEYS)[number],
@@ -186,6 +229,7 @@ export function publicError(input: unknown): Result<PublicError> {
       }),
     );
   }
+
   const out = Object.freeze({
     ...input,
     diagnosticId: diagnostic.value,
@@ -194,7 +238,9 @@ export function publicError(input: unknown): Result<PublicError> {
       ? { issues: Object.freeze(issues) }
       : {}),
   }) as PublicError;
+
   if (utf8Length(JSON.stringify(out)) > BOUNDS.errorBytes)
     return fail("out_of_range");
+
   return ok(out);
 }

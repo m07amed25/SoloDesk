@@ -129,3 +129,5 @@ Measure proposed decoding/arithmetic budgets on declared actual hardware with th
 ## 9. Failure and Backout
 
 Preserve original input/versioned intent and observed failures, identify the owning contract/adapter and repair the same open proposal. Rerun affected checks/QA and current review. Only clean owned scratch/processes under existing limits. If an old reader cannot interpret pending data, stop incompatible writes and use the compatibility contract's forward repair; never silently rewrite intent, recreate empty data, remove protection or claim a skipped result passed.
+
+For repeated clean setup, Electron's installed downloader supports `electron_config_cache=/absolute/cache npm run setup:electron`. Cached official archives are still verified against `node_modules/electron/checksums.json`; this saves downloads and does not bypass runtime/version checks. Each clean checkout keeps its own dependencies and extracted runtime. The F003 Deno setup similarly accepts an already downloaded archive only after both pinned digest checks.

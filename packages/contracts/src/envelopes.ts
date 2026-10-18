@@ -190,7 +190,8 @@ export function response(input: unknown, original: Request): Result<Data> {
 
   if (
     original.kind === "command"
-      ? (!original.operationId || !sameId(input.operationId, original.operationId))
+      ? !original.operationId ||
+        !sameId(input.operationId, original.operationId)
       : Object.hasOwn(input, "operationId")
   )
     return fail("invalid_format");
@@ -267,7 +268,8 @@ export function response(input: unknown, original: Request): Result<Data> {
       status === "outcome_unknown" &&
       (error.value.code !== "OUTCOME_UNKNOWN" ||
         !id(input.reconciliation, "operation").ok ||
-        (!original.operationId || !sameId(input.reconciliation, original.operationId)))
+        !original.operationId ||
+        !sameId(input.reconciliation, original.operationId))
     )
       return fail("invalid_format");
   }

@@ -42,7 +42,6 @@ Pure domain/contracts must run in Electron Node and the selected TypeScript edge
 
 Future configuration includes environment schema, allowed callback/endpoints, local/profile paths, feature/profile limits, signing/update trust roots and test/provider sandbox identities. Do not commit secret values. Installed dependencies do not imply future encrypted storage, backend or portal is implemented.
 
-
 ## F003 implementation — 18 October 2026
 
 Implemented F003 paths: `packages/domain/src`, `packages/contracts/src`, `packages/localization/src`, `tests/f003` and `tooling/f003`. Private package markers have no dependencies. Root TypeScript includes shared sources; `tsconfig.shared.json` excludes Node/DOM globals. Application/infrastructure/Supabase/web folders above remain proposed. See [F003](../features/F003.md).

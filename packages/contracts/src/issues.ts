@@ -13,4 +13,25 @@ export const ISSUE_KEYS = [
   "work_limit",
   "duplicate_field",
 ] as const;
-export const ISSUE_PATHS = ["payload", "unknownField", "coefficient", "scale", "numerator", "denominator", "minorUnits", "currency", "exponent", "profileVersion", "seconds", "date", "instant", "reference", "id", "workspaceId", "kind", "value", "version", "operation"] as const;
+export const ISSUE_PATHS = [
+  "payload",
+  "unknownField",
+  "coefficient",
+  "scale",
+  "numerator",
+  "denominator",
+  "minorUnits",
+  "currency",
+  "exponent",
+  "profileVersion",
+  "seconds",
+  "date",
+  "instant",
+  "reference",
+  "id",
+  "workspaceId",
+  "kind",
+  "value",
+  "version",
+  "operation",
+] as const;

@@ -1,9 +1,43 @@
-import fs from 'node:fs';import path from 'node:path';import crypto from 'node:crypto';import {fileURLToPath} from 'node:url';
-import {allocate} from '../verification/artifacts.mjs';import {CODES} from '../../packages/contracts/src/errors.ts';import {localize} from '../../packages/localization/src/errors.ts';import {rawError} from '../../tests/f003/fixtures/outcomes.mjs';
-const escape=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-export function createPreview(root=process.cwd()){
- const owned=allocate(root,`f003-errors-${crypto.randomUUID()}`);
- const html='<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><meta http-equiv="Content-Security-Policy" content="default-src \'none\'; style-src \'unsafe-inline\'"><title>F003 synthetic error review</title><style>body{font:18px system-ui;max-width:1100px;margin:30px auto;padding:0 20px;background:#f5f6f8;color:#1c2534}article{display:grid;grid-template-columns:1fr 1fr;gap:24px;background:white;padding:20px;margin:12px 0;border:1px solid #dae0e7;border-radius:8px}p{line-height:1.7}code{font-size:13px}h1{font-size:28px}</style><h1>F003 synthetic error review</h1><p>Draft Arabic · Fluent review pending · No customer data</p>'+CODES.map(code=>{const v=rawError(code);return '<article>'+['en','ar'].map(locale=>{const m=localize(v,locale).value;return `<section lang="${locale}" dir="${locale==='ar'?'rtl':'ltr'}"><code>${escape(code)}</code><p>${escape(m.text)}</p><p><bdi dir="ltr">${escape(m.diagnostic)}</bdi></p><small>${escape(m.recovery)}</small></section>`;}).join('')+'</article>';}).join('')+'</html>';
- const file=path.join(root,owned,'index.html');fs.writeFileSync(file,html,{flag:'wx',mode:0o600});return {path:file,owned};
+import fs from "node:fs";
+import path from "node:path";
+import crypto from "node:crypto";
+import { fileURLToPath } from "node:url";
+import { allocate } from "../verification/artifacts.mjs";
+import { CODES } from "../../packages/contracts/src/errors.ts";
+import { localize } from "../../packages/localization/src/errors.ts";
+import { rawError } from "../../tests/f003/fixtures/outcomes.mjs";
+const escape = (s) =>
+  s.replace(
+    /[&<>"']/g,
+    (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[
+        c
+      ],
+  );
+export function createPreview(root = process.cwd()) {
+  const owned = allocate(root, `f003-errors-${crypto.randomUUID()}`);
+  const html =
+    '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><meta http-equiv="Content-Security-Policy" content="default-src \'none\'; style-src \'unsafe-inline\'"><title>F003 synthetic error review</title><style>body{font:18px system-ui;max-width:1100px;margin:30px auto;padding:0 20px;background:#f5f6f8;color:#1c2534}article{display:grid;grid-template-columns:1fr 1fr;gap:24px;background:white;padding:20px;margin:12px 0;border:1px solid #dae0e7;border-radius:8px}p{line-height:1.7}code{font-size:13px}h1{font-size:28px}</style><h1>F003 synthetic error review</h1><p>Draft Arabic · Fluent review pending · No customer data</p>' +
+    CODES.map((code) => {
+      const v = rawError(code);
+      return (
+        "<article>" +
+        ["en", "ar"]
+          .map((locale) => {
+            const m = localize(v, locale).value;
+            return `<section lang="${locale}" dir="${locale === "ar" ? "rtl" : "ltr"}"><code>${escape(code)}</code><p>${escape(m.text)}</p><p><bdi dir="ltr">${escape(m.diagnostic)}</bdi></p><small>${escape(m.recovery)}</small></section>`;
+          })
+          .join("") +
+        "</article>"
+      );
+    }).join("") +
+    "</html>";
+  const file = path.join(root, owned, "index.html");
+  fs.writeFileSync(file, html, { flag: "wx", mode: 0o600 });
+  return { path: file, owned };
 }
-if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url))console.log(JSON.stringify(createPreview()));
+if (
+  process.argv[1] &&
+  path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+)
+  console.log(JSON.stringify(createPreview()));

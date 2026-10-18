@@ -1,4 +1,41 @@
-import {test} from 'node:test';import assert from 'node:assert/strict';import {id} from '../../../packages/domain/src/ids.ts';import {scopedReference} from '../../../packages/contracts/src/validation.ts';import {reference,workspace,otherWorkspace,tagged} from '../fixtures/context.mjs';
-test('A-13 kind cannot be substituted',()=>assert.equal(id(tagged('project',1),'workspace').ok,false));
-test('A-13 display numbers and uppercase UUID rejected',()=>{assert.equal(id({kind:'project',value:'INV-001'},'project').ok,false);assert.equal(id({kind:'project',value:'AAAAAAAA-1111-4111-8111-111111111111'},'project').ok,false);});
-test('A-14 scope claim must be consistent before actual resolver',()=>{assert.equal(scopedReference(reference,'project',workspace).ok,true);assert.equal(scopedReference({...reference,workspaceId:otherWorkspace},'project',workspace).ok,false);assert.equal(scopedReference({...reference,id:tagged('resource',5)},'project',workspace).ok,false);});
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import { id } from "../../../packages/domain/src/ids.ts";
+import { scopedReference } from "../../../packages/contracts/src/validation.ts";
+import {
+  reference,
+  workspace,
+  otherWorkspace,
+  tagged,
+} from "../fixtures/context.mjs";
+test("A-13 kind cannot be substituted", () =>
+  assert.equal(id(tagged("project", 1), "workspace").ok, false));
+test("A-13 display numbers and uppercase UUID rejected", () => {
+  assert.equal(id({ kind: "project", value: "INV-001" }, "project").ok, false);
+  assert.equal(
+    id(
+      { kind: "project", value: "AAAAAAAA-1111-4111-8111-111111111111" },
+      "project",
+    ).ok,
+    false,
+  );
+});
+test("A-14 scope claim must be consistent before actual resolver", () => {
+  assert.equal(scopedReference(reference, "project", workspace).ok, true);
+  assert.equal(
+    scopedReference(
+      { ...reference, workspaceId: otherWorkspace },
+      "project",
+      workspace,
+    ).ok,
+    false,
+  );
+  assert.equal(
+    scopedReference(
+      { ...reference, id: tagged("resource", 5) },
+      "project",
+      workspace,
+    ).ok,
+    false,
+  );
+});

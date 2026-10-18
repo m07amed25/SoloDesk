@@ -6,13 +6,13 @@
 
 Enroll these additive definitions in `verification/suites.v1.json`, with feature `F003`, linked NFR-001/NFR-015/PLT-008, `kind: tests`, `group: baseline`, `executable: $NODE`, exact explicit argv/entry_files and independently meaningful passing/negative cases. The proposed minima below are floors, not a replacement for complete coverage.
 
-| Suite ID | Future entry | Proposed minimum complete tests | Primary scope |
-| --- | --- | --- | --- |
-| `F003:unit` | `tests/f003/unit/contracts.test.mjs`, `primitives.test.mjs`, `dates.test.mjs`, `versions.test.mjs` | 48 | A-01–A-14, A-18–A-20; raw/text/object bounds, independent arithmetic/date values |
-| `F003:adapters` | `tests/f003/integration/adapters.test.mjs`, `intent.test.mjs`, `repair.test.mjs` | 12 | A-04, A-13–A-22, A-28, A-30, A-32; two independently implemented doubles |
-| `F003:errors` | `tests/f003/unit/errors.test.mjs`, `localization.test.mjs` | 30 | A-23–A-27; every one of 17 codes and 13 issue keys plus negative/parameter cases |
-| `F003:source-quality` | `tests/f003/integration/source-quality.test.mjs` | 3 | Shared typecheck, package lint and prohibited-dependency/API checks; A-29 |
-| `F003:runtime` | `tests/f003/integration/runtime.test.mjs` | 3 | Same nonempty standalone fixture pack in Node, Electron and Deno; A-05, A-28–A-29 |
+| Suite ID              | Future entry                                                                                       | Proposed minimum complete tests | Primary scope                                                                     |
+| --------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------- | --------------------------------------------------------------------------------- |
+| `F003:unit`           | `tests/f003/unit/contracts.test.mjs`, `primitives.test.mjs`, `dates.test.mjs`, `versions.test.mjs` | 48                              | A-01–A-14, A-18–A-20; raw/text/object bounds, independent arithmetic/date values  |
+| `F003:adapters`       | `tests/f003/integration/adapters.test.mjs`, `intent.test.mjs`, `repair.test.mjs`                   | 12                              | A-04, A-13–A-22, A-28, A-30, A-32; two independently implemented doubles          |
+| `F003:errors`         | `tests/f003/unit/errors.test.mjs`, `localization.test.mjs`                                         | 30                              | A-23–A-27; every one of 17 codes and 13 issue keys plus negative/parameter cases  |
+| `F003:source-quality` | `tests/f003/integration/source-quality.test.mjs`                                                   | 3                               | Shared typecheck, package lint and prohibited-dependency/API checks; A-29         |
+| `F003:runtime`        | `tests/f003/integration/runtime.test.mjs`                                                          | 3                               | Same nonempty standalone fixture pack in Node, Electron and Deno; A-05, A-28–A-29 |
 
 Test argv begins `--test --test-timeout=30000 --test-reporter=tap`, followed by the exact owned entry list. Runtime wrapper uses a specifically declared longer per-test timeout up to 60,000 ms, with suite deadline no more than 300,000 ms. No glob-only enrollment, shell interpolation, empty success, test skip or flaky automatic retries. If implementation needs different floors, revise the reviewed manifest/design with rationale before adoption; never reduce existing F002 minima or disguise a smaller executed set.
 

@@ -1,16 +1,130 @@
-import {test} from 'node:test';
-import assert from 'node:assert/strict';
-import {request,response} from '../../../packages/contracts/src/envelopes.ts';
-import {decode,encode} from '../../../packages/contracts/src/codec.ts';
-import {registry,echoRequest,recordRequest} from '../fixtures/operations.mjs';
-import {utf8,tagged} from '../fixtures/context.mjs';
-const expect=(r)=>{assert.equal(r.ok,true,JSON.stringify(r));return r.value;};
-test('A-01/A-05 echo and command exact immutable round-trip',()=>{for(const raw of [echoRequest(),recordRequest()]){const value=expect(request(raw,registry));assert.deepEqual(expect(decode(expect(encode(value,utf8)),utf8)),value);raw.payload.text='changed';assert.notEqual(value.payload.text,'changed');assert.equal(Object.isFrozen(value.payload),true);}});
-for(const field of ['protocolVersion','payloadVersion','boundsProfile','kind','operation','requestId','workspaceId','payload'])test(`A-02 missing ${field}`,()=>{const value=echoRequest();delete value[field];assert.equal(request(value,registry).ok,false);});
-for(const [name,mutate]of [
- ['unknown field',v=>v.secret='PRIVATE'],['actor claim',v=>v.actorId=tagged('actor',8)],['role claim',v=>v.roles=['owner']],['unknown operation',v=>v.operation='shell.execute'],['wrong version',v=>v.protocolVersion=2],['wrong payload version',v=>v.payloadVersion=2],['null field',v=>v.workspaceId=null],['float money',v=>v.payload.money.minorUnits=1.2],['missing profile',v=>delete v.payload.money.profileVersion],['unqualified date',v=>v.payload.instant='2026-10-18'],['unexpected device',v=>v.deviceId=tagged('device',4)],['noncanonical ratio',v=>v.payload.ratio={numerator:'2',denominator:'6'}],['null payload',v=>v.payload=null],
-])test(`A-02/A-04 rejects ${name}`,()=>{const v=echoRequest();mutate(v);assert.equal(request(v,registry).ok,false);});
-test('A-20 valid local result has only local metadata',()=>{const original=expect(request(recordRequest(),registry));const base={protocolVersion:1,payloadVersion:1,boundsProfile:'F003-bounds-v1',operation:original.operation,requestId:original.requestId,workspaceId:original.workspaceId,operationId:original.operationId,status:'local_saved',receiptId:tagged('receipt',9),localRevision:'1'};assert.equal(response(base,original).ok,true);assert.equal(response({...base,committedAt:'2026-10-18T01:02:03.000Z'},original).ok,false);});
-test('A-20 query cannot claim mutation and command cannot claim query result',()=>{const original=expect(request(recordRequest(),registry));assert.equal(response({...original,status:'query_result',data:{},freshness:'current'},original).ok,false);});
-test('A-01 changed response correlation fails',()=>{const original=expect(request(echoRequest(),registry));const base={protocolVersion:1,payloadVersion:1,boundsProfile:'F003-bounds-v1',operation:original.operation,requestId:tagged('request',99),workspaceId:original.workspaceId,status:'query_result',data:{},freshness:'current'};assert.equal(response(base,original).ok,false);});
-test('equivalent tagged ID member order preserves response correlation',()=>{const original=expect(request(echoRequest(),registry));const reverse=v=>({value:v.value,kind:v.kind});assert.equal(response({protocolVersion:1,payloadVersion:1,boundsProfile:'F003-bounds-v1',operation:original.operation,requestId:reverse(original.requestId),workspaceId:reverse(original.workspaceId),status:'query_result',data:{},freshness:'current'},original).ok,true);});
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import {
+  request,
+  response,
+} from "../../../packages/contracts/src/envelopes.ts";
+import { decode, encode } from "../../../packages/contracts/src/codec.ts";
+import {
+  registry,
+  echoRequest,
+  recordRequest,
+} from "../fixtures/operations.mjs";
+import { utf8, tagged } from "../fixtures/context.mjs";
+const expect = (r) => {
+  assert.equal(r.ok, true, JSON.stringify(r));
+  return r.value;
+};
+test("A-01/A-05 echo and command exact immutable round-trip", () => {
+  for (const raw of [echoRequest(), recordRequest()]) {
+    const value = expect(request(raw, registry));
+    assert.deepEqual(expect(decode(expect(encode(value, utf8)), utf8)), value);
+    raw.payload.text = "changed";
+    assert.notEqual(value.payload.text, "changed");
+    assert.equal(Object.isFrozen(value.payload), true);
+  }
+});
+for (const field of [
+  "protocolVersion",
+  "payloadVersion",
+  "boundsProfile",
+  "kind",
+  "operation",
+  "requestId",
+  "workspaceId",
+  "payload",
+])
+  test(`A-02 missing ${field}`, () => {
+    const value = echoRequest();
+    delete value[field];
+    assert.equal(request(value, registry).ok, false);
+  });
+for (const [name, mutate] of [
+  ["unknown field", (v) => (v.secret = "PRIVATE")],
+  ["actor claim", (v) => (v.actorId = tagged("actor", 8))],
+  ["role claim", (v) => (v.roles = ["owner"])],
+  ["unknown operation", (v) => (v.operation = "shell.execute")],
+  ["wrong version", (v) => (v.protocolVersion = 2)],
+  ["wrong payload version", (v) => (v.payloadVersion = 2)],
+  ["null field", (v) => (v.workspaceId = null)],
+  ["float money", (v) => (v.payload.money.minorUnits = 1.2)],
+  ["missing profile", (v) => delete v.payload.money.profileVersion],
+  ["unqualified date", (v) => (v.payload.instant = "2026-10-18")],
+  ["unexpected device", (v) => (v.deviceId = tagged("device", 4))],
+  [
+    "noncanonical ratio",
+    (v) => (v.payload.ratio = { numerator: "2", denominator: "6" }),
+  ],
+  ["null payload", (v) => (v.payload = null)],
+])
+  test(`A-02/A-04 rejects ${name}`, () => {
+    const v = echoRequest();
+    mutate(v);
+    assert.equal(request(v, registry).ok, false);
+  });
+test("A-20 valid local result has only local metadata", () => {
+  const original = expect(request(recordRequest(), registry));
+  const base = {
+    protocolVersion: 1,
+    payloadVersion: 1,
+    boundsProfile: "F003-bounds-v1",
+    operation: original.operation,
+    requestId: original.requestId,
+    workspaceId: original.workspaceId,
+    operationId: original.operationId,
+    status: "local_saved",
+    receiptId: tagged("receipt", 9),
+    localRevision: "1",
+  };
+  assert.equal(response(base, original).ok, true);
+  assert.equal(
+    response({ ...base, committedAt: "2026-10-18T01:02:03.000Z" }, original).ok,
+    false,
+  );
+});
+test("A-20 query cannot claim mutation and command cannot claim query result", () => {
+  const original = expect(request(recordRequest(), registry));
+  assert.equal(
+    response(
+      { ...original, status: "query_result", data: {}, freshness: "current" },
+      original,
+    ).ok,
+    false,
+  );
+});
+test("A-01 changed response correlation fails", () => {
+  const original = expect(request(echoRequest(), registry));
+  const base = {
+    protocolVersion: 1,
+    payloadVersion: 1,
+    boundsProfile: "F003-bounds-v1",
+    operation: original.operation,
+    requestId: tagged("request", 99),
+    workspaceId: original.workspaceId,
+    status: "query_result",
+    data: {},
+    freshness: "current",
+  };
+  assert.equal(response(base, original).ok, false);
+});
+test("equivalent tagged ID member order preserves response correlation", () => {
+  const original = expect(request(echoRequest(), registry));
+  const reverse = (v) => ({ value: v.value, kind: v.kind });
+  assert.equal(
+    response(
+      {
+        protocolVersion: 1,
+        payloadVersion: 1,
+        boundsProfile: "F003-bounds-v1",
+        operation: original.operation,
+        requestId: reverse(original.requestId),
+        workspaceId: reverse(original.workspaceId),
+        status: "query_result",
+        data: {},
+        freshness: "current",
+      },
+      original,
+    ).ok,
+    true,
+  );
+});
