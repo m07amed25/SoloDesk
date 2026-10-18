@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "profile": "F003-bounds-v1",
+  "protocol": 1,
+  "payload": 1,
+  "event": 1,
+  "intent": "F003-intent-v1",
+  "adoption": "Implementation request for the reviewed F003 plan; engineering profile only",
+  "node": "24.21.0",
+  "electron": "44.8.0",
+  "deno": "2.9.7",
+  "deno_assets": {
+    "linux-x64": {
+      "url": "https://github.com/denoland/deno/releases/download/v2.9.7/deno-x86_64-unknown-linux-gnu.zip",
+      "zip_sha256": "c6527f24f4b16031d3ae4fa9f658d5f11534c8d84ce7dc8502420280919c3490",
+      "binary_sha256": "ce6a052beb97c2b92de67077e3f3924ba7c9661ede0d8dc2f66a116a3c841f21",
+      "zip_bytes": 41596794
+    }
+  }
+}

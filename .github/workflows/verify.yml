@@ -54,6 +54,8 @@ jobs:
           name: F002-context-${{ github.run_id }}-${{ github.run_attempt }}
           path: .verification/shared
       - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npm run setup:electron
+      - run: npm run setup:f003
       - run: node tooling/verification/hosted.mjs baseline
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()

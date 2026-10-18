@@ -14,7 +14,8 @@
     "types": ["node"],
     "paths": {
       "@/*": ["./app/renderer/*"]
-    }
+    },
+    "allowImportingTsExtensions": true
   },
-  "include": ["vite*.mts", "app/**/*.ts", "app/**/*.tsx"]
+  "include": ["vite*.mts", "app/**/*.ts", "app/**/*.tsx", "packages/**/*.ts"]
 }
