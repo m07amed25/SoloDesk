@@ -26,6 +26,11 @@ export function trustedDevelopmentOrigin(input: string): string | null {
   }
 }
 
+export function trustedDevelopmentDocumentUrl(input: string): string | null {
+  if (!trustedDevelopmentOrigin(input)) return null;
+  return new URL(input).href;
+}
+
 export function assetPath(
   raw: string,
   method: string,
@@ -155,10 +160,14 @@ export async function createTrustedWindow(
   },
 ): Promise<TrustedView> {
   const { BrowserWindow, session } = await import("electron");
-  const developmentOrigin =
-    options.developmentUrl && trustedDevelopmentOrigin(options.developmentUrl);
-  if (options.developmentUrl && !developmentOrigin)
+  const developmentUrl = options.developmentUrl
+    ? trustedDevelopmentDocumentUrl(options.developmentUrl)
+    : null;
+  if (options.developmentUrl && !developmentUrl)
     throw new Error("untrusted-development-origin");
+  const developmentOrigin = developmentUrl
+    ? new URL(developmentUrl).origin
+    : null;
   const viewSession = session.fromPartition(`solodesk-${profileId}-${epoch}`, {
     cache: false,
   });
@@ -200,9 +209,7 @@ export async function createTrustedWindow(
       session: viewSession,
     },
   });
-  const documentUrl = developmentOrigin
-    ? options.developmentUrl!
-    : `${ASSET_ORIGIN}/index.html`;
+  const documentUrl = developmentUrl || `${ASSET_ORIGIN}/index.html`;
   window.webContents.setWindowOpenHandler(() => ({ action: "deny" }));
   window.webContents.on("will-navigate", (event) => event.preventDefault());
   window.webContents.on("will-frame-navigate", (event) =>
@@ -225,6 +232,7 @@ export async function createTrustedWindow(
   options.onCreated?.(window, developmentOrigin || ASSET_ORIGIN, documentUrl);
   try {
     await window.loadURL(documentUrl);
+    if (!window.isDestroyed() && !window.isVisible()) window.show();
   } catch (reason) {
     window.destroy();
     throw new Error("trusted-document-unavailable", { cause: reason });

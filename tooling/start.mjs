@@ -24,6 +24,9 @@ export function launchEnvironment(
     "GSETTINGS_SCHEMA_DIR",
     "GIO_MODULE_DIR",
     "GDK_PIXBUF_MODULE_FILE",
+    "GTK_EXE_PREFIX",
+    "GTK_DATA_PREFIX",
+    "GTK_IM_MODULE_FILE",
   ]) {
     if (environment[key] && isBundledPath(environment[key]))
       delete environment[key];
@@ -41,6 +44,22 @@ export function launchEnvironment(
   return environment;
 }
 
+export function launchArguments(source, platform = process.platform) {
+  const args = [...source];
+  if (platform === "linux") {
+    if (!args.includes("--")) args.push("--");
+    // The development shell has no video workload. Avoid probing unsupported
+    // VA-API drivers while retaining GPU compositing for the interface.
+    for (const flag of [
+      "--disable-accelerated-video-decode",
+      "--disable-accelerated-video-encode",
+    ]) {
+      if (!args.includes(flag)) args.push(flag);
+    }
+  }
+  return args;
+}
+
 if (import.meta.main) {
   const require = createRequire(import.meta.url);
   const packagePath = require.resolve("@electron-forge/cli/package.json");
@@ -52,7 +71,7 @@ if (import.meta.main) {
   const projectRoot = fileURLToPath(new URL("..", import.meta.url));
   const child = spawn(
     process.execPath,
-    [forgeCli, "start", ...process.argv.slice(2)],
+    [forgeCli, "start", ...launchArguments(process.argv.slice(2))],
     {
       cwd: projectRoot,
       env: launchEnvironment(process.env),

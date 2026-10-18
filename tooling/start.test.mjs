@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { launchEnvironment } from "./start.mjs";
+import { launchArguments, launchEnvironment } from "./start.mjs";
 
 const userHome = "/home/test-user";
 const snapHome = `${userHome}/snap/code/268`;
@@ -11,6 +11,9 @@ function snapEnvironment() {
     GSETTINGS_SCHEMA_DIR: `${snapHome}/.local/share/glib-2.0/schemas`,
     GIO_MODULE_DIR: `${userHome}/snap/code/common/.cache/gio-modules`,
     GDK_PIXBUF_MODULE_FILE: `${userHome}/snap/code/common/.cache/gdk-pixbuf-loaders.cache`,
+    GTK_EXE_PREFIX: `${snapInstall}/usr`,
+    GTK_DATA_PREFIX: `${snapInstall}/usr`,
+    GTK_IM_MODULE_FILE: `${userHome}/snap/code/common/.cache/immodules/immodules.cache`,
     XDG_DATA_DIRS: `${snapHome}/.local/share:${snapInstall}/usr/share:/usr/local/share:/usr/share`,
     GTK_PATH: `${snapInstall}/usr/lib/x86_64-linux-gnu/gtk-3.0:/opt/host-gtk`,
     LD_LIBRARY_PATH: `/opt/host-libs:${snapInstall}/usr/lib/x86_64-linux-gnu`,
@@ -23,6 +26,9 @@ function assertCleaned(environment) {
   assert.equal(environment.GSETTINGS_SCHEMA_DIR, undefined);
   assert.equal(environment.GIO_MODULE_DIR, undefined);
   assert.equal(environment.GDK_PIXBUF_MODULE_FILE, undefined);
+  assert.equal(environment.GTK_EXE_PREFIX, undefined);
+  assert.equal(environment.GTK_DATA_PREFIX, undefined);
+  assert.equal(environment.GTK_IM_MODULE_FILE, undefined);
   assert.equal(environment.XDG_DATA_DIRS, "/usr/local/share:/usr/share");
   assert.equal(environment.GTK_PATH, "/opt/host-gtk");
   assert.equal(environment.LD_LIBRARY_PATH, "/opt/host-libs");
@@ -49,6 +55,9 @@ test("preserves custom host paths in a normal Linux environment", () => {
     GSETTINGS_SCHEMA_DIR: "/opt/custom-app/schemas",
     GIO_MODULE_DIR: "/opt/custom-app/gio-modules",
     GDK_PIXBUF_MODULE_FILE: "/opt/custom-app/pixbuf-loaders.cache",
+    GTK_EXE_PREFIX: "/opt/custom-app",
+    GTK_DATA_PREFIX: "/opt/custom-app",
+    GTK_IM_MODULE_FILE: "/opt/custom-app/immodules.cache",
     XDG_DATA_DIRS: "/opt/custom-app/share:/usr/local/share:/usr/share",
     GTK_PATH: "/opt/custom-app/gtk",
     LD_LIBRARY_PATH: "/opt/custom-app/lib",
@@ -71,4 +80,21 @@ test("leaves Windows and macOS environments unchanged", () => {
   for (const platform of ["win32", "darwin"]) {
     assert.deepEqual(launchEnvironment(source, platform, userHome), source);
   }
+});
+
+test("Linux video flags reach Electron after Forge options", () => {
+  const flags = [
+    "--disable-accelerated-video-decode",
+    "--disable-accelerated-video-encode",
+  ];
+  assert.deepEqual(launchArguments([], "linux"), ["--", ...flags]);
+  const source = ["--enable-logging", "--", "--inspect=9230"];
+  assert.deepEqual(launchArguments(source, "linux"), [...source, ...flags]);
+  assert.deepEqual(source, ["--enable-logging", "--", "--inspect=9230"]);
+  assert.deepEqual(launchArguments(["--", ...flags], "linux"), [
+    "--",
+    ...flags,
+  ]);
+  for (const platform of ["win32", "darwin"])
+    assert.deepEqual(launchArguments(source, platform), source);
 });
