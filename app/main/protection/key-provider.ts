@@ -55,6 +55,16 @@ export class ElectronKeyProvider {
    */
   classifyAvailability(): DeviceKeyBinding["availability"] {
     if (!app.isReady()) return "denied";
+    if (process.env.F006_SIMULATE_BLOCKED) {
+      const simulated = process.env.F006_SIMULATE_BLOCKED;
+      if (
+        simulated === "unprotected" ||
+        simulated === "locked" ||
+        simulated === "denied"
+      ) {
+        return simulated;
+      }
+    }
     if (process.platform === "linux") {
       try {
         const backend = safeStorage.getSelectedStorageBackend();

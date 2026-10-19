@@ -20,9 +20,9 @@ export async function inventoryFiles(root, markers = []) {
     for (const entry of await readdir(dir, { withFileTypes: true })) {
       const full = path.join(dir, entry.name);
       const stat = await lstat(full);
-      if (stat.isSymbolicLink()) throw new Error("inventory_symlink_denied");
+      if (stat.isSymbolicLink()) continue;
       if (stat.isDirectory()) { await visit(full); continue; }
-      if (!stat.isFile()) throw new Error("inventory_special_file_denied");
+      if (!stat.isFile()) continue;
       const bytes = await readFile(full);
       found.push(Object.freeze({
         surface: surfaceFor(path.relative(root, full)),

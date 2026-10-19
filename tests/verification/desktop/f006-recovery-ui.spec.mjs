@@ -5,8 +5,7 @@ import crypto from "node:crypto";
 import { allocate } from "../../../tooling/verification/artifacts.mjs";
 import { childEnvironment } from "../../../tooling/verification/run-suite.mjs";
 
-test("A-08 Linux basic_text denial has keyboard reachable English and Arabic retry", async ({ playwright }) => {
-  test.skip(process.platform !== "linux", "Linux backend observation only");
+test("A-08 protection denial has keyboard reachable English and Arabic retry", async ({ playwright }) => {
   const root = process.cwd();
   const owned = allocate(root, `desktop-${crypto.randomUUID()}`);
   const user = path.join(root, owned, "userData");
@@ -19,7 +18,12 @@ test("A-08 Linux basic_text denial has keyboard reachable English and Arabic ret
       args: ["--password-store=basic", path.join(root, "tooling/verification/electron-bootstrap.cjs")],
       chromiumSandbox: true,
       timeout: 30000,
-      env: childEnvironment({ F002_USER_DATA: user, F002_SESSION_DATA: session, F002_ROOT: root }),
+      env: childEnvironment({
+        F002_USER_DATA: user,
+        F002_SESSION_DATA: session,
+        F002_ROOT: root,
+        F006_SIMULATE_BLOCKED: "unprotected",
+      }),
     });
     const page = await app.firstWindow();
     await expect(page.getByRole("alert").filter({ hasText: "Local protection is unavailable" })).toBeVisible();
