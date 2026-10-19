@@ -104,4 +104,13 @@ export const en = {
   "protection.integrity_failed": "Protected work could not be authenticated. Do not replace it with an empty copy; contact support with the diagnostic ID.",
   "protection.interrupted_rotation": "A key change was interrupted. The protected copies need validation before work can continue; contact support.",
   "protection.unsupported_format": "This protected format is not supported by this version. Update the app or contact support; the existing data has not been replaced.",
+
+  // Quota & Degraded Alerts (F008)
+  "quota.warning_70": "Storage utilization reached 70%. Consider archiving unused assets.",
+  "quota.warning_85": "Storage utilization reached 85%. Free up space soon to prevent write interruptions.",
+  "quota.critical_95": "Critical storage warning (95%). Approaching provider hard limit.",
+  "quota.exhausted_100": "Cloud storage capacity exhausted (100%). New writes are halted until space is cleared.",
+  "quota.provider_degraded": "Cloud backend is temporarily unavailable or degraded. Changes are safely saved locally.",
+  "quota.dismiss": "Dismiss alert",
 } as const;
+

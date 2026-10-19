@@ -416,7 +416,9 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F008 — Managed backend and tenant isolation
 
-- **PR identity:** `[F008] Managed backend and tenant isolation`; branch `feat/f008-managed-backend-and-tenant-isolation` → `main`; one PR; implementation and baseline/three-target native QA executed; security repaired and hosted readiness passed; fork/control delivery evidence pending; [PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; hosted readiness passed; manual delivery evidence and owner approval pending.
+- **Specification and design:** [F008 feature specification](specs/008-managed-backend-and-tenant-isolation/spec.md) and [requirements quality checklist](specs/008-managed-backend-and-tenant-isolation/checklists/requirements.md). Specification/planning readiness does not change delivery status or authorize implementation.
+- **PR identity:** `[F008] Managed backend and tenant isolation`; branch `feat/f008-managed-backend-and-tenant-isolation` → `main`; one PR; implementation and baseline/synthetic QA executed; [PR #11](https://github.com/m07amed25/SoloDesk/pull/11) open; hosted readiness passed; manual delivery evidence and owner approval pending.
+
 - **Prerequisites:** F003 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-003, PLT-005, NFR-004, NFR-009. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Define Supabase local/staging schemas, tenant keys, relational constraints, least-privilege RLS/private storage baseline and bounded Edge Functions.

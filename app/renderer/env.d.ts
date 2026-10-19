@@ -2,6 +2,7 @@
 
 import type { DesktopResponse } from "../shared/desktop-contracts.ts";
 import type { PersistenceStatusDto } from "../shared/persistence-contracts.ts";
+import type { ProviderQuotaProfileDto } from "../shared/cloud-contracts.ts";
 
 declare global {
   interface Window {
@@ -28,6 +29,15 @@ declare global {
       }>;
       links: Readonly<{
         onDecision: (callback: (event: unknown) => void) => () => void;
+      }>;
+      cloud?: Readonly<{
+        getQuota?: (workspaceId: string) => Promise<ProviderQuotaProfileDto>;
+        onQuotaChanged?: (
+          callback: (profile: ProviderQuotaProfileDto) => void,
+        ) => () => void;
+        onStatusChanged?: (
+          callback: (payload: { state: string; reason?: string }) => void,
+        ) => () => void;
       }>;
     }>;
   }
