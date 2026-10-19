@@ -243,7 +243,13 @@ export class DesktopBridge {
       }
       if (method === "window.minimize") binding.window.minimize();
       else if (method === "window.restore") {
-        if (binding.window.isMinimized()) binding.window.restore();
+        if (binding.window.isMinimized()) {
+          binding.window.restore();
+        } else if (binding.window.isMaximized()) {
+          binding.window.unmaximize();
+        } else {
+          binding.window.maximize();
+        }
         binding.window.focus();
       } else if (method === "window.requestClose") {
         setTimeout(() => {

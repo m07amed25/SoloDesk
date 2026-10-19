@@ -42,7 +42,10 @@ export type DesktopResponse =
       version: 1;
       requestId: Id<"request">;
       status: "ok";
-      data: WindowState | Readonly<{ subscriptionId: string }> | Readonly<Record<string, never>>;
+      data:
+        | WindowState
+        | Readonly<{ subscriptionId: string }>
+        | Readonly<Record<string, never>>;
     }>
   | Readonly<{
       version: 1;
@@ -189,8 +192,7 @@ export const guidance = Object.freeze({
       "هذا الإجراء غير متاح. عُد إلى الصفحة الرئيسية أو حدّث صلاحية الوصول.",
     linkDenied:
       "تعذّر فتح هذا الرابط. عُد إلى الصفحة الرئيسية وتحقّق من الرابط.",
-    linkUnavailable:
-      "هذا الرابط غير متاح بعد. عُد إلى الصفحة الرئيسية.",
+    linkUnavailable: "هذا الرابط غير متاح بعد. عُد إلى الصفحة الرئيسية.",
     failure:
       "تعذّر فتح هذه النافذة. أغلق التطبيق وأعِد تشغيله؛ لم تُستبدل بياناتك المحمية.",
     interrupted:
