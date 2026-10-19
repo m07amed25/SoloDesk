@@ -93,7 +93,7 @@ export function QuotaWarningBanner({
     return null;
   }
 
-  let messageKey = "quota.warning_70";
+  let messageId = "quota.warning_70";
   let bannerClass =
     "border-amber-500/40 bg-amber-500/10 text-amber-900 dark:text-amber-200";
   let testId = "quota-warning-70-banner";
@@ -106,7 +106,7 @@ export function QuotaWarningBanner({
   const isAssertive = isExhausted || isCritical;
 
   if (isExhausted) {
-    messageKey = "quota.exhausted_100";
+    messageId = "quota.exhausted_100";
     bannerClass =
       "border-destructive/60 bg-destructive/15 text-destructive dark:text-red-300";
     testId = "quota-exhausted-banner";
@@ -117,7 +117,7 @@ export function QuotaWarningBanner({
       />
     );
   } else if (isCritical) {
-    messageKey = "quota.critical_95";
+    messageId = "quota.critical_95";
     bannerClass =
       "border-orange-500/60 bg-orange-500/15 text-orange-900 dark:text-orange-200";
     testId = "quota-critical-banner";
@@ -128,7 +128,7 @@ export function QuotaWarningBanner({
       />
     );
   } else if (isWarning85) {
-    messageKey = "quota.warning_85";
+    messageId = "quota.warning_85";
     bannerClass =
       "border-amber-600/50 bg-amber-600/10 text-amber-950 dark:text-amber-300";
     testId = "quota-warning-85-banner";
@@ -139,7 +139,7 @@ export function QuotaWarningBanner({
       />
     );
   } else if (isDegraded) {
-    messageKey = "quota.provider_degraded";
+    messageId = "quota.provider_degraded";
     bannerClass =
       "border-blue-500/40 bg-blue-500/10 text-blue-900 dark:text-blue-200";
     testId = "quota-degraded-banner";
@@ -156,7 +156,8 @@ export function QuotaWarningBanner({
     onDismiss?.();
   };
 
-  const messageText = t(messageKey as any);
+  const messageText = t(messageId as any);
+
   const dismissText = t("quota.dismiss" as any);
 
   return (
