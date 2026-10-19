@@ -371,7 +371,8 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F005 — Accessible English/Arabic application shell
 
-- **PR identity:** `[F005] Accessible English/Arabic application shell`; branch `feat/f005-accessible-english-arabic-application-shell` → `main`; one PR; implementation and baseline/three-target native QA executed; security repaired and hosted readiness passed; fork/control delivery evidence pending; [PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; hosted readiness passed; manual delivery evidence and owner approval pending.
+- **Specification:** [F005 feature specification](specs/005-accessible-application-shell/spec.md) and [requirements quality checklist](specs/005-accessible-application-shell/checklists/requirements.md). These artifacts define requirements and acceptance; they do not establish implementation, native QA, owner approval or merge.
+- **PR identity:** `[F005] Accessible English/Arabic application shell`; branch `feat/f005-accessible-english-arabic-application-shell` → `main`; one PR; implementation, automated verification, and QA evidence prepared; [PR #8](https://github.com/m07amed25/SoloDesk/pull/8) open; owner review pending.
 - **Prerequisites:** F004 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-015, NFR-006, NFR-007, NFR-015. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Build navigation, workspace/timer/sync placeholders, translation infrastructure, full RTL/logical layout, theme/focus and command-shell routing with Tailwind/shadcn.

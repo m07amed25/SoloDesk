@@ -189,17 +189,8 @@ export async function createTrustedWindow(
     minHeight: 520,
     show: false,
     backgroundColor: "#f7faf9",
-    frame: true,
+    frame: false,
     titleBarStyle: "hidden",
-    ...(process.platform !== "darwin"
-      ? {
-          titleBarOverlay: {
-            color: "#e8f0ed",
-            symbolColor: "#193b43",
-            height: 36,
-          },
-        }
-      : {}),
     autoHideMenuBar: true,
     webPreferences: {
       contextIsolation: true,

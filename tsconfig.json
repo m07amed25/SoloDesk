@@ -13,7 +13,8 @@
     "resolveJsonModule": true,
     "types": ["node"],
     "paths": {
-      "@/*": ["./app/renderer/*"]
+      "@/*": ["./app/renderer/*"],
+      "@public/*": ["./public/*"]
     },
     "allowImportingTsExtensions": true
   },
