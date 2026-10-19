@@ -5,6 +5,10 @@ import type { DesktopResponse } from "../shared/desktop-contracts.ts";
 declare global {
   interface Window {
     solodesk: Readonly<{
+      protection: Readonly<{
+        getState: (...args: unknown[]) => Promise<DesktopResponse>;
+        retry: (...args: unknown[]) => Promise<DesktopResponse>;
+      }>;
       window: Readonly<{
         getState: (...args: unknown[]) => Promise<DesktopResponse>;
         minimize: (...args: unknown[]) => Promise<DesktopResponse>;

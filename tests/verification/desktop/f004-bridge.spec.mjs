@@ -26,15 +26,17 @@ test("built preload exposes only named desktop actions", async ({ playwright }) 
       windowKeys: Object.keys(window.solodesk?.window || {}).sort(),
       lifecycleKeys: Object.keys(window.solodesk?.lifecycle || {}).sort(),
       linkKeys: Object.keys(window.solodesk?.links || {}).sort(),
+      protectionKeys: Object.keys(window.solodesk?.protection || {}).sort(),
       node: typeof globalThis.require,
       process: typeof globalThis.process,
       rawIpc: typeof window.ipcRenderer,
     }));
     expect(surface).toEqual({
-      keys: ["lifecycle", "links", "window"],
+      keys: ["lifecycle", "links", "protection", "window"],
       windowKeys: ["getState", "minimize", "requestClose", "restore"],
       lifecycleKeys: ["onState"],
       linkKeys: ["onDecision"],
+      protectionKeys: ["getState", "retry"],
       node: "undefined",
       process: "undefined",
       rawIpc: "undefined",

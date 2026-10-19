@@ -51,11 +51,11 @@ Updated 17 October 2026. **Confirmed** records user choices. **Recommended** rec
 | Q-04 | Sleep/idle defaults, timer reminders/tray close, maximum manually entered duration | Final timer UX | Product owner |
 | Q-05 | Role templates, time/expense approval rules, project grants, financial dual approval | Permission matrix sign-off | Product owner |
 | Q-06 | Maximum offline authorization period and handling after expiry; proposed seven days subject to risk review | Device enrollment/offline access contract | Product + security |
-| Q-07 | Encryption adapter/key wrapping, Linux key-store fallback, account recovery versus locally unsynced data | P01 encrypted cache proof | Engineering + security |
+| Q-07 | Encryption adapter (better-sqlite3-multiple-ciphers SQLCipher v4), authenticated staged files, fail-closed Linux basic_text rejection, and local-only recovery limits evaluated under F006. Production approval pending final security sign-off and multi-target native host proof | P01 encrypted cache proof | Engineering + security |
 | Q-08 | Mandatory MFA policies, SSO/social providers, account recovery, invite expiry | Identity release | Product + security |
 | Q-09 | First connector/provider list: GitHub/GitLab, calendar, email, payments, accounting; operator credentials and countries | P07 connector commitments | Product owner |
 | Q-10 | Portal login versus expiring verified links; legal signature provider, signatory evidence, branding | P02 signatures / P08 portal | Product + legal/security |
-| Q-11 | Minimum OS/CPU versions, installer formats, code signing, Linux Wayland/X11 matrix | P09 supported distribution | Engineering + product |
+| Q-11 | Provisional native matrix defined (Linux x86_64, Windows x64, macOS arm64). Linux headless verified fail-closed on basic_text; Windows/macOS native host proof remains blocked pending accessible target hosts | P09 supported distribution | Engineering + product |
 | Q-12 | Product pricing/license, trials, seat billing, subscription grace and export on cancellation | Commercial launch, not core domain modeling | Product owner |
 | Q-13 | Maximum offline retention window, tombstone period, account deletion and backup expiry | Deletion/rejoin guarantees | Product + operations/legal |
 | Q-14 | Capacity calendars, working days, cost-rate visibility, reporting basis and FX feed | P03/P06 forecasts | Product owner |

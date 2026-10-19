@@ -105,6 +105,10 @@ function subscribe(family: Family, callback: Listener): () => void {
 }
 
 const facade = Object.freeze({
+  protection: Object.freeze({
+    getState: (...args: unknown[]) => invoke("protection.getState", args),
+    retry: (...args: unknown[]) => invoke("protection.retry", args),
+  }),
   window: Object.freeze({
     getState: (...args: unknown[]) => invoke("window.getState", args),
     minimize: (...args: unknown[]) => invoke("window.minimize", args),

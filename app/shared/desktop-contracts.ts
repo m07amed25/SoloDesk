@@ -10,6 +10,10 @@ import {
   type Data,
 } from "../../packages/contracts/src/validation.ts";
 import { id, type Id } from "../../packages/domain/src/ids.ts";
+import {
+  isProtectionResult,
+  type ProtectionResult,
+} from "./protection-contracts.ts";
 
 export const DESKTOP_VERSION = 1 as const;
 
@@ -20,6 +24,8 @@ export const METHODS = Object.freeze([
   "window.requestClose",
   "lifecycle.onState",
   "links.onDecision",
+  "protection.getState",
+  "protection.retry",
 ] as const);
 
 export type DesktopMethod = (typeof METHODS)[number];
@@ -44,6 +50,7 @@ export type DesktopResponse =
       status: "ok";
       data:
         | WindowState
+        | ProtectionResult
         | Readonly<{ subscriptionId: string }>
         | Readonly<Record<string, never>>;
     }>
@@ -139,7 +146,8 @@ export function validateResponse(
         typeof data.subscriptionId === "string" &&
         /^[0-9a-f-]{36}$/.test(data.subscriptionId)) ||
       (keysAre(data, ["visible", "minimized", "maximized", "focused"]) &&
-        Object.values(data).every((v) => typeof v === "boolean"))
+        Object.values(data).every((v) => typeof v === "boolean")) ||
+      isProtectionResult(data)
     )
       return accepted(copy.value as DesktopResponse);
   }

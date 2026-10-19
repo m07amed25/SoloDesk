@@ -220,15 +220,30 @@
       "argv": ["tooling/verification/desktop.mjs", "linux-x64"],
       "kind": "command",
       "timeout_ms": 180000,
-      "phase_ids": ["F002", "F004"],
-      "requirement_ids": ["FR-006", "NFR-015", "PLT-012"],
+      "phase_ids": ["F002", "F004", "F006"],
+      "requirement_ids": [
+        "FR-001",
+        "FR-002",
+        "FR-003",
+        "FR-004",
+        "FR-006",
+        "NFR-015",
+        "PLT-012"
+      ],
       "scenario_ids": [
         "A-12",
         "A-13",
         "F004:A-01",
         "F004:A-05",
         "F004:A-11",
-        "F004:A-16"
+        "F004:A-16",
+        "F006:A-01",
+        "F006:A-03",
+        "F006:A-05",
+        "F006:A-08",
+        "F006:A-09",
+        "F006:A-12",
+        "F006:A-14"
       ],
       "entry_files": [
         "tests/verification/desktop/shell.spec.mjs",
@@ -236,7 +251,13 @@
         "tests/verification/desktop/f004-ownership.spec.mjs",
         "tests/verification/desktop/f004-bridge.spec.mjs",
         "tests/verification/desktop/f004-links.spec.mjs",
-        "tests/verification/desktop/f004-lifecycle.spec.mjs"
+        "tests/verification/desktop/f004-lifecycle.spec.mjs",
+        "tests/verification/desktop/f006-recovery-ui.spec.mjs",
+        "tests/verification/desktop/f006-protected-files.spec.mjs",
+        "tests/verification/desktop/f006-key-states.spec.mjs",
+        "tests/verification/desktop/f006-identity.spec.mjs",
+        "tests/verification/desktop/f006-key-loss.spec.mjs",
+        "tests/verification/desktop/f006-rotation.spec.mjs"
       ]
     },
     {
@@ -247,15 +268,30 @@
       "argv": ["tooling/verification/desktop.mjs", "windows-x64"],
       "kind": "command",
       "timeout_ms": 180000,
-      "phase_ids": ["F002", "F004"],
-      "requirement_ids": ["FR-006", "NFR-015", "PLT-012"],
+      "phase_ids": ["F002", "F004", "F006"],
+      "requirement_ids": [
+        "FR-001",
+        "FR-002",
+        "FR-003",
+        "FR-004",
+        "FR-006",
+        "NFR-015",
+        "PLT-012"
+      ],
       "scenario_ids": [
         "A-12",
         "A-13",
         "F004:A-01",
         "F004:A-05",
         "F004:A-11",
-        "F004:A-16"
+        "F004:A-16",
+        "F006:A-01",
+        "F006:A-03",
+        "F006:A-05",
+        "F006:A-08",
+        "F006:A-09",
+        "F006:A-12",
+        "F006:A-14"
       ],
       "entry_files": [
         "tests/verification/desktop/shell.spec.mjs",
@@ -263,7 +299,13 @@
         "tests/verification/desktop/f004-ownership.spec.mjs",
         "tests/verification/desktop/f004-bridge.spec.mjs",
         "tests/verification/desktop/f004-links.spec.mjs",
-        "tests/verification/desktop/f004-lifecycle.spec.mjs"
+        "tests/verification/desktop/f004-lifecycle.spec.mjs",
+        "tests/verification/desktop/f006-recovery-ui.spec.mjs",
+        "tests/verification/desktop/f006-protected-files.spec.mjs",
+        "tests/verification/desktop/f006-key-states.spec.mjs",
+        "tests/verification/desktop/f006-identity.spec.mjs",
+        "tests/verification/desktop/f006-key-loss.spec.mjs",
+        "tests/verification/desktop/f006-rotation.spec.mjs"
       ]
     },
     {
@@ -274,15 +316,30 @@
       "argv": ["tooling/verification/desktop.mjs", "macos-arm64"],
       "kind": "command",
       "timeout_ms": 180000,
-      "phase_ids": ["F002", "F004"],
-      "requirement_ids": ["FR-006", "NFR-015", "PLT-012"],
+      "phase_ids": ["F002", "F004", "F006"],
+      "requirement_ids": [
+        "FR-001",
+        "FR-002",
+        "FR-003",
+        "FR-004",
+        "FR-006",
+        "NFR-015",
+        "PLT-012"
+      ],
       "scenario_ids": [
         "A-12",
         "A-13",
         "F004:A-01",
         "F004:A-05",
         "F004:A-11",
-        "F004:A-16"
+        "F004:A-16",
+        "F006:A-01",
+        "F006:A-03",
+        "F006:A-05",
+        "F006:A-08",
+        "F006:A-09",
+        "F006:A-12",
+        "F006:A-14"
       ],
       "entry_files": [
         "tests/verification/desktop/shell.spec.mjs",
@@ -290,7 +347,13 @@
         "tests/verification/desktop/f004-ownership.spec.mjs",
         "tests/verification/desktop/f004-bridge.spec.mjs",
         "tests/verification/desktop/f004-links.spec.mjs",
-        "tests/verification/desktop/f004-lifecycle.spec.mjs"
+        "tests/verification/desktop/f004-lifecycle.spec.mjs",
+        "tests/verification/desktop/f006-recovery-ui.spec.mjs",
+        "tests/verification/desktop/f006-protected-files.spec.mjs",
+        "tests/verification/desktop/f006-key-states.spec.mjs",
+        "tests/verification/desktop/f006-identity.spec.mjs",
+        "tests/verification/desktop/f006-key-loss.spec.mjs",
+        "tests/verification/desktop/f006-rotation.spec.mjs"
       ]
     },
     {
@@ -652,6 +715,68 @@
       ],
       "negative": [
         "Foreign context, unavailable route and failed startup do not cause effects"
+      ]
+    },
+    {
+      "id": "F006:integration",
+      "feature": "F006",
+      "group": "baseline",
+      "executable": "$NODE",
+      "argv": [
+        "--test",
+        "--test-timeout=60000",
+        "--test-reporter=tap",
+        "--test-isolation=none",
+        "tests/f006/integration/database-protection.test.mjs",
+        "tests/f006/integration/staged-file.test.mjs",
+        "tests/f006/integration/key-unavailable.test.mjs",
+        "tests/f006/integration/identity-binding.test.mjs",
+        "tests/f006/integration/owner-isolation.test.mjs",
+        "tests/f006/integration/key-exposure.test.mjs",
+        "tests/f006/integration/rotation-faults.test.mjs",
+        "tests/f006/integration/proof-record.test.mjs"
+      ],
+      "kind": "tests",
+      "min_tests": 8,
+      "timeout_ms": 300000,
+      "phase_ids": ["F006"],
+      "requirement_ids": ["FR-001", "FR-002", "FR-003", "FR-004"],
+      "scenario_ids": [
+        "F006:A-01",
+        "F006:A-03",
+        "F006:A-05",
+        "F006:A-07",
+        "F006:A-09",
+        "F006:A-10",
+        "F006:A-12",
+        "F006:A-13"
+      ],
+      "entry_files": [
+        "tests/f006/integration/database-protection.test.mjs",
+        "tests/f006/integration/staged-file.test.mjs",
+        "tests/f006/integration/key-unavailable.test.mjs",
+        "tests/f006/integration/identity-binding.test.mjs",
+        "tests/f006/integration/owner-isolation.test.mjs",
+        "tests/f006/integration/key-exposure.test.mjs",
+        "tests/f006/integration/rotation-faults.test.mjs",
+        "tests/f006/integration/proof-record.test.mjs"
+      ],
+      "categories": ["integration", "boundary", "authorization"],
+      "scenarios": [
+        "F006:A-01",
+        "F006:A-03",
+        "F006:A-05",
+        "F006:A-07",
+        "F006:A-09",
+        "F006:A-10",
+        "F006:A-12",
+        "F006:A-13"
+      ],
+      "positive": [
+        "Encrypted database, staged file, key rotation and owner isolation match independent fixtures"
+      ],
+      "negative": [
+        "Unavailable, locked, missing, wrong key or basic_text fail closed before file mutation"
       ]
     }
   ]

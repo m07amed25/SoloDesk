@@ -12,6 +12,23 @@ import {
 import { initialLink, LinkRouter, parseLink } from "./links.ts";
 import { LifecycleCoordinator } from "./lifecycle.ts";
 import { createTrustedWindow, registerAssetScheme } from "./windows.ts";
+import { ElectronKeyProvider } from "./protection/key-provider.ts";
+import { ProtectionOwner } from "./protection/owner.ts";
+import { KeyUnavailable } from "./protection/key-provider.ts";
+import {
+  blockedProtection,
+  type ProtectionResult,
+} from "../shared/protection-contracts.ts";
+
+import { rotateKey, reconcileRotation } from "./protection/rotation.ts";
+
+export {
+  ElectronKeyProvider,
+  KeyUnavailable,
+  ProtectionOwner,
+  rotateKey,
+  reconcileRotation,
+};
 
 app.setName("SoloDesk");
 
@@ -42,6 +59,20 @@ if (!lockHeld) {
   registerAssetScheme(protocol);
   type NativeView = OwnedView & { contents: WebContents };
   const profiles = new ProfileOwners<NativeView>(catalogue);
+  const keyProvider = new ElectronKeyProvider();
+  const protectionOwners = new Map<string, ProtectionOwner>();
+  function protectionState(profileId: string, epoch: number): ProtectionResult {
+    if (profiles.epoch(profileId) !== epoch)
+      return blockedProtection("protection_denied");
+    try {
+      keyProvider.assertAvailable();
+      return Object.freeze({ status: "ready", correlationId: randomUUID() });
+    } catch (error) {
+      return blockedProtection(
+        error instanceof KeyUnavailable ? error.reason : "protection_denied",
+      );
+    }
+  }
   const router = new LinkRouter({
     knownProfile: (id) => profiles.hasProfile(id),
   });
@@ -68,12 +99,24 @@ if (!lockHeld) {
 
   async function activate(profileId: string): Promise<NativeView | undefined> {
     if (owner.state !== "ready") return;
+    for (const [id, protection] of protectionOwners)
+      if (id !== profileId) protection.lock();
     return profiles.activate(profileId, async (id, epoch) => {
+      const protection = new ProtectionOwner(
+        { profileId: id, epoch },
+        (candidate, candidateEpoch) =>
+          profiles.epoch(candidate) === candidateEpoch,
+        keyProvider,
+      );
+      protectionOwners.set(id, protection);
       let view: NativeView | undefined;
       const trusted = await createTrustedWindow(id, epoch, {
         developmentUrl: MAIN_WINDOW_VITE_DEV_SERVER_URL,
         onFailure: fail,
         onClose: () => {
+          protection.lock();
+          if (protectionOwners.get(id) === protection)
+            protectionOwners.delete(id);
           if (view) profiles.close(id, view);
         },
         onCreated: (window, origin, documentUrl) => {
@@ -93,6 +136,11 @@ if (!lockHeld) {
             bridge.emit(window.webContents, "lifecycle", { state: "closing" }),
           );
         },
+      }).catch((error) => {
+        protection.lock();
+        if (protectionOwners.get(id) === protection)
+          protectionOwners.delete(id);
+        throw error;
       });
       view = {
         contents: trusted.window.webContents,
@@ -151,6 +199,7 @@ if (!lockHeld) {
       bridge = await installBridge({
         state: () => owner.state,
         epoch: (id) => profiles.epoch(id),
+        protectionState,
       });
       owner.onState((state) => {
         for (const view of profiles.views()) {
@@ -185,6 +234,8 @@ if (!lockHeld) {
     void owner
       .drain("quit")
       .then(() => {
+        for (const protection of protectionOwners.values()) protection.lock();
+        protectionOwners.clear();
         profiles.clear();
         terminalQuit = true;
         app.quit();

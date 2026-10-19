@@ -372,7 +372,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 ### F005 — Accessible English/Arabic application shell
 
 - **Specification:** [F005 feature specification](specs/005-accessible-application-shell/spec.md) and [requirements quality checklist](specs/005-accessible-application-shell/checklists/requirements.md). These artifacts define requirements and acceptance; they do not establish implementation, native QA, owner approval or merge.
-- **PR identity:** `[F005] Accessible English/Arabic application shell`; branch `feat/f005-accessible-english-arabic-application-shell` → `main`; one PR; implementation, automated verification, and QA evidence prepared; [PR #8](https://github.com/m07amed25/SoloDesk/pull/8) open; owner review pending.
+- **PR identity:** `[F005] Accessible English/Arabic application shell`; branch `feat/f005-accessible-english-arabic-application-shell` → `main`; one PR; implementation, automated verification, and QA evidence prepared; [PR #8](https://github.com/m07amed25/SoloDesk/pull/8) merged.
 - **Prerequisites:** F004 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-015, NFR-006, NFR-007, NFR-015. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Build navigation, workspace/timer/sync placeholders, translation infrastructure, full RTL/logical layout, theme/focus and command-shell routing with Tailwind/shadcn.
@@ -386,7 +386,8 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F006 — Cross-platform key protection and encryption proof
 
-- **PR identity:** `[F006] Cross-platform key protection and encryption proof`; branch `feat/f006-cross-platform-key-protection-and-encryption-proof` → `main`; one PR; implementation and baseline/three-target native QA executed; security repaired and hosted readiness passed; fork/control delivery evidence pending; [PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; hosted readiness passed; manual delivery evidence and owner approval pending.
+- **Specification and design:** [F006 feature specification](specs/006-cross-platform-key-protection/spec.md), [requirements quality checklist](specs/006-cross-platform-key-protection/checklists/requirements.md), and [implementation plan](specs/006-cross-platform-key-protection/plan.md). These are planning artifacts; Q-07/Q-11 decisions and native proof are tracked as separate evidence gates.
+- **PR identity:** `[F006] Cross-platform key protection and encryption proof`; branch `feat/f006-cross-platform-key-protection-and-encryption-proof` → `main`; one PR; implementation and baseline/three-target native QA executed; verification passed; delivery packet prepared; [PR #9](https://github.com/m07amed25/SoloDesk/pull/9) open; owner review pending.
 - **Prerequisites:** F004 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-007, NFR-005. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Prove an Electron-compatible encrypted SQLite adapter, OS-wrapped device keys and encrypted attachment/temp/WAL handling on supported native targets.

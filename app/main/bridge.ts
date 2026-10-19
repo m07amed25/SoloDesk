@@ -5,6 +5,7 @@ import type {
   WebFrameMain,
 } from "electron";
 import type { Id } from "../../packages/domain/src/ids.ts";
+import type { ProtectionResult } from "../shared/protection-contracts.ts";
 import { plainData } from "../../packages/contracts/src/validation.ts";
 import {
   METHODS,
@@ -111,6 +112,7 @@ type BridgeOptions = {
   state: () => string;
   epoch: (profileId: string) => number | undefined;
   authority?: (profileId: string, epoch: number) => boolean;
+  protectionState?: (profileId: string, epoch: number) => ProtectionResult;
 };
 
 export class DesktopBridge {
@@ -232,6 +234,19 @@ export class DesktopBridge {
     }
 
     try {
+      if (method === "protection.getState" || method === "protection.retry") {
+        const data = this.options.protectionState?.(
+          binding.profileId,
+          binding.epoch,
+        );
+        if (!data)
+          return {
+            ...base,
+            status: "rejected",
+            error: safeError("RESOURCE_UNAVAILABLE"),
+          };
+        return { ...base, status: "ok", data };
+      }
       if (method === "window.getState") {
         const data: WindowState = {
           visible: binding.window.isVisible(),
