@@ -1,8 +1,18 @@
 import { VitePlugin } from "@electron-forge/plugin-vite";
 
 export default {
-  packagerConfig: { asar: true, name: "SoloDesk" },
-  // The shell does not load native modules. Enable their rebuilds with database work.
+  packagerConfig: {
+    asar: true,
+    name: "SoloDesk",
+    // Forge's Vite plugin otherwise ignores all node_modules, including the
+    // external encrypted adapter required by the main bundle.
+    ignore: (file) => file !== "" && file !== "/node_modules" &&
+      !file.startsWith("/.vite") &&
+      !file.startsWith("/node_modules/better-sqlite3-multiple-ciphers"),
+    ...(process.env.F006_ELECTRON_ZIP_DIR ? { electronZipDir: process.env.F006_ELECTRON_ZIP_DIR } : {}),
+  },
+  // The candidate ships platform N-API binaries. Verify the packaged binary on each
+  // target; a source rebuild is not a substitute for a target-specific load test.
   rebuildConfig: { types: [] },
   makers: [],
   plugins: [

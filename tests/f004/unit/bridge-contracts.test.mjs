@@ -11,6 +11,8 @@ test("only reviewed desktop methods are exposed", () => {
     "window.requestClose",
     "lifecycle.onState",
     "links.onDecision",
+    "protection.getState",
+    "protection.retry",
   ]);
   for (const method of METHODS) assert.equal(validateRequest(method, request()).ok, true);
   assert.equal(validateRequest("external.openApproved", request()).ok, false);

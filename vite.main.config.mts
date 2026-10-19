@@ -8,6 +8,6 @@ export default defineConfig((environment) => ({
   build: {
     outDir: ".vite/build",
     lib: { entry: "app/main/main.ts", formats: ["cjs"], fileName: () => "main.js" },
-    rolldownOptions: { external: [/^node:/, "electron", "better-sqlite3"] },
+    rolldownOptions: { external: [/^node:/, "electron", "better-sqlite3", "better-sqlite3-multiple-ciphers"] },
   },
 }));

@@ -93,4 +93,15 @@ export const en = {
 
   // Breadcrumbs
   "breadcrumb.home": "Home",
+
+  // Local protection states
+  "protection.title": "Local protection is unavailable",
+  "protection.check_again": "Check again",
+  "protection.vault_locked": "Unlock your device's key store, then check again. Existing protected work remains locked.",
+  "protection.key_missing": "The device key for this local work is missing. Check a surviving device or separately protected backup if available. An account password reset cannot decrypt unsynced local work.",
+  "protection.protection_denied": "The device denied key access. Check system permissions, then check again or contact support.",
+  "protection.unprotected_backend": "This device's key store is not providing protected storage. Local protected work cannot be opened or saved until a protected key store is available.",
+  "protection.integrity_failed": "Protected work could not be authenticated. Do not replace it with an empty copy; contact support with the diagnostic ID.",
+  "protection.interrupted_rotation": "A key change was interrupted. The protected copies need validation before work can continue; contact support.",
+  "protection.unsupported_format": "This protected format is not supported by this version. Update the app or contact support; the existing data has not been replaced.",
 } as const;

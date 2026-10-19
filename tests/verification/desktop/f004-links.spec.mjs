@@ -47,8 +47,8 @@ test("built app admits home ingress and denies navigation escape", async ({ play
       deniedChild.once("error", reject);
       deniedChild.once("exit", resolve);
     })).toBe(0);
-    await expect(page.getByRole("alert")).toContainText("غير متاح");
-    await expect(page.getByRole("alert")).not.toContainText("11111111");
+    await expect(page.getByRole("alert").filter({ hasText: "هذا الرابط" })).toContainText("غير متاح");
+    await expect(page.getByRole("alert").filter({ hasText: "هذا الرابط" })).not.toContainText("11111111");
     const malformedChild = spawn(
       path.join(root, "node_modules/electron/dist", process.platform === "win32" ? "electron.exe" :
         process.platform === "darwin" ? "Electron.app/Contents/MacOS/Electron" : "electron"),
@@ -59,7 +59,7 @@ test("built app admits home ingress and denies navigation escape", async ({ play
       malformedChild.once("error", reject);
       malformedChild.once("exit", resolve);
     })).toBe(0);
-    await expect(page.getByRole("alert")).toContainText("تعذّر فتح هذا الرابط");
+    await expect(page.getByRole("alert").filter({ hasText: "هذا الرابط" })).toContainText("تعذّر فتح هذا الرابط");
     const denialImage = path.join(root, owned, "denied-ar.png");
     await page.screenshot({ path: denialImage });
     await testInfo.attach("denied-ar", { path: denialImage, contentType: "image/png" });

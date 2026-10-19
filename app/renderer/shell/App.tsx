@@ -26,6 +26,69 @@ import { Button } from "../components/ui/button.tsx";
 import { ChevronDown } from "lucide-react";
 import logoIcon from "@/assets/solodesk_no_bg_no_text.png";
 import { guidance } from "../../shared/desktop-contracts.ts";
+import {
+  blockedProtection,
+  isProtectionResult,
+  type ProtectionResult,
+} from "../../shared/protection-contracts.ts";
+
+function ProtectionNotice() {
+  const { locale, t } = useLocalization();
+  const [state, setState] = React.useState<ProtectionResult | null>(null);
+  const [checking, setChecking] = React.useState(false);
+  const check = React.useCallback(async (retry = false) => {
+    if (retry) setChecking(true);
+    try {
+      const response = retry
+        ? await window.solodesk.protection.retry()
+        : await window.solodesk.protection.getState();
+      setState(
+        response.status === "ok" && isProtectionResult(response.data)
+          ? response.data
+          : blockedProtection("protection_denied"),
+      );
+    } catch {
+      setState(blockedProtection("protection_denied"));
+    } finally {
+      if (retry) setChecking(false);
+    }
+  }, []);
+  React.useEffect(() => {
+    let active = true;
+    void window.solodesk.protection.getState()
+      .then((response) => {
+        if (active) setState(response.status === "ok" && isProtectionResult(response.data)
+          ? response.data : blockedProtection("protection_denied"));
+      })
+      .catch(() => { if (active) setState(blockedProtection("protection_denied")); });
+    return () => { active = false; };
+  }, []);
+  if (!state || state.status !== "blocked") return null;
+  return (
+    <section
+      role="alert"
+      aria-live="polite"
+      dir={locale === "ar" ? "rtl" : "ltr"}
+      className="mb-5 rounded-lg border border-destructive/40 bg-destructive/10 p-4 text-sm text-foreground"
+    >
+      <h2 className="font-semibold">{t("protection.title")}</h2>
+      <p className="mt-1">{t(`protection.${state.reason}`)}</p>
+      <div className="mt-3 flex items-center gap-3">
+        <Button
+          type="button"
+          variant="outline"
+          disabled={checking}
+          onClick={() => void check(true)}
+        >
+          {t("protection.check_again")}
+        </Button>
+        <span className="font-mono text-xs text-muted-foreground">
+          {state.correlationId}
+        </span>
+      </div>
+    </section>
+  );
+}
 
 function MainContentRenderer() {
   const { activeRoute } = useNavigation();
@@ -34,7 +97,8 @@ function MainContentRenderer() {
   const [notice, setNotice] = React.useState<keyof typeof guidance.en | "">("");
 
   React.useEffect(() => {
-    if (typeof window === "undefined" || !window.solodesk?.links?.onDecision) return;
+    if (typeof window === "undefined" || !window.solodesk?.links?.onDecision)
+      return;
     const stopLinks = window.solodesk.links.onDecision((event: unknown) => {
       if (
         event &&
@@ -105,7 +169,9 @@ function MainContentRenderer() {
             hidden={!showPlan}
             className="mt-4 border-t border-border pt-4"
           >
-            <h2 className="text-base font-semibold text-foreground">Planned next</h2>
+            <h2 className="text-base font-semibold text-foreground">
+              Planned next
+            </h2>
             <ul className="mt-2 grid gap-x-8 gap-y-1 text-sm text-muted-foreground sm:grid-cols-2">
               <li>Projects and clients</li>
               <li>Tasks and deadlines</li>
@@ -306,6 +372,7 @@ function ShellRoot() {
       headerUtilities={<HeaderUtilities />}
     >
       <CommandPalette />
+      <ProtectionNotice />
       <MainContentRenderer />
     </ShellLayout>
   );

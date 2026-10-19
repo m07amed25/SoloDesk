@@ -34,5 +34,6 @@ const { app } = require("electron");
 if (app.isReady()) throw new Error("profile-too-late");
 app.setPath("userData", user);
 app.setPath("sessionData", session);
+globalThis.__F002_REQUIRE = require;
 globalThis.__F002_BUILT_ENTRY = path.join(root, ".vite/build/main.js");
 require(globalThis.__F002_BUILT_ENTRY);
