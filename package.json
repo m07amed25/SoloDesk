@@ -30,7 +30,13 @@
     "test:f007": "node tooling/f007/verify.mjs",
     "test:f007:unit": "node tooling/f007/verify.mjs unit",
     "test:f007:integration": "node tooling/f007/verify.mjs integration",
-    "test:f007:migrations": "node tooling/f007/verify.mjs migrations"
+    "test:f007:migrations": "node tooling/f007/verify.mjs migrations",
+    "test:f008": "node tooling/f008/verify.mjs",
+    "test:f008:isolation": "node tooling/f008/verify.mjs test:cross-tenant-isolation",
+    "test:f008:roles": "node tooling/f008/verify.mjs test:role-lifecycle",
+    "test:f008:storage": "node tooling/f008/verify.mjs test:private-storage",
+    "test:f008:constraints": "node tooling/f008/verify.mjs test:relational-constraints",
+    "test:f008:quota": "node tooling/f008/verify.mjs test:quota-resilience"
   },
   "engines": {
     "node": ">=24 <25"

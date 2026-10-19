@@ -33,6 +33,7 @@ import {
 } from "../../shared/protection-contracts.ts";
 import type { PersistenceStatusDto } from "../../shared/persistence-contracts.ts";
 import { PersistenceRecoveryModal } from "./PersistenceRecoveryModal.tsx";
+import { QuotaWarningBanner } from "./QuotaWarningBanner.tsx";
 
 function PersistenceRecoveryNotice() {
   const { locale } = useLocalization();
@@ -393,6 +394,7 @@ function ShellRoot() {
       <CommandPalette />
       <ProtectionNotice />
       <PersistenceRecoveryNotice />
+      <QuotaWarningBanner />
       <MainContentRenderer />
     </ShellLayout>
   );

@@ -1,0 +1,62 @@
+# Supabase Local Emulator Configuration for SoloDesk (F008)
+# Enables PostgreSQL 16, Supabase Auth, Supabase Storage, and Edge Functions runtime.
+
+project_id = "solodesk-local"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "storage"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 16
+
+[db.pooler]
+enabled = false
+port = 54329
+pool_mode = "transaction"
+default_pool_size = 20
+max_client_conn = 100
+
+[auth]
+enabled = true
+site_url = "http://127.0.0.1:3000"
+additional_redirect_urls = ["https://127.0.0.1:3000"]
+jwt_expiry = 3600
+enable_signup = true
+
+[auth.email]
+enable_signup = true
+double_confirm_changes = true
+enable_confirmations = false
+
+[storage]
+enabled = true
+file_size_limit = "100MiB"
+
+[storage.buckets.workspaces]
+public = false
+file_size_limit = "100MiB"
+allowed_mime_types = [
+  "application/pdf",
+  "image/png",
+  "image/jpeg",
+  "image/webp",
+  "text/plain",
+  "text/csv",
+  "application/json"
+]
+
+[edge_runtime]
+enabled = true
+port = 54323
+inspector_port = 8083
+
+[analytics]
+enabled = false
+port = 54327
+vector_port = 54328
