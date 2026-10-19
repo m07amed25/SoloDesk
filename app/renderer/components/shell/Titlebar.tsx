@@ -88,44 +88,42 @@ export function Titlebar() {
         </span>
       </div>
 
-      {!isMac && (
-        <div
-          dir="ltr"
-          className="no-drag absolute top-0 right-0 flex h-full items-center"
-          style={{ position: "absolute", right: 0, top: 0, direction: "ltr" }}
+      <div
+        dir="ltr"
+        className="no-drag absolute top-0 right-0 flex h-full items-center"
+        style={{ position: "absolute", right: 0, top: 0, direction: "ltr" }}
+      >
+        <button
+          type="button"
+          onClick={handleMinimize}
+          className="inline-flex h-9 w-11 items-center justify-center text-muted-foreground hover:bg-surface-hover hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring cursor-pointer transition-colors"
+          aria-label={t("window.minimize")}
         >
-          <button
-            type="button"
-            onClick={handleMinimize}
-            className="inline-flex h-9 w-11 items-center justify-center text-muted-foreground hover:bg-surface-hover hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring cursor-pointer transition-colors"
-            aria-label={t("window.minimize")}
-          >
-            <Minus className="h-3.5 w-3.5" />
-          </button>
-          <button
-            type="button"
-            onClick={handleMaximize}
-            className="inline-flex h-9 w-11 items-center justify-center text-muted-foreground hover:bg-surface-hover hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring cursor-pointer transition-colors"
-            aria-label={
-              windowState.maximized ? t("window.restore") : t("window.maximize")
-            }
-          >
-            {windowState.maximized ? (
-              <Copy className="h-3.5 w-3.5" />
-            ) : (
-              <Square className="h-3.5 w-3.5" />
-            )}
-          </button>
-          <button
-            type="button"
-            onClick={handleClose}
-            className="inline-flex h-9 w-11 items-center justify-center text-muted-foreground hover:bg-destructive hover:text-destructive-foreground focus-visible:outline-2 focus-visible:outline-ring cursor-pointer transition-colors"
-            aria-label={t("window.close")}
-          >
-            <X className="h-3.5 w-3.5" />
-          </button>
-        </div>
-      )}
+          <Minus className="h-3.5 w-3.5" />
+        </button>
+        <button
+          type="button"
+          onClick={handleMaximize}
+          className="inline-flex h-9 w-11 items-center justify-center text-muted-foreground hover:bg-surface-hover hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring cursor-pointer transition-colors"
+          aria-label={
+            windowState.maximized ? t("window.restore") : t("window.maximize")
+          }
+        >
+          {windowState.maximized ? (
+            <Copy className="h-3.5 w-3.5" />
+          ) : (
+            <Square className="h-3.5 w-3.5" />
+          )}
+        </button>
+        <button
+          type="button"
+          onClick={handleClose}
+          className="inline-flex h-9 w-11 items-center justify-center text-muted-foreground hover:bg-destructive hover:text-destructive-foreground focus-visible:outline-2 focus-visible:outline-ring cursor-pointer transition-colors"
+          aria-label={t("window.close")}
+        >
+          <X className="h-3.5 w-3.5" />
+        </button>
+      </div>
     </header>
   );
 }
