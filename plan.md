@@ -401,7 +401,8 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F007 — Encrypted local persistence and migrations
 
-- **PR identity:** `[F007] Encrypted local persistence and migrations`; branch `feat/f007-encrypted-local-persistence-and-migrations` → `main`; one PR; implementation and baseline/three-target native QA executed; security repaired and hosted readiness passed; fork/control delivery evidence pending; [PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; hosted readiness passed; manual delivery evidence and owner approval pending.
+- **Specification and design:** [F007 feature specification](specs/007-encrypted-local-persistence/spec.md) and [requirements quality checklist](specs/007-encrypted-local-persistence/checklists/requirements.md). Specification/planning readiness does not change delivery status or authorize implementation.
+- **PR identity:** `[F007] Encrypted local persistence and migrations`; branch `feat/f007-encrypted-local-persistence-and-migrations` → `main`; one PR; implementation and baseline/three-target native QA executed; verification passed; delivery packet prepared; [PR #10](https://github.com/m07amed25/SoloDesk/pull/10) open; owner review pending.
 - **Prerequisites:** F003, F006 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-007, NFR-003, NFR-010. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Implement protected per-account/workspace cache, transactions, schema history, migration journal and recoverable read failures.

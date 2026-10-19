@@ -66,6 +66,11 @@ export class ProtectionOwner {
       throw new Error("protection_denied");
     }
   }
+  /** F007 checks the OS key boundary before creating a workspace namespace. */
+  assertKeyAvailable(): void {
+    this.requireIdentity();
+    this.keys.assertAvailable();
+  }
   async createKey(
     envelopePath: string,
     dataSetId: string,

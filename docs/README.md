@@ -1,6 +1,6 @@
 # SoloDesk documentation index
 
-Updated 17 October 2026. Complete phased design set for the expanded product; **business implementation deferred**. F001 governance documentation and local validation are implemented for review. Current implementation includes the welcome shell, F001/F002 delivery tooling and the authorized F003 pure-contract foundation in review. Business workflows remain deferred. Confirmed product choices and proposed details are explicitly distinguished. Read [product brief](../PRODUCT.md), [roadmap](planning/roadmap.md), [coverage](planning/coverage.md), then [decisions](planning/decisions.md).
+Updated 19 October 2026. Complete phased design set for the expanded product. The welcome shell and candidate foundations include F001/F002 delivery tooling, F003 pure contracts, and F007 synthetic encrypted persistence in review. Business workflows and customer-data activation remain deferred pending their feature and native security gates. Confirmed product choices and proposed details are explicitly distinguished. Read [product brief](../PRODUCT.md), [roadmap](planning/roadmap.md), [coverage](planning/coverage.md), then [decisions](planning/decisions.md).
 
 ## Confirmed direction
 
@@ -16,6 +16,7 @@ Freelancers and small teams from first release; Windows/macOS/Linux Electron; Ta
 and [F001 QA/evidence](qa/F001.md) describe the implemented local tooling and current review.
 Owner approval, merge and release are separate outcomes. [F003 guide](features/F003.md) and [F003 QA](qa/F003.md) cover current shared contracts and synthetic conformance.
 [F004 guide](features/F004.md) and [F004 QA](qa/F004.md) cover the secure desktop owner, preload, links and lifecycle candidate with native evidence gaps.
+[F007 guide](features/F007.md) and [F007 QA](qa/F007.md) cover synthetic encrypted local persistence, migrations and recovery evidence; customer-data use remains gated.
 
 ## UI design system
 
@@ -71,7 +72,7 @@ Owner approval, merge and release are separate outcomes. [F003 guide](features/F
 
 ## Maintenance and implementation readiness
 
-Confirmed decisions are authoritative; recommendations and open policies must not be silently promoted to user choices. Update requirement, affected state/data/API, phase, acceptance, risk and decision links together. Stable IDs are never reused. Each enabled release slice needs actual evidence; never check a future gate from documentation alone. Financial legal profiles require selected markets/review. Current scope authorizes F001 governance implementation and its PR publication. Business implementation, new packages, cloud provisioning and deployment remain deferred.
+Confirmed decisions are authoritative; recommendations and open policies must not be silently promoted to user choices. Update requirement, affected state/data/API, phase, acceptance, risk and decision links together. Stable IDs are never reused. Each enabled release slice needs actual evidence; never check a future gate from documentation alone. Financial legal profiles require selected markets/review. F007 synthetic local persistence implementation is in review. Customer-data persistence, business workflows, cloud provisioning and deployment remain subject to their separate gates and authorization.
 
 Recommended reading paths: product owner → brief/decisions/roadmap/screens; engineer → architecture/data/API/sync/security/specs; QA → coverage/acceptance/test strategy/phases; operator → backend/data lifecycle/release/support. For running the existing shell, use development/setup.md.
 

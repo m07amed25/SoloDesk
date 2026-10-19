@@ -11,12 +11,12 @@
     "test:launcher": "node --test --test-isolation=none tooling/start.test.mjs",
     "ui:info": "node tooling/ui-info.mjs",
     "setup:electron": "install-electron",
-    "lint": "oxlint --deny-warnings --threads 2 app tooling tests/verification tests/f004 tests/f006 vite.config.mts vite.main.config.mts vite.preload.config.mts forge.config.mjs",
+    "lint": "oxlint --deny-warnings --threads 2 app tooling tests/verification tests/f004 tests/f006 tests/f007 vite.config.mts vite.main.config.mts vite.preload.config.mts forge.config.mjs",
     "test:unit": "node tooling/verification/run-suite.mjs verification-unit",
     "test:integration": "node tooling/verification/run-suite.mjs verification-integration",
     "check:docs": "node tooling/verification/documentation.mjs",
     "verify": "node tooling/verification/cli.mjs verify",
-    "test:desktop": "node tooling/verification/desktop.mjs",
+    "test:desktop": "node tooling/verification/desktop.mjs --human",
     "check:security": "node tooling/verification/cli.mjs run --group security",
     "setup:f003": "node tooling/f003/setup-runtime.mjs",
     "test:f003": "node tooling/f003/verify.mjs",
@@ -26,7 +26,11 @@
     "test:f003:source-quality": "node tooling/f003/verify.mjs F003:source-quality",
     "test:f003:runtime": "node tooling/f003/verify.mjs F003:runtime",
     "test:f004": "node tooling/f004/verify.mjs",
-    "test:f006": "node tooling/f006/verify.mjs"
+    "test:f006": "node tooling/f006/verify.mjs",
+    "test:f007": "node tooling/f007/verify.mjs",
+    "test:f007:unit": "node tooling/f007/verify.mjs unit",
+    "test:f007:integration": "node tooling/f007/verify.mjs integration",
+    "test:f007:migrations": "node tooling/f007/verify.mjs migrations"
   },
   "engines": {
     "node": ">=24 <25"
