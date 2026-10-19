@@ -5,8 +5,13 @@ import {
   validateResponse,
   type DesktopResponse,
 } from "../shared/desktop-contracts.ts";
+import {
+  isWorkspaceId,
+  sanitizePersistenceStatus,
+  type PersistenceStatusDto,
+} from "../shared/persistence-contracts.ts";
 
-type Family = "lifecycle" | "links";
+type Family = "lifecycle" | "links" | "persistence";
 type Listener = (event: unknown) => void;
 const listeners = new Map<string, { family: Family; callback: Listener }>();
 const pendingEvents = new Map<string, { family: Family; data: unknown }>();
@@ -62,12 +67,16 @@ ipcRenderer.on("f004:event", (_nativeEvent, input: unknown) => {
   if (
     Object.keys(event).length !== 3 ||
     typeof event.subscriptionId !== "string" ||
-    (event.family !== "lifecycle" && event.family !== "links")
+    (event.family !== "lifecycle" &&
+      event.family !== "links" &&
+      event.family !== "persistence")
   )
     return;
   const listener = listeners.get(event.subscriptionId);
   const data = boundedEvent(event.data);
   if (data === null) return;
+  if (event.family === "persistence" && !sanitizePersistenceStatus(data))
+    return;
   if (listener?.family === event.family) listener.callback(data);
   else if (pendingEvents.size < 32)
     pendingEvents.set(event.subscriptionId, { family: event.family, data });
@@ -104,7 +113,80 @@ function subscribe(family: Family, callback: Listener): () => void {
   };
 }
 
+async function invokePersistence(
+  method: "getState" | "retryOpen",
+  workspaceId: string,
+): Promise<PersistenceStatusDto> {
+  if (!isWorkspaceId(workspaceId)) throw new Error("persistence_unavailable");
+  try {
+    const response: unknown = await ipcRenderer.invoke(
+      `solodesk.persistence.${method}`,
+      { workspaceId },
+    );
+    if (
+      response &&
+      typeof response === "object" &&
+      "status" in response &&
+      response.status === "ok" &&
+      "data" in response
+    ) {
+      const safe = sanitizePersistenceStatus(response.data);
+      if (safe && safe.workspaceId === workspaceId) return safe;
+    }
+  } catch {
+    /* IPC errors remain inside preload. */
+  }
+  throw new Error("persistence_unavailable");
+}
+
+function subscribePersistence(
+  callback: (state: PersistenceStatusDto) => void,
+): () => void {
+  if (typeof callback !== "function") return () => {};
+  let active = true;
+  let subscriptionId: string | undefined;
+  void ipcRenderer
+    .invoke("solodesk.persistence.onStateChanged")
+    .then((response: unknown) => {
+      if (
+        !response ||
+        typeof response !== "object" ||
+        !("subscriptionId" in response) ||
+        typeof response.subscriptionId !== "string" ||
+        !/^[0-9a-f-]{36}$/.test(response.subscriptionId)
+      )
+        return;
+      subscriptionId = response.subscriptionId;
+      if (active) {
+        const deliver = (value: unknown) => {
+          const safe = sanitizePersistenceStatus(value);
+          if (safe) callback(safe);
+        };
+        listeners.set(subscriptionId, { family: "persistence", callback: deliver });
+        const pending = pendingEvents.get(subscriptionId);
+        if (pending?.family === "persistence") deliver(pending.data);
+        pendingEvents.delete(subscriptionId);
+      } else ipcRenderer.send("f004:subscription:remove", { subscriptionId });
+    })
+    .catch(() => {});
+  return () => {
+    active = false;
+    if (subscriptionId) {
+      listeners.delete(subscriptionId);
+      ipcRenderer.send("f004:subscription:remove", { subscriptionId });
+    }
+  };
+}
+
 const facade = Object.freeze({
+  persistence: Object.freeze({
+    getState: (workspaceId: string) =>
+      invokePersistence("getState", workspaceId),
+    retryOpen: (workspaceId: string) =>
+      invokePersistence("retryOpen", workspaceId),
+    onStateChanged: (callback: (state: PersistenceStatusDto) => void) =>
+      subscribePersistence(callback),
+  }),
   protection: Object.freeze({
     getState: (...args: unknown[]) => invoke("protection.getState", args),
     retry: (...args: unknown[]) => invoke("protection.retry", args),

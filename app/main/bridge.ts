@@ -6,6 +6,12 @@ import type {
 } from "electron";
 import type { Id } from "../../packages/domain/src/ids.ts";
 import type { ProtectionResult } from "../shared/protection-contracts.ts";
+import {
+  isPersistenceRequest,
+  sanitizePersistenceStatus,
+  type PersistenceIpcResponse,
+  type PersistenceStatusDto,
+} from "../shared/persistence-contracts.ts";
 import { plainData } from "../../packages/contracts/src/validation.ts";
 import {
   METHODS,
@@ -32,7 +38,7 @@ type CurrentContext = {
   epoch: number | undefined;
   authority: boolean;
 };
-type EventFamily = "lifecycle" | "links";
+type EventFamily = "lifecycle" | "links" | "persistence";
 
 function documentOrigin(url: string): string | null {
   try {
@@ -113,6 +119,16 @@ type BridgeOptions = {
   epoch: (profileId: string) => number | undefined;
   authority?: (profileId: string, epoch: number) => boolean;
   protectionState?: (profileId: string, epoch: number) => ProtectionResult;
+  persistenceState?: (
+    profileId: string,
+    epoch: number,
+    workspaceId: string,
+    retry: boolean,
+  ) => Promise<PersistenceStatusDto | null>;
+  activePersistenceState?: (
+    profileId: string,
+    epoch: number,
+  ) => PersistenceStatusDto | null;
 };
 
 export class DesktopBridge {
@@ -287,6 +303,54 @@ export class DesktopBridge {
     }
   }
 
+  async invokePersistence(
+    method: "getState" | "retryOpen",
+    event: IpcMainInvokeEvent,
+    input: unknown,
+  ): Promise<PersistenceIpcResponse> {
+    if (!isPersistenceRequest(input))
+      return { status: "rejected", code: "VALIDATION" };
+    const binding = this.bindings.get(event.sender);
+    if (!admitCaller(event, binding, this.context(binding)) || !binding)
+      return { status: "rejected", code: "FORBIDDEN" };
+    try {
+      const data = await this.options.persistenceState?.(
+        binding.profileId,
+        binding.epoch,
+        input.workspaceId,
+        method === "retryOpen",
+      );
+      const safe = sanitizePersistenceStatus(data);
+      if (!safe || safe.workspaceId !== input.workspaceId)
+        return { status: "rejected", code: "RESOURCE_UNAVAILABLE" };
+      return { status: "ok", data: safe };
+    } catch {
+      return { status: "rejected", code: "RESOURCE_UNAVAILABLE" };
+    }
+  }
+
+  subscribePersistence(
+    event: IpcMainInvokeEvent,
+  ): { subscriptionId: string } | null {
+    const binding = this.bindings.get(event.sender);
+    if (!admitCaller(event, binding, this.context(binding)) || !binding)
+      return null;
+    const subscriptionId = this.subscriptions.add(binding, "persistence");
+    const current = sanitizePersistenceStatus(
+      this.options.activePersistenceState?.(binding.profileId, binding.epoch),
+    );
+    if (current)
+      queueMicrotask(() => {
+        if (!binding.contents.isDestroyed())
+          binding.contents.send("f004:event", {
+            family: "persistence",
+            subscriptionId,
+            data: current,
+          });
+      });
+    return { subscriptionId };
+  }
+
   remove(event: IpcMainInvokeEvent, input: unknown): void {
     const binding = this.bindings.get(event.sender);
     if (!admitCaller(event, binding, this.context(binding)) || !binding) return;
@@ -344,6 +408,13 @@ export async function installBridge(
     ipcMain.handle(`f004:${method}`, (event, input: unknown) =>
       bridge.invoke(method, event, input),
     );
+  for (const method of ["getState", "retryOpen"] as const)
+    ipcMain.handle(`solodesk.persistence.${method}`, (event, input: unknown) =>
+      bridge.invokePersistence(method, event, input),
+    );
+  ipcMain.handle("solodesk.persistence.onStateChanged", (event) =>
+    bridge.subscribePersistence(event),
+  );
   ipcMain.on("f004:subscription:remove", (event, input: unknown) =>
     bridge.remove(event as IpcMainInvokeEvent, input),
   );

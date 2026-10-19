@@ -77,3 +77,22 @@ test("all five real F003 suites have owned entries, reviewed floors and obligati
     assert.ok(check.argv.includes("--test-isolation=none"));
   }
 });
+
+test("F007 encrypted persistence suite is enrolled with its owned test files", () => {
+  const checks = JSON.parse(
+    fs.readFileSync("verification/suites.v1.json", "utf8"),
+  ).checks.filter((c) => c.id === "F007:integration");
+  assert.equal(checks.length, 1);
+  const [check] = checks;
+  assert.equal(check.group, "baseline");
+  assert.equal(check.min_tests, 16);
+  assert.equal(check.entry_files.length, 16);
+  assert.deepEqual(check.argv.slice(4), check.entry_files);
+  assert.equal(
+    validateEnrollment(
+      check,
+      check.entry_files.filter((p) => fs.statSync(path.resolve(p)).isFile()),
+    ),
+    true,
+  );
+});

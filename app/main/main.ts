@@ -14,6 +14,8 @@ import { LifecycleCoordinator } from "./lifecycle.ts";
 import { createTrustedWindow, registerAssetScheme } from "./windows.ts";
 import { ElectronKeyProvider } from "./protection/key-provider.ts";
 import { ProtectionOwner } from "./protection/owner.ts";
+import { PersistenceService } from "./persistence/persistence-service.ts";
+import { isWorkspaceId } from "../shared/persistence-contracts.ts";
 import { KeyUnavailable } from "./protection/key-provider.ts";
 import {
   blockedProtection,
@@ -61,6 +63,15 @@ if (!lockHeld) {
   const profiles = new ProfileOwners<NativeView>(catalogue);
   const keyProvider = new ElectronKeyProvider();
   const protectionOwners = new Map<string, ProtectionOwner>();
+  const persistenceServices = new Map<string, PersistenceService>();
+  // F012 enrollment will supply the authorized workspace. Until then only the
+  // existing synthetic verification mode can opt into an active workspace.
+  const syntheticWorkspace =
+    !app.isPackaged &&
+    Boolean(process.env.F002_ROOT) &&
+    isWorkspaceId(process.env.F007_SYNTHETIC_WORKSPACE)
+      ? process.env.F007_SYNTHETIC_WORKSPACE
+      : undefined;
   function protectionState(profileId: string, epoch: number): ProtectionResult {
     if (profiles.epoch(profileId) !== epoch)
       return blockedProtection("protection_denied");
@@ -100,7 +111,10 @@ if (!lockHeld) {
   async function activate(profileId: string): Promise<NativeView | undefined> {
     if (owner.state !== "ready") return;
     for (const [id, protection] of protectionOwners)
-      if (id !== profileId) protection.lock();
+      if (id !== profileId) {
+        await persistenceServices.get(id)?.closeActiveStore();
+        protection.lock();
+      }
     return profiles.activate(profileId, async (id, epoch) => {
       const protection = new ProtectionOwner(
         { profileId: id, epoch },
@@ -109,14 +123,28 @@ if (!lockHeld) {
         keyProvider,
       );
       protectionOwners.set(id, protection);
+      const persistence = new PersistenceService(
+        app.getPath("userData"),
+        id,
+        protection,
+      );
+      persistenceServices.set(id, persistence);
+      persistence.onStateChanged((state) => {
+        const current = profiles.current(id);
+        if (current) bridge.emit(current.contents, "persistence", state);
+      });
+      if (syntheticWorkspace)
+        await persistence.openWorkspaceStore(syntheticWorkspace);
       let view: NativeView | undefined;
       const trusted = await createTrustedWindow(id, epoch, {
         developmentUrl: MAIN_WINDOW_VITE_DEV_SERVER_URL,
         onFailure: fail,
         onClose: () => {
-          protection.lock();
+          void persistence.closeActiveStore().catch(() => {}).finally(() => protection.lock());
           if (protectionOwners.get(id) === protection)
             protectionOwners.delete(id);
+          if (persistenceServices.get(id) === persistence)
+            persistenceServices.delete(id);
           if (view) profiles.close(id, view);
         },
         onCreated: (window, origin, documentUrl) => {
@@ -137,9 +165,11 @@ if (!lockHeld) {
           );
         },
       }).catch((error) => {
-        protection.lock();
+        void persistence.closeActiveStore().catch(() => {}).finally(() => protection.lock());
         if (protectionOwners.get(id) === protection)
           protectionOwners.delete(id);
+        if (persistenceServices.get(id) === persistence)
+          persistenceServices.delete(id);
         throw error;
       });
       view = {
@@ -200,6 +230,27 @@ if (!lockHeld) {
         state: () => owner.state,
         epoch: (id) => profiles.epoch(id),
         protectionState,
+        persistenceState: async (profileId, epoch, workspaceId, retry) => {
+          if (
+            profiles.epoch(profileId) !== epoch ||
+            workspaceId !== syntheticWorkspace
+          )
+            return null;
+          const service = persistenceServices.get(profileId);
+          if (!service) return null;
+          return retry
+            ? service.openWorkspaceStore(workspaceId)
+            : service.getPersistenceState(workspaceId);
+        },
+        activePersistenceState: (profileId, epoch) => {
+          if (profiles.epoch(profileId) !== epoch || !syntheticWorkspace)
+            return null;
+          return (
+            persistenceServices
+              .get(profileId)
+              ?.getPersistenceState(syntheticWorkspace) ?? null
+          );
+        },
       });
       owner.onState((state) => {
         for (const view of profiles.views()) {
@@ -233,7 +284,10 @@ if (!lockHeld) {
     event.preventDefault();
     void owner
       .drain("quit")
-      .then(() => {
+      .then(async () => {
+        for (const service of persistenceServices.values())
+          await service.closeActiveStore();
+        persistenceServices.clear();
         for (const protection of protectionOwners.values()) protection.lock();
         protectionOwners.clear();
         profiles.clear();

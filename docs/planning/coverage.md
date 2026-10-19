@@ -155,3 +155,5 @@ F002 implementation is authorized by the current user request. Its [verification
 ## F003 implementation — 18 October 2026
 
 F003 now supplies tested pure foundations for NFR-001 (exact values/intent), NFR-015 (portable contracts/narrow port types) and PLT-008 (distinct local/queued/authoritative/unknown outcome contracts). Actual storage atomicity, production authorization and synchronization remain later-feature obligations. [F003 QA](../qa/F003.md) maps all FR-001–FR-034, A-01–A-32 and SC-001–SC-010 to observations or explicit blocking gaps; implementation does not establish approval, merge or release.
+
+F007 now supplies a synthetic candidate for PLT-007, NFR-003 and NFR-010 local encrypted persistence and migration recovery, with atomic local/outbox evidence relevant to PLT-008. [F007 QA](../qa/F007.md) records executed checks and the native/security gates that still block customer-data activation. This planning register does not convert those gates into release approval.

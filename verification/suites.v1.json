@@ -152,10 +152,11 @@
         "tests/verification/unit/artifacts.test.mjs",
         "tests/verification/unit/workflow-security.test.mjs",
         "tests/verification/unit/adoption.test.mjs",
-        "tests/verification/unit/ui-info.test.mjs"
+        "tests/verification/unit/ui-info.test.mjs",
+        "tests/verification/unit/desktop-output.test.mjs"
       ],
       "kind": "tests",
-      "min_tests": 64,
+      "min_tests": 73,
       "timeout_ms": 300000,
       "phase_ids": ["F002"],
       "requirement_ids": ["NFR-014"],
@@ -171,7 +172,8 @@
         "tests/verification/unit/artifacts.test.mjs",
         "tests/verification/unit/workflow-security.test.mjs",
         "tests/verification/unit/adoption.test.mjs",
-        "tests/verification/unit/ui-info.test.mjs"
+        "tests/verification/unit/ui-info.test.mjs",
+        "tests/verification/unit/desktop-output.test.mjs"
       ]
     },
     {
@@ -777,6 +779,79 @@
       ],
       "negative": [
         "Unavailable, locked, missing, wrong key or basic_text fail closed before file mutation"
+      ]
+    },
+    {
+      "id": "F007:integration",
+      "feature": "F007",
+      "group": "baseline",
+      "executable": "$NODE",
+      "argv": [
+        "--test",
+        "--test-timeout=60000",
+        "--test-reporter=tap",
+        "--test-isolation=none",
+        "tests/f007/unit/workspace-namespace.test.mjs",
+        "tests/f007/unit/transaction-scope.test.mjs",
+        "tests/f007/unit/fail-closed-diagnostics.test.mjs",
+        "tests/f007/unit/pre-flight-checks.test.mjs",
+        "tests/f007/unit/ipc-contract.test.mjs",
+        "tests/f007/unit/recovery-modal.test.mjs",
+        "tests/f007/integration/raw-file-encryption.test.mjs",
+        "tests/f007/integration/session-close-purge.test.mjs",
+        "tests/f007/integration/atomic-outbox-crash.test.mjs",
+        "tests/f007/integration/relational-integrity.test.mjs",
+        "tests/f007/integration/no-empty-replacement.test.mjs",
+        "tests/f007/integration/locked-vault-fail-closed.test.mjs",
+        "tests/f007/integration/snapshot-lifecycle.test.mjs",
+        "tests/f007/migrations/interrupted-migration-rollback.test.mjs",
+        "tests/f007/migrations/forward-compatibility-block.test.mjs",
+        "tests/f007/migrations/reference-dataset-reconciliation.test.mjs"
+      ],
+      "kind": "tests",
+      "min_tests": 16,
+      "timeout_ms": 300000,
+      "phase_ids": ["F007"],
+      "requirement_ids": [
+        "FR-001", "FR-002", "FR-003", "FR-004", "FR-005", "FR-006", "FR-007",
+        "FR-008", "FR-009", "FR-010", "FR-011", "FR-012", "FR-013", "FR-014"
+      ],
+      "scenario_ids": [
+        "F007:A-01", "F007:A-02", "F007:A-03", "F007:A-04", "F007:A-05",
+        "F007:A-06", "F007:A-07", "F007:A-08", "F007:A-09", "F007:A-10",
+        "F007:A-11", "F007:A-12", "F007:A-13", "F007:A-14", "F007:A-15",
+        "F007:A-16", "F007:A-17"
+      ],
+      "entry_files": [
+        "tests/f007/unit/workspace-namespace.test.mjs",
+        "tests/f007/unit/transaction-scope.test.mjs",
+        "tests/f007/unit/fail-closed-diagnostics.test.mjs",
+        "tests/f007/unit/pre-flight-checks.test.mjs",
+        "tests/f007/unit/ipc-contract.test.mjs",
+        "tests/f007/unit/recovery-modal.test.mjs",
+        "tests/f007/integration/raw-file-encryption.test.mjs",
+        "tests/f007/integration/session-close-purge.test.mjs",
+        "tests/f007/integration/atomic-outbox-crash.test.mjs",
+        "tests/f007/integration/relational-integrity.test.mjs",
+        "tests/f007/integration/no-empty-replacement.test.mjs",
+        "tests/f007/integration/locked-vault-fail-closed.test.mjs",
+        "tests/f007/integration/snapshot-lifecycle.test.mjs",
+        "tests/f007/migrations/interrupted-migration-rollback.test.mjs",
+        "tests/f007/migrations/forward-compatibility-block.test.mjs",
+        "tests/f007/migrations/reference-dataset-reconciliation.test.mjs"
+      ],
+      "categories": ["integration", "storage", "boundary", "bilingual"],
+      "scenarios": [
+        "F007:A-01", "F007:A-02", "F007:A-03", "F007:A-04", "F007:A-05",
+        "F007:A-06", "F007:A-07", "F007:A-08", "F007:A-09", "F007:A-10",
+        "F007:A-11", "F007:A-12", "F007:A-13", "F007:A-14", "F007:A-15",
+        "F007:A-16", "F007:A-17"
+      ],
+      "positive": [
+        "Encrypted isolated stores, atomic outbox, snapshots, migrations and bilingual recovery satisfy synthetic fixtures"
+      ],
+      "negative": [
+        "Wrong or missing keys, corruption, disk faults, revision conflicts and future schemas fail closed"
       ]
     }
   ]

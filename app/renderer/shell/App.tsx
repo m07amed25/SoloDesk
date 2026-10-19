@@ -31,6 +31,25 @@ import {
   isProtectionResult,
   type ProtectionResult,
 } from "../../shared/protection-contracts.ts";
+import type { PersistenceStatusDto } from "../../shared/persistence-contracts.ts";
+import { PersistenceRecoveryModal } from "./PersistenceRecoveryModal.tsx";
+
+function PersistenceRecoveryNotice() {
+  const { locale } = useLocalization();
+  const [state, setState] = React.useState<PersistenceStatusDto | null>(null);
+  const [busy, setBusy] = React.useState(false);
+  React.useEffect(() => window.solodesk.persistence.onStateChanged(setState), []);
+  if (!state || state.status !== "recovery_required") return null;
+  const retry = async () => {
+    setBusy(true);
+    try { setState(await window.solodesk.persistence.retryOpen(state.workspaceId)); }
+    catch { /* Keep the last safe guidance visible. */ }
+    finally { setBusy(false); }
+  };
+  return <PersistenceRecoveryModal state={state} locale={locale} busy={busy}
+    onRetry={() => { void retry(); }}
+    onQuit={() => { void window.solodesk.window.requestClose(); }} />;
+}
 
 function ProtectionNotice() {
   const { locale, t } = useLocalization();
@@ -373,6 +392,7 @@ function ShellRoot() {
     >
       <CommandPalette />
       <ProtectionNotice />
+      <PersistenceRecoveryNotice />
       <MainContentRenderer />
     </ShellLayout>
   );
