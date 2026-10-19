@@ -387,7 +387,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 ### F006 — Cross-platform key protection and encryption proof
 
 - **Specification and design:** [F006 feature specification](specs/006-cross-platform-key-protection/spec.md), [requirements quality checklist](specs/006-cross-platform-key-protection/checklists/requirements.md), and [implementation plan](specs/006-cross-platform-key-protection/plan.md). These are planning artifacts; Q-07/Q-11 decisions and native proof are tracked as separate evidence gates.
-- **PR identity:** `[F006] Cross-platform key protection and encryption proof`; branch `feat/f006-cross-platform-key-protection-and-encryption-proof` → `main`; one PR; implementation and baseline/three-target native QA executed; verification passed; delivery packet prepared; owner review pending.
+- **PR identity:** `[F006] Cross-platform key protection and encryption proof`; branch `feat/f006-cross-platform-key-protection-and-encryption-proof` → `main`; one PR; implementation and baseline/three-target native QA executed; verification passed; delivery packet prepared; [PR #9](https://github.com/m07amed25/SoloDesk/pull/9) open; owner review pending.
 - **Prerequisites:** F004 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-007, NFR-005. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Prove an Electron-compatible encrypted SQLite adapter, OS-wrapped device keys and encrypted attachment/temp/WAL handling on supported native targets.
