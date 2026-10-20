@@ -432,7 +432,8 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F009 — Authoritative command receipts and audit
 
-- **PR identity:** `[F009] Authoritative command receipts and audit`; branch `feat/f009-authoritative-command-receipts-and-audit` → `main`; one PR; implementation and baseline/three-target native QA executed; security repaired and hosted readiness passed; fork/control delivery evidence pending; [PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; hosted readiness passed; manual delivery evidence and owner approval pending.
+- **Specification and design:** [F009 feature specification](specs/009-authoritative-command-receipts/spec.md), [implementation plan](specs/009-authoritative-command-receipts/plan.md), and [requirements quality checklist](specs/009-authoritative-command-receipts/checklists/requirements.md). Specification/planning readiness does not change delivery status or authorize implementation.
+- **PR identity:** `[F009] Authoritative command receipts and audit`; branch `feat/f009-authoritative-command-receipts-and-audit` → `main`; one PR; partial synthetic backend and contract implementation; 45/45 emulator and boundary regression tests pass; PostgreSQL transaction/query functions, production adapters, and rendered UI acceptance remain incomplete; [QA limitations](docs/qa/F009.md) and open feature tasks govern delivery status.
 - **Prerequisites:** F008 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-014, NFR-001, NFR-004. **Behavior authority:** [requirements](docs/product/requirements.md), [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Add verified actor/current-scope entry points, expected revisions, transactional receipts/request digests, accepted event cursor and redacted append-only audit.
