@@ -36,7 +36,15 @@
     "test:f008:roles": "node tooling/f008/verify.mjs test:role-lifecycle",
     "test:f008:storage": "node tooling/f008/verify.mjs test:private-storage",
     "test:f008:constraints": "node tooling/f008/verify.mjs test:relational-constraints",
-    "test:f008:quota": "node tooling/f008/verify.mjs test:quota-resilience"
+    "test:f008:quota": "node tooling/f008/verify.mjs test:quota-resilience",
+    "test:f009": "node tooling/f009/verify.mjs",
+    "test:f009:intent": "node tooling/f009/verify.mjs test:f009:intent",
+    "test:f009:atomicity": "node tooling/f009/verify.mjs test:f009:atomicity",
+    "test:f009:authorization": "node tooling/f009/verify.mjs test:f009:authorization",
+    "test:f009:audit": "node tooling/f009/verify.mjs test:f009:audit",
+    "test:f009:events": "node tooling/f009/verify.mjs test:f009:events",
+    "test:f009:recovery": "node tooling/f009/verify.mjs test:f009:recovery",
+    "test:f009:ui": "node tooling/f009/verify.mjs test:f009:ui"
   },
   "engines": {
     "node": ">=24 <25"

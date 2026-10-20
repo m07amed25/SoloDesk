@@ -97,20 +97,43 @@ export const en = {
   // Local protection states
   "protection.title": "Local protection is unavailable",
   "protection.check_again": "Check again",
-  "protection.vault_locked": "Unlock your device's key store, then check again. Existing protected work remains locked.",
-  "protection.key_missing": "The device key for this local work is missing. Check a surviving device or separately protected backup if available. An account password reset cannot decrypt unsynced local work.",
-  "protection.protection_denied": "The device denied key access. Check system permissions, then check again or contact support.",
-  "protection.unprotected_backend": "This device's key store is not providing protected storage. Local protected work cannot be opened or saved until a protected key store is available.",
-  "protection.integrity_failed": "Protected work could not be authenticated. Do not replace it with an empty copy; contact support with the diagnostic ID.",
-  "protection.interrupted_rotation": "A key change was interrupted. The protected copies need validation before work can continue; contact support.",
-  "protection.unsupported_format": "This protected format is not supported by this version. Update the app or contact support; the existing data has not been replaced.",
+  "protection.vault_locked":
+    "Unlock your device's key store, then check again. Existing protected work remains locked.",
+  "protection.key_missing":
+    "The device key for this local work is missing. Check a surviving device or separately protected backup if available. An account password reset cannot decrypt unsynced local work.",
+  "protection.protection_denied":
+    "The device denied key access. Check system permissions, then check again or contact support.",
+  "protection.unprotected_backend":
+    "This device's key store is not providing protected storage. Local protected work cannot be opened or saved until a protected key store is available.",
+  "protection.integrity_failed":
+    "Protected work could not be authenticated. Do not replace it with an empty copy; contact support with the diagnostic ID.",
+  "protection.interrupted_rotation":
+    "A key change was interrupted. The protected copies need validation before work can continue; contact support.",
+  "protection.unsupported_format":
+    "This protected format is not supported by this version. Update the app or contact support; the existing data has not been replaced.",
 
   // Quota & Degraded Alerts (F008)
-  "quota.warning_70": "Storage utilization reached 70%. Consider archiving unused assets.",
-  "quota.warning_85": "Storage utilization reached 85%. Free up space soon to prevent write interruptions.",
-  "quota.critical_95": "Critical storage warning (95%). Approaching provider hard limit.",
-  "quota.exhausted_100": "Cloud storage capacity exhausted (100%). New writes are halted until space is cleared.",
-  "quota.provider_degraded": "Cloud backend is temporarily unavailable or degraded. Changes are safely saved locally.",
+  "quota.warning_70":
+    "Storage utilization reached 70%. Consider archiving unused assets.",
+  "quota.warning_85":
+    "Storage utilization reached 85%. Free up space soon to prevent write interruptions.",
+  "quota.critical_95":
+    "Critical storage warning (95%). Approaching provider hard limit.",
+  "quota.exhausted_100":
+    "Cloud storage capacity exhausted (100%). New writes are halted until space is cleared.",
+  "quota.provider_degraded":
+    "Cloud backend is temporarily unavailable or degraded. Changes are safely saved locally.",
   "quota.dismiss": "Dismiss alert",
-} as const;
 
+  // Authoritative Command Receipts & Audit (F009)
+  "receipt.status.committed": "Authoritative change committed",
+  "receipt.status.job_accepted": "Job accepted for processing",
+  "receipt.status.conflict": "Revision conflict detected",
+  "receipt.status.rejected": "Command rejected",
+  "receipt.status.proven_not_applied": "Operation proven not applied",
+  "receipt.status.reconciling": "Reconciling operation status...",
+  "receipt.announcement.committed":
+    "Command completed successfully. Receipt ID: {receiptId}",
+  "receipt.announcement.conflict": "Command failed due to revision conflict.",
+  "receipt.announcement.rejected": "Command was rejected by the server.",
+} as const;

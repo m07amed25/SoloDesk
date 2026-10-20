@@ -114,5 +114,16 @@ export const ar: TranslationDictionary = {
   "quota.exhausted_100": "تم استنفاد سعة التخزين السحابية (100٪). تم إيقاف الحفظ الجديد مؤقتًا.",
   "quota.provider_degraded": "الخدمة السحابية متوقفة أو تعمل بشكل مقيّد مؤقتًا. يتم حفظ التغييرات محليًا بأمان.",
   "quota.dismiss": "إغلاق التنبيه",
+
+  // إيصالات الأوامر المعتمدة والتدقيق (F009)
+  "receipt.status.committed": "تم اعتماد التغيير رسميًا",
+  "receipt.status.job_accepted": "تم قبول العملية للمعالجة",
+  "receipt.status.conflict": "تم اكتشاف تعارض في النسخة",
+  "receipt.status.rejected": "تم رفض الأمر",
+  "receipt.status.proven_not_applied": "تم إثبات عدم تطبيق العملية",
+  "receipt.status.reconciling": "جارٍ التحقق من حالة العملية...",
+  "receipt.announcement.committed": "اكتمل تنفيذ الأمر بنجاح. معرّف الإيصال: {receiptId}",
+  "receipt.announcement.conflict": "تعذر تنفيذ الأمر بسبب تعارض في النسخة.",
+  "receipt.announcement.rejected": "تم رفض الأمر من قِبل الخادم.",
 };
 
