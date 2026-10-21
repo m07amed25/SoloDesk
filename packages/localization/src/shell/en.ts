@@ -136,4 +136,24 @@ export const en = {
     "Command completed successfully. Receipt ID: {receiptId}",
   "receipt.announcement.conflict": "Command failed due to revision conflict.",
   "receipt.announcement.rejected": "Command was rejected by the server.",
+
+  // Identity recovery (safe local copy; never provider error text)
+  "shell.identity.action.retry": "Try again",
+  "shell.identity.action.cancel": "Cancel",
+  "shell.identity.action.unlockProtection": "Unlock protection",
+  "shell.identity.action.signIn": "Sign in again",
+  "shell.identity.action.chooseIsolatedProfile": "Choose an isolated profile",
+  "shell.identity.action.reconcile": "Check enrollment status",
+  "shell.identity.action.upgrade": "Update SoloDesk",
+  "shell.identity.action.contactSupport": "Contact support",
+  "shell.identity.recovery.unlockProtection":
+    "Unlock protected device storage before continuing. Existing local data has not been replaced.",
+  "shell.identity.recovery.signInAgain":
+    "Your session is no longer current. Sign in again to continue.",
+  "shell.identity.recovery.reconcile":
+    "Enrollment may still be processing. Check its authoritative status before trying a new enrollment.",
+  "shell.identity.recovery.upgrade":
+    "This protected identity format needs a newer SoloDesk version. Existing data has not been replaced.",
+  "shell.identity.recovery.contactSupport":
+    "Protected identity data could not be verified. Keep the existing files and contact support.",
 } as const;

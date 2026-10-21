@@ -1,4 +1,6 @@
 import { utf8Length } from "../../packages/contracts/src/bounds.ts";
+import { parseAuthCallback } from "./identity/auth-callback.ts";
+import { parseIdentityConfig, type IdentityConfig } from "./identity/config.ts";
 
 const UUID =
   "[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}";
@@ -7,15 +9,43 @@ const RECORD = new RegExp(
 );
 const HOME = "solodesk://open/home";
 
+export type IdentityReturnIntent = Readonly<{
+  kind: "identity_return";
+  code?: string;
+  error?: string;
+  state: string;
+  responseIssuer?: string;
+  rawUrl: string;
+}>;
+
 export type LinkIntent =
   | Readonly<{ kind: "home" }>
-  | Readonly<{ kind: "record"; recordId: string; workspaceId: string }>;
+  | Readonly<{ kind: "record"; recordId: string; workspaceId: string }>
+  | IdentityReturnIntent;
+
 export type LinkDecision = Readonly<{
   status: "accepted" | "denied" | "unavailable";
   route?: "home" | "record";
 }>;
 
+export function parseIdentityReturn(raw: unknown, config?: IdentityConfig): IdentityReturnIntent | null {
+  if (typeof raw !== "string") return null;
+  const grammarConfig = config ?? { ...parseIdentityConfig({ SOLODESK_TEST_MODE: "1" }), issuer: "" };
+  const parsed = parseAuthCallback(raw, grammarConfig);
+  if (parsed.type === "invalid") return null;
+  return Object.freeze({
+    kind: "identity_return",
+    ...(parsed.type === "success" ? { code: parsed.code } : { error: parsed.error }),
+    state: parsed.state,
+    responseIssuer: parsed.responseIssuer,
+    rawUrl: raw,
+  });
+}
+
 export function parseLink(raw: unknown): LinkIntent | null {
+  const identityReturn = parseIdentityReturn(raw);
+  if (identityReturn) return identityReturn;
+
   if (
     typeof raw !== "string" ||
     utf8Length(raw) > 2048 ||
@@ -82,6 +112,7 @@ export class LinkRouter {
       this.seen.add(deliveryId);
     }
     if (intent.kind === "home") return { status: "accepted", route: "home" };
+    if (intent.kind === "identity_return") return { status: "denied" };
     if (!this.options.syntheticRecord) return { status: "unavailable" };
     if (
       !this.options.authorizeRecord ||

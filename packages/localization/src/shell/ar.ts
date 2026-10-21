@@ -125,5 +125,20 @@ export const ar: TranslationDictionary = {
   "receipt.announcement.committed": "اكتمل تنفيذ الأمر بنجاح. معرّف الإيصال: {receiptId}",
   "receipt.announcement.conflict": "تعذر تنفيذ الأمر بسبب تعارض في النسخة.",
   "receipt.announcement.rejected": "تم رفض الأمر من قِبل الخادم.",
+
+  // استعادة الهوية (نص محلي آمن، دون نسخ رسائل المزوّد)
+  "shell.identity.action.retry": "إعادة المحاولة",
+  "shell.identity.action.cancel": "إلغاء",
+  "shell.identity.action.unlockProtection": "فتح الحماية",
+  "shell.identity.action.signIn": "تسجيل الدخول مجددًا",
+  "shell.identity.action.chooseIsolatedProfile": "اختيار ملف شخصي معزول",
+  "shell.identity.action.reconcile": "التحقق من حالة التسجيل",
+  "shell.identity.action.upgrade": "تحديث سولو ديسك",
+  "shell.identity.action.contactSupport": "التواصل مع الدعم",
+  "shell.identity.recovery.unlockProtection": "افتح تخزين الجهاز المحمي قبل المتابعة. لم تُستبدل البيانات المحلية الحالية.",
+  "shell.identity.recovery.signInAgain": "لم تعد الجلسة الحالية صالحة. سجّل الدخول مجددًا للمتابعة.",
+  "shell.identity.recovery.reconcile": "قد تكون عملية التسجيل ما زالت قيد التنفيذ. تحقّق من حالتها المعتمدة قبل بدء تسجيل جديد.",
+  "shell.identity.recovery.upgrade": "تحتاج صيغة الهوية المحمية هذه إلى إصدار أحدث من سولو ديسك. لم تُستبدل البيانات الحالية.",
+  "shell.identity.recovery.contactSupport": "تعذّر التحقق من بيانات الهوية المحمية. احتفظ بالملفات الحالية وتواصل مع الدعم.",
 };
 

@@ -3,6 +3,66 @@ import type {
   PersistenceRecoveryState,
   PersistenceStatusDto,
 } from "../../shared/persistence-contracts.ts";
+import type {
+  IdentityAction,
+  IdentityLifecycle,
+  SessionStatus,
+} from "../../shared/identity-contracts.ts";
+
+export type IdentityRecoveryState = Readonly<{
+  lifecycle: IdentityLifecycle;
+  sessionStatus: SessionStatus;
+  messageKey: string;
+  actionKey: string;
+  nextActions: readonly IdentityAction[];
+}>;
+
+export function identityRecoveryState(error: unknown): IdentityRecoveryState {
+  const reason = error instanceof Error ? error.message : String(error);
+  if (["vault_locked", "key_missing", "unprotected_backend", "protection_denied"].includes(reason)) {
+    return Object.freeze({
+      lifecycle: "protection_unavailable",
+      sessionStatus: "none",
+      messageKey: "shell.identity.recovery.unlockProtection",
+      actionKey: "shell.identity.action.unlockProtection",
+      nextActions: Object.freeze(["unlock_protection"] as const),
+    });
+  }
+  if (reason.includes("unsupported")) {
+    return Object.freeze({
+      lifecycle: "recovery_required",
+      sessionStatus: "none",
+      messageKey: "shell.identity.recovery.upgrade",
+      actionKey: "shell.identity.action.upgrade",
+      nextActions: Object.freeze(["upgrade"] as const),
+    });
+  }
+  if (reason === "session_rejected" || reason === "session_invalidated") {
+    return Object.freeze({
+      lifecycle: "sign_in_required",
+      sessionStatus: "rejected",
+      messageKey: "shell.identity.recovery.signInAgain",
+      actionKey: "shell.identity.action.signIn",
+      nextActions: Object.freeze(["sign_in_again"] as const),
+    });
+  }
+  if (reason === "partial_enrollment" || reason === "outcome_unknown") {
+    return Object.freeze({
+      lifecycle: "recovery_required",
+      sessionStatus: "current",
+      messageKey: "shell.identity.recovery.reconcile",
+      actionKey: "shell.identity.action.reconcile",
+      nextActions: Object.freeze(["reconcile"] as const),
+    });
+  }
+  return Object.freeze({
+    lifecycle: "recovery_required",
+    sessionStatus: "none",
+    messageKey: "shell.identity.recovery.contactSupport",
+    actionKey: "shell.identity.action.contactSupport",
+    nextActions: Object.freeze(["contact_support"] as const),
+  });
+}
 
 const messages: Record<
   PersistenceReasonCode,

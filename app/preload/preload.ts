@@ -10,8 +10,15 @@ import {
   sanitizePersistenceStatus,
   type PersistenceStatusDto,
 } from "../shared/persistence-contracts.ts";
+import {
+  isRendererIdentityState,
+  sanitizeRendererState,
+  validateIdentityResponse,
+  type IdentityMethod,
+  type RendererIdentityState,
+} from "../shared/identity-contracts.ts";
 
-type Family = "lifecycle" | "links" | "persistence";
+type Family = "lifecycle" | "links" | "persistence" | "identity";
 type Listener = (event: unknown) => void;
 const listeners = new Map<string, { family: Family; callback: Listener }>();
 const pendingEvents = new Map<string, { family: Family; data: unknown }>();
@@ -69,7 +76,8 @@ ipcRenderer.on("f004:event", (_nativeEvent, input: unknown) => {
     typeof event.subscriptionId !== "string" ||
     (event.family !== "lifecycle" &&
       event.family !== "links" &&
-      event.family !== "persistence")
+      event.family !== "persistence" &&
+      event.family !== "identity")
   )
     return;
   const listener = listeners.get(event.subscriptionId);
@@ -77,6 +85,7 @@ ipcRenderer.on("f004:event", (_nativeEvent, input: unknown) => {
   if (data === null) return;
   if (event.family === "persistence" && !sanitizePersistenceStatus(data))
     return;
+  if (event.family === "identity" && !isRendererIdentityState(data)) return;
   if (listener?.family === event.family) listener.callback(data);
   else if (pendingEvents.size < 32)
     pendingEvents.set(event.subscriptionId, { family: event.family, data });
@@ -162,7 +171,10 @@ function subscribePersistence(
           const safe = sanitizePersistenceStatus(value);
           if (safe) callback(safe);
         };
-        listeners.set(subscriptionId, { family: "persistence", callback: deliver });
+        listeners.set(subscriptionId, {
+          family: "persistence",
+          callback: deliver,
+        });
         const pending = pendingEvents.get(subscriptionId);
         if (pending?.family === "persistence") deliver(pending.data);
         pendingEvents.delete(subscriptionId);
@@ -178,7 +190,99 @@ function subscribePersistence(
   };
 }
 
+async function invokeIdentity(
+  method: IdentityMethod,
+  payload: Record<string, unknown> = {},
+): Promise<RendererIdentityState> {
+  const requestId = newRequestId();
+  const request = Object.freeze({
+    version: 1 as const,
+    requestId,
+    method,
+    payload: Object.freeze({ ...payload }),
+  });
+  try {
+    const response: unknown = await ipcRenderer.invoke(
+      `solodesk.${method}`,
+      request,
+    );
+    const checked = validateIdentityResponse(response, requestId);
+    if (checked.ok && checked.value.status === "ok") {
+      const data = checked.value.data;
+      if (isRendererIdentityState(data)) {
+        return sanitizeRendererState(data);
+      }
+    }
+  } catch {
+    /* IPC errors remain inside preload. */
+  }
+  throw new Error("identity_unavailable");
+}
+
+function subscribeIdentity(
+  callback: (state: RendererIdentityState) => void,
+): () => void {
+  if (typeof callback !== "function") return () => {};
+  let active = true;
+  let subscriptionId: string | undefined;
+  void ipcRenderer
+    .invoke("solodesk.identity.onStateChanged")
+    .then((response: unknown) => {
+      if (
+        !response ||
+        typeof response !== "object" ||
+        !("subscriptionId" in response) ||
+        typeof response.subscriptionId !== "string" ||
+        !/^[0-9a-f-]{36}$/.test(response.subscriptionId)
+      )
+        return;
+      subscriptionId = response.subscriptionId;
+      if (active) {
+        const deliver = (value: unknown) => {
+          if (isRendererIdentityState(value))
+            callback(sanitizeRendererState(value));
+        };
+        listeners.set(subscriptionId, {
+          family: "identity",
+          callback: deliver,
+        });
+        const pending = pendingEvents.get(subscriptionId);
+        if (
+          pending?.family === "identity" &&
+          isRendererIdentityState(pending.data)
+        ) {
+          deliver(pending.data);
+        }
+        pendingEvents.delete(subscriptionId);
+      } else ipcRenderer.send("f004:subscription:remove", { subscriptionId });
+    })
+    .catch(() => {});
+  return () => {
+    active = false;
+    if (subscriptionId) {
+      listeners.delete(subscriptionId);
+      pendingEvents.delete(subscriptionId);
+      ipcRenderer.send("f004:subscription:remove", { subscriptionId });
+    }
+  };
+}
+
 const facade = Object.freeze({
+  identity: Object.freeze({
+    getState: () => invokeIdentity("identity.getState"),
+    startSignIn: () => invokeIdentity("identity.startSignIn"),
+    cancelSignIn: () => invokeIdentity("identity.cancelSignIn"),
+    confirmEnrollment: (label?: string) =>
+      invokeIdentity(
+        "identity.confirmEnrollment",
+        label !== undefined ? { label } : {},
+      ),
+    retryReconciliation: () => invokeIdentity("identity.retryReconciliation"),
+    signOut: () => invokeIdentity("identity.signOut"),
+    confirmAccountSwitch: () => invokeIdentity("identity.confirmAccountSwitch"),
+    onStateChanged: (callback: (state: RendererIdentityState) => void) =>
+      subscribeIdentity(callback),
+  }),
   persistence: Object.freeze({
     getState: (workspaceId: string) =>
       invokePersistence("getState", workspaceId),
