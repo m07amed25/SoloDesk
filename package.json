@@ -50,7 +50,16 @@
     "test:f010:enrollment": "node tooling/f010/verify.mjs test:f010:enrollment",
     "test:f010:isolation": "node tooling/f010/verify.mjs test:f010:isolation",
     "test:f010:recovery": "node tooling/f010/verify.mjs test:f010:recovery",
-    "test:f010:ui": "node tooling/f010/verify.mjs test:f010:ui"
+    "test:f010:ui": "node tooling/f010/verify.mjs test:f010:ui",
+    "test:f011": "node tooling/f011/verify.mjs",
+    "test:f011:policy": "node tooling/f011/verify.mjs test:f011:policy",
+    "test:f011:mfa": "node tooling/f011/verify.mjs test:f011:mfa",
+    "test:f011:recovery": "node tooling/f011/verify.mjs test:f011:recovery",
+    "test:f011:security": "node tooling/f011/verify.mjs test:f011:security",
+    "test:f011:reconciliation": "node tooling/f011/verify.mjs test:f011:reconciliation",
+    "test:f011:boundary": "node tooling/f011/verify.mjs test:f011:boundary",
+    "test:f011:privacy": "node tooling/f011/verify.mjs test:f011:privacy",
+    "test:f011:ui": "node tooling/f011/verify.mjs test:f011:ui"
   },
   "engines": {
     "node": ">=24 <25"

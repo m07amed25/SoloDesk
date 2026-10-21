@@ -1,13 +1,42 @@
 import fs from "node:fs";
 import path from "node:path";
 import { parseEnv } from "node:util";
+import {
+  type IdentitySecurityPolicy,
+  isIdentitySecurityPolicy,
+  SECURITY_PURPOSES,
+  type SecurityPurpose,
+} from "../../shared/identity-security-contracts.ts";
 
-export function identityEnvironment(directory: string, environment = process.env): Record<string, string | undefined> {
+export const DEFAULT_SYNTHETIC_SECURITY_POLICY: IdentitySecurityPolicy =
+  Object.freeze({
+    policy_version: "f011_v1_synthetic",
+    factor_requirement: "optional",
+    factor_types: Object.freeze(["totp"] as const),
+    recovery_method: "provider_recovery_codes",
+    reauth_purposes: SECURITY_PURPOSES,
+    attempt_policy_ref: "provider_standard_attempts_v1",
+    session_consequence_profile: "standard_signout_other_sessions_v1",
+    primary_recovery_profile: "password_or_magic_link_v1",
+    manual_escalation_profile: "support_assisted_recovery_pending_q08",
+    effective_at: "2026-10-21T00:00:00.000Z",
+  });
+
+export function identityEnvironment(
+  directory: string,
+  environment = process.env,
+): Record<string, string | undefined> {
   const file = path.join(directory, ".env.local");
-  const local = fs.existsSync(file) ? parseEnv(fs.readFileSync(file, "utf8")) : {};
-  const allowed = Object.fromEntries(Object.entries(local).filter(([key]) =>
-    key.startsWith("SOLODESK_AUTH_") || ["VITE_SUPABASE_URL", "VITE_SUPABASE_PUBLISHABLE_KEY"].includes(key),
-  ));
+  const local = fs.existsSync(file)
+    ? parseEnv(fs.readFileSync(file, "utf8"))
+    : {};
+  const allowed = Object.fromEntries(
+    Object.entries(local).filter(
+      ([key]) =>
+        key.startsWith("SOLODESK_AUTH_") ||
+        ["VITE_SUPABASE_URL", "VITE_SUPABASE_PUBLISHABLE_KEY"].includes(key),
+    ),
+  );
   return { ...allowed, ...environment };
 }
 
@@ -21,6 +50,8 @@ export type CallbackDestinationConfig = Readonly<{
   path: string;
 }>;
 
+export type SignOutScope = "global" | "local" | "others";
+
 export type IdentityConfig = Readonly<{
   hostedOrigin: string;
   hostedPath: string;
@@ -33,10 +64,15 @@ export type IdentityConfig = Readonly<{
   maxDeviceLabelLength: number;
   publishableKey: string;
   publicRegistrationEnabled: boolean;
+  securityPolicy: IdentitySecurityPolicy;
+  securityPurposes: readonly SecurityPurpose[];
+  securityLifetimeMs: number;
+  signOutScope: SignOutScope;
 }>;
 
 export function parseIdentityConfig(
   env: Record<string, string | undefined> = process.env,
+  options?: { isPackaged?: boolean },
 ): IdentityConfig {
   const isTest = env.NODE_ENV === "test" || env.SOLODESK_TEST_MODE === "1";
 
@@ -95,7 +131,9 @@ export function parseIdentityConfig(
   }
 
   const issuer = issuerUrl.toString().replace(/\/$/, "");
-  const audience = env.SOLODESK_AUTH_AUDIENCE || (env.VITE_SUPABASE_URL ? "authenticated" : "solodesk-desktop");
+  const audience =
+    env.SOLODESK_AUTH_AUDIENCE ||
+    (env.VITE_SUPABASE_URL ? "authenticated" : "solodesk-desktop");
   if (!audience || audience.trim().length === 0) {
     throw new Error("invalid_auth_audience");
   }
@@ -111,8 +149,8 @@ export function parseIdentityConfig(
   if (publishableKey) {
     if (
       publishableKey.toLowerCase().includes("service_role") ||
-      publishableKey.toLowerCase().includes("secret_key")
-      || publishableKey.startsWith("sb_secret_")
+      publishableKey.toLowerCase().includes("secret_key") ||
+      publishableKey.startsWith("sb_secret_")
     ) {
       throw new Error("service_role_key_prohibited");
     }
@@ -164,6 +202,59 @@ export function parseIdentityConfig(
     }),
   };
 
+  // F011 Security Policy parsing and validation
+  let securityPolicy: IdentitySecurityPolicy =
+    DEFAULT_SYNTHETIC_SECURITY_POLICY;
+  if (env.SOLODESK_AUTH_SECURITY_POLICY_JSON) {
+    try {
+      const parsed = JSON.parse(env.SOLODESK_AUTH_SECURITY_POLICY_JSON);
+      if (!isIdentitySecurityPolicy(parsed)) {
+        throw new Error("invalid_security_policy");
+      }
+      securityPolicy = Object.freeze(parsed);
+    } catch (err) {
+      if (err instanceof Error && err.message === "invalid_security_policy")
+        throw err;
+      throw new Error("corrupt_security_policy_json");
+    }
+  }
+
+  // Fail closed on sandbox-as-production
+  const isProduction =
+    options?.isPackaged === true ||
+    env.SOLODESK_PACKAGED === "1" ||
+    env.SOLODESK_PACKAGED === "true" ||
+    env.NODE_ENV === "production";
+  if (isProduction) {
+    if (
+      securityPolicy.policy_version.includes("synthetic") ||
+      securityPolicy.policy_version.includes("test")
+    ) {
+      throw new Error("sandbox_policy_in_production_prohibited");
+    }
+    if (hostedOrigin.includes(".test") || hostedOrigin.includes("localhost")) {
+      throw new Error("sandbox_origin_in_production_prohibited");
+    }
+  }
+
+  const securityLifetimeMs = Number(
+    env.SOLODESK_AUTH_SECURITY_LIFETIME_MS || 300000,
+  );
+  if (
+    !Number.isSafeInteger(securityLifetimeMs) ||
+    securityLifetimeMs <= 0 ||
+    securityLifetimeMs > 3600000
+  ) {
+    throw new Error("invalid_security_lifetime");
+  }
+
+  const validSignOutScopes = ["global", "local", "others"];
+  const signOutScope = (env.SOLODESK_AUTH_SIGNOUT_SCOPE ||
+    "global") as SignOutScope;
+  if (!validSignOutScopes.includes(signOutScope)) {
+    throw new Error("invalid_signout_scope");
+  }
+
   return Object.freeze({
     hostedOrigin,
     hostedPath,
@@ -176,5 +267,9 @@ export function parseIdentityConfig(
     maxDeviceLabelLength,
     publishableKey,
     publicRegistrationEnabled,
+    securityPolicy,
+    securityPurposes: SECURITY_PURPOSES,
+    securityLifetimeMs,
+    signOutScope,
   });
 }

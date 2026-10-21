@@ -156,4 +156,59 @@ export const en = {
     "This protected identity format needs a newer SoloDesk version. Existing data has not been replaced.",
   "shell.identity.recovery.contactSupport":
     "Protected identity data could not be verified. Keep the existing files and contact support.",
+
+  // Identity Security & MFA (F011)
+  "identity.security.title": "Account Security",
+  "identity.security.policy.optional":
+    "Two-factor authentication is optional for your account.",
+  "identity.security.policy.required":
+    "Two-factor authentication is required by your organization policy.",
+  "identity.security.status.not_configured":
+    "No additional authentication factors configured.",
+  "identity.security.status.recovery_codes_pending":
+    "Additional factor verified. Please save and acknowledge your recovery codes.",
+  "identity.security.status.ready":
+    "Two-factor authentication is active and ready.",
+  "identity.security.announcement.browser_opened":
+    "A secure browser window has been opened to complete setup.",
+  "identity.security.action.enroll_factor": "Set up Authenticator App",
+  "identity.security.action.acknowledge_recovery_codes":
+    "I have saved these recovery codes",
+  "identity.security.action.cancel": "Cancel setup",
+  "identity.security.recovery_codes.confined_warning":
+    "Recovery codes are displayed only once in the secure browser. Save them safely before acknowledging.",
+  "identity.security.error.verification_failed":
+    "Authentication failed. Please verify your credentials or try again.",
+  "identity.security.status.challenge_required":
+    "Additional verification is required to continue.",
+  "identity.security.status.challenge_waiting":
+    "Waiting for verification in the secure browser window...",
+  "identity.security.status.challenge_expired":
+    "The authentication request has expired. Please try again.",
+  "identity.security.status.rate_limited":
+    "Too many failed attempts. Please wait before trying again or use account recovery.",
+  "identity.security.action.open_challenge": "Verify Identity",
+  "identity.security.action.retry": "Try again",
+  "identity.security.action.recover": "Recover account",
+  "identity.security.action.sign_in_again": "Sign in again",
+  "identity.security.status.recovery_requested":
+    "If an account exists with this identifier, recovery instructions have been sent.",
+  "identity.security.status.factor_reset_required":
+    "Account access recovered. Your previous authenticator has been reset. Please set up a new authenticator app.",
+  "identity.security.status.local_unlock_required":
+    "Account identity verified. Local encrypted workspace data requires device unlock.",
+  "identity.security.status.workspace_revalidation":
+    "Cloud session recovered. Workspace permissions must be revalidated.",
+  "identity.security.action.unlock_local": "Unlock local data",
+  "identity.security.action.revalidate_workspace": "Revalidate access",
+  "identity.security.status.reauth_required":
+    "Reauthentication required. Please confirm your identity to complete this security change.",
+  "identity.security.status.stale_action":
+    "This security request is no longer valid due to a newer account update.",
+  "identity.security.status.session_impact":
+    "Completing this security change will sign out all other active sessions.",
+  "identity.security.action.reauthenticate": "Reauthenticate",
+  "identity.security.action.confirm_change": "Confirm change",
 } as const;
+
+

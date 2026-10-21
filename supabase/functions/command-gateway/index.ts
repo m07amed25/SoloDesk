@@ -20,6 +20,12 @@ import {
   parseDeviceEnrollmentRequest,
   type DeviceEnrollmentDatabase,
 } from "../_shared/device-enrollment.ts";
+import {
+  type AccountSecurityDatabase,
+  parseBeginOperationPayload,
+  parseObserveOperationPayload,
+  parseAcknowledgeRecoveryCodesPayload,
+} from "../_shared/account-security.ts";
 
 export interface F009GatewayOptions {
   // Must verify credentials and derive workspace/device authority on the service.
@@ -27,8 +33,11 @@ export interface F009GatewayOptions {
   db?: AuthoritativeDatabase;
   membershipReader?: DatabaseMembershipReader;
   registry?: Registry;
-  authenticateIdentity?: (req: Request) => Promise<VerifiedIdentityContext | null>;
+  authenticateIdentity?: (
+    req: Request,
+  ) => Promise<VerifiedIdentityContext | null>;
   enrollmentDb?: DeviceEnrollmentDatabase;
+  accountSecurityDb?: AccountSecurityDatabase;
 }
 
 export async function handleCommandGateway(
@@ -55,7 +64,10 @@ export async function handleCommandGateway(
     return jsonErrorResponse("VALIDATION", 400);
   }
 
-  if (body.command === "device.enroll" || body.command === "device.enrollmentResult") {
+  if (
+    body.command === "device.enroll" ||
+    body.command === "device.enrollmentResult"
+  ) {
     if (!f009Options?.authenticateIdentity || !f009Options.enrollmentDb) {
       return jsonErrorResponse("SERVICE_UNAVAILABLE", 503);
     }
@@ -76,7 +88,8 @@ export async function handleCommandGateway(
       Object.keys(body.payload).length !== 1 ||
       typeof body.payload.enrollmentIntentId !== "string" ||
       !/^[0-9a-f-]{36}$/i.test(body.payload.enrollmentIntentId)
-    ) return jsonErrorResponse("VALIDATION", 400);
+    )
+      return jsonErrorResponse("VALIDATION", 400);
     const data = await f009Options.enrollmentDb.result(
       identity,
       body.payload.enrollmentIntentId,
@@ -96,6 +109,63 @@ export async function handleCommandGateway(
     });
   }
 
+  if (
+    body.command === "identity.security.getState" ||
+    body.command === "identity.security.begin" ||
+    body.command === "identity.security.observe" ||
+    body.command === "identity.security.acknowledgeRecoveryCodes"
+  ) {
+    if (!f009Options?.authenticateIdentity || !f009Options.accountSecurityDb) {
+      return jsonErrorResponse("SERVICE_UNAVAILABLE", 503);
+    }
+    const identity = await f009Options.authenticateIdentity(req);
+    if (!identity) return jsonErrorResponse("AUTH_REQUIRED", 401);
+
+    if (body.command === "identity.security.getState") {
+      const data = await f009Options.accountSecurityDb.getState(identity);
+      return new Response(JSON.stringify({ ok: true, data }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    if (body.command === "identity.security.begin") {
+      const payload = parseBeginOperationPayload(body.payload);
+      if (!payload) return jsonErrorResponse("VALIDATION", 400);
+      const data = await f009Options.accountSecurityDb.begin(identity, payload);
+      return new Response(JSON.stringify({ ok: true, data }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    if (body.command === "identity.security.observe") {
+      const payload = parseObserveOperationPayload(body.payload);
+      if (!payload) return jsonErrorResponse("VALIDATION", 400);
+      const data = await f009Options.accountSecurityDb.observe(
+        identity,
+        payload,
+      );
+      return new Response(JSON.stringify({ ok: true, data }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    if (body.command === "identity.security.acknowledgeRecoveryCodes") {
+      const payload = parseAcknowledgeRecoveryCodesPayload(body.payload);
+      if (!payload) return jsonErrorResponse("VALIDATION", 400);
+      const data = await f009Options.accountSecurityDb.acknowledgeRecoveryCodes(
+        identity,
+        payload,
+      );
+      return new Response(JSON.stringify({ ok: true, data }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+  }
+
   // F009 Authoritative Command / Query branch
   if (
     body.protocolVersion === 1 ||
@@ -103,7 +173,12 @@ export async function handleCommandGateway(
     body.kind === "command" ||
     body.kind === "query"
   ) {
-    if (!f009Options?.db || !f009Options.registry || !f009Options.membershipReader || !f009Options.authenticate) {
+    if (
+      !f009Options?.db ||
+      !f009Options.registry ||
+      !f009Options.membershipReader ||
+      !f009Options.authenticate
+    ) {
       return jsonErrorResponse("SERVICE_UNAVAILABLE", 503);
     }
     {
@@ -111,13 +186,22 @@ export async function handleCommandGateway(
       if (!trustedCtx) return jsonErrorResponse("AUTH_REQUIRED", 401);
       const membershipReader = f009Options.membershipReader;
       const parsed = request(body, f009Options.registry);
-      if (!parsed.ok || parsed.value.workspaceId.value !== trustedCtx.workspaceId) {
+      if (
+        !parsed.ok ||
+        parsed.value.workspaceId.value !== trustedCtx.workspaceId
+      ) {
         return jsonErrorResponse("VALIDATION", 400);
       }
       // Handle reconciliation query operation
       if (body.kind === "query" && body.operation === "command.reconcile") {
         const payload = parsed.value.payload as Record<string, unknown>;
-        if (!isValidOperationType(payload.originalOperation) || !id({ kind: "operation", value: payload.originalOperationId }, "operation").ok) {
+        if (
+          !isValidOperationType(payload.originalOperation) ||
+          !id(
+            { kind: "operation", value: payload.originalOperationId },
+            "operation",
+          ).ok
+        ) {
           return jsonErrorResponse("VALIDATION", 400);
         }
         const reconResult = await reconcileOperation(
@@ -130,13 +214,17 @@ export async function handleCommandGateway(
         );
 
         return new Response(
-          JSON.stringify({
-            ok:
-              reconResult.outcome === "committed" ||
-              reconResult.outcome === "job_accepted",
-            status: reconResult.outcome,
-            data: reconResult,
-          }, (_key, value) => typeof value === "bigint" ? value.toString() : value),
+          JSON.stringify(
+            {
+              ok:
+                reconResult.outcome === "committed" ||
+                reconResult.outcome === "job_accepted",
+              status: reconResult.outcome,
+              data: reconResult,
+            },
+            (_key, value) =>
+              typeof value === "bigint" ? value.toString() : value,
+          ),
           {
             status: 200,
             headers: { "Content-Type": "application/json" },
@@ -161,15 +249,19 @@ export async function handleCommandGateway(
           ? 409
           : 400;
       return new Response(
-        JSON.stringify({
-          ok: output.ok,
-          status: output.status,
-          receipt: output.receipt,
-          event: output.event,
-          error: output.error,
-          currentRevision: output.currentRevision,
-          progressToken: output.progressToken,
-        }, (_key, value) => typeof value === "bigint" ? value.toString() : value),
+        JSON.stringify(
+          {
+            ok: output.ok,
+            status: output.status,
+            receipt: output.receipt,
+            event: output.event,
+            error: output.error,
+            currentRevision: output.currentRevision,
+            progressToken: output.progressToken,
+          },
+          (_key, value) =>
+            typeof value === "bigint" ? value.toString() : value,
+        ),
         {
           status: httpStatus,
           headers: { "Content-Type": "application/json" },
@@ -191,7 +283,6 @@ export async function handleCommandGateway(
   }
 
   const { context } = authResult;
-
 
   if (typeof body.command !== "string") {
     return jsonErrorResponse("VALIDATION", 400);
@@ -226,13 +317,26 @@ export async function handleCommandGateway(
 
 export default {
   async fetch(req: Request): Promise<Response> {
-    const runtime = (globalThis as unknown as { Deno?: { env: { get(name: string): string | undefined } } }).Deno;
+    const runtime = (
+      globalThis as unknown as {
+        Deno?: { env: { get(name: string): string | undefined } };
+      }
+    ).Deno;
     const env = Object.fromEntries(
-      ["SUPABASE_URL", "SUPABASE_PUBLISHABLE_KEY", "SUPABASE_ANON_KEY", "SOLODESK_AUTH_AUDIENCE"]
-        .map((key) => [key, runtime?.env.get(key)]),
+      [
+        "SUPABASE_URL",
+        "SUPABASE_PUBLISHABLE_KEY",
+        "SUPABASE_ANON_KEY",
+        "SOLODESK_AUTH_AUDIENCE",
+      ].map((key) => [key, runtime?.env.get(key)]),
     );
     try {
-      return await handleCommandGateway(req, async () => null, undefined, identityRuntimeOptions(req, env));
+      return await handleCommandGateway(
+        req,
+        async () => null,
+        undefined,
+        identityRuntimeOptions(req, env),
+      );
     } catch {
       return jsonErrorResponse("SERVICE_UNAVAILABLE", 503);
     }

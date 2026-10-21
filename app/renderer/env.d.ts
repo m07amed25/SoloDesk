@@ -3,10 +3,24 @@
 import type { DesktopResponse } from "../shared/desktop-contracts.ts";
 import type { PersistenceStatusDto } from "../shared/persistence-contracts.ts";
 import type { ProviderQuotaProfileDto } from "../shared/cloud-contracts.ts";
+import type { RendererAccountSecurityState } from "../shared/identity-security-contracts.ts";
+
+export type IdentitySecurityApi = Readonly<{
+  getState: () => Promise<RendererAccountSecurityState>;
+  start: (action?: string) => Promise<RendererAccountSecurityState>;
+  cancel: () => Promise<RendererAccountSecurityState>;
+  acknowledgeRecoveryCodes: () => Promise<RendererAccountSecurityState>;
+  retryReconciliation: () => Promise<RendererAccountSecurityState>;
+  onStateChanged: (
+    callback: (state: RendererAccountSecurityState) => void,
+  ) => () => void;
+}>;
 
 declare global {
   interface Window {
+    identitySecurity?: IdentitySecurityApi;
     solodesk: Readonly<{
+      identitySecurity?: IdentitySecurityApi;
       persistence: Readonly<{
         getState: (workspaceId: string) => Promise<PersistenceStatusDto>;
         retryOpen: (workspaceId: string) => Promise<PersistenceStatusDto>;

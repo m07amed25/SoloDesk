@@ -31,6 +31,20 @@ import {
   type WindowState,
 } from "../shared/desktop-contracts.ts";
 
+import {
+  type RendererAccountSecurityState,
+  isRendererAccountSecurityState,
+} from "../shared/identity-security-contracts.ts";
+
+export const IDENTITY_SECURITY_METHODS = Object.freeze([
+  "getState",
+  "start",
+  "cancel",
+  "acknowledgeRecoveryCodes",
+  "retryReconciliation",
+] as const);
+export type IdentitySecurityMethod = (typeof IDENTITY_SECURITY_METHODS)[number];
+
 type Frame = Pick<WebFrameMain, "url" | "isDestroyed">;
 type Contents = Pick<WebContents, "mainFrame" | "isDestroyed" | "getURL">;
 export type WindowBinding = {
@@ -47,7 +61,12 @@ type CurrentContext = {
   epoch: number | undefined;
   authority: boolean;
 };
-type EventFamily = "lifecycle" | "links" | "persistence" | "identity";
+type EventFamily =
+  | "lifecycle"
+  | "links"
+  | "persistence"
+  | "identity"
+  | "identitySecurity";
 
 function documentOrigin(url: string): string | null {
   try {
@@ -167,6 +186,42 @@ type BridgeOptions = {
     profileId: string,
     epoch: number,
   ) => Promise<RendererIdentityState | null>;
+  identitySecurityState?: (
+    profileId: string,
+    epoch: number,
+  ) =>
+    | Promise<RendererAccountSecurityState | null>
+    | RendererAccountSecurityState
+    | null;
+  startIdentitySecurity?: (
+    profileId: string,
+    epoch: number,
+    action?: string,
+  ) =>
+    | Promise<RendererAccountSecurityState | null>
+    | RendererAccountSecurityState
+    | null;
+  cancelIdentitySecurity?: (
+    profileId: string,
+    epoch: number,
+  ) =>
+    | Promise<RendererAccountSecurityState | null>
+    | RendererAccountSecurityState
+    | null;
+  acknowledgeRecoveryCodes?: (
+    profileId: string,
+    epoch: number,
+  ) =>
+    | Promise<RendererAccountSecurityState | null>
+    | RendererAccountSecurityState
+    | null;
+  retrySecurityReconciliation?: (
+    profileId: string,
+    epoch: number,
+  ) =>
+    | Promise<RendererAccountSecurityState | null>
+    | RendererAccountSecurityState
+    | null;
 };
 
 export class DesktopBridge {
@@ -501,6 +556,78 @@ export class DesktopBridge {
     return { subscriptionId };
   }
 
+  async invokeIdentitySecurity(
+    method: IdentitySecurityMethod,
+    event: IpcMainInvokeEvent,
+    input: unknown,
+  ): Promise<RendererAccountSecurityState | null> {
+    const binding = this.bindings.get(event.sender);
+    if (!admitCaller(event, binding, this.context(binding)) || !binding) {
+      return null;
+    }
+
+    let result: RendererAccountSecurityState | null = null;
+    if (method === "getState") {
+      result = await (this.options.identitySecurityState?.(
+        binding.profileId,
+        binding.epoch,
+      ) ?? null);
+    } else if (method === "start") {
+      const action = typeof input === "string" ? input : undefined;
+      result = await (this.options.startIdentitySecurity?.(
+        binding.profileId,
+        binding.epoch,
+        action,
+      ) ?? null);
+    } else if (method === "cancel") {
+      result = await (this.options.cancelIdentitySecurity?.(
+        binding.profileId,
+        binding.epoch,
+      ) ?? null);
+    } else if (method === "acknowledgeRecoveryCodes") {
+      result = await (this.options.acknowledgeRecoveryCodes?.(
+        binding.profileId,
+        binding.epoch,
+      ) ?? null);
+    } else if (method === "retryReconciliation") {
+      result = await (this.options.retrySecurityReconciliation?.(
+        binding.profileId,
+        binding.epoch,
+      ) ?? null);
+    }
+
+    if (result && !isRendererAccountSecurityState(result)) {
+      return null;
+    }
+    return result;
+  }
+
+  subscribeIdentitySecurity(
+    event: IpcMainInvokeEvent,
+  ): { subscriptionId: string } | null {
+    const binding = this.bindings.get(event.sender);
+    if (!admitCaller(event, binding, this.context(binding)) || !binding) {
+      return null;
+    }
+    const subscriptionId = this.subscriptions.add(binding, "identitySecurity");
+    void Promise.resolve(
+      this.options.identitySecurityState?.(binding.profileId, binding.epoch),
+    ).then((data) => {
+      if (data && isRendererAccountSecurityState(data)) {
+        queueMicrotask(() => {
+          if (!binding.contents.isDestroyed()) {
+            binding.contents.send("f004:event", {
+              family: "identitySecurity",
+              subscriptionId,
+              data,
+            });
+          }
+        });
+      }
+    });
+    return { subscriptionId };
+  }
+
   remove(event: IpcMainInvokeEvent, input: unknown): void {
     const binding = this.bindings.get(event.sender);
     if (!admitCaller(event, binding, this.context(binding)) || !binding) return;
@@ -571,6 +698,15 @@ export async function installBridge(
     );
   ipcMain.handle("solodesk.identity.onStateChanged", (event) =>
     bridge.subscribeIdentity(event),
+  );
+  for (const method of IDENTITY_SECURITY_METHODS)
+    ipcMain.handle(
+      `solodesk.identitySecurity.${method}`,
+      (event, input: unknown) =>
+        bridge.invokeIdentitySecurity(method, event, input),
+    );
+  ipcMain.handle("solodesk.identitySecurity.onStateChanged", (event) =>
+    bridge.subscribeIdentitySecurity(event),
   );
   ipcMain.on("f004:subscription:remove", (event, input: unknown) =>
     bridge.remove(event as IpcMainInvokeEvent, input),
