@@ -30,6 +30,9 @@ test("built preload exposes only named desktop actions", async ({
     const surface = await page.evaluate(() => ({
       keys: Object.keys(window.solodesk || {}).sort(),
       identityKeys: Object.keys(window.solodesk?.identity || {}).sort(),
+      identitySecurityKeys: Object.keys(
+        window.solodesk?.identitySecurity || {},
+      ).sort(),
       windowKeys: Object.keys(window.solodesk?.window || {}).sort(),
       lifecycleKeys: Object.keys(window.solodesk?.lifecycle || {}).sort(),
       linkKeys: Object.keys(window.solodesk?.links || {}).sort(),
@@ -42,6 +45,7 @@ test("built preload exposes only named desktop actions", async ({
     expect(surface).toEqual({
       keys: [
         "identity",
+        "identitySecurity",
         "lifecycle",
         "links",
         "persistence",
@@ -57,6 +61,14 @@ test("built preload exposes only named desktop actions", async ({
         "retryReconciliation",
         "signOut",
         "startSignIn",
+      ],
+      identitySecurityKeys: [
+        "acknowledgeRecoveryCodes",
+        "cancel",
+        "getState",
+        "onStateChanged",
+        "retryReconciliation",
+        "start",
       ],
       windowKeys: ["getState", "minimize", "requestClose", "restore"],
       lifecycleKeys: ["onState"],
