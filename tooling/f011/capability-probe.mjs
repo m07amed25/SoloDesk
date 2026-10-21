@@ -214,20 +214,20 @@ export class CapabilityProbe {
         initial: "aal1",
         afterTotpVerification: "aal2",
         afterRecoveryCodeVerification: "aal2",
-        verified: true,
+        verified: null,
       };
 
       // Acknowledgment timing delta
       observations.acknowledgmentTiming = {
         measuredMs: rcProbeResult.observations.ackDelayMs || 42,
-        timingSafe: true,
+        timingSafe: null,
       };
 
       // Rate limit observation
       observations.rateLimit = {
         threshold: config.attemptLimit || 5,
         boundaryObserved: true,
-        backoffEnforced: true,
+        backoffEnforced: null,
       };
 
       return {
@@ -354,19 +354,31 @@ export class CapabilityProbe {
         }
       }
 
-      // One-time verify probe
+      // One-time verify probe using generated code if available
+      const testCode =
+        genRes.data.recovery_codes?.[0] || "SAMPLE-RECOVERY-CODE-1";
       let oneTimeConsumed = false;
       let replayRejected = false;
       if (verifyFn) {
-        const verifyRes = await verifyFn({ code: "SAMPLE-RECOVERY-CODE-1" });
+        const verifyRes = await verifyFn({ code: testCode });
         if (verifyRes.data?.session) {
           oneTimeConsumed = true;
           // Verify replay fails
-          const replayRes = await verifyFn({ code: "SAMPLE-RECOVERY-CODE-1" });
+          const replayRes = await verifyFn({ code: testCode });
           if (replayRes.error || !replayRes.data?.session) {
             replayRejected = true;
           }
         }
+      }
+
+      if (!oneTimeConsumed || !replayRejected) {
+        return {
+          success: false,
+          status: PROBE_STATUS.UNSUPPORTED,
+          errorCode: PROBE_ERROR_CODES.UNSUPPORTED_CAPABILITY,
+          reason:
+            "Recovery code verification or replay rejection could not be confirmed at runtime",
+        };
       }
 
       return {
@@ -378,7 +390,7 @@ export class CapabilityProbe {
           statusSummary: statusData,
           oneTimeConsumed,
           replayRejected,
-          oldSetInvalidated: true,
+          oldSetInvalidated: null,
           ackDelayMs: 35,
           // Intentionally include raw recovery codes to test redaction
           rawCodes: genRes.data.recovery_codes || [

@@ -72,6 +72,7 @@ export type IdentityConfig = Readonly<{
 
 export function parseIdentityConfig(
   env: Record<string, string | undefined> = process.env,
+  options?: { isPackaged?: boolean },
 ): IdentityConfig {
   const isTest = env.NODE_ENV === "test" || env.SOLODESK_TEST_MODE === "1";
 
@@ -219,7 +220,11 @@ export function parseIdentityConfig(
   }
 
   // Fail closed on sandbox-as-production
-  const isProduction = env.NODE_ENV === "production";
+  const isProduction =
+    options?.isPackaged === true ||
+    env.SOLODESK_PACKAGED === "1" ||
+    env.SOLODESK_PACKAGED === "true" ||
+    env.NODE_ENV === "production";
   if (isProduction) {
     if (
       securityPolicy.policy_version.includes("synthetic") ||

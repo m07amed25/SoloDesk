@@ -46,7 +46,7 @@ describe("T044: Security Evidence Privacy, Notification & Secret Redaction", () 
 
 
     // Verify allowlisted fields
-    assert.equal(latest.identity_event_type, "factor_enroll");
+    assert.equal(latest.identity_event_type, "factor_enrollment_accepted");
     assert.equal(latest.outcome, "accepted");
     assert.equal(latest.security_generation, 2);
 

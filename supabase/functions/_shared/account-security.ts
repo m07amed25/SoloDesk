@@ -117,10 +117,17 @@ export function parseObserveOperationPayload(
   ) {
     return null;
   }
+  const allowedSessionConsequences = [
+    "continues_aal2",
+    "continues_aal1",
+    "reauthentication_required",
+    "ended",
+    "unknown",
+  ];
   if (
     p.sessionConsequence !== undefined &&
     (typeof p.sessionConsequence !== "string" ||
-      p.sessionConsequence.length > 64)
+      !allowedSessionConsequences.includes(p.sessionConsequence))
   ) {
     return null;
   }
@@ -185,6 +192,37 @@ export interface AccountSecurityStateRecord {
   updated_at: string;
 }
 
+function mapPurposeToEventType(
+  purpose: string,
+  outcome: "accepted" | "rejected",
+): string {
+  switch (purpose) {
+    case "factor_enroll":
+      return outcome === "accepted"
+        ? "factor_enrollment_accepted"
+        : "factor_enrollment_rejected";
+    case "recovery_codes_regenerate":
+      return outcome === "accepted"
+        ? "recovery_codes_regenerated"
+        : "security_change_rejected";
+    case "lost_factor_recover":
+    case "primary_credential_recover":
+      return outcome === "accepted"
+        ? "account_recovery_accepted"
+        : "account_recovery_rejected";
+    case "mfa_challenge":
+      return outcome === "accepted"
+        ? "mfa_challenge_verified"
+        : "mfa_challenge_rejected";
+    case "recovery_codes_acknowledge":
+      return "recovery_codes_acknowledged";
+    default:
+      return outcome === "accepted"
+        ? "security_change_accepted"
+        : "security_change_rejected";
+  }
+}
+
 export class AccountSecurityService implements AccountSecurityDatabase {
   private states = new Map<string, AccountSecurityStateRecord>();
   private operations = new Map<string, Record<string, unknown>>();
@@ -226,11 +264,6 @@ export class AccountSecurityService implements AccountSecurityDatabase {
     const parsed = parseBeginOperationPayload(payload);
     if (!parsed) throw new Error("invalid_request");
 
-    const state = await this.getState(identity);
-    if (parsed.expectedGeneration !== state.security_generation) {
-      throw new Error("generation_mismatch");
-    }
-
     const key = `${this.accountKey(identity)}\0${parsed.operationId}`;
     const existing = this.operations.get(key);
     if (existing) {
@@ -243,12 +276,18 @@ export class AccountSecurityService implements AccountSecurityDatabase {
       };
     }
 
+    const state = await this.getState(identity);
+    if (parsed.expectedGeneration !== state.security_generation) {
+      throw new Error("generation_mismatch");
+    }
+
     const opRecord = {
       ...parsed,
       accountKey: this.accountKey(identity),
       status: "in_progress",
       provider_effect: "not_started",
       created_at: new Date().toISOString(),
+      expires_at: new Date(Date.now() + 15 * 60 * 1000).toISOString(),
       updated_at: new Date().toISOString(),
     };
     this.operations.set(key, opRecord);
@@ -275,6 +314,11 @@ export class AccountSecurityService implements AccountSecurityDatabase {
 
     if (parsed.providerEffect === "observed_applied") {
       if (op.status !== "accepted") {
+        if (op.expectedGeneration !== state.security_generation) {
+          op.status = "reconcile_required";
+          op.provider_effect = "observed_applied";
+          throw new Error("generation_mismatch");
+        }
         op.status = "accepted";
         op.provider_effect = "observed_applied";
         op.safeProviderReference = parsed.safeProviderReference;
@@ -303,7 +347,7 @@ export class AccountSecurityService implements AccountSecurityDatabase {
         this.states.set(stateKey, state);
 
         this.recordEvidence(identity, {
-          identity_event_type: op.purpose as any,
+          identity_event_type: mapPurposeToEventType(op.purpose as string, "accepted"),
           outcome: "accepted",
           identity_operation_reference: parsed.operationId,
           security_generation: state.security_generation,
@@ -317,7 +361,7 @@ export class AccountSecurityService implements AccountSecurityDatabase {
       op.status = "rejected";
       op.provider_effect = parsed.providerEffect;
       this.recordEvidence(identity, {
-        identity_event_type: op.purpose as any,
+        identity_event_type: mapPurposeToEventType(op.purpose as string, "rejected"),
         outcome: "rejected",
         identity_operation_reference: parsed.operationId,
         security_generation: state.security_generation,
@@ -350,8 +394,22 @@ export class AccountSecurityService implements AccountSecurityDatabase {
       throw new Error("generation_mismatch");
     }
 
-    if (state.setup_state !== "recovery_codes_pending") {
+    if (
+      state.recovery_handoff_state !== "ack_pending" &&
+      state.setup_state !== "recovery_codes_pending"
+    ) {
       throw new Error("invalid_setup_state");
+    }
+
+    const opKey = `${this.accountKey(identity)}\0${parsed.operationId}`;
+    const op = this.operations.get(opKey);
+    if (
+      !op ||
+      op.status !== "accepted" ||
+      (op.purpose !== "factor_enroll" &&
+        op.purpose !== "recovery_codes_regenerate")
+    ) {
+      throw new Error("invalid_operation");
     }
 
     state.setup_state = "ready";
@@ -361,9 +419,9 @@ export class AccountSecurityService implements AccountSecurityDatabase {
     this.states.set(stateKey, state);
 
     this.recordEvidence(identity, {
-      identity_event_type: "recovery_codes_acknowledge",
+      identity_event_type: "recovery_codes_acknowledged",
       outcome: "accepted",
-      identity_operation_reference: parsed.operationId,
+      identity_operation_reference: crypto.randomUUID(),
       security_generation: state.security_generation,
       safe_reason_code: "codes_acknowledged",
     });

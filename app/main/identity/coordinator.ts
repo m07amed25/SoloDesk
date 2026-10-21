@@ -620,7 +620,11 @@ export class IdentityCoordinator {
   async signOut(): Promise<RendererIdentityState> {
     this.authorityGeneration += 1;
     this.handoff.closeLoopbackListener();
-    this.security.cancelActiveHandoff();
+    try {
+      this.security.cancelActiveHandoff();
+    } catch {
+      /* Sign-out must proceed even if the handoff cannot be updated. */
+    }
     if (this.currentAttempt) {
       this.attempts.cancelAttempt(
         this.currentAttempt.attempt_id,
@@ -661,6 +665,11 @@ export class IdentityCoordinator {
         : "shell.identity.signedOutRetainedWork";
     this.actionKey = "shell.identity.action.signIn";
     this.nextActions = Object.freeze(["sign_in_again"]);
+    try {
+      this.security.clearActiveHandoff();
+    } catch {
+      /* Best-effort clearing of active handoff */
+    }
     await this.onTeardown?.();
     this.notifyStateChange();
     return this.getState();

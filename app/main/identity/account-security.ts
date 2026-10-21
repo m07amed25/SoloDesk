@@ -30,6 +30,7 @@ export interface ProviderSecurityProjection {
   recovery_status: RecoveryStatus; // unsupported, not_generated, available, exhausted, or unknown
   provider_observed_at: string; // Used only within bounded freshness rules
   capability_version: string; // Exact probed SDK/server/project capability identity
+  security_generation?: number;
 }
 
 const PROHIBITED_PROJECTION_KEYS = [
@@ -108,6 +109,15 @@ export function validateProviderSecurityProjection(
   if (
     typeof p.capability_version !== "string" ||
     p.capability_version.length === 0
+  ) {
+    return false;
+  }
+
+  if (
+    p.security_generation !== undefined &&
+    (typeof p.security_generation !== "number" ||
+      !Number.isSafeInteger(p.security_generation) ||
+      p.security_generation < 1)
   ) {
     return false;
   }
@@ -240,6 +250,15 @@ export class AccountSecurityCoordinator {
     });
   }
 
+  clearActiveHandoff(): void {
+    this.activeHandoff = null;
+    try {
+      this.store?.clearActiveSecurityHandoff?.();
+    } catch {
+      // ignore
+    }
+  }
+
   getRendererState(): RendererAccountSecurityState {
     return this.currentRendererState;
   }
@@ -275,8 +294,30 @@ export class AccountSecurityCoordinator {
   async start(
     action: string = "factor_enroll",
   ): Promise<RendererAccountSecurityState> {
+    const cfg = this.config as
+      | {
+          hostedOrigin?: string;
+          serviceDomain?: string;
+          issuer?: string;
+        }
+      | undefined;
+    const hostedOrigin =
+      cfg?.hostedOrigin ||
+      cfg?.serviceDomain ||
+      cfg?.issuer ||
+      "https://auth.solodesk.test";
+    const destUrl = `${hostedOrigin}/security/enroll`;
+    if (this.openBrowser) {
+      try {
+        await this.openBrowser(destUrl);
+      } catch {
+        // Continue staging handoff
+      }
+    }
+
     const handoff = {
       version: 1,
+      format_version: 1,
       handoff_id: crypto.randomUUID(),
       operation_id: crypto.randomUUID(),
       purpose: action,
@@ -284,9 +325,11 @@ export class AccountSecurityCoordinator {
       profile_generation: 1,
       session_generation: 1,
       destination_id: "hosted_enroll_v1",
+      hosted_destination_id: "security_enrollment_v1",
       created_at: new Date().toISOString(),
       expires_at: new Date(Date.now() + 600000).toISOString(),
       status: "in_progress",
+      lifecycle: "pending",
     };
     this.stageHandoff(handoff);
     return this.currentRendererState;
@@ -298,6 +341,32 @@ export class AccountSecurityCoordinator {
   }
 
   async acknowledgeRecoveryCodes(): Promise<RendererAccountSecurityState> {
+    if (
+      this.provider &&
+      typeof (this.provider as any).observeSecurityProjection === "function"
+    ) {
+      try {
+        const projection = await (this.provider as any).observeSecurityProjection();
+        if (
+          projection &&
+          (projection.factors_enrolled > 0 ||
+            projection.current_aal === "aal2" ||
+            projection.totp_enrolled)
+        ) {
+          this.updateState({
+            readiness: "ready",
+            heading_key: "identity.security.status.ready",
+            message_key: "identity.security.status.ready",
+            action_key: undefined,
+            recovery_status: "available",
+            is_reconciling: false,
+          });
+          return this.currentRendererState;
+        }
+      } catch {
+        // Provider check failed or factor not confirmed
+      }
+    }
     this.updateState({
       readiness: "ready",
       heading_key: "identity.security.status.ready",
@@ -334,6 +403,7 @@ export interface MfaVerificationInput {
   subjectId: string;
   sessionId: string;
   securityGeneration: number;
+  issuerId?: string;
 }
 
 export interface MfaVerificationResult {
@@ -385,6 +455,14 @@ export class MfaChallengeManager {
       return { success: false, errorCode: "account_mismatch" };
     }
 
+    if (input.issuerId && challenge.issuerId !== input.issuerId) {
+      return { success: false, errorCode: "account_mismatch" };
+    }
+
+    if (challenge.sessionId !== input.sessionId) {
+      return { success: false, errorCode: "session_mismatch" };
+    }
+
     if (challenge.expectedSecurityGeneration !== input.securityGeneration) {
       return { success: false, errorCode: "stale_generation" };
     }
@@ -415,7 +493,10 @@ export interface ChallengeReconciliationResult {
 export class MfaChallengeCoordinator {
   private config?: unknown;
   private provider?: {
-    observeSecurityProjection: () => Promise<ProviderSecurityProjection>;
+    observeSecurityProjection: (
+      tokens?: unknown,
+      verifiedAccount?: unknown,
+    ) => Promise<ProviderSecurityProjection>;
   };
   private store?: unknown;
   private activeChallenges: Map<string, MfaChallengeContext> = new Map();
@@ -425,7 +506,10 @@ export class MfaChallengeCoordinator {
   constructor(
     config?: unknown,
     provider?: {
-      observeSecurityProjection: () => Promise<ProviderSecurityProjection>;
+      observeSecurityProjection: (
+        tokens?: unknown,
+        verifiedAccount?: unknown,
+      ) => Promise<ProviderSecurityProjection>;
     },
     store?: unknown,
   ) {
@@ -463,10 +547,28 @@ export class MfaChallengeCoordinator {
 
   async reconcileChallenge(
     challengeId: string,
+    tokens?: unknown,
+    verifiedAccount?: unknown,
   ): Promise<ChallengeReconciliationResult> {
     const challenge = this.activeChallenges.get(challengeId);
     if (!challenge) {
       return { success: false, safeNextAction: "sign_in_again" };
+    }
+
+    if (challenge.completed) {
+      return {
+        success: false,
+        safeNextAction: "sign_in_again",
+        errorCode: "challenge_already_consumed",
+      };
+    }
+
+    if (Date.parse(challenge.expiresAt) <= Date.now()) {
+      return {
+        success: false,
+        safeNextAction: "sign_in_again",
+        errorCode: "challenge_expired",
+      };
     }
 
     if (!this.provider) {
@@ -474,13 +576,23 @@ export class MfaChallengeCoordinator {
     }
 
     try {
-      const projection = await this.provider.observeSecurityProjection();
+      const projection = await this.provider.observeSecurityProjection(
+        tokens,
+        verifiedAccount,
+      );
       if (
         !projection ||
         projection.subject_id !== challenge.subjectId ||
         projection.session_id !== challenge.sessionId
       ) {
         return { success: false, safeNextAction: "sign_in_again" };
+      }
+
+      if (
+        typeof projection.security_generation === "number" &&
+        projection.security_generation <= challenge.expectedSecurityGeneration
+      ) {
+        return { success: false, requiresOnline: true, safeNextAction: "retry" };
       }
 
       if (projection.current_aal === "aal2") {
@@ -837,6 +949,7 @@ export class SensitiveChangeManager {
   private securityPolicy?: unknown;
   private proofTtlMs: number = 300000;
   private generations: Map<string, number> = new Map();
+  private usedProofIds = new Set<string>();
 
   constructor(options?: { securityPolicy?: unknown; proofTtlMs?: number }) {
     this.securityPolicy = options?.securityPolicy;
@@ -875,8 +988,21 @@ export class SensitiveChangeManager {
     }
 
     // Check proof age
-    const proofAge = Date.now() - Date.parse(proof.issuedAt);
-    if (proofAge > this.proofTtlMs || proofAge < 0) {
+    const issuedAtMs = Date.parse(proof.issuedAt);
+    const proofAge = Date.now() - issuedAtMs;
+    if (
+      !Number.isFinite(issuedAtMs) ||
+      proofAge > this.proofTtlMs ||
+      proofAge < 0
+    ) {
+      return { success: false, errorCode: "stale_or_expired_proof" };
+    }
+
+    if (proof.verifiedAal !== "aal2") {
+      return { success: false, errorCode: "insufficient_aal" };
+    }
+
+    if (this.usedProofIds.has(proof.proofId)) {
       return { success: false, errorCode: "stale_or_expired_proof" };
     }
 
@@ -889,6 +1015,8 @@ export class SensitiveChangeManager {
     if (currentGen !== securityGeneration) {
       return { success: false, errorCode: "generation_mismatch" };
     }
+
+    this.usedProofIds.add(proof.proofId);
 
     const newGen = currentGen + 1;
     this.generations.set(subjectId, newGen);

@@ -123,13 +123,32 @@ for (const [key, suite] of Object.entries(suitesToRun)) {
   const stderr = result.stderr || "";
   const combined = stdout + stderr + (result.error ? String(result.error) : "");
 
-  const passed = Number(stdout.match(/^# pass (\d+)$/m)?.[1] ?? 0);
-  const failed = Number(stdout.match(/^# fail (\d+)$/m)?.[1] ?? 0);
-  totalTests += passed + failed;
+  const get = (key) => {
+    const matches = [
+      ...stdout.matchAll(new RegExp(`(?:#|ℹ) ${key} (\\d+)`, "g")),
+    ];
+    return matches.length ? Number(matches.at(-1)[1]) : null;
+  };
+
+  const executed = get("tests") ?? 0;
+  const passed = get("pass") ?? 0;
+  const failed = get("fail") ?? 0;
+  const skipped = get("skipped") ?? 0;
+  const todo = get("todo") ?? 0;
+  const cancelled = get("cancelled") ?? 0;
+
+  totalTests += executed;
   totalPassed += passed;
 
   const isPassed =
-    !result.error && result.status === 0 && failed === 0 && passed > 0;
+    !result.error &&
+    result.status === 0 &&
+    failed === 0 &&
+    skipped === 0 &&
+    todo === 0 &&
+    cancelled === 0 &&
+    executed > 0 &&
+    passed === executed;
 
   collector.recordScenario({
     scenarioId: key,

@@ -9,8 +9,17 @@ import {
   type Activation,
   type OwnedView,
 } from "./profiles.ts";
-import { initialLink, LinkRouter, parseLink, parseIdentityReturn } from "./links.ts";
-import { identityEnvironment, parseIdentityConfig, type IdentityConfig } from "./identity/config.ts";
+import {
+  initialLink,
+  LinkRouter,
+  parseLink,
+  parseIdentityReturn,
+} from "./links.ts";
+import {
+  identityEnvironment,
+  parseIdentityConfig,
+  type IdentityConfig,
+} from "./identity/config.ts";
 import { ProtectedIdentityStore } from "./identity/protected-identity-store.ts";
 import { SupabaseProviderAdapter } from "./identity/provider-adapter.ts";
 import { IdentityCoordinator } from "./identity/coordinator.ts";
@@ -71,19 +80,24 @@ if (!lockHeld) {
   const persistenceServices = new Map<string, PersistenceService>();
   const identityCoordinators = new Map<string, IdentityCoordinator>();
   function getIdentityConfig(): IdentityConfig {
-    const environment = app.isPackaged ? process.env : identityEnvironment(process.cwd());
+    const environment = app.isPackaged
+      ? process.env
+      : identityEnvironment(process.cwd());
     try {
-      return parseIdentityConfig(environment);
+      return parseIdentityConfig(environment, { isPackaged: app.isPackaged });
     } catch (error) {
       if (app.isPackaged) throw error;
-      return parseIdentityConfig({
-        ...environment,
-        SOLODESK_TEST_MODE: "1",
-        SOLODESK_AUTH_HOSTED_ORIGIN: "https://auth.solodesk.test",
-        SOLODESK_AUTH_ISSUER: "https://auth.solodesk.test",
-        SOLODESK_AUTH_AUDIENCE: "solodesk-desktop",
-        SOLODESK_AUTH_PUBLISHABLE_KEY: "sb_pub_sandbox_key",
-      });
+      return parseIdentityConfig(
+        {
+          ...environment,
+          SOLODESK_TEST_MODE: "1",
+          SOLODESK_AUTH_HOSTED_ORIGIN: "https://auth.solodesk.test",
+          SOLODESK_AUTH_ISSUER: "https://auth.solodesk.test",
+          SOLODESK_AUTH_AUDIENCE: "solodesk-desktop",
+          SOLODESK_AUTH_PUBLISHABLE_KEY: "sb_pub_sandbox_key",
+        },
+        { isPackaged: app.isPackaged },
+      );
     }
   }
   // F012 enrollment will supply the authorized workspace. Until then only the
@@ -163,7 +177,10 @@ if (!lockHeld) {
       );
       const identityConfig = getIdentityConfig();
       const identityProvider = new SupabaseProviderAdapter(identityConfig);
-      const enrollmentService = new SupabaseEnrollmentService(identityConfig, () => identity.getAccessToken());
+      const enrollmentService = new SupabaseEnrollmentService(
+        identityConfig,
+        () => identity.getAccessToken(),
+      );
       const identity = new IdentityCoordinator({
         profileId: id,
         epoch,
@@ -187,7 +204,8 @@ if (!lockHeld) {
         },
         onStateChanged: (state) => {
           const current = profiles.current(id);
-          if (current && profiles.epoch(id) === epoch) bridge.emit(current.contents, "identity", state);
+          if (current && profiles.epoch(id) === epoch)
+            bridge.emit(current.contents, "identity", state);
         },
       });
       identityCoordinators.set(id, identity);
@@ -200,7 +218,10 @@ if (!lockHeld) {
         onFailure: fail,
         onClose: () => {
           identity.dispose();
-          void persistence.closeActiveStore().catch(() => {}).finally(() => protection.lock());
+          void persistence
+            .closeActiveStore()
+            .catch(() => {})
+            .finally(() => protection.lock());
           if (protectionOwners.get(id) === protection)
             protectionOwners.delete(id);
           if (persistenceServices.get(id) === persistence)
@@ -227,7 +248,10 @@ if (!lockHeld) {
           );
         },
       }).catch((error) => {
-        void persistence.closeActiveStore().catch(() => {}).finally(() => protection.lock());
+        void persistence
+          .closeActiveStore()
+          .catch(() => {})
+          .finally(() => protection.lock());
         if (protectionOwners.get(id) === protection)
           protectionOwners.delete(id);
         if (persistenceServices.get(id) === persistence)
@@ -251,7 +275,10 @@ if (!lockHeld) {
       await activate(intent.profileId);
       return;
     }
-    const identityReturn = parseIdentityReturn(intent.link, getIdentityConfig());
+    const identityReturn = parseIdentityReturn(
+      intent.link,
+      getIdentityConfig(),
+    );
     if (identityReturn) {
       const view = await activate(intent.profileId);
       const coordinator = identityCoordinators.get(intent.profileId);
@@ -329,24 +356,30 @@ if (!lockHeld) {
         },
         startSignIn: async (profileId, epoch) => {
           if (profiles.epoch(profileId) !== epoch) return null;
-          return (await identityCoordinators.get(profileId)?.startSignIn()) ?? null;
+          return (
+            (await identityCoordinators.get(profileId)?.startSignIn()) ?? null
+          );
         },
         cancelSignIn: async (profileId, epoch) => {
           if (profiles.epoch(profileId) !== epoch) return null;
-          return (await identityCoordinators.get(profileId)?.cancelSignIn()) ?? null;
+          return (
+            (await identityCoordinators.get(profileId)?.cancelSignIn()) ?? null
+          );
         },
         confirmEnrollment: async (profileId, epoch, label) => {
           if (profiles.epoch(profileId) !== epoch) return null;
           return (
-            (await identityCoordinators.get(profileId)?.confirmEnrollment(label)) ??
-            null
+            (await identityCoordinators
+              .get(profileId)
+              ?.confirmEnrollment(label)) ?? null
           );
         },
         retryReconciliation: async (profileId, epoch) => {
           if (profiles.epoch(profileId) !== epoch) return null;
           return (
-            (await identityCoordinators.get(profileId)?.retryReconciliation()) ??
-            null
+            (await identityCoordinators
+              .get(profileId)
+              ?.retryReconciliation()) ?? null
           );
         },
         signOut: async (profileId, epoch) => {
@@ -356,8 +389,9 @@ if (!lockHeld) {
         confirmAccountSwitch: async (profileId, epoch) => {
           if (profiles.epoch(profileId) !== epoch) return null;
           return (
-            (await identityCoordinators.get(profileId)?.confirmAccountSwitch()) ??
-            null
+            (await identityCoordinators
+              .get(profileId)
+              ?.confirmAccountSwitch()) ?? null
           );
         },
       });

@@ -524,16 +524,20 @@ export class ProtectedIdentityStore {
       return null;
     }
     this.assertProtectionUsable();
+    const raw = fs.readFileSync(this.paths.securityHandoff, "utf-8");
+    let parsed: unknown;
     try {
-      const raw = fs.readFileSync(this.paths.securityHandoff, "utf-8");
-      const parsed = JSON.parse(raw);
-      if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
-        return null;
-      }
-      return parsed as Record<string, unknown>;
+      parsed = JSON.parse(raw);
     } catch {
-      return null;
+      throw new Error("corrupt_security_handoff");
     }
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+      throw new Error("invalid_security_handoff");
+    }
+    if (containsProhibitedSecurityKey(parsed)) {
+      throw new Error("prohibited_secret_in_handoff");
+    }
+    return parsed as Record<string, unknown>;
   }
 
   clearSecurityHandoff(): void {

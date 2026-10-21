@@ -80,6 +80,65 @@ describe("T042: Sensitive Security Changes, Reauthentication & Sign-Out Scope", 
 
     assert.equal(wrongPurposeRes.success, false);
     assert.equal(wrongPurposeRes.errorCode, "proof_purpose_mismatch");
+
+    // Insufficient AAL proof (AAL1 proof)
+    const aal1Proof = {
+      proofId: crypto.randomUUID(),
+      purpose: "factor_disable",
+      subjectId: ACCOUNT_A.subject_id,
+      verifiedAal: "aal1",
+      issuedAt: new Date().toISOString(),
+    };
+    const aal1Res = await manager.applySensitiveChange({
+      changeType: "factor_disable",
+      subjectId: ACCOUNT_A.subject_id,
+      proof: aal1Proof,
+      securityGeneration: 1,
+    });
+    assert.equal(aal1Res.success, false);
+    assert.equal(aal1Res.errorCode, "insufficient_aal");
+
+    // Malformed non-finite timestamp proof
+    const malformedProof = {
+      proofId: crypto.randomUUID(),
+      purpose: "factor_disable",
+      subjectId: ACCOUNT_A.subject_id,
+      verifiedAal: "aal2",
+      issuedAt: "invalid_date_not_finite",
+    };
+    const malformedRes = await manager.applySensitiveChange({
+      changeType: "factor_disable",
+      subjectId: ACCOUNT_A.subject_id,
+      proof: malformedProof,
+      securityGeneration: 1,
+    });
+    assert.equal(malformedRes.success, false);
+    assert.equal(malformedRes.errorCode, "stale_or_expired_proof");
+
+    // Proof reuse prevention
+    const reusableProof = {
+      proofId: crypto.randomUUID(),
+      purpose: "factor_disable",
+      subjectId: ACCOUNT_A.subject_id,
+      verifiedAal: "aal2",
+      issuedAt: new Date().toISOString(),
+    };
+    const firstApply = await manager.applySensitiveChange({
+      changeType: "factor_disable",
+      subjectId: ACCOUNT_A.subject_id,
+      proof: reusableProof,
+      securityGeneration: 1,
+    });
+    assert.equal(firstApply.success, true);
+
+    const replayedApply = await manager.applySensitiveChange({
+      changeType: "factor_disable",
+      subjectId: ACCOUNT_A.subject_id,
+      proof: reusableProof,
+      securityGeneration: 2,
+    });
+    assert.equal(replayedApply.success, false);
+    assert.equal(replayedApply.errorCode, "stale_or_expired_proof");
   });
 
   it("fails closed on secret canaries in change requests", async () => {

@@ -13,6 +13,7 @@ import {
   WORKSPACE_AUTHORITY_CONSEQUENCE,
   RENDERER_NEXT_ACTIONS,
   isIdentitySecurityPolicy,
+  isRendererAccountSecurityState,
   isSessionConsequence,
   isSecurityPurpose,
   isSecuritySetupState,
@@ -82,9 +83,54 @@ describe("T016: Identity Security Contracts and Policy Validation", () => {
     };
     assert.equal(isIdentitySecurityPolicy(missingDatePolicy), false);
 
+    // Reject required MFA when recovery_method is not provider_recovery_codes
+    const invalidRecoveryForRequired = {
+      ...VALID_POLICY_REQUIRED,
+      recovery_method: "none",
+    };
+    assert.equal(isIdentitySecurityPolicy(invalidRecoveryForRequired), false);
+
     // Null or non-object
     assert.equal(isIdentitySecurityPolicy(null), false);
     assert.equal(isIdentitySecurityPolicy("policy"), false);
+  });
+
+  it("validates RendererAccountSecurityState strictly against allowed keys", () => {
+    const validRendererState = {
+      version: 1,
+      policy_status: "required",
+      readiness: "ready",
+      factor_category: "totp",
+      factor_label: "Authenticator",
+      recovery_status: "available",
+      current_session: "continues_aal2",
+      other_sessions: "ended",
+      local_data: "retained_encrypted",
+      heading_key: "security.title",
+      message_key: "security.ok",
+      requires_online: false,
+      has_retained_data: true,
+      is_reconciling: false,
+    };
+    assert.equal(isRendererAccountSecurityState(validRendererState), true);
+
+    // Reject unknown extra key
+    assert.equal(
+      isRendererAccountSecurityState({
+        ...validRendererState,
+        unexpected_extra_field: "disallowed",
+      }),
+      false,
+    );
+
+    // Reject prohibited key (e.g. totp_seed or seed)
+    assert.equal(
+      isRendererAccountSecurityState({
+        ...validRendererState,
+        totp_seed: "secret_seed",
+      }),
+      false,
+    );
   });
 
   it("validates SessionConsequence with fixed workspace_authority", () => {
@@ -113,6 +159,8 @@ describe("T016: Identity Security Contracts and Policy Validation", () => {
     assert.equal(containsProhibitedSecurityKey({ password: "pass" }), true);
     assert.equal(containsProhibitedSecurityKey({ token: "jwt" }), true);
     assert.equal(containsProhibitedSecurityKey({ cookie: "c" }), true);
+    assert.equal(containsProhibitedSecurityKey({ seed: "s" }), true);
+    assert.equal(containsProhibitedSecurityKey({ totp_seed: "s" }), true);
     assert.equal(containsProhibitedSecurityKey({ nested: { raw_claims: "c" } }), true);
 
     assert.equal(
@@ -146,6 +194,17 @@ describe("T016: Identity Security Contracts and Policy Validation", () => {
     assert.equal(projected.outcome, "success");
     assert.equal(projected.policy_version, "f011_v1_synthetic");
     assert.equal(projected.security_generation, 1);
+    assert.equal(projected.session_consequence, "continues_aal2");
+
+    // Reject invalid session consequence
+    assert.throws(
+      () =>
+        projectIdentityEvidence({
+          ...validEvidenceInput,
+          session_consequence: "escalate_superadmin",
+        }),
+      /invalid_session_consequence/,
+    );
 
     // Reject unknown fields
     assert.throws(

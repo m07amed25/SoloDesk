@@ -72,6 +72,27 @@ describe("T028: MFA Challenge Purpose and Attempt Binding", () => {
     assert.equal(crossAccount.success, false);
     assert.equal(crossAccount.errorCode, "account_mismatch");
 
+    // Cross-issuer verification attempt
+    const crossIssuer = manager.verifyChallenge(ctx.challengeId, {
+      observedAal: "aal2",
+      subjectId: ACCOUNT_A.subject_id,
+      issuerId: "https://wrong.issuer.test",
+      sessionId: ctx.sessionId,
+      securityGeneration: 1,
+    });
+    assert.equal(crossIssuer.success, false);
+    assert.equal(crossIssuer.errorCode, "account_mismatch");
+
+    // Cross-session verification attempt
+    const crossSession = manager.verifyChallenge(ctx.challengeId, {
+      observedAal: "aal2",
+      subjectId: ACCOUNT_A.subject_id,
+      sessionId: "different_session_123",
+      securityGeneration: 1,
+    });
+    assert.equal(crossSession.success, false);
+    assert.equal(crossSession.errorCode, "session_mismatch");
+
     // Stale generation verification attempt
     const staleGen = manager.verifyChallenge(ctx.challengeId, {
       observedAal: "aal2",

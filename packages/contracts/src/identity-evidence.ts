@@ -69,6 +69,17 @@ export const SAFE_REASON_CODES = Object.freeze([
 
 export type SafeReasonCode = (typeof SAFE_REASON_CODES)[number];
 
+export const IDENTITY_SESSION_CONSEQUENCES = Object.freeze([
+  "continues_aal2",
+  "continues_aal1",
+  "reauthentication_required",
+  "ended",
+  "unknown",
+] as const);
+
+export type IdentitySessionConsequence =
+  (typeof IDENTITY_SESSION_CONSEQUENCES)[number];
+
 /**
  * Bounded redacted append-only evidence for security-relevant terminal events.
  * Strictly excludes passwords, codes, tokens, PKCE verifiers, raw state/nonce, cookies,
@@ -88,7 +99,7 @@ export type IdentitySecurityEvidence = Readonly<{
   account_reference?: string; // Optional policy-approved pseudonymous reference
   policy_version?: string; // F011
   security_generation?: number; // F011
-  session_consequence?: string; // F011
+  session_consequence?: IdentitySessionConsequence; // F011
   safe_diagnostic_reference?: string; // F011
   outcome_certainty?: "certain" | "uncertain"; // F011
   authoritative_at?: string; // Distinguished server time
@@ -254,11 +265,20 @@ export function projectIdentityEvidence(
       ? raw.security_generation
       : undefined;
 
-  const session_consequence =
-    typeof raw.session_consequence === "string" &&
-    raw.session_consequence.length <= 64
-      ? raw.session_consequence
-      : undefined;
+  let session_consequence: IdentitySessionConsequence | undefined;
+  if (raw.session_consequence !== undefined) {
+    if (
+      typeof raw.session_consequence !== "string" ||
+      !(IDENTITY_SESSION_CONSEQUENCES as readonly string[]).includes(
+        raw.session_consequence,
+      )
+    ) {
+      throw new Error(
+        `invalid_session_consequence: ${String(raw.session_consequence)}`,
+      );
+    }
+    session_consequence = raw.session_consequence as IdentitySessionConsequence;
+  }
 
   const safe_diagnostic_reference =
     typeof raw.safe_diagnostic_reference === "string" &&

@@ -74,7 +74,7 @@ describe("T020: Factor Enrollment & Recovery Code Acknowledgment Service Logic",
       operationId: opId,
       providerEffect: "observed_applied",
       safeProviderReference: "factor_totp_00000000-0000-4000-8000-000000000001",
-      sessionConsequence: "standard_signout_other_sessions_v1",
+      sessionConsequence: "continues_aal2",
       safeReasonCode: "factor_enrolled",
     };
 

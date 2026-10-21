@@ -323,19 +323,15 @@ export class SupabaseProviderAdapter implements IdentityProviderAdapter {
     tokens: ProviderTokens,
     code: string,
   ): Promise<{ success: boolean; upgradedAal: AalLevel }> {
-    if (!tokens || !tokens.access_token) throw new Error("session_rejected");
-    if (!code || typeof code !== "string" || code.trim().length === 0) {
-      throw new Error("invalid_recovery_code");
-    }
-    return { success: true, upgradedAal: "aal2" };
+    void tokens;
+    void code;
+    throw new Error("unsupported_capability");
   }
 
   async requestPrimaryRecovery(
     identifier: string,
   ): Promise<{ status: "recovery_requested" }> {
-    if (!identifier || typeof identifier !== "string") {
-      throw new Error("invalid_identifier");
-    }
-    return { status: "recovery_requested" };
+    void identifier;
+    throw new Error("unsupported_capability");
   }
 }

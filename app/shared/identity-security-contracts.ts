@@ -170,6 +170,26 @@ export interface RendererAccountSecurityState {
   diagnostic_reference?: string;
 }
 
+const ALLOWED_RENDERER_SECURITY_STATE_KEYS = new Set([
+  "version",
+  "policy_status",
+  "readiness",
+  "factor_category",
+  "factor_label",
+  "recovery_status",
+  "current_session",
+  "other_sessions",
+  "local_data",
+  "heading_key",
+  "message_key",
+  "warning_key",
+  "action_key",
+  "requires_online",
+  "has_retained_data",
+  "is_reconciling",
+  "diagnostic_reference",
+]);
+
 export function isRendererAccountSecurityState(
   val: unknown,
 ): val is RendererAccountSecurityState {
@@ -178,10 +198,17 @@ export function isRendererAccountSecurityState(
 
   if (containsProhibitedSecurityKey(s)) return false;
 
+  for (const k of Object.keys(s)) {
+    if (!ALLOWED_RENDERER_SECURITY_STATE_KEYS.has(k)) {
+      return false;
+    }
+  }
+
   if (s.version !== 1) return false;
   if (!isFactorRequirement(s.policy_status)) return false;
   if (!isSecuritySetupState(s.readiness)) return false;
-  if (s.factor_category !== undefined && s.factor_category !== "totp") return false;
+  if (s.factor_category !== undefined && s.factor_category !== "totp")
+    return false;
   if (
     s.factor_label !== undefined &&
     (typeof s.factor_label !== "string" || s.factor_label.length > 128)
@@ -191,13 +218,17 @@ export function isRendererAccountSecurityState(
   if (!isRecoveryStatus(s.recovery_status)) return false;
   if (
     typeof s.current_session !== "string" ||
-    !(CURRENT_SESSION_CONSEQUENCES as readonly string[]).includes(s.current_session)
+    !(CURRENT_SESSION_CONSEQUENCES as readonly string[]).includes(
+      s.current_session,
+    )
   ) {
     return false;
   }
   if (
     typeof s.other_sessions !== "string" ||
-    !(OTHER_SESSIONS_CONSEQUENCES as readonly string[]).includes(s.other_sessions)
+    !(OTHER_SESSIONS_CONSEQUENCES as readonly string[]).includes(
+      s.other_sessions,
+    )
   ) {
     return false;
   }
@@ -238,7 +269,8 @@ export function isRendererAccountSecurityState(
   if (typeof s.is_reconciling !== "boolean") return false;
   if (
     s.diagnostic_reference !== undefined &&
-    (typeof s.diagnostic_reference !== "string" || s.diagnostic_reference.length > 128)
+    (typeof s.diagnostic_reference !== "string" ||
+      s.diagnostic_reference.length > 128)
   ) {
     return false;
   }
@@ -345,6 +377,12 @@ export function isIdentitySecurityPolicy(
     return false;
   }
   if (
+    p.factor_requirement === "required" &&
+    p.recovery_method !== "provider_recovery_codes"
+  ) {
+    return false;
+  }
+  if (
     !Array.isArray(p.reauth_purposes) ||
     p.reauth_purposes.some((purpose) => !isSecurityPurpose(purpose))
   ) {
@@ -404,6 +442,8 @@ const PROHIBITED_KEYS = [
   "raw_claims_token",
   "raw_provider_error",
   "raw_provider_payload",
+  "seed",
+  "totp_seed",
 ];
 
 export function containsProhibitedSecurityKey(obj: unknown): boolean {
