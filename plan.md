@@ -463,7 +463,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 ### F011 — MFA and account recovery
 
 - **Specification and design:** [F011 feature specification](specs/011-mfa-account-recovery/spec.md), [implementation plan](specs/011-mfa-account-recovery/plan.md), and [requirements quality checklist](specs/011-mfa-account-recovery/checklists/requirements.md). Planning readiness does not change delivery status or authorize implementation.
-- **PR identity:** `[F011] MFA and account recovery`; branch `feat/f011-mfa-and-account-recovery` → `main`; one PR; implementation and baseline/three-target native QA executed; security repaired and hosted readiness passed; fork/control delivery evidence pending; [PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; hosted readiness passed; manual delivery evidence and owner approval pending.
+- **PR identity:** `[F011] MFA and account recovery`; branch `feat/f011-mfa-and-account-recovery` → `main`; one PR; implementation and verification executed; [PR #14](https://github.com/m07amed25/SoloDesk/pull/14) open; release gates Q-08, Q-02, Q-07, and F029 pending; manual delivery evidence and owner approval pending.
 - **Prerequisites:** F010 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-002. **Behavior authority:** [platform-and-workspaces](docs/specs/platform-and-workspaces.md).
 - **Build the feature:** Implement configured MFA enrollment/challenge/recovery codes, reauthentication and lost-session/password recovery without claiming recovery of missing unsynced keys.
