@@ -12,6 +12,15 @@ import {
   type PersistenceIpcResponse,
   type PersistenceStatusDto,
 } from "../shared/persistence-contracts.ts";
+import {
+  IDENTITY_METHODS,
+  isRendererIdentityState,
+  sanitizeRendererState,
+  validateIdentityRequest,
+  type IdentityCommandResponse,
+  type IdentityMethod,
+  type RendererIdentityState,
+} from "../shared/identity-contracts.ts";
 import { plainData } from "../../packages/contracts/src/validation.ts";
 import {
   METHODS,
@@ -38,7 +47,7 @@ type CurrentContext = {
   epoch: number | undefined;
   authority: boolean;
 };
-type EventFamily = "lifecycle" | "links" | "persistence";
+type EventFamily = "lifecycle" | "links" | "persistence" | "identity";
 
 function documentOrigin(url: string): string | null {
   try {
@@ -129,6 +138,35 @@ type BridgeOptions = {
     profileId: string,
     epoch: number,
   ) => PersistenceStatusDto | null;
+  identityState?: (
+    profileId: string,
+    epoch: number,
+  ) => Promise<RendererIdentityState | null> | RendererIdentityState | null;
+  startSignIn?: (
+    profileId: string,
+    epoch: number,
+  ) => Promise<RendererIdentityState | null>;
+  cancelSignIn?: (
+    profileId: string,
+    epoch: number,
+  ) => Promise<RendererIdentityState | null>;
+  confirmEnrollment?: (
+    profileId: string,
+    epoch: number,
+    label?: string,
+  ) => Promise<RendererIdentityState | null>;
+  retryReconciliation?: (
+    profileId: string,
+    epoch: number,
+  ) => Promise<RendererIdentityState | null>;
+  signOut?: (
+    profileId: string,
+    epoch: number,
+  ) => Promise<RendererIdentityState | null>;
+  confirmAccountSwitch?: (
+    profileId: string,
+    epoch: number,
+  ) => Promise<RendererIdentityState | null>;
 };
 
 export class DesktopBridge {
@@ -351,6 +389,118 @@ export class DesktopBridge {
     return { subscriptionId };
   }
 
+  async invokeIdentity(
+    method: IdentityMethod,
+    event: IpcMainInvokeEvent,
+    input: unknown,
+  ): Promise<IdentityCommandResponse> {
+    const checked = validateIdentityRequest(method, input);
+    const requestId: Id<"request"> = checked.ok
+      ? checked.value.requestId
+      : Object.freeze({
+          kind: "request",
+          value: globalThis.crypto.randomUUID(),
+        });
+    const base = { version: 1 as const, requestId };
+    if (!checked.ok) {
+      return {
+        ...base,
+        status: "error",
+        error: safeError(checked.code),
+      };
+    }
+    const binding = this.bindings.get(event.sender);
+    if (!admitCaller(event, binding, this.context(binding)) || !binding) {
+      return {
+        ...base,
+        status: "error",
+        error: safeError("FORBIDDEN"),
+      };
+    }
+
+    try {
+      let state: RendererIdentityState | null | undefined;
+      if (method === "identity.getState") {
+        state = await this.options.identityState?.(
+          binding.profileId,
+          binding.epoch,
+        );
+      } else if (method === "identity.startSignIn") {
+        state = await this.options.startSignIn?.(
+          binding.profileId,
+          binding.epoch,
+        );
+      } else if (method === "identity.cancelSignIn") {
+        state = await this.options.cancelSignIn?.(
+          binding.profileId,
+          binding.epoch,
+        );
+      } else if (method === "identity.confirmEnrollment") {
+        const label = checked.value.payload.label as string | undefined;
+        state = await this.options.confirmEnrollment?.(
+          binding.profileId,
+          binding.epoch,
+          label,
+        );
+      } else if (method === "identity.retryReconciliation") {
+        state = await this.options.retryReconciliation?.(
+          binding.profileId,
+          binding.epoch,
+        );
+      } else if (method === "identity.signOut") {
+        state = await this.options.signOut?.(binding.profileId, binding.epoch);
+      } else if (method === "identity.confirmAccountSwitch") {
+        state = await this.options.confirmAccountSwitch?.(
+          binding.profileId,
+          binding.epoch,
+        );
+      }
+      if (!state || !isRendererIdentityState(state)) {
+        return {
+          ...base,
+          status: "error",
+          error: safeError("RESOURCE_UNAVAILABLE"),
+        };
+      }
+      return {
+        ...base,
+        status: "ok",
+        data: sanitizeRendererState(state),
+      };
+    } catch {
+      return {
+        ...base,
+        status: "error",
+        error: safeError("RESOURCE_UNAVAILABLE"),
+      };
+    }
+  }
+
+  subscribeIdentity(
+    event: IpcMainInvokeEvent,
+  ): { subscriptionId: string } | null {
+    const binding = this.bindings.get(event.sender);
+    if (!admitCaller(event, binding, this.context(binding)) || !binding)
+      return null;
+    const subscriptionId = this.subscriptions.add(binding, "identity");
+    void Promise.resolve(
+      this.options.identityState?.(binding.profileId, binding.epoch),
+    ).then((data) => {
+      if (data && isRendererIdentityState(data)) {
+        const safe = sanitizeRendererState(data);
+        queueMicrotask(() => {
+          if (!binding.contents.isDestroyed())
+            binding.contents.send("f004:event", {
+              family: "identity",
+              subscriptionId,
+              data: safe,
+            });
+        });
+      }
+    });
+    return { subscriptionId };
+  }
+
   remove(event: IpcMainInvokeEvent, input: unknown): void {
     const binding = this.bindings.get(event.sender);
     if (!admitCaller(event, binding, this.context(binding)) || !binding) return;
@@ -414,6 +564,13 @@ export async function installBridge(
     );
   ipcMain.handle("solodesk.persistence.onStateChanged", (event) =>
     bridge.subscribePersistence(event),
+  );
+  for (const method of IDENTITY_METHODS)
+    ipcMain.handle(`solodesk.${method}`, (event, input: unknown) =>
+      bridge.invokeIdentity(method, event, input),
+    );
+  ipcMain.handle("solodesk.identity.onStateChanged", (event) =>
+    bridge.subscribeIdentity(event),
   );
   ipcMain.on("f004:subscription:remove", (event, input: unknown) =>
     bridge.remove(event as IpcMainInvokeEvent, input),

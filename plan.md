@@ -447,6 +447,7 @@ The common documentation/testing/QA/merge contract in sections 3–4 applies to 
 
 ### F010 — Browser sign-in and native enrollment
 
+- **Specification and design:** [F010 feature specification](specs/010-browser-sign-in-enrollment/spec.md) and [requirements quality checklist](specs/010-browser-sign-in-enrollment/checklists/requirements.md). Specification readiness does not change delivery status or authorize implementation.
 - **PR identity:** `[F010] Browser sign-in and native enrollment`; branch `feat/f010-browser-sign-in-and-native-enrollment` → `main`; one PR; implementation and baseline/three-target native QA executed; security repaired and hosted readiness passed; fork/control delivery evidence pending; [PR #2](https://github.com/m07amed25/SoloDesk/pull/2) open; hosted readiness passed; manual delivery evidence and owner approval pending.
 - **Prerequisites:** F005, F007, F009 **Milestone:** P01 — Secure desktop, identity, teams and offline cloud foundation.
 - **Requirements:** PLT-001, PLT-002. **Behavior authority:** [platform-and-workspaces](docs/specs/platform-and-workspaces.md).

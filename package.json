@@ -44,7 +44,13 @@
     "test:f009:audit": "node tooling/f009/verify.mjs test:f009:audit",
     "test:f009:events": "node tooling/f009/verify.mjs test:f009:events",
     "test:f009:recovery": "node tooling/f009/verify.mjs test:f009:recovery",
-    "test:f009:ui": "node tooling/f009/verify.mjs test:f009:ui"
+    "test:f009:ui": "node tooling/f009/verify.mjs test:f009:ui",
+    "test:f010": "node tooling/f010/verify.mjs",
+    "test:f010:attempts": "node tooling/f010/verify.mjs test:f010:attempts",
+    "test:f010:enrollment": "node tooling/f010/verify.mjs test:f010:enrollment",
+    "test:f010:isolation": "node tooling/f010/verify.mjs test:f010:isolation",
+    "test:f010:recovery": "node tooling/f010/verify.mjs test:f010:recovery",
+    "test:f010:ui": "node tooling/f010/verify.mjs test:f010:ui"
   },
   "engines": {
     "node": ">=24 <25"

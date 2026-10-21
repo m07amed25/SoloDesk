@@ -5,7 +5,9 @@ import crypto from "node:crypto";
 import { allocate } from "../../../tooling/verification/artifacts.mjs";
 import { childEnvironment } from "../../../tooling/verification/run-suite.mjs";
 
-test("built preload exposes only named desktop actions", async ({ playwright }) => {
+test("built preload exposes only named desktop actions", async ({
+  playwright,
+}) => {
   const root = process.cwd();
   const owned = allocate(root, `desktop-${crypto.randomUUID()}`);
   const user = path.join(root, owned, "userData");
@@ -18,11 +20,16 @@ test("built preload exposes only named desktop actions", async ({ playwright }) 
       args: [path.join(root, "tooling/verification/electron-bootstrap.cjs")],
       chromiumSandbox: true,
       timeout: 30000,
-      env: childEnvironment({ F002_USER_DATA: user, F002_SESSION_DATA: session, F002_ROOT: root }),
+      env: childEnvironment({
+        F002_USER_DATA: user,
+        F002_SESSION_DATA: session,
+        F002_ROOT: root,
+      }),
     });
     const page = await app.firstWindow();
     const surface = await page.evaluate(() => ({
       keys: Object.keys(window.solodesk || {}).sort(),
+      identityKeys: Object.keys(window.solodesk?.identity || {}).sort(),
       windowKeys: Object.keys(window.solodesk?.window || {}).sort(),
       lifecycleKeys: Object.keys(window.solodesk?.lifecycle || {}).sort(),
       linkKeys: Object.keys(window.solodesk?.links || {}).sort(),
@@ -33,7 +40,24 @@ test("built preload exposes only named desktop actions", async ({ playwright }) 
       rawIpc: typeof window.ipcRenderer,
     }));
     expect(surface).toEqual({
-      keys: ["lifecycle", "links", "persistence", "protection", "window"],
+      keys: [
+        "identity",
+        "lifecycle",
+        "links",
+        "persistence",
+        "protection",
+        "window",
+      ],
+      identityKeys: [
+        "cancelSignIn",
+        "confirmAccountSwitch",
+        "confirmEnrollment",
+        "getState",
+        "onStateChanged",
+        "retryReconciliation",
+        "signOut",
+        "startSignIn",
+      ],
       windowKeys: ["getState", "minimize", "requestClose", "restore"],
       lifecycleKeys: ["onState"],
       linkKeys: ["onDecision"],
@@ -45,10 +69,16 @@ test("built preload exposes only named desktop actions", async ({ playwright }) 
     });
     const state = await page.evaluate(() => window.solodesk.window.getState());
     expect(state.status, JSON.stringify(state)).toBe("ok");
-    await expect.poll(async () =>
-      (await page.evaluate(() => window.solodesk.window.getState())).data.visible,
-    ).toBe(true);
-    const denied = await page.evaluate(() => window.solodesk.window.getState({ unexpected: true }));
+    await expect
+      .poll(
+        async () =>
+          (await page.evaluate(() => window.solodesk.window.getState())).data
+            .visible,
+      )
+      .toBe(true);
+    const denied = await page.evaluate(() =>
+      window.solodesk.window.getState({ unexpected: true }),
+    );
     expect(denied.status).toBe("rejected");
   } finally {
     if (app) await app.close();

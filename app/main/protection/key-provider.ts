@@ -45,6 +45,16 @@ function sameContext(a: KeyContext, b: KeyContext): boolean {
 
 /** Main-process-only OS wrapper. The payload binds key bytes to an exact identity/data set/generation. */
 export class ElectronKeyProvider {
+  sealSecret(value: string): Buffer {
+    this.checkAvailable();
+    return safeStorage.encryptString(value);
+  }
+
+  openSecret(value: Buffer): string {
+    this.checkAvailable();
+    return safeStorage.decryptString(value);
+  }
+
   assertAvailable(): void {
     this.checkAvailable();
   }

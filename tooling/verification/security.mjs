@@ -89,6 +89,50 @@ export function workflowFindings(text) {
       findings.push({ code: "unpinned-action", severity: "blocking" });
   return findings;
 }
+
+export function scanF010SecretEvidence(root) {
+  const findings = [];
+  const targetDirs = ["app/renderer", "app/preload"];
+  const prohibitedPatterns = [
+    { pattern: /FIXTURE_SECRET_/g, rule: "f010-fixture-secret-leak" },
+    { pattern: /\bservice_role\b/g, rule: "f010-service-role-leak" },
+    { pattern: /\bcode_verifier\b/g, rule: "f010-pkce-verifier-leak" },
+    { pattern: /\b(access_token|refresh_token)\b/g, rule: "f010-token-leak" },
+    { pattern: /[?&]code=[A-Za-z0-9_-]+(&|$)/g, rule: "f010-raw-callback-leak" },
+  ];
+
+  for (const dir of targetDirs) {
+    const fullDir = path.join(root, dir);
+    if (!fs.existsSync(fullDir)) continue;
+    const entries = fs.readdirSync(fullDir, { recursive: true, withFileTypes: true });
+    for (const entry of entries) {
+      if (!entry.isFile() || entry.name.endsWith(".d.ts")) continue;
+      const parentDir = entry.parentPath || entry.path || fullDir;
+      const filePath = path.join(parentDir, entry.name);
+      const relativePath = path.relative(root, filePath);
+      const content = fs.readFileSync(filePath, "utf-8");
+      const lines = content.split("\n");
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        for (const { pattern, rule } of prohibitedPatterns) {
+          pattern.lastIndex = 0;
+          if (pattern.test(line)) {
+            findings.push({
+              code: "secret",
+              rule,
+              location: relativePath,
+              line: i + 1,
+              severity: "blocking",
+              action: "Remove credential, token, code_verifier, or secret marker from renderer/preload surface",
+            });
+          }
+        }
+      }
+    }
+  }
+  return findings;
+}
+
 async function boundedDownload(url, file, max = 33554432) {
   const response = await fetch(url, { signal: AbortSignal.timeout(180000) });
   if (!response.ok) throw new Error("scanner-download-unavailable");
@@ -276,6 +320,7 @@ export async function securityCheck(root, kind) {
         severity: "blocking",
         action: "Remove credential/sentinel, rotate actual exposure, rerun",
       }));
+      findings.push(...scanF010SecretEvidence(root));
       inputs = files.length;
       source = tool.name;
       version = tool.version;
