@@ -17,8 +17,17 @@ import {
   type IdentityMethod,
   type RendererIdentityState,
 } from "../shared/identity-contracts.ts";
+import {
+  isRendererAccountSecurityState,
+  type RendererAccountSecurityState,
+} from "../shared/identity-security-contracts.ts";
 
-type Family = "lifecycle" | "links" | "persistence" | "identity";
+type Family =
+  | "lifecycle"
+  | "links"
+  | "persistence"
+  | "identity"
+  | "identitySecurity";
 type Listener = (event: unknown) => void;
 const listeners = new Map<string, { family: Family; callback: Listener }>();
 const pendingEvents = new Map<string, { family: Family; data: unknown }>();
@@ -77,7 +86,8 @@ ipcRenderer.on("f004:event", (_nativeEvent, input: unknown) => {
     (event.family !== "lifecycle" &&
       event.family !== "links" &&
       event.family !== "persistence" &&
-      event.family !== "identity")
+      event.family !== "identity" &&
+      event.family !== "identitySecurity")
   )
     return;
   const listener = listeners.get(event.subscriptionId);
@@ -86,6 +96,11 @@ ipcRenderer.on("f004:event", (_nativeEvent, input: unknown) => {
   if (event.family === "persistence" && !sanitizePersistenceStatus(data))
     return;
   if (event.family === "identity" && !isRendererIdentityState(data)) return;
+  if (
+    event.family === "identitySecurity" &&
+    !isRendererAccountSecurityState(data)
+  )
+    return;
   if (listener?.family === event.family) listener.callback(data);
   else if (pendingEvents.size < 32)
     pendingEvents.set(event.subscriptionId, { family: event.family, data });
@@ -267,6 +282,69 @@ function subscribeIdentity(
   };
 }
 
+async function invokeIdentitySecurity(
+  method: string,
+  payload?: unknown,
+): Promise<RendererAccountSecurityState> {
+  const response: unknown = await ipcRenderer.invoke(
+    `solodesk.identitySecurity.${method}`,
+    payload,
+  );
+  if (!isRendererAccountSecurityState(response)) {
+    throw new Error("invalid_security_state");
+  }
+  return response;
+}
+
+function subscribeIdentitySecurity(
+  callback: (state: RendererAccountSecurityState) => void,
+): () => void {
+  if (typeof callback !== "function") return () => {};
+  let active = true;
+  let subscriptionId: string | undefined;
+  void ipcRenderer
+    .invoke("solodesk.identitySecurity.onStateChanged")
+    .then((res: unknown) => {
+      if (!active) return;
+      if (res && typeof res === "object" && "subscriptionId" in res) {
+        subscriptionId = (res as { subscriptionId: string }).subscriptionId;
+        listeners.set(subscriptionId, {
+          family: "identitySecurity",
+          callback: (data: unknown) => {
+            if (isRendererAccountSecurityState(data)) callback(data);
+          },
+        });
+        const pending = pendingEvents.get(subscriptionId);
+        if (pending?.family === "identitySecurity") {
+          pendingEvents.delete(subscriptionId);
+          if (isRendererAccountSecurityState(pending.data)) {
+            callback(pending.data);
+          }
+        }
+      }
+    })
+    .catch(() => {});
+  return () => {
+    active = false;
+    if (subscriptionId) {
+      listeners.delete(subscriptionId);
+      pendingEvents.delete(subscriptionId);
+      ipcRenderer.send("f004:subscription:remove", { subscriptionId });
+    }
+  };
+}
+
+const identitySecurityFacade = Object.freeze({
+  getState: () => invokeIdentitySecurity("getState"),
+  start: (action?: string) => invokeIdentitySecurity("start", action),
+  cancel: () => invokeIdentitySecurity("cancel"),
+  acknowledgeRecoveryCodes: () =>
+    invokeIdentitySecurity("acknowledgeRecoveryCodes"),
+  retryReconciliation: () => invokeIdentitySecurity("retryReconciliation"),
+  onStateChanged: (callback: (state: RendererAccountSecurityState) => void) =>
+    subscribeIdentitySecurity(callback),
+});
+
 const facade = Object.freeze({
   identity: Object.freeze({
     getState: () => invokeIdentity("identity.getState"),
@@ -283,6 +361,7 @@ const facade = Object.freeze({
     onStateChanged: (callback: (state: RendererIdentityState) => void) =>
       subscribeIdentity(callback),
   }),
+  identitySecurity: identitySecurityFacade,
   persistence: Object.freeze({
     getState: (workspaceId: string) =>
       invokePersistence("getState", workspaceId),
@@ -310,3 +389,4 @@ const facade = Object.freeze({
 });
 
 contextBridge.exposeInMainWorld("solodesk", facade);
+contextBridge.exposeInMainWorld("identitySecurity", identitySecurityFacade);

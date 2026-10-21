@@ -4,10 +4,7 @@ import type { ProtectedIdentityStore } from "./protected-identity-store.ts";
 import type { IdentityProviderAdapter } from "./provider-adapter.ts";
 import { AuthAttemptManager, type SignInAttempt } from "./auth-attempts.ts";
 import { SessionOwner, type VerifiedAccount } from "./session-owner.ts";
-import {
-  EnrollmentCoordinator,
-  type EnrollmentService,
-} from "./enrollment.ts";
+import { EnrollmentCoordinator, type EnrollmentService } from "./enrollment.ts";
 import {
   BrowserHandoffManager,
   buildAuthorizationUrl,
@@ -28,6 +25,7 @@ import type {
 } from "../../shared/identity-contracts.ts";
 import { identityRecoveryState } from "../persistence/recovery-state.ts";
 import { parseAuthCallback } from "./auth-callback.ts";
+import { AccountSecurityCoordinator } from "./account-security.ts";
 
 export type IdentityCoordinatorOptions = {
   profileId: string;
@@ -59,6 +57,7 @@ export class IdentityCoordinator {
   private readonly attempts: AuthAttemptManager;
   private readonly sessionOwner: SessionOwner;
   private readonly handoff: BrowserHandoffManager;
+  readonly security: AccountSecurityCoordinator;
   private readonly onStateChanged?: (state: RendererIdentityState) => void;
   private readonly enrollmentOptions?: IdentityCoordinatorOptions["enrollment"];
   private readonly restoreSession?: IdentityCoordinatorOptions["restoreSession"];
@@ -74,7 +73,9 @@ export class IdentityCoordinator {
   private retainedWork: RetainedWorkStatus = "none";
   private messageKey: string = "shell.identity.signInRequired";
   private actionKey: string = "shell.identity.action.signIn";
-  private nextActions: readonly IdentityAction[] = Object.freeze(["sign_in_again"]);
+  private nextActions: readonly IdentityAction[] = Object.freeze([
+    "sign_in_again",
+  ]);
   private authorityGeneration = 0;
   private profileGeneration: number;
   private disposed = false;
@@ -91,13 +92,39 @@ export class IdentityCoordinator {
     this.store = options.store;
     this.provider = options.provider;
     this.attempts = new AuthAttemptManager(this.config, this.store);
-    this.sessionOwner = new SessionOwner(this.config, this.store, this.provider);
+    this.sessionOwner = new SessionOwner(
+      this.config,
+      this.store,
+      this.provider,
+    );
+    this.security = new AccountSecurityCoordinator(
+      this.config,
+      this.store,
+      this.provider,
+      options.openBrowser,
+    );
     this.handoff = new BrowserHandoffManager(this.config, {
       onCallbackReceived: async (rawUrl) => {
-        const parsed = parseAuthCallback(rawUrl, this.config, this.currentRedirectUri ?? undefined);
-        if (parsed.type === "invalid" || !this.currentAttempt ||
-          !this.attempts.findPendingAttemptByState(parsed.state, this.profileId, this.profileGeneration)) return false;
-        await this.handleIdentityReturn({ kind: "identity_return", ...parsed, rawUrl });
+        const parsed = parseAuthCallback(
+          rawUrl,
+          this.config,
+          this.currentRedirectUri ?? undefined,
+        );
+        if (
+          parsed.type === "invalid" ||
+          !this.currentAttempt ||
+          !this.attempts.findPendingAttemptByState(
+            parsed.state,
+            this.profileId,
+            this.profileGeneration,
+          )
+        )
+          return false;
+        await this.handleIdentityReturn({
+          kind: "identity_return",
+          ...parsed,
+          rawUrl,
+        });
         return true;
       },
       shellOpenExternal: options.openBrowser
@@ -118,7 +145,8 @@ export class IdentityCoordinator {
     try {
       this.store.assertProtectionUsable();
       const profile = this.store.loadProfile();
-      this.profileGeneration = profile?.profile_generation ?? this.profileGeneration;
+      this.profileGeneration =
+        profile?.profile_generation ?? this.profileGeneration;
       const storedAttempt = this.store.loadActiveAttempt();
       if (storedAttempt) {
         const attempt = this.attempts.restoreAttempt(
@@ -128,7 +156,8 @@ export class IdentityCoordinator {
         );
         if (attempt) {
           this.currentAttempt = attempt;
-          const destination = this.config.destinations[attempt.return_destination_id];
+          const destination =
+            this.config.destinations[attempt.return_destination_id];
           this.currentRedirectUri = `${destination.scheme}://${destination.host}${destination.path}`;
           this.lifecycle = "signing_in";
           this.sessionStatus = "sign_in_required";
@@ -152,23 +181,30 @@ export class IdentityCoordinator {
         binding.subject_id !== profile.subject_id ||
         binding.status !== "current" ||
         binding.protected_write_status !== "committed"
-      ) throw new Error("session_rejected");
+      )
+        throw new Error("session_rejected");
 
       const account = this.restoreSession
         ? await this.restoreSession(binding)
-        : await this.sessionOwner.restore(binding, () => this.isCurrent(generation));
+        : await this.sessionOwner.restore(binding, () =>
+            this.isCurrent(generation),
+          );
       if (!this.isCurrent(generation)) return this.getState();
       if (
         !account ||
         account.issuer_id !== binding.issuer_id ||
         account.subject_id !== binding.subject_id
-      ) throw new Error("session_rejected");
+      )
+        throw new Error("session_rejected");
 
       this.verifiedAccount = account;
       this.sessionStatus = "current";
       this.configureEnrollment(account, profile, binding);
       const intent = this.store.loadEnrollmentIntent();
-      if (profile.lifecycle === "enrolled" && intent?.status === "locally_committed") {
+      if (
+        profile.lifecycle === "enrolled" &&
+        intent?.status === "locally_committed"
+      ) {
         this.lifecycle = "enrolled";
         this.enrollmentStatus = "enrolled";
         this.messageKey = "shell.identity.enrolled";
@@ -193,11 +229,16 @@ export class IdentityCoordinator {
   }
 
   private isCurrent(generation: number): boolean {
-    return !this.disposed && generation === this.authorityGeneration && (this.isCurrentOwner?.() ?? true);
+    return (
+      !this.disposed &&
+      generation === this.authorityGeneration &&
+      (this.isCurrentOwner?.() ?? true)
+    );
   }
 
   getAccessToken(): string {
-    if (this.disposed || this.sessionStatus !== "current") throw new Error("session_rejected");
+    if (this.disposed || this.sessionStatus !== "current")
+      throw new Error("session_rejected");
     return this.sessionOwner.getAccessToken();
   }
 
@@ -243,7 +284,9 @@ export class IdentityCoordinator {
       ...(this.verifiedAccount?.display_identifier
         ? { displayIdentifier: this.verifiedAccount.display_identifier }
         : {}),
-      ...(this.safeDeviceLabel ? { safeDeviceLabel: this.safeDeviceLabel } : {}),
+      ...(this.safeDeviceLabel
+        ? { safeDeviceLabel: this.safeDeviceLabel }
+        : {}),
       protectionStatus:
         this.lifecycle === "protection_unavailable" ? "blocked" : "ready",
       sessionStatus: this.sessionStatus,
@@ -274,7 +317,8 @@ export class IdentityCoordinator {
     this.handoff.closeLoopbackListener();
     try {
       this.store.assertProtectionUsable();
-      this.profileGeneration = this.store.loadProfile()?.profile_generation ?? this.profileGeneration;
+      this.profileGeneration =
+        this.store.loadProfile()?.profile_generation ?? this.profileGeneration;
     } catch (error) {
       const state = identityRecoveryState(error);
       this.lifecycle = state.lifecycle;
@@ -359,10 +403,27 @@ export class IdentityCoordinator {
     returnIntent: IdentityReturnIntent,
   ): Promise<RendererIdentityState> {
     const generation = this.authorityGeneration;
-    const parsed = parseAuthCallback(returnIntent.rawUrl, this.config, this.currentRedirectUri ?? undefined);
-    if (parsed.type === "invalid" || !this.isCurrent(generation) || !this.currentAttempt ||
-      !this.attempts.findPendingAttemptByState(parsed.state, this.profileId, this.profileGeneration)) return this.getState();
-    returnIntent = { kind: "identity_return", ...parsed, rawUrl: returnIntent.rawUrl };
+    const parsed = parseAuthCallback(
+      returnIntent.rawUrl,
+      this.config,
+      this.currentRedirectUri ?? undefined,
+    );
+    if (
+      parsed.type === "invalid" ||
+      !this.isCurrent(generation) ||
+      !this.currentAttempt ||
+      !this.attempts.findPendingAttemptByState(
+        parsed.state,
+        this.profileId,
+        this.profileGeneration,
+      )
+    )
+      return this.getState();
+    returnIntent = {
+      kind: "identity_return",
+      ...parsed,
+      rawUrl: returnIntent.rawUrl,
+    };
     // Check if there is an active attempt matching the return's state
     if (!this.currentAttempt) {
       this.lifecycle = "sign_in_required";
@@ -559,6 +620,7 @@ export class IdentityCoordinator {
   async signOut(): Promise<RendererIdentityState> {
     this.authorityGeneration += 1;
     this.handoff.closeLoopbackListener();
+    this.security.cancelActiveHandoff();
     if (this.currentAttempt) {
       this.attempts.cancelAttempt(
         this.currentAttempt.attempt_id,
@@ -593,9 +655,10 @@ export class IdentityCoordinator {
     this.enrollmentStatus = "not_enrolled";
     this.retainedWork = signedOut.retainedWork;
     this.lifecycle = "sign_in_required";
-    this.messageKey = signedOut.retainedWork === "none"
-      ? "shell.identity.signedOut"
-      : "shell.identity.signedOutRetainedWork";
+    this.messageKey =
+      signedOut.retainedWork === "none"
+        ? "shell.identity.signedOut"
+        : "shell.identity.signedOutRetainedWork";
     this.actionKey = "shell.identity.action.signIn";
     this.nextActions = Object.freeze(["sign_in_again"]);
     await this.onTeardown?.();

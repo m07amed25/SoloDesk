@@ -7,6 +7,11 @@ import {
   type LocalAccountProfile,
   type ProtectedSessionBinding,
 } from "../../shared/identity-contracts.ts";
+import {
+  type SecurityPurpose,
+  isSecurityPurpose,
+  containsProhibitedSecurityKey,
+} from "../../shared/identity-security-contracts.ts";
 import type { ProtectionOwner } from "../protection/owner.ts";
 
 export interface IdentitySecretProtection {
@@ -14,6 +19,39 @@ export interface IdentitySecretProtection {
   sealSecret(value: string): Buffer;
   openSecret(value: Buffer): string;
 }
+
+export const HOSTED_DESTINATION_IDS = Object.freeze([
+  "security_enrollment_v1",
+  "security_challenge_v1",
+  "security_recovery_v1",
+  "security_reauth_v1",
+] as const);
+export type HostedDestinationId = (typeof HOSTED_DESTINATION_IDS)[number];
+
+export const HANDOFF_LIFECYCLES = Object.freeze([
+  "pending",
+  "returned",
+  "reconcile_required",
+  "accepted",
+  "rejected",
+  "cancelled",
+  "expired",
+] as const);
+export type HandoffLifecycle = (typeof HANDOFF_LIFECYCLES)[number];
+
+export type ProtectedSecurityHandoff = Readonly<{
+  format_version: 1;
+  profile_reference: string;
+  profile_generation: number;
+  session_generation: number;
+  operation_id: string;
+  purpose: SecurityPurpose;
+  expected_security_generation: number;
+  hosted_destination_id: HostedDestinationId;
+  lifecycle: HandoffLifecycle;
+  created_at: string;
+  expires_at: string;
+}>;
 
 export type StoredAttemptRecord = Readonly<{
   attempt_id: string;
@@ -54,6 +92,7 @@ export type ProtectedIdentityPaths = Readonly<{
   attempt: string;
   credentials: string;
   enrollment: string;
+  securityHandoff: string;
 }>;
 
 export type StoredEnrollmentIntent = Readonly<{
@@ -101,6 +140,7 @@ export function deriveIdentityPaths(
     attempt: path.join(directory, "attempt.v1.json"),
     credentials: path.join(directory, "credentials.v1.enc"),
     enrollment: path.join(directory, "enrollment.v1.json"),
+    securityHandoff: path.join(directory, "security-handoff.v1.json"),
   });
 }
 
@@ -150,6 +190,10 @@ export class ProtectedIdentityStore {
     }
   }
 
+  hasProfile(): boolean {
+    return fs.existsSync(this.paths.profile);
+  }
+
   loadProfile(): LocalAccountProfile | null {
     if (!fs.existsSync(this.paths.profile)) {
       return null;
@@ -172,7 +216,10 @@ export class ProtectedIdentityStore {
   }
 
   saveProfile(profile: LocalAccountProfile): void {
-    if (!isLocalAccountProfile(profile) || profile.compatibility_version !== 1) {
+    if (
+      !isLocalAccountProfile(profile) ||
+      profile.compatibility_version !== 1
+    ) {
       throw new Error("invalid_profile_data");
     }
     if (profile.profile_id !== this.profileId) {
@@ -229,9 +276,17 @@ export class ProtectedIdentityStore {
       const envelope = JSON.parse(raw);
       if (envelope.version !== 2 || typeof envelope.sealed !== "string")
         throw new Error("unsupported_attempt_format");
-      parsed = JSON.parse(this.secretProtection!.openSecret(Buffer.from(envelope.sealed, "base64")));
+      parsed = JSON.parse(
+        this.secretProtection!.openSecret(
+          Buffer.from(envelope.sealed, "base64"),
+        ),
+      );
     } catch (error) {
-      if (error instanceof Error && error.message === "unsupported_attempt_format") throw error;
+      if (
+        error instanceof Error &&
+        error.message === "unsupported_attempt_format"
+      )
+        throw error;
       throw new Error("corrupt_attempt_record");
     }
     if (
@@ -249,7 +304,9 @@ export class ProtectedIdentityStore {
     if (!attempt || attempt.profile_id !== this.profileId) {
       throw new Error("invalid_attempt_data");
     }
-    const sealed = this.secretProtection!.sealSecret(JSON.stringify(attempt)).toString("base64");
+    const sealed = this.secretProtection!.sealSecret(
+      JSON.stringify(attempt),
+    ).toString("base64");
     atomicWrite(this.paths.attempt, JSON.stringify({ version: 2, sealed }));
   }
 
@@ -262,7 +319,9 @@ export class ProtectedIdentityStore {
   loadEnrollmentIntent(): StoredEnrollmentIntent | null {
     if (!fs.existsSync(this.paths.enrollment)) return null;
     try {
-      const value = JSON.parse(fs.readFileSync(this.paths.enrollment, "utf-8")) as StoredEnrollmentIntent;
+      const value = JSON.parse(
+        fs.readFileSync(this.paths.enrollment, "utf-8"),
+      ) as StoredEnrollmentIntent;
       if (
         !value ||
         typeof value !== "object" ||
@@ -270,10 +329,15 @@ export class ProtectedIdentityStore {
         !/^[0-9a-f]{64}$/i.test(value.requestDigest) ||
         value.profileGeneration < 1 ||
         value.payloadVersion !== 1
-      ) throw new Error("invalid_enrollment_intent");
+      )
+        throw new Error("invalid_enrollment_intent");
       return value;
     } catch (error) {
-      if (error instanceof Error && error.message === "invalid_enrollment_intent") throw error;
+      if (
+        error instanceof Error &&
+        error.message === "invalid_enrollment_intent"
+      )
+        throw error;
       throw new Error("corrupt_enrollment_intent");
     }
   }
@@ -284,35 +348,201 @@ export class ProtectedIdentityStore {
       !/^[0-9a-f]{64}$/i.test(intent.requestDigest) ||
       intent.profileGeneration < 1 ||
       intent.payloadVersion !== 1
-    ) throw new Error("invalid_enrollment_intent");
+    )
+      throw new Error("invalid_enrollment_intent");
     atomicWrite(this.paths.enrollment, JSON.stringify(intent, null, 2));
   }
 
-  saveEncryptedCredentials(
-    credentials: { accessToken?: string; refreshToken?: string },
-  ): void {
+  saveEncryptedCredentials(credentials: {
+    accessToken?: string;
+    refreshToken?: string;
+  }): void {
     this.assertProtectionUsable();
-    const sealed = this.secretProtection!.sealSecret(JSON.stringify(credentials)).toString("base64");
+    const sealed = this.secretProtection!.sealSecret(
+      JSON.stringify(credentials),
+    ).toString("base64");
     atomicWrite(this.paths.credentials, JSON.stringify({ version: 2, sealed }));
   }
 
-  loadEncryptedCredentials(
-  ): { accessToken?: string; refreshToken?: string } | null {
+  loadEncryptedCredentials(): {
+    accessToken?: string;
+    refreshToken?: string;
+  } | null {
     if (!fs.existsSync(this.paths.credentials)) {
       return null;
     }
     this.assertProtectionUsable();
     try {
-      const envelope = JSON.parse(fs.readFileSync(this.paths.credentials, "utf8"));
+      const envelope = JSON.parse(
+        fs.readFileSync(this.paths.credentials, "utf8"),
+      );
       if (envelope.version !== 2 || typeof envelope.sealed !== "string")
         throw new Error("unsupported_credential_format");
-      const credentials = JSON.parse(this.secretProtection!.openSecret(Buffer.from(envelope.sealed, "base64")));
-      if (!credentials || typeof credentials.accessToken !== "string" || !credentials.accessToken ||
-        (credentials.refreshToken !== undefined && typeof credentials.refreshToken !== "string"))
+      const credentials = JSON.parse(
+        this.secretProtection!.openSecret(
+          Buffer.from(envelope.sealed, "base64"),
+        ),
+      );
+      if (
+        !credentials ||
+        typeof credentials.accessToken !== "string" ||
+        !credentials.accessToken ||
+        (credentials.refreshToken !== undefined &&
+          typeof credentials.refreshToken !== "string")
+      )
         throw new Error("corrupt_encrypted_credentials");
       return credentials;
     } catch {
       throw new Error("credentials_decryption_failed");
     }
+  }
+
+  loadSecurityHandoff(): ProtectedSecurityHandoff | null {
+    if (!fs.existsSync(this.paths.securityHandoff)) {
+      return null;
+    }
+    this.assertProtectionUsable();
+    const raw = fs.readFileSync(this.paths.securityHandoff, "utf-8");
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(raw);
+    } catch {
+      throw new Error("corrupt_security_handoff");
+    }
+
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+      throw new Error("invalid_security_handoff");
+    }
+
+    const h = parsed as Record<string, unknown>;
+
+    // Unsupported format_version is rejected without replacement
+    if (h.format_version !== 1) {
+      throw new Error("unsupported_format_version");
+    }
+
+    // Must never contain prohibited keys
+    if (containsProhibitedSecurityKey(h)) {
+      throw new Error("prohibited_secret_in_handoff");
+    }
+
+    // Validate fields
+    if (
+      typeof h.profile_reference !== "string" ||
+      h.profile_reference !== this.profileId
+    ) {
+      throw new Error("profile_reference_mismatch");
+    }
+    if (typeof h.profile_generation !== "number" || h.profile_generation < 1) {
+      throw new Error("invalid_profile_generation");
+    }
+    if (typeof h.session_generation !== "number" || h.session_generation < 1) {
+      throw new Error("invalid_session_generation");
+    }
+    if (
+      typeof h.operation_id !== "string" ||
+      !/^[0-9a-f-]{36}$/i.test(h.operation_id)
+    ) {
+      throw new Error("invalid_operation_id");
+    }
+    if (!isSecurityPurpose(h.purpose)) {
+      throw new Error("invalid_purpose");
+    }
+    if (
+      typeof h.expected_security_generation !== "number" ||
+      h.expected_security_generation < 1
+    ) {
+      throw new Error("invalid_expected_security_generation");
+    }
+    if (
+      typeof h.hosted_destination_id !== "string" ||
+      !(HOSTED_DESTINATION_IDS as readonly string[]).includes(
+        h.hosted_destination_id,
+      )
+    ) {
+      throw new Error("invalid_destination_id");
+    }
+    if (
+      typeof h.lifecycle !== "string" ||
+      !(HANDOFF_LIFECYCLES as readonly string[]).includes(h.lifecycle)
+    ) {
+      throw new Error("invalid_lifecycle");
+    }
+    if (
+      typeof h.created_at !== "string" ||
+      Number.isNaN(Date.parse(h.created_at))
+    ) {
+      throw new Error("invalid_created_at");
+    }
+    if (
+      typeof h.expires_at !== "string" ||
+      Number.isNaN(Date.parse(h.expires_at))
+    ) {
+      throw new Error("invalid_expires_at");
+    }
+    if (Date.parse(h.expires_at) <= Date.parse(h.created_at)) {
+      throw new Error("invalid_lifetime_bounds");
+    }
+
+    return parsed as ProtectedSecurityHandoff;
+  }
+
+  saveSecurityHandoff(handoff: ProtectedSecurityHandoff): void {
+    this.assertProtectionUsable();
+    if (!handoff || typeof handoff !== "object") {
+      throw new Error("invalid_security_handoff_data");
+    }
+    if (handoff.format_version !== 1) {
+      throw new Error("unsupported_format_version");
+    }
+    if (containsProhibitedSecurityKey(handoff)) {
+      throw new Error("prohibited_secret_in_handoff");
+    }
+    if (handoff.profile_reference !== this.profileId) {
+      throw new Error("profile_reference_mismatch");
+    }
+    if (Date.parse(handoff.expires_at) <= Date.parse(handoff.created_at)) {
+      throw new Error("invalid_lifetime_bounds");
+    }
+
+    atomicWrite(this.paths.securityHandoff, JSON.stringify(handoff, null, 2));
+  }
+
+  saveActiveSecurityHandoff(handoff: Record<string, unknown>): void {
+    this.assertProtectionUsable();
+    if (!handoff || typeof handoff !== "object") {
+      throw new Error("invalid_security_handoff_data");
+    }
+    if (containsProhibitedSecurityKey(handoff)) {
+      throw new Error("prohibited_secret_in_handoff");
+    }
+    atomicWrite(this.paths.securityHandoff, JSON.stringify(handoff, null, 2));
+  }
+
+  loadActiveSecurityHandoff(): Record<string, unknown> | null {
+    if (!fs.existsSync(this.paths.securityHandoff)) {
+      return null;
+    }
+    this.assertProtectionUsable();
+    try {
+      const raw = fs.readFileSync(this.paths.securityHandoff, "utf-8");
+      const parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+        return null;
+      }
+      return parsed as Record<string, unknown>;
+    } catch {
+      return null;
+    }
+  }
+
+  clearSecurityHandoff(): void {
+    if (fs.existsSync(this.paths.securityHandoff)) {
+      fs.unlinkSync(this.paths.securityHandoff);
+    }
+  }
+
+  clearActiveSecurityHandoff(): void {
+    this.clearSecurityHandoff();
   }
 }

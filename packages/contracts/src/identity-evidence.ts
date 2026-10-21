@@ -1,6 +1,7 @@
 export const IDENTITY_EVIDENCE_SCHEMA_VERSION = 1 as const;
 
 export const IDENTITY_EVENT_TYPES = Object.freeze([
+  // F010 events
   "sign_in_started",
   "sign_in_completed",
   "sign_in_failed",
@@ -12,6 +13,18 @@ export const IDENTITY_EVENT_TYPES = Object.freeze([
   "signed_out",
   "account_switched",
   "profile_recovered",
+  // F011 additive events
+  "factor_enrollment_accepted",
+  "factor_enrollment_rejected",
+  "mfa_challenge_verified",
+  "mfa_challenge_rejected",
+  "recovery_codes_acknowledged",
+  "recovery_codes_regenerated",
+  "account_recovery_accepted",
+  "account_recovery_rejected",
+  "security_change_accepted",
+  "security_change_rejected",
+  "security_reconciled",
 ] as const);
 
 export type IdentityEventType = (typeof IDENTITY_EVENT_TYPES)[number];
@@ -28,6 +41,7 @@ export const IDENTITY_OUTCOMES = Object.freeze([
 export type IdentityOutcome = (typeof IDENTITY_OUTCOMES)[number];
 
 export const SAFE_REASON_CODES = Object.freeze([
+  // F010 codes
   "network_unavailable",
   "provider_unavailable",
   "cancelled",
@@ -42,6 +56,15 @@ export const SAFE_REASON_CODES = Object.freeze([
   "recovery_required",
   "session_invalidated",
   "completed_normally",
+  // F011 codes
+  "mfa_required",
+  "mfa_challenge_failed",
+  "factor_unverified",
+  "recovery_code_invalid",
+  "recovery_codes_exhausted",
+  "stale_generation",
+  "rate_limited",
+  "reauthentication_required",
 ] as const);
 
 export type SafeReasonCode = (typeof SAFE_REASON_CODES)[number];
@@ -61,7 +84,13 @@ export type IdentitySecurityEvidence = Readonly<{
   device_reference?: string; // Safe opaque reference
   attempt_reference?: string; // Safe opaque attempt UUID
   enrollment_intent_reference?: string; // Safe opaque intent UUID
+  identity_operation_reference?: string; // Safe opaque operation UUID (F011)
   account_reference?: string; // Optional policy-approved pseudonymous reference
+  policy_version?: string; // F011
+  security_generation?: number; // F011
+  session_consequence?: string; // F011
+  safe_diagnostic_reference?: string; // F011
+  outcome_certainty?: "certain" | "uncertain"; // F011
   authoritative_at?: string; // Distinguished server time
   local_observed_at: string; // Local observation instant
   correlation_id?: string;
@@ -83,7 +112,31 @@ const SENSITIVE_KEY_PATTERNS = [
   /fragment/i,
   /key/i,
   /service_role/i,
+  /raw_/i,
 ];
+
+const ALLOWED_EVIDENCE_KEYS = Object.freeze([
+  "evidence_id",
+  "schema_version",
+  "event_type",
+  "outcome",
+  "safe_reason_code",
+  "profile_reference",
+  "device_reference",
+  "attempt_reference",
+  "enrollment_intent_reference",
+  "identity_operation_reference",
+  "account_reference",
+  "policy_version",
+  "security_generation",
+  "session_consequence",
+  "safe_diagnostic_reference",
+  "outcome_certainty",
+  "authoritative_at",
+  "local_observed_at",
+  "correlation_id",
+  "diagnostic_id",
+]);
 
 function isSafeBoundedReference(val: unknown): val is string {
   return (
@@ -109,10 +162,10 @@ export function projectIdentityEvidence(
     throw new Error("invalid_evidence_input");
   }
 
-  // Check for any obvious leak attempts in keys
+  // Reject sensitive and unknown fields
   for (const k of Object.keys(raw)) {
     if (SENSITIVE_KEY_PATTERNS.some((pat) => pat.test(k))) {
-      // Allowed reference keys:
+      // Allowed keys that match pattern
       if (
         k !== "safe_reason_code" &&
         k !== "diagnostic_id" &&
@@ -120,6 +173,9 @@ export function projectIdentityEvidence(
       ) {
         throw new Error(`forbidden_sensitive_evidence_field: ${k}`);
       }
+    }
+    if (!ALLOWED_EVIDENCE_KEYS.includes(k)) {
+      throw new Error(`unknown_evidence_field: ${k}`);
     }
   }
 
@@ -174,9 +230,46 @@ export function projectIdentityEvidence(
       ? raw.enrollment_intent_reference
       : undefined;
 
+  const identity_operation_reference =
+    typeof raw.identity_operation_reference === "string" &&
+    /^[0-9a-f-]{36}$/i.test(raw.identity_operation_reference)
+      ? raw.identity_operation_reference
+      : undefined;
+
   const account_reference = isSafeBoundedReference(raw.account_reference)
     ? raw.account_reference
     : undefined;
+
+  const policy_version =
+    typeof raw.policy_version === "string" &&
+    raw.policy_version.length > 0 &&
+    raw.policy_version.length <= 64
+      ? raw.policy_version
+      : undefined;
+
+  const security_generation =
+    typeof raw.security_generation === "number" &&
+    Number.isSafeInteger(raw.security_generation) &&
+    raw.security_generation > 0
+      ? raw.security_generation
+      : undefined;
+
+  const session_consequence =
+    typeof raw.session_consequence === "string" &&
+    raw.session_consequence.length <= 64
+      ? raw.session_consequence
+      : undefined;
+
+  const safe_diagnostic_reference =
+    typeof raw.safe_diagnostic_reference === "string" &&
+    /^[0-9a-f-]{36}$/i.test(raw.safe_diagnostic_reference)
+      ? raw.safe_diagnostic_reference
+      : undefined;
+
+  const outcome_certainty =
+    raw.outcome_certainty === "certain" || raw.outcome_certainty === "uncertain"
+      ? raw.outcome_certainty
+      : undefined;
 
   const authoritative_at = isIsoDate(raw.authoritative_at)
     ? raw.authoritative_at
@@ -210,7 +303,13 @@ export function projectIdentityEvidence(
     device_reference,
     attempt_reference,
     enrollment_intent_reference,
+    identity_operation_reference,
     account_reference,
+    policy_version,
+    security_generation,
+    session_consequence,
+    safe_diagnostic_reference,
+    outcome_certainty,
     authoritative_at,
     local_observed_at,
     correlation_id,

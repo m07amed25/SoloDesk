@@ -98,13 +98,19 @@ export function scanF010SecretEvidence(root) {
     { pattern: /\bservice_role\b/g, rule: "f010-service-role-leak" },
     { pattern: /\bcode_verifier\b/g, rule: "f010-pkce-verifier-leak" },
     { pattern: /\b(access_token|refresh_token)\b/g, rule: "f010-token-leak" },
-    { pattern: /[?&]code=[A-Za-z0-9_-]+(&|$)/g, rule: "f010-raw-callback-leak" },
+    {
+      pattern: /[?&]code=[A-Za-z0-9_-]+(&|$)/g,
+      rule: "f010-raw-callback-leak",
+    },
   ];
 
   for (const dir of targetDirs) {
     const fullDir = path.join(root, dir);
     if (!fs.existsSync(fullDir)) continue;
-    const entries = fs.readdirSync(fullDir, { recursive: true, withFileTypes: true });
+    const entries = fs.readdirSync(fullDir, {
+      recursive: true,
+      withFileTypes: true,
+    });
     for (const entry of entries) {
       if (!entry.isFile() || entry.name.endsWith(".d.ts")) continue;
       const parentDir = entry.parentPath || entry.path || fullDir;
@@ -123,7 +129,61 @@ export function scanF010SecretEvidence(root) {
               location: relativePath,
               line: i + 1,
               severity: "blocking",
-              action: "Remove credential, token, code_verifier, or secret marker from renderer/preload surface",
+              action:
+                "Remove credential, token, code_verifier, or secret marker from renderer/preload surface",
+            });
+          }
+        }
+      }
+    }
+  }
+  return findings;
+}
+
+export function scanF011SecretEvidence(root) {
+  const findings = [];
+  const targetDirs = ["app/renderer", "app/preload", "packages/localization"];
+  const prohibitedPatterns = [
+    { pattern: /CANARY_TOTP_SECRET/g, rule: "f011-totp-secret-leak" },
+    { pattern: /CANARY_QR/g, rule: "f011-qr-code-leak" },
+    { pattern: /CANARY[-_]CODE/g, rule: "f011-recovery-code-leak" },
+    { pattern: /CANARY_SUPER_SECRET_PASSWORD/g, rule: "f011-password-leak" },
+    { pattern: /CANARY_PAYLOAD/g, rule: "f011-jwt-token-leak" },
+    { pattern: /CANARY_RAW_CLAIMS/g, rule: "f011-claims-leak" },
+    { pattern: /\btotp_secret\b/g, rule: "f011-totp-field-leak" },
+    {
+      pattern: /\b(rawTotpSecret|rawRecoveryCodes)\b/g,
+      rule: "f011-canary-identifier-leak",
+    },
+  ];
+
+  for (const dir of targetDirs) {
+    const fullDir = path.join(root, dir);
+    if (!fs.existsSync(fullDir)) continue;
+    const entries = fs.readdirSync(fullDir, {
+      recursive: true,
+      withFileTypes: true,
+    });
+    for (const entry of entries) {
+      if (!entry.isFile() || entry.name.endsWith(".d.ts")) continue;
+      const parentDir = entry.parentPath || entry.path || fullDir;
+      const filePath = path.join(parentDir, entry.name);
+      const relativePath = path.relative(root, filePath);
+      const content = fs.readFileSync(filePath, "utf-8");
+      const lines = content.split("\n");
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        for (const { pattern, rule } of prohibitedPatterns) {
+          pattern.lastIndex = 0;
+          if (pattern.test(line)) {
+            findings.push({
+              code: "secret",
+              rule,
+              location: relativePath,
+              line: i + 1,
+              severity: "blocking",
+              action:
+                "Remove TOTP secret, recovery code, password, or sensitive canary from renderer/preload/localization surface",
             });
           }
         }
@@ -321,6 +381,7 @@ export async function securityCheck(root, kind) {
         action: "Remove credential/sentinel, rotate actual exposure, rerun",
       }));
       findings.push(...scanF010SecretEvidence(root));
+      findings.push(...scanF011SecretEvidence(root));
       inputs = files.length;
       source = tool.name;
       version = tool.version;
