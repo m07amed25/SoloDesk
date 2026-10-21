@@ -177,11 +177,12 @@ if (!lockHeld) {
       );
       const identityConfig = getIdentityConfig();
       const identityProvider = new SupabaseProviderAdapter(identityConfig);
-      const enrollmentService = new SupabaseEnrollmentService(
-        identityConfig,
-        () => identity.getAccessToken(),
-      );
-      const identity = new IdentityCoordinator({
+      let identity: IdentityCoordinator;
+      const enrollmentService: SupabaseEnrollmentService =
+        new SupabaseEnrollmentService(identityConfig, () =>
+          identity.getAccessToken(),
+        );
+      identity = new IdentityCoordinator({
         profileId: id,
         epoch,
         config: identityConfig,
