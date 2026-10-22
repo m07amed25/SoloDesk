@@ -15,6 +15,9 @@ export interface NavigationContextValue {
   navigateTo: (routeId: RouteId) => void;
   isSidebarCollapsed: boolean;
   toggleSidebar: () => void;
+  isMobileNavOpen: boolean;
+  toggleMobileNav: () => void;
+  closeMobileNav: () => void;
   breadcrumbs: ReadonlyArray<BreadcrumbItem>;
   routes: readonly RouteDefinition[];
 }
@@ -39,9 +42,19 @@ export function NavigationProvider({
       return false;
     },
   );
+  const [isMobileNavOpen, setIsMobileNavOpen] = React.useState<boolean>(false);
+
+  const toggleMobileNav = React.useCallback(() => {
+    setIsMobileNavOpen((prev) => !prev);
+  }, []);
+
+  const closeMobileNav = React.useCallback(() => {
+    setIsMobileNavOpen(false);
+  }, []);
 
   const navigateTo = React.useCallback((routeId: RouteId) => {
     setActiveRoute(routeId);
+    setIsMobileNavOpen(false);
   }, []);
 
   const toggleSidebar = React.useCallback(() => {
@@ -52,19 +65,43 @@ export function NavigationProvider({
     });
   }, []);
 
+  // Auto-collapse desktop rail below 1024px; auto-close mobile drawer on desktop resize
   React.useEffect(() => {
     if (typeof window === "undefined" || !window.matchMedia) return;
-    const mql = window.matchMedia("(max-width: 1023px)");
+    const collapseMql = window.matchMedia("(max-width: 1023px)");
+    const desktopMql = window.matchMedia("(min-width: 768px)");
 
-    const handler = (e: MediaQueryListEvent) => {
+    const handleCollapse = (e: MediaQueryListEvent) => {
       if (e.matches) {
         setIsSidebarCollapsed(true);
       }
     };
 
-    mql.addEventListener("change", handler);
-    return () => mql.removeEventListener("change", handler);
+    const handleDesktop = (e: MediaQueryListEvent) => {
+      if (e.matches) {
+        setIsMobileNavOpen(false);
+      }
+    };
+
+    collapseMql.addEventListener("change", handleCollapse);
+    desktopMql.addEventListener("change", handleDesktop);
+    return () => {
+      collapseMql.removeEventListener("change", handleCollapse);
+      desktopMql.removeEventListener("change", handleDesktop);
+    };
   }, []);
+
+  // Close mobile drawer on Escape key
+  React.useEffect(() => {
+    if (!isMobileNavOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsMobileNavOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isMobileNavOpen]);
 
   const breadcrumbs = React.useMemo(() => {
     return computeBreadcrumbs(activeRoute);
@@ -76,10 +113,22 @@ export function NavigationProvider({
       navigateTo,
       isSidebarCollapsed,
       toggleSidebar,
+      isMobileNavOpen,
+      toggleMobileNav,
+      closeMobileNav,
       breadcrumbs,
       routes: ROUTES,
     }),
-    [activeRoute, navigateTo, isSidebarCollapsed, toggleSidebar, breadcrumbs],
+    [
+      activeRoute,
+      navigateTo,
+      isSidebarCollapsed,
+      toggleSidebar,
+      isMobileNavOpen,
+      toggleMobileNav,
+      closeMobileNav,
+      breadcrumbs,
+    ],
   );
 
   return (

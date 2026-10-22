@@ -20,11 +20,11 @@ export function ModulePlaceholder({
 
   return (
     <div className="mx-auto max-w-3xl space-y-6">
-      <div className="rounded-xl border border-border bg-surface p-8 shadow-xs">
-        <div className="flex flex-wrap items-start justify-between gap-4 border-b border-border pb-6">
+      <div className="rounded-xl border border-border bg-surface p-4 sm:p-6 md:p-8 shadow-xs">
+        <div className="flex flex-wrap items-start justify-between gap-4 border-b border-border pb-4 sm:pb-6">
           <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-bold tracking-tight text-foreground">
+            <div className="flex flex-wrap items-center gap-2">
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
                 <BdiText>{title}</BdiText>
               </h1>
               <span className="rounded-md bg-accent px-2.5 py-0.5 text-xs font-semibold text-accent-foreground">

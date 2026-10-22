@@ -101,7 +101,7 @@ export function CommandPalette() {
         />
         <BaseDialog.Popup
           aria-label={t("search.placeholder")}
-          className="fixed left-1/2 top-1/4 z-50 w-full max-w-xl -translate-x-1/2 rounded-xl border border-border bg-surface shadow-2xl overflow-hidden focus:outline-none"
+          className="fixed left-1/2 top-1/6 sm:top-1/4 z-50 w-[calc(100%-2rem)] max-w-xl -translate-x-1/2 rounded-xl border border-border bg-surface shadow-2xl overflow-hidden focus:outline-none"
         >
           {/* Search Input Bar */}
           <div className="flex items-center border-b border-border px-4 py-3 gap-2">

@@ -75,16 +75,18 @@ export function Titlebar() {
       className="window-titlebar relative flex h-9 w-full shrink-0 items-center justify-between border-b border-border bg-surface px-3 text-xs select-none"
     >
       <div
-        className={`flex items-center gap-2 ${isMac ? "ms-[72px]" : "ms-0"}`}
+        className={`flex items-center gap-2 min-w-0 ${isMac ? "ms-[72px]" : "ms-0 pe-36"}`}
       >
-        <span className="font-semibold text-foreground tracking-tight flex items-center gap-2">
+        <span className="font-semibold text-foreground tracking-tight flex items-center gap-2 min-w-0 truncate">
           <img
             src={logoIcon}
             alt=""
             aria-hidden="true"
             className="h-4 w-4 shrink-0 object-contain"
           />
-          <BdiText>{t("app.title")}</BdiText>
+          <span className="truncate">
+            <BdiText>{t("app.title")}</BdiText>
+          </span>
         </span>
       </div>
 

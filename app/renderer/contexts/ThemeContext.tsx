@@ -5,15 +5,18 @@ import {
   getNextThemeMode,
   type ThemeMode,
   type ResolvedTheme,
+  type ThemePreset,
 } from "../lib/theme.ts";
 
-export type { ThemeMode, ResolvedTheme };
+export type { ThemeMode, ResolvedTheme, ThemePreset };
 
 export interface ThemeContextValue {
   mode: ThemeMode;
   resolvedTheme: ResolvedTheme;
+  themePreset: ThemePreset;
   forcedColorsActive: boolean;
   setTheme: (mode: ThemeMode) => void;
+  setThemePreset: (preset: ThemePreset) => void;
   toggleTheme: () => void;
 }
 
@@ -24,6 +27,10 @@ const ThemeContext = React.createContext<ThemeContextValue | undefined>(
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [mode, setModeState] = React.useState<ThemeMode>(() => {
     return preferencesManager.load().theme;
+  });
+
+  const [themePreset, setThemePresetState] = React.useState<ThemePreset>(() => {
+    return preferencesManager.load().themePreset ?? "modern-minimal";
   });
 
   const [systemPrefersDark, setSystemPrefersDark] = React.useState<boolean>(
@@ -75,7 +82,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     return resolveTheme(mode, systemPrefersDark);
   }, [mode, systemPrefersDark]);
 
-  // Synchronize DOM root class for Tailwind .dark variant
+  // Synchronize DOM root class for Tailwind .dark variant and data-theme attribute
   React.useEffect(() => {
     if (typeof document !== "undefined") {
       if (resolvedTheme === "dark") {
@@ -83,12 +90,18 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       } else {
         document.documentElement.classList.remove("dark");
       }
+      document.documentElement.setAttribute("data-theme", themePreset);
     }
-  }, [resolvedTheme]);
+  }, [resolvedTheme, themePreset]);
 
   const setTheme = React.useCallback((nextMode: ThemeMode) => {
     setModeState(nextMode);
     preferencesManager.save({ theme: nextMode });
+  }, []);
+
+  const setThemePreset = React.useCallback((nextPreset: ThemePreset) => {
+    setThemePresetState(nextPreset);
+    preferencesManager.save({ themePreset: nextPreset });
   }, []);
 
   const toggleTheme = React.useCallback(() => {
@@ -99,11 +112,21 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     () => ({
       mode,
       resolvedTheme,
+      themePreset,
       forcedColorsActive,
       setTheme,
+      setThemePreset,
       toggleTheme,
     }),
-    [mode, resolvedTheme, forcedColorsActive, setTheme, toggleTheme],
+    [
+      mode,
+      resolvedTheme,
+      themePreset,
+      forcedColorsActive,
+      setTheme,
+      setThemePreset,
+      toggleTheme,
+    ],
   );
 
   return (

@@ -1,10 +1,12 @@
 export type SupportedLocale = "en" | "ar";
 export type ThemeMode = "light" | "dark" | "system";
+export type ThemePreset = "modern-minimal" | "amber-mono";
 
 export interface UserPreferenceRecord {
   schemaVersion: 1;
   locale: SupportedLocale;
   theme: ThemeMode;
+  themePreset?: ThemePreset;
   sidebarCollapsed: boolean;
   lastUpdated: string;
 }
@@ -69,10 +71,18 @@ export function validatePreferences(
       ? record.lastUpdated
       : new Date().toISOString();
 
+  const themePreset: ThemePreset | undefined =
+    record.themePreset === "amber-mono"
+      ? "amber-mono"
+      : record.themePreset === "modern-minimal"
+        ? "modern-minimal"
+        : undefined;
+
   return {
     schemaVersion: 1,
     locale: record.locale,
     theme: record.theme,
+    ...(themePreset ? { themePreset } : {}),
     sidebarCollapsed: record.sidebarCollapsed,
     lastUpdated,
   };

@@ -1,8 +1,9 @@
 import * as React from "react";
 import { Briefcase, Clock, CloudOff, Bell, Languages } from "lucide-react";
 import { useLocalization } from "../../contexts/LocalizationContext.tsx";
+import { useWorkspace } from "../../contexts/WorkspaceContext.tsx";
 import { SearchTrigger } from "./SearchTrigger.tsx";
-import { ThemeToggle } from "./ThemeToggle.tsx";
+import { UserMenu } from "./UserMenu.tsx";
 import { Button } from "../ui/button.tsx";
 import { BdiText } from "../ui/bdi-text.tsx";
 import {
@@ -25,6 +26,7 @@ interface UtilityDialogState {
 
 export function HeaderUtilities() {
   const { locale, toggleLocale, t } = useLocalization();
+  const { currentWorkspace } = useWorkspace();
   const [activeDialog, setActiveDialog] =
     React.useState<UtilityDialogState | null>(null);
 
@@ -44,30 +46,46 @@ export function HeaderUtilities() {
 
   return (
     <>
-      <div className="flex items-center gap-1.5 sm:gap-2">
+      <div className="flex items-center gap-1 sm:gap-1.5 md:gap-2">
         <SearchTrigger />
 
-        <button
-          type="button"
-          onClick={() =>
-            openUtilityDialog(
-              "placeholder.workspaces.title",
-              "placeholder.workspaces.status",
-              "placeholder.workspaces.description",
-              "F012",
-            )
-          }
-          className="hidden xl:inline-flex h-8 items-center gap-1.5 rounded-md border border-border bg-surface px-2.5 text-xs font-medium text-foreground hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-ring cursor-pointer transition-colors whitespace-nowrap shrink-0"
-          aria-label={t("placeholder.workspaces.title")}
-        >
-          <Briefcase
-            className="h-3.5 w-3.5 text-muted-foreground shrink-0"
-            aria-hidden="true"
-          />
-          <span className="truncate max-w-[120px]">
-            <BdiText>{t("placeholder.workspaces.status")}</BdiText>
-          </span>
-        </button>
+        {currentWorkspace ? (
+          <div
+            className="hidden md:inline-flex h-8 items-center gap-1.5 rounded-md border border-border bg-surface px-2.5 text-xs font-medium text-foreground whitespace-nowrap shrink-0"
+            role="status"
+            aria-label={`${t("workspace.title")}: ${currentWorkspace.displayName} (${currentWorkspace.discriminator})`}
+          >
+            <Briefcase
+              className="h-3.5 w-3.5 text-muted-foreground shrink-0"
+              aria-hidden="true"
+            />
+            <span className="truncate max-w-[120px] lg:max-w-[160px]">
+              <BdiText>{currentWorkspace.displayName}</BdiText>
+            </span>
+            <span className="text-[10px] text-muted-foreground font-mono">
+              <BdiText>({currentWorkspace.discriminator})</BdiText>
+            </span>
+          </div>
+        ) : (
+          <button
+            type="button"
+            onClick={() => {
+              window.dispatchEvent(
+                new CustomEvent("solodesk:open-workspace-create"),
+              );
+            }}
+            className="hidden xl:inline-flex h-8 items-center gap-1.5 rounded-md border border-border bg-surface px-2.5 text-xs font-medium text-foreground hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-ring cursor-pointer transition-colors whitespace-nowrap shrink-0"
+            aria-label={t("workspace.create.dialogTitle")}
+          >
+            <Briefcase
+              className="h-3.5 w-3.5 text-muted-foreground shrink-0"
+              aria-hidden="true"
+            />
+            <span className="truncate max-w-[140px]">
+              <BdiText>{t("workspace.create.dialogTitle")}</BdiText>
+            </span>
+          </button>
+        )}
 
         <button
           type="button"
@@ -128,18 +146,23 @@ export function HeaderUtilities() {
           <Bell className="h-3.5 w-3.5" aria-hidden="true" />
         </button>
 
-        <ThemeToggle />
-
         <Button
           variant="outline"
           size="sm"
           onClick={toggleLocale}
-          className="h-8 gap-1.5 px-2.5 text-xs whitespace-nowrap shrink-0"
+          className="h-8 gap-1.5 px-2 sm:px-2.5 text-xs whitespace-nowrap shrink-0"
           aria-label="Switch language"
         >
           <Languages className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-          <span>{locale === "en" ? "العربية" : "English"}</span>
+          <span className="hidden sm:inline">
+            {locale === "en" ? "العربية" : "English"}
+          </span>
+          <span className="sm:hidden text-[11px] font-semibold">
+            {locale === "en" ? "عر" : "EN"}
+          </span>
         </Button>
+
+        <UserMenu />
       </div>
 
       {activeDialog && (
