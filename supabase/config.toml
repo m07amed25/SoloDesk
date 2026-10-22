@@ -1,5 +1,5 @@
 # Supabase Local Emulator Configuration for SoloDesk (F008)
-# Enables PostgreSQL 16, Supabase Auth, Supabase Storage, and Edge Functions runtime.
+# Enables PostgreSQL 17, Supabase Auth, Supabase Storage, and Edge Functions runtime.
 
 project_id = "solodesk-local"
 
@@ -13,7 +13,7 @@ max_rows = 1000
 [db]
 port = 54322
 shadow_port = 54320
-major_version = 16
+major_version = 17
 
 [db.pooler]
 enabled = false

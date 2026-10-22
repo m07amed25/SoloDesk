@@ -8,6 +8,10 @@ import type {
   IdentityLifecycle,
   SessionStatus,
 } from "../../shared/identity-contracts.ts";
+import type {
+  SafeReasonCode,
+  SafeActionCode,
+} from "../../shared/workspace-contracts.ts";
 
 export type IdentityRecoveryState = Readonly<{
   lifecycle: IdentityLifecycle;
@@ -19,7 +23,14 @@ export type IdentityRecoveryState = Readonly<{
 
 export function identityRecoveryState(error: unknown): IdentityRecoveryState {
   const reason = error instanceof Error ? error.message : String(error);
-  if (["vault_locked", "key_missing", "unprotected_backend", "protection_denied"].includes(reason)) {
+  if (
+    [
+      "vault_locked",
+      "key_missing",
+      "unprotected_backend",
+      "protection_denied",
+    ].includes(reason)
+  ) {
     return Object.freeze({
       lifecycle: "protection_unavailable",
       sessionStatus: "none",
@@ -74,7 +85,10 @@ const messages: Record<
 > = {
   vault_locked: {
     title: ["Protected storage is unavailable", "التخزين المحمي غير متاح"],
-    message: ["The device vault cannot be used right now.", "لا يمكن استخدام خزنة الجهاز حالياً."],
+    message: [
+      "The device vault cannot be used right now.",
+      "لا يمكن استخدام خزنة الجهاز حالياً.",
+    ],
     guidance: [
       "Unlock or configure a protected device vault, then try again.",
       "افتح خزنة الجهاز المحمية أو هيئها ثم حاول مجدداً.",
@@ -201,4 +215,112 @@ export function recoveryStatus(
       ...extra,
     },
   };
+}
+
+export type WorkspaceRecoveryOutcome = Readonly<{
+  reasonCode: SafeReasonCode;
+  actionCode: SafeActionCode;
+  messageKey: string;
+  actionKey: string;
+  nextActions: readonly SafeActionCode[];
+}>;
+
+export function workspaceRecoveryState(
+  outcome: unknown,
+): WorkspaceRecoveryOutcome {
+  const reason = outcome instanceof Error ? outcome.message : String(outcome);
+  if (
+    reason === "uninitialized" ||
+    reason === "local_partition_missing" ||
+    reason === "missing"
+  ) {
+    return Object.freeze({
+      reasonCode: "local_partition_missing",
+      actionCode: "choose_another_workspace",
+      messageKey: "shell.workspace.recovery.localPartitionMissing",
+      actionKey: "shell.workspace.action.chooseAnotherWorkspace",
+      nextActions: Object.freeze(["choose_another_workspace"] as const),
+    });
+  }
+  if (
+    reason === "vault_locked" ||
+    reason === "protection_locked" ||
+    reason === "protection_denied" ||
+    reason === "unprotected_backend"
+  ) {
+    return Object.freeze({
+      reasonCode: "protection_locked",
+      actionCode: "unlock",
+      messageKey: "shell.workspace.recovery.protectionLocked",
+      actionKey: "shell.workspace.action.unlock",
+      nextActions: Object.freeze([
+        "unlock",
+        "choose_another_workspace",
+      ] as const),
+    });
+  }
+  if (
+    reason === "integrity_failed" ||
+    reason === "local_partition_unreadable" ||
+    reason === "corrupt" ||
+    reason === "wrong_binding"
+  ) {
+    return Object.freeze({
+      reasonCode: "local_partition_unreadable",
+      actionCode: "approved_recovery",
+      messageKey: "shell.workspace.recovery.localPartitionUnreadable",
+      actionKey: "shell.workspace.action.approved_recovery",
+      nextActions: Object.freeze([
+        "approved_recovery",
+        "choose_another_workspace",
+      ] as const),
+    });
+  }
+  if (
+    reason === "unsupported_future_version" ||
+    reason === "upgrade_required"
+  ) {
+    return Object.freeze({
+      reasonCode: "upgrade_required",
+      actionCode: "upgrade",
+      messageKey: "shell.workspace.recovery.upgradeRequired",
+      actionKey: "shell.workspace.action.upgrade",
+      nextActions: Object.freeze(["upgrade"] as const),
+    });
+  }
+  if (reason === "online_required" || reason === "offline") {
+    return Object.freeze({
+      reasonCode: "online_required",
+      actionCode: "reconnect",
+      messageKey: "shell.workspace.recovery.onlineRequired",
+      actionKey: "shell.workspace.action.reconnect",
+      nextActions: Object.freeze([
+        "reconnect",
+        "choose_another_workspace",
+      ] as const),
+    });
+  }
+  if (
+    reason === "workspace_unavailable" ||
+    reason === "revoked" ||
+    reason === "closed"
+  ) {
+    return Object.freeze({
+      reasonCode: "workspace_unavailable",
+      actionCode: "choose_another_workspace",
+      messageKey: "shell.workspace.recovery.workspaceUnavailable",
+      actionKey: "shell.workspace.action.chooseAnotherWorkspace",
+      nextActions: Object.freeze([
+        "choose_another_workspace",
+        "refresh",
+      ] as const),
+    });
+  }
+  return Object.freeze({
+    reasonCode: "recovery_required",
+    actionCode: "retry_or_contact_support",
+    messageKey: "shell.workspace.recovery.recoveryRequired",
+    actionKey: "shell.workspace.action.retry_or_contact_support",
+    nextActions: Object.freeze(["retry_or_contact_support"] as const),
+  });
 }
