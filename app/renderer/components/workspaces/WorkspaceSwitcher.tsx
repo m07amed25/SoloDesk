@@ -7,11 +7,13 @@ import { BdiText } from "../ui/bdi-text.tsx";
 
 export interface WorkspaceSwitcherProps {
   onOpenCreateDialog?: () => void;
+  onSelectWorkspace?: (workspaceId: string) => void;
   className?: string;
 }
 
 export function WorkspaceSwitcher({
   onOpenCreateDialog,
+  onSelectWorkspace,
   className = "",
 }: WorkspaceSwitcherProps) {
   const { t } = useLocalization();
@@ -161,7 +163,10 @@ export function WorkspaceSwitcher({
               key={ws.workspaceId}
               type="button"
               disabled={isSwitching || isSelected}
-              onClick={() => void requestSwitch(ws.workspaceId)}
+              onClick={async () => {
+                await requestSwitch(ws.workspaceId);
+                onSelectWorkspace?.(ws.workspaceId);
+              }}
               className={`w-full flex items-center justify-between p-2.5 rounded-lg border text-xs text-start transition-colors ${
                 isSelected
                   ? "border-primary bg-primary/10 text-foreground font-medium"

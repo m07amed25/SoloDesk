@@ -471,6 +471,31 @@ function ShellRoot() {
       );
     }
 
+    cleanups.push(
+      registerAction({
+        id: "workspace-create",
+        category: "actions",
+        titleKey: "workspace.create.dialogTitle",
+        titleText: t("workspace.create.dialogTitle"),
+        keywords: [
+          "workspace",
+          "create",
+          "new",
+          "مساحة",
+          "عمل",
+          "إنشاء",
+          "جديدة",
+        ],
+        iconName: "Briefcase",
+        execute: () => {
+          window.dispatchEvent(
+            new CustomEvent("solodesk:open-workspace-create"),
+          );
+        },
+        enabled: true,
+      }),
+    );
+
     return () => {
       for (const cleanup of cleanups) {
         cleanup();
@@ -504,17 +529,13 @@ function ShellRoot() {
 
   React.useEffect(() => {
     const handleOpen = () => {
-      if (workspaceState?.creation) {
-        void refreshWorkspaces();
-        setCreateDialogOpen(true);
-      } else {
-        setAuthDialogOpen(true);
-      }
+      void refreshWorkspaces();
+      setCreateDialogOpen(true);
     };
     window.addEventListener("solodesk:open-workspace-create", handleOpen);
     return () =>
       window.removeEventListener("solodesk:open-workspace-create", handleOpen);
-  }, [refreshWorkspaces, setAuthDialogOpen, workspaceState?.creation]);
+  }, [refreshWorkspaces]);
 
   return (
     <ShellLayout
