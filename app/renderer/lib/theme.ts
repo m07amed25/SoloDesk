@@ -6,7 +6,8 @@ export type ThemePreset =
   | "graphite"
   | "high-contrast"
   | "solar"
-  | "chakra-industrial";
+  | "chakra-industrial"
+  | "cobalt";
 
 export interface ThemePresetOption {
   id: ThemePreset;
@@ -16,7 +17,8 @@ export interface ThemePresetOption {
     | "theme.preset.graphite"
     | "theme.preset.high_contrast"
     | "theme.preset.solar"
-    | "theme.preset.chakra";
+    | "theme.preset.chakra"
+    | "theme.preset.cobalt";
   accentColor: string;
   keywords: readonly string[];
 }
@@ -66,6 +68,12 @@ export const THEME_PRESET_OPTIONS: readonly ThemePresetOption[] = [
       "صناعي",
       "نمط",
     ],
+  },
+  {
+    id: "cobalt",
+    titleKey: "theme.preset.cobalt",
+    accentColor: "oklch(0.5296 0.1506 255.1121)",
+    keywords: ["preset", "cobalt", "blue", "slate", "كوبالت", "أزرق", "نمط"],
   },
 ] as const;
 

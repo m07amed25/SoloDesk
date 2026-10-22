@@ -36,6 +36,7 @@ test("exposes each selectable theme preset once", () => {
       "high-contrast",
       "solar",
       "chakra-industrial",
+      "cobalt",
     ],
   );
 });

@@ -50,6 +50,7 @@ export const ar: TranslationDictionary = {
   "theme.preset.high_contrast": "تباين عالٍ",
   "theme.preset.solar": "شمسي",
   "theme.preset.chakra": "شاكرا صناعي",
+  "theme.preset.cobalt": "كوبالت",
   "theme.preset.switch_to": "تغيير النمط البصري: {style}",
 
   // Language

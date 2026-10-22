@@ -48,6 +48,7 @@ export const en = {
   "theme.preset.high_contrast": "High Contrast",
   "theme.preset.solar": "Solar",
   "theme.preset.chakra": "Chakra Industrial",
+  "theme.preset.cobalt": "Cobalt",
   "theme.preset.switch_to": "Switch theme style: {style}",
 
   // Language
