@@ -31,6 +31,8 @@ import { ProtectionOwner } from "./protection/owner.ts";
 import { PersistenceService } from "./persistence/persistence-service.ts";
 import { isWorkspaceId } from "../shared/persistence-contracts.ts";
 import { KeyUnavailable } from "./protection/key-provider.ts";
+import { WorkspaceCoordinator } from "./workspaces/coordinator.ts";
+import { WorkspaceService } from "./workspaces/workspace-service.ts";
 import {
   blockedProtection,
   type ProtectionResult,
@@ -79,10 +81,14 @@ if (!lockHeld) {
   const protectionOwners = new Map<string, ProtectionOwner>();
   const persistenceServices = new Map<string, PersistenceService>();
   const identityCoordinators = new Map<string, IdentityCoordinator>();
+  const workspaceCoordinators = new Map<string, WorkspaceCoordinator>();
   function getIdentityConfig(): IdentityConfig {
-    const environment = app.isPackaged
-      ? process.env
-      : identityEnvironment(process.cwd());
+    const environment = identityEnvironment(process.cwd(), {
+      VITE_SUPABASE_URL: import.meta.env.VITE_SUPABASE_URL,
+      VITE_SUPABASE_PUBLISHABLE_KEY:
+        import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+      ...process.env,
+    });
     try {
       return parseIdentityConfig(environment, { isPackaged: app.isPackaged });
     } catch (error) {
@@ -128,7 +134,8 @@ if (!lockHeld) {
   const startedAt = Date.now();
   let failureShown = false;
 
-  function fail(reason?: unknown): void {
+  // Keep distinct from packages/domain fail(); the main bundle is flattened.
+  function failApplication(reason?: unknown): void {
     if (failureShown) return;
     failureShown = true;
     if (process.env.F002_ROOT) {
@@ -190,6 +197,10 @@ if (!lockHeld) {
         provider: identityProvider,
         isCurrentOwner: () => profiles.epoch(id) === epoch,
         onTeardown: async () => {
+          const ws = workspaceCoordinators.get(id);
+          if (ws) {
+            await ws.dispose();
+          }
           await persistence.closeActiveStore();
           protection.lock();
         },
@@ -211,12 +222,47 @@ if (!lockHeld) {
       });
       identityCoordinators.set(id, identity);
       await identity.restoreStartup();
+
+      const workspaceService = new WorkspaceService({
+        supabaseUrl: new URL(identityConfig.issuer).origin,
+        supabaseAnonKey: identityConfig.publishableKey,
+      });
+      const workspace = new WorkspaceCoordinator({
+        profileId: id,
+        getProfileGeneration: () => identity.getProfileGeneration(),
+        getAccount: () => {
+          const acc = identity.getAccount();
+          return acc
+            ? { issuerId: acc.issuer_id, subjectId: acc.subject_id }
+            : null;
+        },
+        getAccessToken: async () => {
+          try {
+            return identity.getAccessToken();
+          } catch {
+            return null;
+          }
+        },
+        getDeviceEnrollmentId: () => identity.getDeviceEnrollmentId(),
+        persistence,
+        identityStore,
+        workspaceService,
+      });
+      workspace.onStateChanged((state) => {
+        const current = profiles.current(id);
+        if (current && profiles.epoch(id) === epoch) {
+          bridge.emit(current.contents, "workspace", state);
+        }
+      });
+      workspaceCoordinators.set(id, workspace);
+      await workspace.bootstrap();
+
       if (syntheticWorkspace)
         await persistence.openWorkspaceStore(syntheticWorkspace);
       let view: NativeView | undefined;
       const trusted = await createTrustedWindow(id, epoch, {
         developmentUrl: MAIN_WINDOW_VITE_DEV_SERVER_URL,
-        onFailure: fail,
+        onFailure: failApplication,
         onClose: () => {
           identity.dispose();
           void persistence
@@ -229,6 +275,9 @@ if (!lockHeld) {
             persistenceServices.delete(id);
           if (identityCoordinators.get(id) === identity)
             identityCoordinators.delete(id);
+          workspace.dispose();
+          if (workspaceCoordinators.get(id) === workspace)
+            workspaceCoordinators.delete(id);
           if (view) profiles.close(id, view);
         },
         onCreated: (window, origin, documentUrl) => {
@@ -310,7 +359,7 @@ if (!lockHeld) {
       if (pending.length < 32) pending.push(intent);
       return;
     }
-    void route(intent).catch(fail);
+    void route(intent).catch(failApplication);
   }
 
   app.on(
@@ -361,6 +410,22 @@ if (!lockHeld) {
             (await identityCoordinators.get(profileId)?.startSignIn()) ?? null
           );
         },
+        signInWithPassword: async (profileId, epoch, email, password) => {
+          if (profiles.epoch(profileId) !== epoch) return null;
+          return (
+            (await identityCoordinators
+              .get(profileId)
+              ?.signInWithPassword(email, password)) ?? null
+          );
+        },
+        signUpWithPassword: async (profileId, epoch, email, password) => {
+          if (profiles.epoch(profileId) !== epoch) return null;
+          return (
+            (await identityCoordinators
+              .get(profileId)
+              ?.signUpWithPassword(email, password)) ?? null
+          );
+        },
         cancelSignIn: async (profileId, epoch) => {
           if (profiles.epoch(profileId) !== epoch) return null;
           return (
@@ -395,6 +460,60 @@ if (!lockHeld) {
               ?.confirmAccountSwitch()) ?? null
           );
         },
+        workspaceState: (profileId, epoch) => {
+          if (profiles.epoch(profileId) !== epoch) return null;
+          return workspaceCoordinators.get(profileId)?.getState() ?? null;
+        },
+        refreshWorkspace: async (profileId, epoch) => {
+          if (profiles.epoch(profileId) !== epoch) return null;
+          return (
+            (await workspaceCoordinators.get(profileId)?.refresh()) ?? null
+          );
+        },
+        createWorkspace: async (profileId, epoch, payload) => {
+          if (profiles.epoch(profileId) !== epoch) return null;
+          const req = payload as {
+            profile: {
+              displayName: string;
+              legalName?: string;
+              tradeName?: string;
+              defaultTimezone: string;
+              defaultCurrency: string;
+              defaultLocale: "en" | "ar";
+              profileVersion: 1;
+              creationPolicyVersion: number | string;
+            };
+            intentId?: string;
+          };
+          return (
+            (await workspaceCoordinators
+              .get(profileId)
+              ?.create(req.profile, req.intentId)) ?? null
+          );
+        },
+        reconcileWorkspaceCreation: async (profileId, epoch, intentId) => {
+          if (profiles.epoch(profileId) !== epoch) return null;
+          return (
+            (await workspaceCoordinators
+              .get(profileId)
+              ?.reconcileCreation(intentId)) ?? null
+          );
+        },
+        switchWorkspace: async (profileId, epoch, payload) => {
+          if (profiles.epoch(profileId) !== epoch) return null;
+          const req = payload as {
+            targetWorkspaceId: string;
+            expectedSelectionGeneration: number;
+          };
+          return (
+            (await workspaceCoordinators
+              .get(profileId)
+              ?.switch(
+                req.targetWorkspaceId,
+                req.expectedSelectionGeneration,
+              )) ?? null
+          );
+        },
       });
       owner.onState((state) => {
         for (const view of profiles.views()) {
@@ -414,10 +533,10 @@ if (!lockHeld) {
         for (const intent of pending.splice(0)) await route(intent);
       else pending.length = 0;
       app.on("activate", () => {
-        void activate(DEFAULT_PROFILE).catch(fail);
+        void activate(DEFAULT_PROFILE).catch(failApplication);
       });
     })
-    .catch(fail);
+    .catch(failApplication);
 
   app.on("window-all-closed", () => {
     if (process.platform !== "darwin") app.quit();

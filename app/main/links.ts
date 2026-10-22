@@ -24,18 +24,28 @@ export type LinkIntent =
   | IdentityReturnIntent;
 
 export type LinkDecision = Readonly<{
-  status: "accepted" | "denied" | "unavailable";
+  status: "accepted" | "denied" | "unavailable" | "switch_required";
   route?: "home" | "record";
+  targetWorkspaceId?: string;
+  recordId?: string;
 }>;
 
-export function parseIdentityReturn(raw: unknown, config?: IdentityConfig): IdentityReturnIntent | null {
+export function parseIdentityReturn(
+  raw: unknown,
+  config?: IdentityConfig,
+): IdentityReturnIntent | null {
   if (typeof raw !== "string") return null;
-  const grammarConfig = config ?? { ...parseIdentityConfig({ SOLODESK_TEST_MODE: "1" }), issuer: "" };
+  const grammarConfig = config ?? {
+    ...parseIdentityConfig({ SOLODESK_TEST_MODE: "1" }),
+    issuer: "",
+  };
   const parsed = parseAuthCallback(raw, grammarConfig);
   if (parsed.type === "invalid") return null;
   return Object.freeze({
     kind: "identity_return",
-    ...(parsed.type === "success" ? { code: parsed.code } : { error: parsed.error }),
+    ...(parsed.type === "success"
+      ? { code: parsed.code }
+      : { error: parsed.error }),
     state: parsed.state,
     responseIssuer: parsed.responseIssuer,
     rawUrl: raw,
@@ -79,6 +89,11 @@ export function externalDestination(purpose: string): null {
 type RouterOptions = {
   knownProfile: (profileId: string) => boolean;
   syntheticRecord?: boolean;
+  getCurrentWorkspaceId?: (profileId: string) => string | undefined;
+  isWorkspaceSelectable?: (
+    workspaceId: string,
+    profileId: string,
+  ) => Promise<boolean> | boolean;
   authorizeRecord?: (
     intent: Extract<LinkIntent, { kind: "record" }>,
     profileId: string,
@@ -114,13 +129,38 @@ export class LinkRouter {
     if (intent.kind === "home") return { status: "accepted", route: "home" };
     if (intent.kind === "identity_return") return { status: "denied" };
     if (!this.options.syntheticRecord) return { status: "unavailable" };
-    if (
-      !this.options.authorizeRecord ||
-      !this.options.currentAuthority ||
-      !(await this.options.authorizeRecord(intent, profileId)) ||
-      !this.options.currentAuthority(intent, profileId)
-    )
-      return { status: "denied" };
-    return { status: "accepted", route: "record" };
+
+    if (intent.kind === "record") {
+      const currentWorkspaceId =
+        this.options.getCurrentWorkspaceId?.(profileId);
+      if (currentWorkspaceId && intent.workspaceId !== currentWorkspaceId) {
+        const isSelectable = this.options.isWorkspaceSelectable
+          ? await this.options.isWorkspaceSelectable(
+              intent.workspaceId,
+              profileId,
+            )
+          : false;
+        if (!isSelectable) {
+          return { status: "denied" };
+        }
+        return {
+          status: "switch_required",
+          targetWorkspaceId: intent.workspaceId,
+          recordId: intent.recordId,
+        };
+      }
+
+      if (
+        !this.options.authorizeRecord ||
+        !this.options.currentAuthority ||
+        !(await this.options.authorizeRecord(intent, profileId)) ||
+        !this.options.currentAuthority(intent, profileId)
+      ) {
+        return { status: "denied" };
+      }
+      return { status: "accepted", route: "record" };
+    }
+
+    return { status: "denied" };
   }
 }

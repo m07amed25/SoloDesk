@@ -21,13 +21,19 @@ import {
   isRendererAccountSecurityState,
   type RendererAccountSecurityState,
 } from "../shared/identity-security-contracts.ts";
+import type {
+  WorkspaceState,
+  WorkspaceCreationResult,
+  WorkspaceSwitchResult,
+} from "../shared/workspace-contracts.ts";
 
 type Family =
   | "lifecycle"
   | "links"
   | "persistence"
   | "identity"
-  | "identitySecurity";
+  | "identitySecurity"
+  | "workspace";
 type Listener = (event: unknown) => void;
 const listeners = new Map<string, { family: Family; callback: Listener }>();
 const pendingEvents = new Map<string, { family: Family; data: unknown }>();
@@ -87,7 +93,8 @@ ipcRenderer.on("f004:event", (_nativeEvent, input: unknown) => {
       event.family !== "links" &&
       event.family !== "persistence" &&
       event.family !== "identity" &&
-      event.family !== "identitySecurity")
+      event.family !== "identitySecurity" &&
+      event.family !== "workspace")
   )
     return;
   const listener = listeners.get(event.subscriptionId);
@@ -345,10 +352,85 @@ const identitySecurityFacade = Object.freeze({
     subscribeIdentitySecurity(callback),
 });
 
+async function invokeWorkspace(
+  method: string,
+  input?: unknown,
+): Promise<unknown> {
+  try {
+    return await ipcRenderer.invoke(`solodesk.workspace.${method}`, input);
+  } catch {
+    return null;
+  }
+}
+
+function subscribeWorkspace(
+  callback: (state: WorkspaceState) => void,
+): () => void {
+  if (typeof callback !== "function") return () => {};
+  let active = true;
+  let subscriptionId: string | undefined;
+
+  void ipcRenderer
+    .invoke("solodesk.workspace.onStateChanged")
+    .then((result: unknown) => {
+      if (!active) return;
+      if (
+        result &&
+        typeof result === "object" &&
+        "subscriptionId" in result &&
+        typeof (result as { subscriptionId: unknown }).subscriptionId ===
+          "string"
+      ) {
+        subscriptionId = (result as { subscriptionId: string }).subscriptionId;
+        const pending = pendingEvents.get(subscriptionId);
+        listeners.set(subscriptionId, {
+          family: "workspace",
+          callback: (data: unknown) => callback(data as WorkspaceState),
+        });
+        if (pending && pending.family === "workspace") {
+          pendingEvents.delete(subscriptionId);
+          callback(pending.data as WorkspaceState);
+        }
+      }
+    });
+
+  return () => {
+    active = false;
+    if (subscriptionId) {
+      listeners.delete(subscriptionId);
+      pendingEvents.delete(subscriptionId);
+      ipcRenderer.send("f004:subscription:remove", { subscriptionId });
+    }
+  };
+}
+
+const workspaceFacade = Object.freeze({
+  getState: () => invokeWorkspace("getState") as Promise<WorkspaceState | null>,
+  refresh: () => invokeWorkspace("refresh") as Promise<WorkspaceState | null>,
+  create: (request: unknown) =>
+    invokeWorkspace(
+      "create",
+      request,
+    ) as Promise<WorkspaceCreationResult | null>,
+  reconcileCreation: (intentId: string) =>
+    invokeWorkspace(
+      "reconcileCreation",
+      intentId,
+    ) as Promise<WorkspaceCreationResult | null>,
+  switch: (request: unknown) =>
+    invokeWorkspace("switch", request) as Promise<WorkspaceSwitchResult | null>,
+  onStateChanged: (callback: (state: WorkspaceState) => void) =>
+    subscribeWorkspace(callback),
+});
+
 const facade = Object.freeze({
   identity: Object.freeze({
     getState: () => invokeIdentity("identity.getState"),
     startSignIn: () => invokeIdentity("identity.startSignIn"),
+    signInWithPassword: (email: string, password: string) =>
+      invokeIdentity("identity.signInWithPassword", { email, password }),
+    signUpWithPassword: (email: string, password: string) =>
+      invokeIdentity("identity.signUpWithPassword", { email, password }),
     cancelSignIn: () => invokeIdentity("identity.cancelSignIn"),
     confirmEnrollment: (label?: string) =>
       invokeIdentity(
@@ -386,6 +468,7 @@ const facade = Object.freeze({
   links: Object.freeze({
     onDecision: (callback: Listener) => subscribe("links", callback),
   }),
+  workspace: workspaceFacade,
 });
 
 contextBridge.exposeInMainWorld("solodesk", facade);

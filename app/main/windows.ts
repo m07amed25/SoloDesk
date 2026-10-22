@@ -91,6 +91,12 @@ export function registerAssetScheme(protocol: Protocol): void {
   ]);
 }
 
+export function isRendererFailure(
+  reason: Electron.RenderProcessGoneDetails["reason"],
+): boolean {
+  return reason !== "clean-exit";
+}
+
 export async function registerAssetHandler(
   viewSession: Session,
   bundleRoot: string,
@@ -210,7 +216,9 @@ export async function createTrustedWindow(
   window.webContents.on("will-attach-webview", (event) =>
     event.preventDefault(),
   );
-  window.webContents.on("render-process-gone", options.onFailure);
+  window.webContents.on("render-process-gone", (_event, details) => {
+    if (isRendererFailure(details.reason)) options.onFailure();
+  });
   window.webContents.on(
     "did-fail-load",
     (_event, code, _description, validatedUrl, isMainFrame) => {
