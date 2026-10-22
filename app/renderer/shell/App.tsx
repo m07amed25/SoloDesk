@@ -34,22 +34,47 @@ import {
 import type { PersistenceStatusDto } from "../../shared/persistence-contracts.ts";
 import { PersistenceRecoveryModal } from "./PersistenceRecoveryModal.tsx";
 import { QuotaWarningBanner } from "./QuotaWarningBanner.tsx";
+import { WorkspaceCreateDialog } from "../components/workspaces/WorkspaceCreateDialog.tsx";
+import { PendingWorkspaceSwitchDialog } from "../components/workspaces/PendingWorkspaceSwitchDialog.tsx";
+import { AuthDialog } from "../components/identity/AuthDialog.tsx";
+import {
+  WorkspaceProvider,
+  useWorkspace,
+} from "../contexts/WorkspaceContext.tsx";
+import { IdentityProvider, useIdentity } from "../contexts/IdentityContext.tsx";
 
 function PersistenceRecoveryNotice() {
   const { locale } = useLocalization();
   const [state, setState] = React.useState<PersistenceStatusDto | null>(null);
   const [busy, setBusy] = React.useState(false);
-  React.useEffect(() => window.solodesk.persistence.onStateChanged(setState), []);
+  React.useEffect(
+    () => window.solodesk.persistence.onStateChanged(setState),
+    [],
+  );
   if (!state || state.status !== "recovery_required") return null;
   const retry = async () => {
     setBusy(true);
-    try { setState(await window.solodesk.persistence.retryOpen(state.workspaceId)); }
-    catch { /* Keep the last safe guidance visible. */ }
-    finally { setBusy(false); }
+    try {
+      setState(await window.solodesk.persistence.retryOpen(state.workspaceId));
+    } catch {
+      /* Keep the last safe guidance visible. */
+    } finally {
+      setBusy(false);
+    }
   };
-  return <PersistenceRecoveryModal state={state} locale={locale} busy={busy}
-    onRetry={() => { void retry(); }}
-    onQuit={() => { void window.solodesk.window.requestClose(); }} />;
+  return (
+    <PersistenceRecoveryModal
+      state={state}
+      locale={locale}
+      busy={busy}
+      onRetry={() => {
+        void retry();
+      }}
+      onQuit={() => {
+        void window.solodesk.window.requestClose();
+      }}
+    />
+  );
 }
 
 function ProtectionNotice() {
@@ -75,13 +100,22 @@ function ProtectionNotice() {
   }, []);
   React.useEffect(() => {
     let active = true;
-    void window.solodesk.protection.getState()
+    void window.solodesk.protection
+      .getState()
       .then((response) => {
-        if (active) setState(response.status === "ok" && isProtectionResult(response.data)
-          ? response.data : blockedProtection("protection_denied"));
+        if (active)
+          setState(
+            response.status === "ok" && isProtectionResult(response.data)
+              ? response.data
+              : blockedProtection("protection_denied"),
+          );
       })
-      .catch(() => { if (active) setState(blockedProtection("protection_denied")); });
-    return () => { active = false; };
+      .catch(() => {
+        if (active) setState(blockedProtection("protection_denied"));
+      });
+    return () => {
+      active = false;
+    };
   }, []);
   if (!state || state.status !== "blocked") return null;
   return (
@@ -134,6 +168,20 @@ function MainContentRenderer() {
         (event as { status: string }).status === "unavailable"
       ) {
         setNotice("linkUnavailable");
+      } else if (
+        event &&
+        typeof event === "object" &&
+        "status" in event &&
+        (event as { status: string }).status === "switch_required" &&
+        "targetWorkspaceId" in event
+      ) {
+        const targetId = (event as { targetWorkspaceId: string })
+          .targetWorkspaceId;
+        if (targetId && window.solodesk?.workspace?.switch) {
+          void window.solodesk.workspace.switch({
+            targetWorkspaceId: targetId,
+          });
+        }
       }
     });
     return () => {
@@ -158,7 +206,7 @@ function MainContentRenderer() {
           </p>
         )}
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-foreground">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
             A workspace for your independent work.
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -192,7 +240,7 @@ function MainContentRenderer() {
             <h2 className="text-base font-semibold text-foreground">
               Planned next
             </h2>
-            <ul className="mt-2 grid gap-x-8 gap-y-1 text-sm text-muted-foreground sm:grid-cols-2">
+            <ul className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-1 text-sm text-muted-foreground">
               <li>Projects and clients</li>
               <li>Tasks and deadlines</li>
               <li>Time tracking</li>
@@ -204,8 +252,8 @@ function MainContentRenderer() {
           </section>
         </div>
 
-        <div className="rounded-xl border border-border bg-surface p-6 shadow-xs">
-          <div className="flex items-center gap-3.5">
+        <div className="rounded-xl border border-border bg-surface p-4 sm:p-6 shadow-xs">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-3.5">
             <img
               src={logoIcon}
               alt=""
@@ -222,8 +270,8 @@ function MainContentRenderer() {
             </div>
           </div>
 
-          <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-            <div className="rounded-lg bg-surface-subtle p-4 border border-border">
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 text-sm">
+            <div className="rounded-lg bg-surface-subtle p-3.5 sm:p-4 border border-border">
               <span className="text-muted-foreground text-xs block font-medium">
                 {t("placeholder.sync.title")}
               </span>
@@ -235,7 +283,7 @@ function MainContentRenderer() {
               </span>
             </div>
 
-            <div className="rounded-lg bg-surface-subtle p-4 border border-border">
+            <div className="rounded-lg bg-surface-subtle p-3.5 sm:p-4 border border-border">
               <span className="text-muted-foreground text-xs block font-medium">
                 Active Tenant / Workspace
               </span>
@@ -247,7 +295,7 @@ function MainContentRenderer() {
               </span>
             </div>
 
-            <div className="rounded-lg bg-surface-subtle p-4 border border-border">
+            <div className="rounded-lg bg-surface-subtle p-3.5 sm:p-4 border border-border sm:col-span-2 lg:col-span-1">
               <span className="text-muted-foreground text-xs block font-medium">
                 Sample Bidi Identifier
               </span>
@@ -279,9 +327,16 @@ function MainContentRenderer() {
 
 function ShellRoot() {
   const { toggleLocale, t } = useLocalization();
-  const { toggleTheme, setTheme } = useTheme();
+  const { toggleTheme, setTheme, setThemePreset } = useTheme();
   const { navigateTo, routes } = useNavigation();
   const { toggle, registerAction } = useCommandPalette();
+  const {
+    authDialogOpen,
+    setAuthDialogOpen,
+    isAuthenticated,
+    signOut,
+    openAuthDialog,
+  } = useIdentity();
 
   // Listen for global shortcut Mod+K
   React.useEffect(() => {
@@ -355,6 +410,36 @@ function ShellRoot() {
       }),
     );
 
+    cleanups.push(
+      registerAction({
+        id: "pref-theme-preset-modern",
+        category: "preferences",
+        titleKey: "theme.preset.modern",
+        titleText: t("theme.preset.switch_to", {
+          style: t("theme.preset.modern"),
+        }),
+        keywords: ["preset", "modern", "minimal", "نمط", "حديث"],
+        iconName: "Palette",
+        execute: () => setThemePreset("modern-minimal"),
+        enabled: true,
+      }),
+    );
+
+    cleanups.push(
+      registerAction({
+        id: "pref-theme-preset-amber",
+        category: "preferences",
+        titleKey: "theme.preset.amber",
+        titleText: t("theme.preset.switch_to", {
+          style: t("theme.preset.amber"),
+        }),
+        keywords: ["preset", "amber", "mono", "warm", "عنبري", "نمط"],
+        iconName: "Palette",
+        execute: () => setThemePreset("amber-mono"),
+        enabled: true,
+      }),
+    );
+
     // Register language action
     cleanups.push(
       registerAction({
@@ -370,6 +455,34 @@ function ShellRoot() {
       }),
     );
 
+    if (isAuthenticated) {
+      cleanups.push(
+        registerAction({
+          id: "auth-sign-out",
+          category: "actions",
+          titleKey: "auth.signOut",
+          titleText: t("auth.signOut"),
+          keywords: ["logout", "sign out", "خروج", "تسجيل خروج"],
+          iconName: "LogOut",
+          execute: () => void signOut(),
+          enabled: true,
+        }),
+      );
+    } else {
+      cleanups.push(
+        registerAction({
+          id: "auth-sign-in",
+          category: "actions",
+          titleKey: "auth.signIn",
+          titleText: t("auth.signIn"),
+          keywords: ["login", "sign in", "دخول", "تسجيل دخول", "google"],
+          iconName: "LogIn",
+          execute: openAuthDialog,
+          enabled: true,
+        }),
+      );
+    }
+
     return () => {
       for (const cleanup of cleanups) {
         cleanup();
@@ -383,7 +496,37 @@ function ShellRoot() {
     toggleLocale,
     toggleTheme,
     setTheme,
+    setThemePreset,
+    isAuthenticated,
+    signOut,
+    openAuthDialog,
   ]);
+
+  const {
+    state: workspaceState,
+    selectionGeneration,
+    refresh: refreshWorkspaces,
+  } = useWorkspace();
+  const [createDialogOpen, setCreateDialogOpen] = React.useState(false);
+
+  const handleIdentityReady = React.useCallback(async () => {
+    await refreshWorkspaces();
+    setCreateDialogOpen(true);
+  }, [refreshWorkspaces]);
+
+  React.useEffect(() => {
+    const handleOpen = () => {
+      if (workspaceState?.creation) {
+        void refreshWorkspaces();
+        setCreateDialogOpen(true);
+      } else {
+        setAuthDialogOpen(true);
+      }
+    };
+    window.addEventListener("solodesk:open-workspace-create", handleOpen);
+    return () =>
+      window.removeEventListener("solodesk:open-workspace-create", handleOpen);
+  }, [refreshWorkspaces, setAuthDialogOpen, workspaceState?.creation]);
 
   return (
     <ShellLayout
@@ -395,7 +538,18 @@ function ShellRoot() {
       <ProtectionNotice />
       <PersistenceRecoveryNotice />
       <QuotaWarningBanner />
-      <MainContentRenderer />
+      <AuthDialog
+        open={authDialogOpen}
+        onOpenChange={setAuthDialogOpen}
+        onReady={handleIdentityReady}
+      />
+      <WorkspaceCreateDialog
+        open={createDialogOpen}
+        onOpenChange={setCreateDialogOpen}
+        policy={workspaceState?.creation}
+      />
+      <PendingWorkspaceSwitchDialog />
+      <MainContentRenderer key={selectionGeneration} />
     </ShellLayout>
   );
 }
@@ -406,7 +560,11 @@ export function App() {
       <ThemeProvider>
         <NavigationProvider>
           <CommandPaletteProvider>
-            <ShellRoot />
+            <IdentityProvider>
+              <WorkspaceProvider>
+                <ShellRoot />
+              </WorkspaceProvider>
+            </IdentityProvider>
           </CommandPaletteProvider>
         </NavigationProvider>
       </ThemeProvider>

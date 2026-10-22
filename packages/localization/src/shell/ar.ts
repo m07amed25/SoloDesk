@@ -20,6 +20,8 @@ export const ar: TranslationDictionary = {
   "sidebar.expand": "توسيع الشريط الجانبي",
   "sidebar.collapse": "طي الشريط الجانبي",
   "sidebar.main_nav": "التنقل الرئيسي",
+  "sidebar.open_menu": "فتح القائمة",
+  "sidebar.close_menu": "إغلاق القائمة",
 
   // Search & Command Palette
   "search.placeholder": "ابحث أو اكتب أمرًا...",
@@ -40,6 +42,11 @@ export const ar: TranslationDictionary = {
   "theme.toggle": "تبديل المظهر",
   "theme.switch_to": "تبديل المظهر: {mode}",
   "theme.label": "المظهر",
+  "theme.preset.title": "النمط البصري للمظهر",
+  "theme.preset.description": "اختر النمط البصري ومجموعة ألوان التمييز.",
+  "theme.preset.modern": "حديث بسيط",
+  "theme.preset.amber": "عنبري أحادي الخط",
+  "theme.preset.switch_to": "تغيير النمط البصري: {style}",
 
   // Language
   "language.en": "English",
@@ -86,6 +93,16 @@ export const ar: TranslationDictionary = {
   "settings.environment.title": "بيئة سطح المكتب",
   "settings.environment.platform": "نظام التشغيل",
   "settings.environment.version": "الإصدار",
+  "settings.account.title": "الحساب والجهاز",
+  "settings.account.description":
+    "إدارة حسابك المعتمد وتسجيل الجهاز الموثوق وخزنة التشفير.",
+  "settings.account.profileName": "الاسم المعروض",
+  "settings.account.identifier": "معرّف الحساب",
+  "settings.account.device": "الجهاز الموثوق",
+  "settings.account.protection": "حماية الجهاز",
+  "settings.account.status": "حالة الحساب",
+  "settings.account.notEnrolled": "لم يُسجّل بعد",
+  "settings.account.noName": "غير محدد",
 
   // Window Controls
   "window.minimize": "تصغير",
@@ -159,6 +176,45 @@ export const ar: TranslationDictionary = {
   "shell.identity.recovery.contactSupport":
     "تعذّر التحقق من بيانات الهوية المحمية. احتفظ بالملفات الحالية وتواصل مع الدعم.",
 
+  // المصادقة
+  "auth.title": "تسجيل الدخول إلى سولو ديسك",
+  "auth.description": "سجّل الدخول قبل إنشاء مساحة عمل سحابية أو فتحها.",
+  "auth.menuDescription": "تابع إلى مساحات عملك باستخدام حساب سولو ديسك.",
+  "auth.google": "المتابعة باستخدام Google",
+  "auth.or": "أو",
+  "auth.signIn": "تسجيل الدخول",
+  "auth.signUp": "إنشاء حساب",
+  "auth.email": "البريد الإلكتروني",
+  "auth.password": "كلمة المرور",
+  "auth.working": "يرجى الانتظار…",
+  "auth.cancel": "إلغاء",
+  "auth.error.unavailable": "خدمة المصادقة غير متاحة مؤقتًا.",
+  "auth.enrollment.title": "الوثوق بهذا الجهاز",
+  "auth.enrollment.description":
+    "سجّل هذا التثبيت المحمي قبل الوصول إلى مساحات العمل.",
+  "auth.enrollment.deviceLabel": "اسم الجهاز",
+  "auth.enrollment.confirm": "الوثوق والمتابعة",
+  "auth.account": "الحساب",
+  "auth.profile": "الملف الشخصي",
+  "auth.signOut": "تسجيل الخروج",
+  "auth.signingOut": "جارٍ تسجيل الخروج…",
+  "auth.notSignedIn": "غير مسجل الدخول",
+  "auth.signedInAs": "مسجل الدخول باسم",
+  "auth.deviceEnrolled": "جهاز موثوق",
+  "auth.deviceNotEnrolled": "قيد التسجيل",
+  "auth.protectionReady": "خزنة الحماية نشطة",
+  "auth.protectionBlocked": "الخزنة مقفلة",
+  "auth.sessionActive": "جلسة نشطة",
+  "auth.manageAccount": "إعدادات الحساب",
+  "auth.enrollDevicePrompt": "إكمال تسجيل الجهاز",
+  "shell.identity.signingIn": "جارٍ تسجيل الدخول بأمان…",
+  "shell.identity.invalidCredentials":
+    "البريد الإلكتروني أو كلمة المرور غير صحيحة، أو لا يمكن لهذا الحساب تسجيل الدخول.",
+  "shell.identity.providerUnavailable":
+    "خدمة المصادقة غير متاحة. حاول مرة أخرى.",
+  "shell.identity.checkEmail":
+    "تحقق من بريدك الإلكتروني لتأكيد الحساب، ثم ارجع وسجّل الدخول.",
+
   // أمان الحساب والمصادقة متعددة العوامل (F011)
   "identity.security.title": "أمان الحساب",
   "identity.security.policy.optional": "المصادقة الثنائية اختيارية لحسابك.",
@@ -209,4 +265,86 @@ export const ar: TranslationDictionary = {
     "سيؤدي إكمال هذا التغيير الأمني إلى تسجيل الخروج من جميع الجلسات النشطة الأخرى.",
   "identity.security.action.reauthenticate": "إعادة المصادقة",
   "identity.security.action.confirm_change": "تأكيد التغيير",
+
+  // Workspace Management (F012)
+  "workspace.title": "مساحات العمل",
+  "workspace.create.dialogTitle": "إنشاء مساحة عمل",
+  "workspace.create.displayNameLabel": "اسم مساحة العمل",
+  "workspace.create.displayNamePlaceholder": "مثال: استوديو الإبداع",
+  "workspace.create.legalNameLabel":
+    "الاسم القانوني / التجاري للمنشأة (اختياري)",
+  "workspace.create.legalNamePlaceholder": "الاسم القانوني الاختياري",
+  "workspace.create.tradeNameLabel": "الاسم التجاري (اختياري)",
+  "workspace.create.tradeNamePlaceholder": "الاسم التجاري الاختياري",
+  "workspace.create.timezoneLabel": "المنطقة الزمنية الافتراضية",
+  "workspace.create.currencyLabel": "العملة الافتراضية",
+  "workspace.create.localeLabel": "اللغة الافتراضية لمساحة العمل",
+  "workspace.create.submit": "إنشاء مساحة العمل",
+  "workspace.create.cancel": "إلغاء",
+  "workspace.create.creating": "جارٍ إنشاء مساحة العمل...",
+  "workspace.create.incompleteReadinessNotice":
+    "ستبدأ مساحة العمل هذه بحالة إعداد غير مكتمل. يمكن تحديث الإعدادات لاحقاً.",
+  "workspace.create.error.nameRequired": "اسم مساحة العمل مطلوب.",
+  "workspace.create.error.nameTooLong": "يتجاوز اسم مساحة العمل 120 حرفاً.",
+  "workspace.create.error.invalidCurrency":
+    "العملة المحددة غير مدعومة بالسياسة الحالية.",
+  "workspace.create.error.policyDisabled":
+    "إنشاء مساحات العمل غير متاح حالياً.",
+  "workspace.readiness.setupIncomplete": "الإعداد غير مكتمل",
+  "workspace.readiness.ready": "جاهز",
+  "workspace.switch.title": "تبديل مساحة العمل",
+  "workspace.switch.current": "مساحة العمل الحالية",
+  "workspace.switch.switching": "جارٍ تبديل مساحة العمل...",
+  "workspace.switch.pendingChangesNotice":
+    "لديك تغييرات غير محفوظة في مساحة العمل الحالية.",
+  "workspace.switch.saveAndSwitch": "حفظ وتبديل",
+  "workspace.switch.discardAndSwitch": "تجاهل وتبديل",
+  "workspace.switch.stay": "البقاء في مساحة العمل الحالية",
+  "shell.workspace.recovery.localPartitionMissing":
+    "قسم مساحة العمل المشفر محلياً مفقود أو مقفل. افتح القفل أو اختر مساحة عمل أخرى.",
+  "shell.workspace.recovery.protectionLocked":
+    "التخزين المحمي للجهاز مقفل. افتح خزنة الجهاز للوصول إلى مساحة العمل هذه.",
+  "shell.workspace.recovery.localPartitionUnreadable":
+    "تعذر التحقق من بيانات مساحة العمل المحلية. يلزم إجراء استعادة آمنة مع الحفاظ على الملفات الأصلية.",
+  "shell.workspace.recovery.upgradeRequired":
+    "يلزم إصدار أحدث من SoloDesk لفتح مساحة العمل هذه.",
+  "shell.workspace.recovery.workspaceUnavailable":
+    "مساحة العمل المحددة غير متاحة أو تم إلغاء الوصول إليها.",
+  "shell.workspace.recovery.recoveryRequired":
+    "يلزم استعادة التخزين قبل فتح مساحة العمل هذه.",
+  "shell.workspace.recovery.onlineRequired":
+    "الاتصال بالإنترنت مطلوب للتحقق من العضوية في مساحة العمل.",
+  "shell.workspace.recovery.serviceUnavailable":
+    "خدمة مساحات العمل غير متاحة مؤقتاً. يُرجى المحاولة مرة أخرى.",
+  "shell.workspace.recovery.outcomeUnknown":
+    "نتيجة إنشاء مساحة العمل غير معروفة. يُرجى التحقق من الحالة.",
+  "shell.workspace.action.chooseAnotherWorkspace": "اختيار مساحة عمل أخرى",
+  "shell.workspace.action.reconnect": "إعادة الاتصال",
+  "shell.workspace.action.retry": "إعادة المحاولة",
+  "shell.workspace.action.reconcileCreation": "التحقق من حالة الإنشاء",
+  "shell.workspace.action.sign_in_again": "تسجيل الدخول مجدداً",
+  "shell.workspace.action.reenroll_device": "إعادة تسجيل الجهاز",
+  "shell.workspace.action.refresh_options": "تحديث الخيارات",
+  "shell.workspace.action.refresh": "تحديث",
+  "shell.workspace.action.unlock": "إلغاء القفل",
+  "shell.workspace.action.approved_recovery": "استعادة آمنة",
+  "shell.workspace.action.retry_or_contact_support":
+    "إعادة المحاولة أو التواصل مع الدعم",
+  "shell.workspace.action.correct_input": "تصحيح المدخلات",
+  "shell.workspace.action.upgrade": "تحديث SoloDesk",
+  "shell.workspace.rejection.auth_required":
+    "المصادقة مطلوبة. يُرجى تسجيل الدخول مجدداً.",
+  "shell.workspace.rejection.device_not_enrolled":
+    "تسجيل الجهاز مطلوب لإنشاء مساحة عمل.",
+  "shell.workspace.rejection.stale_creation_policy":
+    "تغيرت سياسة الإنشاء. يُرجى التحديث والمحاولة مجدداً.",
+  "shell.workspace.rejection.workspace_creation_unavailable":
+    "إنشاء مساحات العمل غير متاح حالياً.",
+  "shell.workspace.rejection.changed_intent":
+    "تم تعديل طلب الإنشاء. يُرجى التحقق أو البدء من جديد.",
+  "shell.workspace.rejection.validation":
+    "يُرجى مراجعة بيانات مساحة العمل المدخلة.",
+  "shell.workspace.rejection.upgrade_required": "يلزم تحديث تطبيق SoloDesk.",
+  "shell.workspace.rejection.workspace_unavailable":
+    "مساحة العمل المحددة غير متاحة.",
 };
