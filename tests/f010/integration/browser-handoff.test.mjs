@@ -1,6 +1,5 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import http from "node:http";
 import {
   BrowserHandoffManager,
   buildAuthorizationUrl,
@@ -33,6 +32,27 @@ describe("T016: Electron Ingress and Browser Launch Handoff", () => {
     assert.equal(parsed.searchParams.get("state"), "test_state_456");
     assert.equal(parsed.searchParams.get("nonce"), "test_nonce_789");
     assert.equal(parsed.searchParams.get("redirect_uri"), "http://127.0.0.1:42042/auth/callback");
+  });
+
+  it("builds the Supabase Google PKCE URL with attempt state bound to the callback", () => {
+    const supabase = parseIdentityConfig({
+      SOLODESK_TEST_MODE: "1",
+      VITE_SUPABASE_URL: "https://project.supabase.co",
+      VITE_SUPABASE_PUBLISHABLE_KEY: "sb_publishable_test",
+    });
+    const parsed = new URL(buildAuthorizationUrl(supabase, {
+      challenge: "challenge",
+      state: "attempt-state",
+      nonce: "nonce",
+      redirectUri: "http://127.0.0.1:42042/auth/callback",
+    }));
+    assert.equal(parsed.href.startsWith("https://project.supabase.co/auth/v1/authorize?"), true);
+    assert.equal(parsed.searchParams.get("provider"), "google");
+    assert.equal(parsed.searchParams.get("code_challenge_method"), "s256");
+    const redirect = new URL(parsed.searchParams.get("redirect_to"));
+    assert.equal(redirect.origin, "http://127.0.0.1:42042");
+    assert.equal(redirect.pathname, "/auth/callback");
+    assert.equal(redirect.searchParams.get("state"), "attempt-state");
   });
 
   it("validates exact hosted HTTPS allowlist and rejects untrusted origins", () => {
@@ -75,6 +95,9 @@ describe("T016: Electron Ingress and Browser Launch Handoff", () => {
 
     const body = await res.text();
     assert.ok(body.includes("SoloDesk"), "Response should provide safe return guidance");
+    assert.ok(body.includes("Sign-in complete"));
+    assert.ok(body.includes("prefers-reduced-motion"));
+    assert.ok(body.includes('href="solodesk://open/home"'));
     assert.equal(capturedCallback, reqUrl);
 
     // Give server a moment to close

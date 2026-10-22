@@ -5,6 +5,7 @@ import path from "node:path";
 import os from "node:os";
 import crypto from "node:crypto";
 import { SessionOwner } from "../../../app/main/identity/session-owner.ts";
+import { getGoogleAvatarUrl } from "../../../app/main/identity/provider-adapter.ts";
 import { ProtectedIdentityStore } from "../../../app/main/identity/protected-identity-store.ts";
 import { parseIdentityConfig } from "../../../app/main/identity/config.ts";
 import { ACCOUNT_A, ISSUER, AUDIENCE, TEST_SECRET_PROTECTION } from "../fixtures/identity-fixtures.mjs";
@@ -43,6 +44,7 @@ describe("T015: Trusted Exchange and Session Owner", () => {
             nonce: overrides.expectedNonce || "valid_nonce_123",
             name: ACCOUNT_A.displayName,
             email: "alice@example.com",
+            avatar_url: ACCOUNT_A.avatarUrl,
           },
         };
       },
@@ -68,12 +70,45 @@ describe("T015: Trusted Exchange and Session Owner", () => {
       assert.equal(result.account.subject_id, ACCOUNT_A.subject_id);
       assert.equal(result.account.verification_status, "verified");
       assert.equal(result.account.session_status, "current");
+      assert.equal(result.account.avatar_url, ACCOUNT_A.avatarUrl);
       assert.ok(result.account.display_identifier?.includes("***"), "Email must be masked");
 
       // Verify that NO workspace or tenant table was created
       const workspaceDbPath = path.join(tmpDir, "workspaces");
       assert.equal(fs.existsSync(workspaceDbPath), false, "Must not create workspace store on auth");
     }
+  });
+
+  it("accepts only Google-hosted profile photos from Google identity metadata", () => {
+    assert.equal(
+      getGoogleAvatarUrl({
+        identities: [
+          {
+            provider: "google",
+            identity_data: { picture: ACCOUNT_A.avatarUrl },
+          },
+        ],
+      }),
+      ACCOUNT_A.avatarUrl,
+    );
+    assert.equal(
+      getGoogleAvatarUrl({
+        app_metadata: { provider: "google" },
+        user_metadata: { avatar_url: "https://attacker.test/avatar.png" },
+      }),
+      undefined,
+    );
+    assert.equal(
+      getGoogleAvatarUrl({
+        identities: [
+          {
+            provider: "email",
+            identity_data: { picture: ACCOUNT_A.avatarUrl },
+          },
+        ],
+      }),
+      undefined,
+    );
   });
 
   it("validates issuer and rejects foreign token issuer", async () => {

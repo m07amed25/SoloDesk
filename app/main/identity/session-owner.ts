@@ -13,6 +13,7 @@ export type VerifiedAccount = Readonly<{
   verification_status: "verified";
   display_name?: string;
   display_identifier?: string;
+  avatar_url?: string;
   session_status: SessionStatus;
   verified_at: string;
   diagnostic_id?: string;
@@ -25,6 +26,14 @@ export type ExchangeRequest = Readonly<{
   profileId: string;
   profileGeneration: number;
   expectedNonce: string;
+  isCurrent?: () => boolean;
+}>;
+
+export type AdoptSessionRequest = Readonly<{
+  tokens: ProviderTokens;
+  profileId: string;
+  profileGeneration: number;
+  expectedNonce?: string;
   isCurrent?: () => boolean;
 }>;
 
@@ -117,6 +126,7 @@ export class SessionOwner {
       verified_at: new Date().toISOString(),
       display_name: identity.name?.slice(0, 128),
       display_identifier: maskIdentifier(identity.email || identity.sub),
+      avatar_url: identity.avatar_url,
     });
     credentials = null;
     return this.currentAccount;
@@ -144,9 +154,29 @@ export class SessionOwner {
       });
     }
 
+    return this.adoptSession(
+      {
+        tokens,
+        profileId: request.profileId,
+        profileGeneration: request.profileGeneration,
+        expectedNonce: request.expectedNonce,
+        isCurrent: request.isCurrent,
+      },
+      diagnosticId,
+      operationGeneration,
+    );
+  }
+
+  async adoptSession(
+    request: AdoptSessionRequest,
+    diagnosticId = crypto.randomUUID(),
+    operationGeneration = this.operationGeneration,
+  ): Promise<ExchangeResult> {
+
     let idToken;
     try {
-      idToken = await this.provider.verifySession(tokens);
+      this.store.assertProtectionUsable();
+      idToken = await this.provider.verifySession(request.tokens);
     } catch {
       return Object.freeze({
         success: false,
@@ -174,7 +204,11 @@ export class SessionOwner {
     }
 
     // 3. Verify nonce
-    if (idToken.nonce !== undefined && idToken.nonce !== request.expectedNonce) {
+    if (
+      request.expectedNonce !== undefined &&
+      idToken.nonce !== undefined &&
+      idToken.nonce !== request.expectedNonce
+    ) {
       return Object.freeze({
         success: false,
         reason: "nonce_mismatch",
@@ -202,6 +236,7 @@ export class SessionOwner {
       display_identifier: idToken.email
         ? maskIdentifier(idToken.email)
         : maskIdentifier(idToken.sub),
+      avatar_url: idToken.avatar_url,
       session_status: "current",
       verified_at: new Date().toISOString(),
       diagnostic_id: diagnosticId,
@@ -248,8 +283,8 @@ export class SessionOwner {
       });
       this.store.saveEncryptedCredentials(
         {
-          accessToken: tokens.access_token,
-          refreshToken: tokens.refresh_token,
+          accessToken: request.tokens.access_token,
+          refreshToken: request.tokens.refresh_token,
         },
       );
       this.store.saveSessionBinding(sessionBinding);

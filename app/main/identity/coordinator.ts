@@ -3,7 +3,11 @@ import type { IdentityConfig } from "./config.ts";
 import type { ProtectedIdentityStore } from "./protected-identity-store.ts";
 import type { IdentityProviderAdapter } from "./provider-adapter.ts";
 import { AuthAttemptManager, type SignInAttempt } from "./auth-attempts.ts";
-import { SessionOwner, type VerifiedAccount } from "./session-owner.ts";
+import {
+  SessionOwner,
+  type ExchangeResult,
+  type VerifiedAccount,
+} from "./session-owner.ts";
 import { EnrollmentCoordinator, type EnrollmentService } from "./enrollment.ts";
 import {
   BrowserHandoffManager,
@@ -205,6 +209,9 @@ export class IdentityCoordinator {
         profile.lifecycle === "enrolled" &&
         intent?.status === "locally_committed"
       ) {
+        if (intent.deviceLabel) {
+          this.safeDeviceLabel = intent.deviceLabel;
+        }
         this.lifecycle = "enrolled";
         this.enrollmentStatus = "enrolled";
         this.messageKey = "shell.identity.enrolled";
@@ -212,6 +219,12 @@ export class IdentityCoordinator {
         this.nextActions = Object.freeze([]);
       } else if (intent && this.enrollment) {
         await this.retryReconciliation();
+      } else if (profile.lifecycle === "enrolling") {
+        this.lifecycle = "enrolling";
+        this.enrollmentStatus = "pending";
+        this.messageKey = "shell.identity.verifiedWaitingEnrollment";
+        this.actionKey = "shell.identity.action.confirmEnrollment";
+        this.nextActions = Object.freeze(["reconcile"]);
       } else {
         throw new Error("partial_enrollment");
       }
@@ -240,6 +253,32 @@ export class IdentityCoordinator {
     if (this.disposed || this.sessionStatus !== "current")
       throw new Error("session_rejected");
     return this.sessionOwner.getAccessToken();
+  }
+
+  getAccount(): { issuer_id: string; subject_id: string } | null {
+    if (this.verifiedAccount) {
+      return {
+        issuer_id: this.verifiedAccount.issuer_id,
+        subject_id: this.verifiedAccount.subject_id,
+      };
+    }
+    const profile = this.store.loadProfile();
+    if (profile?.issuer_id && profile?.subject_id) {
+      return {
+        issuer_id: profile.issuer_id,
+        subject_id: profile.subject_id,
+      };
+    }
+    return null;
+  }
+
+  getDeviceEnrollmentId(): string | null {
+    const intent = this.store.loadEnrollmentIntent();
+    return intent?.deviceEnrollmentId ?? null;
+  }
+
+  getProfileGeneration(): number {
+    return this.profileGeneration;
   }
 
   dispose(): void {
@@ -273,6 +312,81 @@ export class IdentityCoordinator {
     });
   }
 
+  private applyAuthenticationResult(
+    exchange: ExchangeResult,
+  ): RendererIdentityState {
+    if (!exchange.success) {
+      this.lifecycle = "sign_in_required";
+      this.sessionStatus = "rejected";
+      this.messageKey =
+        exchange.reason === "provider_unavailable"
+          ? "shell.identity.providerUnavailable"
+          : "shell.identity.invalidCredentials";
+      this.actionKey = "shell.identity.action.retry";
+      this.nextActions = Object.freeze(["retry"]);
+      this.notifyStateChange();
+      return this.getState();
+    }
+
+    this.verifiedAccount = exchange.account;
+    const existingProfile = this.store.loadProfile();
+    if (
+      existingProfile &&
+      (existingProfile.issuer_id !== exchange.account.issuer_id ||
+        existingProfile.subject_id !== exchange.account.subject_id)
+    ) {
+      this.lifecycle = "recovery_required";
+      this.sessionStatus = "rejected";
+      this.messageKey = "shell.identity.accountMismatch";
+      this.actionKey = "shell.identity.action.chooseIsolatedProfile";
+      this.nextActions = Object.freeze(["choose_isolated_profile"]);
+      this.notifyStateChange();
+      return this.getState();
+    }
+    this.configureEnrollment(
+      exchange.account,
+      existingProfile ??
+        Object.freeze({
+          profile_id: this.profileId,
+          issuer_id: exchange.account.issuer_id,
+          subject_id: exchange.account.subject_id,
+          protection_binding_id: `protection:${this.profileId}`,
+          profile_generation: this.profileGeneration,
+          compatibility_version: 1,
+          lifecycle: "enrolling",
+          last_transition_at: new Date().toISOString(),
+        }),
+      exchange.sessionBinding,
+    );
+    this.sessionStatus = "current";
+    const enrollmentIntent = this.store.loadEnrollmentIntent();
+    if (
+      existingProfile &&
+      enrollmentIntent?.status === "locally_committed"
+    ) {
+      this.store.saveProfile({
+        ...existingProfile,
+        lifecycle: "enrolled",
+        last_transition_at: new Date().toISOString(),
+      });
+      this.safeDeviceLabel = enrollmentIntent.deviceLabel;
+      this.lifecycle = "enrolled";
+      this.enrollmentStatus = "enrolled";
+      this.messageKey = "shell.identity.enrolled";
+      this.actionKey = "shell.identity.action.none";
+      this.nextActions = Object.freeze([]);
+      this.notifyStateChange();
+      return this.getState();
+    }
+    this.lifecycle = "enrolling";
+    this.enrollmentStatus = "pending";
+    this.messageKey = "shell.identity.verifiedWaitingEnrollment";
+    this.actionKey = "shell.identity.action.confirmEnrollment";
+    this.nextActions = Object.freeze(["reconcile"]);
+    this.notifyStateChange();
+    return this.getState();
+  }
+
   getState(): RendererIdentityState {
     const raw: RendererIdentityState = {
       version: 1,
@@ -283,6 +397,9 @@ export class IdentityCoordinator {
         : {}),
       ...(this.verifiedAccount?.display_identifier
         ? { displayIdentifier: this.verifiedAccount.display_identifier }
+        : {}),
+      ...(this.verifiedAccount?.avatar_url
+        ? { avatarUrl: this.verifiedAccount.avatar_url }
         : {}),
       ...(this.safeDeviceLabel
         ? { safeDeviceLabel: this.safeDeviceLabel }
@@ -376,6 +493,92 @@ export class IdentityCoordinator {
 
     this.notifyStateChange();
     return this.getState();
+  }
+
+  async signInWithPassword(
+    email: string,
+    password: string,
+  ): Promise<RendererIdentityState> {
+    return this.authenticateWithPassword("sign_in", email, password);
+  }
+
+  async signUpWithPassword(
+    email: string,
+    password: string,
+  ): Promise<RendererIdentityState> {
+    return this.authenticateWithPassword("sign_up", email, password);
+  }
+
+  private async authenticateWithPassword(
+    mode: "sign_in" | "sign_up",
+    email: string,
+    password: string,
+  ): Promise<RendererIdentityState> {
+    if (this.disposed) return this.getState();
+    const generation = ++this.authorityGeneration;
+    this.handoff.closeLoopbackListener();
+    this.lifecycle = "signing_in";
+    this.messageKey = "shell.identity.signingIn";
+    this.actionKey = "shell.identity.action.cancel";
+    this.nextActions = Object.freeze(["cancel"]);
+    this.notifyStateChange();
+
+    try {
+      this.store.assertProtectionUsable();
+      this.profileGeneration =
+        this.store.loadProfile()?.profile_generation ?? this.profileGeneration;
+      let tokens;
+      if (mode === "sign_up") {
+        if (
+          !this.config.publicRegistrationEnabled ||
+          !this.provider.signUpWithPassword
+        ) {
+          throw new Error("registration_disabled");
+        }
+        const registration = await this.provider.signUpWithPassword(
+          email,
+          password,
+        );
+        if (!this.isCurrent(generation)) return this.getState();
+        if (registration.confirmationRequired || !registration.tokens) {
+          this.lifecycle = "sign_in_required";
+          this.sessionStatus = "none";
+          this.messageKey = "shell.identity.checkEmail";
+          this.actionKey = "shell.identity.action.signIn";
+          this.nextActions = Object.freeze(["sign_in_again"]);
+          this.notifyStateChange();
+          return this.getState();
+        }
+        tokens = registration.tokens;
+      } else {
+        if (!this.provider.signInWithPassword) {
+          throw new Error("unsupported_capability");
+        }
+        tokens = await this.provider.signInWithPassword(email, password);
+      }
+
+      if (!this.isCurrent(generation)) return this.getState();
+      const exchange = await this.sessionOwner.adoptSession({
+        tokens,
+        profileId: this.profileId,
+        profileGeneration: this.profileGeneration,
+        isCurrent: () => this.isCurrent(generation),
+      });
+      if (!this.isCurrent(generation)) return this.getState();
+      return this.applyAuthenticationResult(exchange);
+    } catch (error) {
+      if (!this.isCurrent(generation)) return this.getState();
+      this.lifecycle = "sign_in_required";
+      this.sessionStatus = "rejected";
+      this.messageKey =
+        error instanceof Error && error.message === "provider_unavailable"
+          ? "shell.identity.providerUnavailable"
+          : "shell.identity.invalidCredentials";
+      this.actionKey = "shell.identity.action.retry";
+      this.nextActions = Object.freeze(["retry"]);
+      this.notifyStateChange();
+      return this.getState();
+    }
   }
 
   async cancelSignIn(): Promise<RendererIdentityState> {
@@ -508,58 +711,9 @@ export class IdentityCoordinator {
     if (!this.isCurrent(generation)) return this.getState();
     this.handoff.closeLoopbackListener();
 
-    if (!exchange.success) {
-      this.currentAttempt = null;
-      this.lifecycle = "sign_in_required";
-      this.sessionStatus = "rejected";
-      this.messageKey = "shell.identity.exchangeFailed";
-      this.actionKey = "shell.identity.action.retry";
-      this.nextActions = Object.freeze(["retry"]);
-      this.notifyStateChange();
-      return this.getState();
-    }
-
     this.currentAttempt = null;
     this.currentRedirectUri = null;
-    this.verifiedAccount = exchange.account;
-    const existingProfile = this.store.loadProfile();
-    if (
-      existingProfile &&
-      (existingProfile.issuer_id !== exchange.account.issuer_id ||
-        existingProfile.subject_id !== exchange.account.subject_id)
-    ) {
-      this.lifecycle = "recovery_required";
-      this.sessionStatus = "rejected";
-      this.messageKey = "shell.identity.accountMismatch";
-      this.actionKey = "shell.identity.action.chooseIsolatedProfile";
-      this.nextActions = Object.freeze(["choose_isolated_profile"]);
-      this.notifyStateChange();
-      return this.getState();
-    }
-    this.configureEnrollment(
-      exchange.account,
-      existingProfile ??
-        Object.freeze({
-          profile_id: this.profileId,
-          issuer_id: exchange.account.issuer_id,
-          subject_id: exchange.account.subject_id,
-          protection_binding_id: `protection:${this.profileId}`,
-          profile_generation: this.profileGeneration,
-          compatibility_version: 1,
-          lifecycle: "enrolling",
-          last_transition_at: new Date().toISOString(),
-        }),
-      exchange.sessionBinding,
-    );
-    this.sessionStatus = "current";
-    // Transition to enrolling as the verified account awaits first device enrollment
-    this.lifecycle = "enrolling";
-    this.enrollmentStatus = "pending";
-    this.messageKey = "shell.identity.verifiedWaitingEnrollment";
-    this.actionKey = "shell.identity.action.confirmEnrollment";
-    this.nextActions = Object.freeze(["reconcile"]);
-    this.notifyStateChange();
-    return this.getState();
+    return this.applyAuthenticationResult(exchange);
   }
 
   async confirmEnrollment(label?: string): Promise<RendererIdentityState> {

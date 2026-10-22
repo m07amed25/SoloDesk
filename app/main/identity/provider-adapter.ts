@@ -9,6 +9,7 @@ import type {
   AalLevel,
   RecoveryStatus,
 } from "../../shared/identity-security-contracts.ts";
+import { isAllowedIdentityAvatarUrl } from "../../shared/identity-contracts.ts";
 
 export type ExchangeParams = Readonly<{
   code: string;
@@ -25,7 +26,40 @@ export type IdTokenPayload = Readonly<{
   nonce?: string;
   name?: string;
   email?: string;
+  avatar_url?: string;
 }>;
+
+function asRecord(value: unknown): Record<string, unknown> | null {
+  return value && typeof value === "object" && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : null;
+}
+
+export function getGoogleAvatarUrl(user: unknown): string | undefined {
+  const record = asRecord(user);
+  if (!record) return undefined;
+
+  const candidates: unknown[] = [];
+  if (Array.isArray(record.identities)) {
+    for (const identity of record.identities) {
+      const entry = asRecord(identity);
+      if (entry?.provider !== "google") continue;
+      const data = asRecord(entry.identity_data);
+      candidates.push(data?.avatar_url, data?.picture);
+    }
+  }
+
+  const appMetadata = asRecord(record.app_metadata);
+  const providers = Array.isArray(appMetadata?.providers)
+    ? appMetadata.providers
+    : [];
+  if (appMetadata?.provider === "google" || providers.includes("google")) {
+    const metadata = asRecord(record.user_metadata);
+    candidates.push(metadata?.avatar_url, metadata?.picture);
+  }
+
+  return candidates.find(isAllowedIdentityAvatarUrl);
+}
 
 export type ProviderTokens = Readonly<{
   access_token: string;
@@ -33,8 +67,18 @@ export type ProviderTokens = Readonly<{
   expires_in?: number;
 }>;
 
+export type PasswordSignUpResult = Readonly<{
+  confirmationRequired: boolean;
+  tokens?: ProviderTokens;
+}>;
+
 export interface IdentityProviderAdapter {
   exchangeCodeForTokens(params: ExchangeParams): Promise<ProviderTokens>;
+  signInWithPassword?(email: string, password: string): Promise<ProviderTokens>;
+  signUpWithPassword?(
+    email: string,
+    password: string,
+  ): Promise<PasswordSignUpResult>;
   verifySession(tokens: ProviderTokens): Promise<IdTokenPayload>;
   refreshSession?(refreshToken: string): Promise<ProviderTokens>;
   signOut?(accessToken: string): Promise<void>;
@@ -68,6 +112,42 @@ export class SupabaseProviderAdapter implements IdentityProviderAdapter {
     });
   }
 
+  async signInWithPassword(
+    email: string,
+    password: string,
+  ): Promise<ProviderTokens> {
+    return this.tokenRequest("password", { email, password });
+  }
+
+  async signUpWithPassword(
+    email: string,
+    password: string,
+  ): Promise<PasswordSignUpResult> {
+    const response = await fetch(`${this.config.issuer}/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        apikey: this.config.publishableKey,
+      },
+      body: JSON.stringify({ email, password }),
+      signal: AbortSignal.timeout(15000),
+      redirect: "error",
+    });
+    if (!response.ok) {
+      throw new Error(
+        response.status < 500 ? "invalid_credentials" : "provider_unavailable",
+      );
+    }
+    const data = await response.json();
+    if (typeof data.access_token !== "string" || !data.access_token) {
+      return Object.freeze({ confirmationRequired: true });
+    }
+    return Object.freeze({
+      confirmationRequired: false,
+      tokens: this.parseTokens(data),
+    });
+  }
+
   async refreshSession(refreshToken: string): Promise<ProviderTokens> {
     return this.tokenRequest("refresh_token", { refresh_token: refreshToken });
   }
@@ -94,17 +174,22 @@ export class SupabaseProviderAdapter implements IdentityProviderAdapter {
         response.status < 500 ? "invalid_grant" : "provider_unavailable",
       );
     const data = await response.json();
+    return this.parseTokens(data);
+  }
+
+  private parseTokens(data: Record<string, unknown>): ProviderTokens {
     if (
       typeof data.access_token !== "string" ||
       !data.access_token ||
       (data.refresh_token !== undefined &&
-        typeof data.refresh_token !== "string")
+        typeof data.refresh_token !== "string") ||
+      (data.expires_in !== undefined && typeof data.expires_in !== "number")
     )
       throw new Error("invalid_provider_response");
     return Object.freeze({
       access_token: data.access_token,
-      refresh_token: data.refresh_token,
-      expires_in: data.expires_in,
+      refresh_token: data.refresh_token as string | undefined,
+      expires_in: data.expires_in as number | undefined,
     });
   }
 
@@ -144,6 +229,7 @@ export class SupabaseProviderAdapter implements IdentityProviderAdapter {
           ? user.user_metadata.full_name
           : undefined,
       email: typeof user.email === "string" ? user.email : undefined,
+      avatar_url: getGoogleAvatarUrl(user),
     });
   }
 
