@@ -471,6 +471,31 @@ function ShellRoot() {
       );
     }
 
+    cleanups.push(
+      registerAction({
+        id: "workspace-create",
+        category: "actions",
+        titleKey: "workspace.create.dialogTitle",
+        titleText: t("workspace.create.dialogTitle"),
+        keywords: [
+          "workspace",
+          "create",
+          "new",
+          "مساحة",
+          "عمل",
+          "إنشاء",
+          "جديدة",
+        ],
+        iconName: "Briefcase",
+        execute: () => {
+          window.dispatchEvent(
+            new CustomEvent("solodesk:open-workspace-create"),
+          );
+        },
+        enabled: true,
+      }),
+    );
+
     return () => {
       for (const cleanup of cleanups) {
         cleanup();

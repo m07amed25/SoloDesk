@@ -1,7 +1,15 @@
 import * as React from "react";
-import { Briefcase, Clock, CloudOff, Bell, Languages } from "lucide-react";
+import {
+  Briefcase,
+  Clock,
+  CloudOff,
+  Bell,
+  Languages,
+  ChevronDown,
+} from "lucide-react";
 import { useLocalization } from "../../contexts/LocalizationContext.tsx";
 import { useWorkspace } from "../../contexts/WorkspaceContext.tsx";
+import { WorkspaceSwitcher } from "../workspaces/WorkspaceSwitcher.tsx";
 import { SearchTrigger } from "./SearchTrigger.tsx";
 import { UserMenu } from "./UserMenu.tsx";
 import { Button } from "../ui/button.tsx";
@@ -25,10 +33,39 @@ interface UtilityDialogState {
 }
 
 export function HeaderUtilities() {
-  const { locale, toggleLocale, t } = useLocalization();
+  const { locale, direction, toggleLocale, t } = useLocalization();
   const { currentWorkspace } = useWorkspace();
   const [activeDialog, setActiveDialog] =
     React.useState<UtilityDialogState | null>(null);
+  const [isWorkspaceMenuOpen, setIsWorkspaceMenuOpen] = React.useState(false);
+  const workspaceMenuRef = React.useRef<HTMLDivElement>(null);
+
+  // Close workspace dropdown on click outside or Escape key
+  React.useEffect(() => {
+    if (!isWorkspaceMenuOpen) return;
+
+    const handlePointerDown = (event: MouseEvent) => {
+      if (
+        workspaceMenuRef.current &&
+        !workspaceMenuRef.current.contains(event.target as Node)
+      ) {
+        setIsWorkspaceMenuOpen(false);
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsWorkspaceMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isWorkspaceMenuOpen]);
 
   const openUtilityDialog = (
     titleKey: string,
@@ -44,27 +81,62 @@ export function HeaderUtilities() {
     });
   };
 
+  const dropdownClassName = `absolute start-0 top-full mt-1.5 z-50 w-72 sm:w-80 rounded-xl border border-border bg-popover text-popover-foreground shadow-md transition-transform duration-150 ease-out animate-in fade-in-0 zoom-in-95 p-3 ${
+    direction === "rtl" ? "origin-top-right" : "origin-top-left"
+  }`;
+
   return (
     <>
       <div className="flex items-center gap-1 sm:gap-1.5 md:gap-2">
         <SearchTrigger />
 
         {currentWorkspace ? (
-          <div
-            className="hidden md:inline-flex h-8 items-center gap-1.5 rounded-md border border-border bg-surface px-2.5 text-xs font-medium text-foreground whitespace-nowrap shrink-0"
-            role="status"
-            aria-label={`${t("workspace.title")}: ${currentWorkspace.displayName} (${currentWorkspace.discriminator})`}
-          >
-            <Briefcase
-              className="h-3.5 w-3.5 text-muted-foreground shrink-0"
-              aria-hidden="true"
-            />
-            <span className="truncate max-w-[120px] lg:max-w-[160px]">
-              <BdiText>{currentWorkspace.displayName}</BdiText>
-            </span>
-            <span className="text-[10px] text-muted-foreground font-mono">
-              <BdiText>({currentWorkspace.discriminator})</BdiText>
-            </span>
+          <div className="relative" ref={workspaceMenuRef}>
+            <button
+              type="button"
+              onClick={() => setIsWorkspaceMenuOpen((prev) => !prev)}
+              aria-expanded={isWorkspaceMenuOpen}
+              aria-haspopup="dialog"
+              className="hidden sm:inline-flex h-8 items-center gap-1.5 rounded-md border border-border bg-surface px-2.5 text-xs font-medium text-foreground hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-ring cursor-pointer transition-colors whitespace-nowrap shrink-0"
+              aria-label={`${t("workspace.title")}: ${currentWorkspace.displayName} (${currentWorkspace.discriminator})`}
+            >
+              <Briefcase
+                className="h-3.5 w-3.5 text-muted-foreground shrink-0"
+                aria-hidden="true"
+              />
+              <span className="truncate max-w-[120px] lg:max-w-[160px]">
+                <BdiText>{currentWorkspace.displayName}</BdiText>
+              </span>
+              <span className="text-[10px] text-muted-foreground font-mono">
+                <BdiText>({currentWorkspace.discriminator})</BdiText>
+              </span>
+              <ChevronDown
+                className={`h-3.5 w-3.5 text-muted-foreground/70 shrink-0 transition-transform duration-150 ${
+                  isWorkspaceMenuOpen ? "rotate-180" : ""
+                }`}
+                aria-hidden="true"
+              />
+            </button>
+
+            {isWorkspaceMenuOpen && (
+              <div
+                role="dialog"
+                aria-label={t("workspace.title")}
+                className={dropdownClassName}
+              >
+                <WorkspaceSwitcher
+                  onOpenCreateDialog={() => {
+                    setIsWorkspaceMenuOpen(false);
+                    window.dispatchEvent(
+                      new CustomEvent("solodesk:open-workspace-create"),
+                    );
+                  }}
+                  onSelectWorkspace={() => {
+                    setIsWorkspaceMenuOpen(false);
+                  }}
+                />
+              </div>
+            )}
           </div>
         ) : (
           <button
@@ -74,7 +146,7 @@ export function HeaderUtilities() {
                 new CustomEvent("solodesk:open-workspace-create"),
               );
             }}
-            className="hidden xl:inline-flex h-8 items-center gap-1.5 rounded-md border border-border bg-surface px-2.5 text-xs font-medium text-foreground hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-ring cursor-pointer transition-colors whitespace-nowrap shrink-0"
+            className="hidden sm:inline-flex h-8 items-center gap-1.5 rounded-md border border-border bg-surface px-2.5 text-xs font-medium text-foreground hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-ring cursor-pointer transition-colors whitespace-nowrap shrink-0"
             aria-label={t("workspace.create.dialogTitle")}
           >
             <Briefcase
