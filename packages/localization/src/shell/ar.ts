@@ -49,6 +49,7 @@ export const ar: TranslationDictionary = {
   "theme.preset.graphite": "غرافيت",
   "theme.preset.high_contrast": "تباين عالٍ",
   "theme.preset.solar": "شمسي",
+  "theme.preset.chakra": "شاكرا صناعي",
   "theme.preset.switch_to": "تغيير النمط البصري: {style}",
 
   // Language
