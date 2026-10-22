@@ -29,6 +29,15 @@ test("cycles theme modes in predictable sequence (system -> light -> dark -> sys
 test("exposes each selectable theme preset once", () => {
   assert.deepEqual(
     THEME_PRESET_OPTIONS.map(({ id }) => id),
-    ["modern-minimal", "amber-mono", "graphite", "high-contrast", "solar"],
+    [
+      "modern-minimal",
+      "amber-mono",
+      "graphite",
+      "high-contrast",
+      "solar",
+      "chakra-industrial",
+      "cobalt",
+      "amber-outfit",
+    ],
   );
 });

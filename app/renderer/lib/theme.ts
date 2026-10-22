@@ -5,7 +5,10 @@ export type ThemePreset =
   | "amber-mono"
   | "graphite"
   | "high-contrast"
-  | "solar";
+  | "solar"
+  | "chakra-industrial"
+  | "cobalt"
+  | "amber-outfit";
 
 export interface ThemePresetOption {
   id: ThemePreset;
@@ -14,7 +17,10 @@ export interface ThemePresetOption {
     | "theme.preset.amber"
     | "theme.preset.graphite"
     | "theme.preset.high_contrast"
-    | "theme.preset.solar";
+    | "theme.preset.solar"
+    | "theme.preset.chakra"
+    | "theme.preset.cobalt"
+    | "theme.preset.amber_outfit";
   accentColor: string;
   keywords: readonly string[];
 }
@@ -49,6 +55,42 @@ export const THEME_PRESET_OPTIONS: readonly ThemePresetOption[] = [
     titleKey: "theme.preset.solar",
     accentColor: "oklch(0.6958 0.2043 43.4910)",
     keywords: ["preset", "solar", "orange", "warm", "برتقالي", "نمط"],
+  },
+  {
+    id: "chakra-industrial",
+    titleKey: "theme.preset.chakra",
+    accentColor: "oklch(0.6152 0.1657 26.9800)",
+    keywords: [
+      "preset",
+      "chakra",
+      "industrial",
+      "cyber",
+      "sharp",
+      "شاكرا",
+      "صناعي",
+      "نمط",
+    ],
+  },
+  {
+    id: "cobalt",
+    titleKey: "theme.preset.cobalt",
+    accentColor: "oklch(0.5296 0.1506 255.1121)",
+    keywords: ["preset", "cobalt", "blue", "slate", "كوبالت", "أزرق", "نمط"],
+  },
+  {
+    id: "amber-outfit",
+    titleKey: "theme.preset.amber_outfit",
+    accentColor: "oklch(0.6716 0.1368 48.5130)",
+    keywords: [
+      "preset",
+      "amber",
+      "outfit",
+      "warm",
+      "copper",
+      "عنبري",
+      "آوتفت",
+      "نمط",
+    ],
   },
 ] as const;
 
