@@ -18,6 +18,7 @@ export default defineConfig({
     "f006-key-loss.spec.mjs",
     "f006-rotation.spec.mjs",
     "f007-recovery.spec.mjs",
+    "f012-workspaces.spec.mjs",
   ],
   timeout: 60000,
   expect: { timeout: 10000 },

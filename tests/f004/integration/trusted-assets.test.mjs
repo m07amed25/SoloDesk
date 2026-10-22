@@ -3,11 +3,18 @@ import assert from "node:assert/strict";
 import path from "node:path";
 import {
   assetPath,
+  isRendererFailure,
   trustedDevelopmentDocumentUrl,
   trustedDevelopmentOrigin,
 } from "../../../app/main/windows.ts";
 
 const root = path.resolve(".vite/renderer/main_window");
+
+test("clean renderer exits are not reported as crashes", () => {
+  assert.equal(isRendererFailure("clean-exit"), false);
+  assert.equal(isRendererFailure("crashed"), true);
+  assert.equal(isRendererFailure("oom"), true);
+});
 
 test("asset origin allows canonical bundle files only", () => {
   assert.equal(

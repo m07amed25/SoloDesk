@@ -193,6 +193,55 @@ export function scanF011SecretEvidence(root) {
   return findings;
 }
 
+export function scanF012SecretEvidence(root) {
+  const findings = [];
+  const targetDirs = ["app/renderer", "app/preload", "packages/localization"];
+  const prohibitedPatterns = [
+    { pattern: /CANARY_DATABASE_KEY/g, rule: "f012-db-key-leak" },
+    { pattern: /CANARY_AUTH_TOKEN/g, rule: "f012-auth-token-leak" },
+    { pattern: /CANARY_RAW_ERROR/g, rule: "f012-raw-error-leak" },
+    { pattern: /CANARY_HIDDEN_TENANT/g, rule: "f012-hidden-tenant-leak" },
+    { pattern: /\bsolodesk_sqlite_key_\b/g, rule: "f012-key-marker-leak" },
+    { pattern: /\bsolodesk_secret_token_\b/g, rule: "f012-secret-marker-leak" },
+    { pattern: /\bINTERNAL_DB_ERROR_\b/g, rule: "f012-db-error-leak" },
+  ];
+
+  for (const dir of targetDirs) {
+    const fullDir = path.join(root, dir);
+    if (!fs.existsSync(fullDir)) continue;
+    const entries = fs.readdirSync(fullDir, {
+      recursive: true,
+      withFileTypes: true,
+    });
+    for (const entry of entries) {
+      if (!entry.isFile() || entry.name.endsWith(".d.ts")) continue;
+      const parentDir = entry.parentPath || entry.path || fullDir;
+      const filePath = path.join(parentDir, entry.name);
+      const relativePath = path.relative(root, filePath);
+      const content = fs.readFileSync(filePath, "utf-8");
+      const lines = content.split("\n");
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        for (const { pattern, rule } of prohibitedPatterns) {
+          pattern.lastIndex = 0;
+          if (pattern.test(line)) {
+            findings.push({
+              code: "secret",
+              rule,
+              location: relativePath,
+              line: i + 1,
+              severity: "blocking",
+              action:
+                "Remove SQLite key, token, raw error, or canary from renderer/preload/localization surface",
+            });
+          }
+        }
+      }
+    }
+  }
+  return findings;
+}
+
 async function boundedDownload(url, file, max = 33554432) {
   const response = await fetch(url, { signal: AbortSignal.timeout(180000) });
   if (!response.ok) throw new Error("scanner-download-unavailable");
@@ -382,6 +431,7 @@ export async function securityCheck(root, kind) {
       }));
       findings.push(...scanF010SecretEvidence(root));
       findings.push(...scanF011SecretEvidence(root));
+      findings.push(...scanF012SecretEvidence(root));
       inputs = files.length;
       source = tool.name;
       version = tool.version;
