@@ -1,11 +1,22 @@
 export type ThemeMode = "light" | "dark" | "system";
 export type ResolvedTheme = "light" | "dark";
-export type ThemePreset = "modern-minimal" | "amber-mono";
+export type ThemePreset =
+  | "modern-minimal"
+  | "amber-mono"
+  | "graphite"
+  | "high-contrast"
+  | "solar";
 
 export interface ThemePresetOption {
   id: ThemePreset;
-  titleKey: "theme.preset.modern" | "theme.preset.amber";
+  titleKey:
+    | "theme.preset.modern"
+    | "theme.preset.amber"
+    | "theme.preset.graphite"
+    | "theme.preset.high_contrast"
+    | "theme.preset.solar";
   accentColor: string;
+  keywords: readonly string[];
 }
 
 export const THEME_PRESET_OPTIONS: readonly ThemePresetOption[] = [
@@ -13,11 +24,31 @@ export const THEME_PRESET_OPTIONS: readonly ThemePresetOption[] = [
     id: "modern-minimal",
     titleKey: "theme.preset.modern",
     accentColor: "oklch(0.6231 0.1880 259.8145)",
+    keywords: ["preset", "modern", "minimal", "نمط", "حديث"],
   },
   {
     id: "amber-mono",
     titleKey: "theme.preset.amber",
     accentColor: "oklch(0.6716 0.1368 48.5130)",
+    keywords: ["preset", "amber", "mono", "warm", "عنبري", "نمط"],
+  },
+  {
+    id: "graphite",
+    titleKey: "theme.preset.graphite",
+    accentColor: "oklch(0.0600 0.0100 270)",
+    keywords: ["preset", "graphite", "neutral", "رمادي", "نمط"],
+  },
+  {
+    id: "high-contrast",
+    titleKey: "theme.preset.high_contrast",
+    accentColor: "oklch(0.2138 0.0019 286.2347)",
+    keywords: ["preset", "contrast", "black", "white", "تباين", "نمط"],
+  },
+  {
+    id: "solar",
+    titleKey: "theme.preset.solar",
+    accentColor: "oklch(0.6958 0.2043 43.4910)",
+    keywords: ["preset", "solar", "orange", "warm", "برتقالي", "نمط"],
   },
 ] as const;
 

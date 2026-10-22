@@ -1,6 +1,7 @@
+import { THEME_PRESET_OPTIONS, type ThemePreset } from "./theme.ts";
+
 export type SupportedLocale = "en" | "ar";
 export type ThemeMode = "light" | "dark" | "system";
-export type ThemePreset = "modern-minimal" | "amber-mono";
 
 export interface UserPreferenceRecord {
   schemaVersion: 1;
@@ -71,12 +72,9 @@ export function validatePreferences(
       ? record.lastUpdated
       : new Date().toISOString();
 
-  const themePreset: ThemePreset | undefined =
-    record.themePreset === "amber-mono"
-      ? "amber-mono"
-      : record.themePreset === "modern-minimal"
-        ? "modern-minimal"
-        : undefined;
+  const themePreset = THEME_PRESET_OPTIONS.find(
+    ({ id }) => id === record.themePreset,
+  )?.id;
 
   return {
     schemaVersion: 1,

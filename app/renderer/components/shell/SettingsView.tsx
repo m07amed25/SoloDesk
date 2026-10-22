@@ -5,6 +5,7 @@ import {
 } from "../../contexts/LocalizationContext.tsx";
 import { useTheme, type ThemeMode } from "../../contexts/ThemeContext.tsx";
 import { useIdentity } from "../../contexts/IdentityContext.tsx";
+import { THEME_PRESET_OPTIONS } from "../../lib/theme.ts";
 import { Button } from "../ui/button.tsx";
 import { BdiText } from "../ui/bdi-text.tsx";
 import {
@@ -295,32 +296,21 @@ export function SettingsView() {
               {t("theme.preset.description")}
             </p>
             <div className="flex flex-wrap gap-3">
-              <Button
-                variant={
-                  themePreset === "modern-minimal" ? "default" : "outline"
-                }
-                onClick={() => setThemePreset("modern-minimal")}
-                className="gap-2.5"
-              >
-                <span
-                  className="h-3 w-3 rounded-full border border-white/20"
-                  style={{ backgroundColor: "oklch(0.6231 0.1880 259.8145)" }}
-                  aria-hidden="true"
-                />
-                <span>{t("theme.preset.modern")}</span>
-              </Button>
-              <Button
-                variant={themePreset === "amber-mono" ? "default" : "outline"}
-                onClick={() => setThemePreset("amber-mono")}
-                className="gap-2.5"
-              >
-                <span
-                  className="h-3 w-3 rounded-full border border-white/20"
-                  style={{ backgroundColor: "oklch(0.6716 0.1368 48.5130)" }}
-                  aria-hidden="true"
-                />
-                <span>{t("theme.preset.amber")}</span>
-              </Button>
+              {THEME_PRESET_OPTIONS.map((preset) => (
+                <Button
+                  key={preset.id}
+                  variant={themePreset === preset.id ? "default" : "outline"}
+                  onClick={() => setThemePreset(preset.id)}
+                  className="gap-2.5"
+                >
+                  <span
+                    className="h-3 w-3 rounded-full border border-white/20"
+                    style={{ backgroundColor: preset.accentColor }}
+                    aria-hidden="true"
+                  />
+                  <span>{t(preset.titleKey)}</span>
+                </Button>
+              ))}
             </div>
           </div>
         </section>

@@ -22,6 +22,7 @@ import { ModulePlaceholder } from "../components/shell/ModulePlaceholder.tsx";
 import { BdiText } from "../components/ui/bdi-text.tsx";
 import { isCommandPaletteShortcut } from "../lib/shortcuts.ts";
 import { getRouteDefinition, type RouteId } from "../lib/routes.ts";
+import { THEME_PRESET_OPTIONS } from "../lib/theme.ts";
 import { Button } from "../components/ui/button.tsx";
 import { ChevronDown } from "lucide-react";
 import logoIcon from "@/assets/solodesk_no_bg_no_text.png";
@@ -410,35 +411,22 @@ function ShellRoot() {
       }),
     );
 
-    cleanups.push(
-      registerAction({
-        id: "pref-theme-preset-modern",
-        category: "preferences",
-        titleKey: "theme.preset.modern",
-        titleText: t("theme.preset.switch_to", {
-          style: t("theme.preset.modern"),
+    for (const preset of THEME_PRESET_OPTIONS) {
+      cleanups.push(
+        registerAction({
+          id: `pref-theme-preset-${preset.id}`,
+          category: "preferences",
+          titleKey: preset.titleKey,
+          titleText: t("theme.preset.switch_to", {
+            style: t(preset.titleKey),
+          }),
+          keywords: [...preset.keywords],
+          iconName: "Palette",
+          execute: () => setThemePreset(preset.id),
+          enabled: true,
         }),
-        keywords: ["preset", "modern", "minimal", "نمط", "حديث"],
-        iconName: "Palette",
-        execute: () => setThemePreset("modern-minimal"),
-        enabled: true,
-      }),
-    );
-
-    cleanups.push(
-      registerAction({
-        id: "pref-theme-preset-amber",
-        category: "preferences",
-        titleKey: "theme.preset.amber",
-        titleText: t("theme.preset.switch_to", {
-          style: t("theme.preset.amber"),
-        }),
-        keywords: ["preset", "amber", "mono", "warm", "عنبري", "نمط"],
-        iconName: "Palette",
-        execute: () => setThemePreset("amber-mono"),
-        enabled: true,
-      }),
-    );
+      );
+    }
 
     // Register language action
     cleanups.push(

@@ -46,6 +46,9 @@ export const ar: TranslationDictionary = {
   "theme.preset.description": "اختر النمط البصري ومجموعة ألوان التمييز.",
   "theme.preset.modern": "حديث بسيط",
   "theme.preset.amber": "عنبري أحادي الخط",
+  "theme.preset.graphite": "غرافيت",
+  "theme.preset.high_contrast": "تباين عالٍ",
+  "theme.preset.solar": "شمسي",
   "theme.preset.switch_to": "تغيير النمط البصري: {style}",
 
   // Language

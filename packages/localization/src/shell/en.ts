@@ -44,6 +44,9 @@ export const en = {
   "theme.preset.description": "Choose visual style and accent palette.",
   "theme.preset.modern": "Modern Minimal",
   "theme.preset.amber": "Amber Mono",
+  "theme.preset.graphite": "Graphite",
+  "theme.preset.high_contrast": "High Contrast",
+  "theme.preset.solar": "Solar",
   "theme.preset.switch_to": "Switch theme style: {style}",
 
   // Language
