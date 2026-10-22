@@ -29,6 +29,7 @@ test("T024: DesktopBridge identity IPC validates requests, admission, and saniti
     profileReference: `profile:${PROFILE_A.profile_id}`,
     displayName: ACCOUNT_A.displayName,
     displayIdentifier: ACCOUNT_A.displayIdentifier,
+    avatarUrl: ACCOUNT_A.avatarUrl,
     safeDeviceLabel: LABELS.enStandard,
     protectionStatus: "ready",
     sessionStatus: "current",
@@ -116,5 +117,6 @@ test("T024: DesktopBridge identity IPC validates requests, admission, and saniti
   const delivered = sent.find((s) => s.family === "identity");
   assert.ok(delivered);
   assert.equal(delivered.data.lifecycle, "enrolling");
+  assert.equal(delivered.data.avatarUrl, ACCOUNT_A.avatarUrl);
   assert.equal(isRendererIdentityState(delivered.data), true);
 });

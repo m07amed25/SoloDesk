@@ -11,6 +11,7 @@ import {
   isProtectedSessionBinding,
   validateSafeDeviceLabel,
   containsProhibitedKey,
+  validateIdentityRequest,
 } from "../../../app/shared/identity-contracts.ts";
 import {
   projectIdentityEvidence,
@@ -25,6 +26,29 @@ import {
 } from "../fixtures/identity-fixtures.mjs";
 
 describe("T011: Identity Contracts and Redaction", () => {
+  it("accepts bounded email/password commands without accepting arbitrary secret payloads", () => {
+    const request = {
+      version: 1,
+      requestId: { kind: "request", value: "req-password" },
+      payload: { email: "owner@example.com", password: "correct horse" },
+    };
+    assert.equal(
+      validateIdentityRequest("identity.signInWithPassword", request).ok,
+      true,
+    );
+    assert.equal(
+      validateIdentityRequest("identity.signUpWithPassword", {
+        ...request,
+        payload: { ...request.payload, redirect: "https://evil.test" },
+      }).ok,
+      false,
+    );
+    assert.equal(
+      validateIdentityRequest("identity.getState", request).ok,
+      false,
+    );
+  });
+
   it("enforces exact lifecycle enum closure (7 states)", () => {
     assert.equal(IDENTITY_LIFECYCLES.length, 7);
     const expected = [
@@ -54,6 +78,7 @@ describe("T011: Identity Contracts and Redaction", () => {
       profileReference: PROFILE_A.profile_id,
       displayName: ACCOUNT_A.displayName,
       displayIdentifier: ACCOUNT_A.displayIdentifier,
+      avatarUrl: ACCOUNT_A.avatarUrl,
       safeDeviceLabel: LABELS.enStandard,
       protectionStatus: "ready",
       sessionStatus: "current",
@@ -66,6 +91,13 @@ describe("T011: Identity Contracts and Redaction", () => {
     };
 
     assert.equal(isRendererIdentityState(validState), true);
+    assert.equal(
+      isRendererIdentityState({
+        ...validState,
+        avatarUrl: "https://attacker.test/avatar.png",
+      }),
+      false,
+    );
 
     // Reject unknown keys
     assert.equal(

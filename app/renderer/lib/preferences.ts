@@ -1,3 +1,5 @@
+import { THEME_PRESET_OPTIONS, type ThemePreset } from "./theme.ts";
+
 export type SupportedLocale = "en" | "ar";
 export type ThemeMode = "light" | "dark" | "system";
 
@@ -5,6 +7,7 @@ export interface UserPreferenceRecord {
   schemaVersion: 1;
   locale: SupportedLocale;
   theme: ThemeMode;
+  themePreset?: ThemePreset;
   sidebarCollapsed: boolean;
   lastUpdated: string;
 }
@@ -69,10 +72,15 @@ export function validatePreferences(
       ? record.lastUpdated
       : new Date().toISOString();
 
+  const themePreset = THEME_PRESET_OPTIONS.find(
+    ({ id }) => id === record.themePreset,
+  )?.id;
+
   return {
     schemaVersion: 1,
     locale: record.locale,
     theme: record.theme,
+    ...(themePreset ? { themePreset } : {}),
     sidebarCollapsed: record.sidebarCollapsed,
     lastUpdated,
   };

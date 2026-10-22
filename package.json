@@ -59,7 +59,13 @@
     "test:f011:reconciliation": "node tooling/f011/verify.mjs test:f011:reconciliation",
     "test:f011:boundary": "node tooling/f011/verify.mjs test:f011:boundary",
     "test:f011:privacy": "node tooling/f011/verify.mjs test:f011:privacy",
-    "test:f011:ui": "node tooling/f011/verify.mjs test:f011:ui"
+    "test:f011:ui": "node tooling/f011/verify.mjs test:f011:ui",
+    "test:f012": "node tooling/f012/verify.mjs",
+    "test:f012:contracts": "node tooling/f012/verify.mjs test:f012:contracts",
+    "test:f012:service": "node tooling/f012/verify.mjs test:f012:service",
+    "test:f012:switching": "node tooling/f012/verify.mjs test:f012:switching",
+    "test:f012:security": "node tooling/f012/verify.mjs test:f012:security",
+    "test:f012:ui": "node tooling/f012/verify.mjs test:f012:ui"
   },
   "engines": {
     "node": ">=24 <25"

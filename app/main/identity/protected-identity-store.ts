@@ -12,6 +12,15 @@ import {
   isSecurityPurpose,
   containsProhibitedSecurityKey,
 } from "../../shared/identity-security-contracts.ts";
+import {
+  type ActiveWorkspaceSelection,
+  SELECTION_STATES,
+  SELECTION_RECORD_PENDING_WORK_DECISIONS,
+  type SelectionRecordPendingWorkDecision,
+  SAFE_REASON_CODES,
+  isValidWorkspaceId,
+  isValidUuidV4,
+} from "../../shared/workspace-contracts.ts";
 import type { ProtectionOwner } from "../protection/owner.ts";
 
 export interface IdentitySecretProtection {
@@ -93,6 +102,7 @@ export type ProtectedIdentityPaths = Readonly<{
   credentials: string;
   enrollment: string;
   securityHandoff: string;
+  workspaceSelection: string;
 }>;
 
 export type StoredEnrollmentIntent = Readonly<{
@@ -141,6 +151,7 @@ export function deriveIdentityPaths(
     credentials: path.join(directory, "credentials.v1.enc"),
     enrollment: path.join(directory, "enrollment.v1.json"),
     securityHandoff: path.join(directory, "security-handoff.v1.json"),
+    workspaceSelection: path.join(directory, "workspace-selection.v1.json"),
   });
 }
 
@@ -549,4 +560,181 @@ export class ProtectedIdentityStore {
   clearActiveSecurityHandoff(): void {
     this.clearSecurityHandoff();
   }
+
+  saveWorkspaceSelection(selection: ActiveWorkspaceSelection): void {
+    this.assertProtectionUsable();
+    const validated = validateActiveWorkspaceSelection(selection);
+    if (validated.profileReference !== this.profileId) {
+      throw new Error("profile_reference_mismatch");
+    }
+    atomicWrite(
+      this.paths.workspaceSelection,
+      JSON.stringify(validated, null, 2),
+    );
+  }
+
+  loadWorkspaceSelection(expectedAccount?: {
+    issuerId?: string;
+    subjectId?: string;
+    profileReference?: string;
+    profileGeneration?: number;
+  }): ActiveWorkspaceSelection | null {
+    if (!fs.existsSync(this.paths.workspaceSelection)) {
+      return null;
+    }
+    this.assertProtectionUsable();
+    const raw = fs.readFileSync(this.paths.workspaceSelection, "utf-8");
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(raw);
+    } catch {
+      return null;
+    }
+    let validated: ActiveWorkspaceSelection;
+    try {
+      validated = validateActiveWorkspaceSelection(parsed);
+    } catch {
+      return null;
+    }
+    if (validated.profileReference !== this.profileId) {
+      return null;
+    }
+    if (expectedAccount) {
+      if (
+        expectedAccount.issuerId &&
+        validated.issuerId !== expectedAccount.issuerId
+      ) {
+        return null;
+      }
+      if (
+        expectedAccount.subjectId &&
+        validated.subjectId !== expectedAccount.subjectId
+      ) {
+        return null;
+      }
+      if (
+        expectedAccount.profileGeneration !== undefined &&
+        validated.profileGeneration !== expectedAccount.profileGeneration
+      ) {
+        return null;
+      }
+    }
+    return validated;
+  }
+
+  clearWorkspaceSelection(): void {
+    if (fs.existsSync(this.paths.workspaceSelection)) {
+      fs.unlinkSync(this.paths.workspaceSelection);
+    }
+  }
+}
+
+export function validateActiveWorkspaceSelection(
+  record: unknown,
+): ActiveWorkspaceSelection {
+  if (!record || typeof record !== "object" || Array.isArray(record)) {
+    throw new Error("invalid_workspace_selection");
+  }
+  const r = record as Record<string, unknown>;
+  const formatVersion = r.formatVersion ?? r.format_version;
+  if (formatVersion !== 1) {
+    throw new Error("unsupported_selection_format_version");
+  }
+  const profileReference = String(
+    r.profileReference ?? r.profile_reference ?? "",
+  );
+  if (!profileReference) throw new Error("missing_profile_reference");
+
+  const profileGeneration = Number(r.profileGeneration ?? r.profile_generation);
+  if (!Number.isSafeInteger(profileGeneration) || profileGeneration <= 0) {
+    throw new Error("invalid_profile_generation");
+  }
+
+  const issuerId = String(r.issuerId ?? r.issuer_id ?? "");
+  const subjectId = String(r.subjectId ?? r.subject_id ?? "");
+  if (!issuerId || !subjectId) throw new Error("missing_account_binding");
+
+  const selectionGeneration = Number(
+    r.selectionGeneration ?? r.selection_generation,
+  );
+  if (!Number.isSafeInteger(selectionGeneration) || selectionGeneration <= 0) {
+    throw new Error("invalid_selection_generation");
+  }
+
+  const state = String(r.state ?? "");
+  if (!SELECTION_STATES.includes(state as (typeof SELECTION_STATES)[number])) {
+    throw new Error("invalid_selection_state");
+  }
+
+  const currentWorkspaceId = (r.currentWorkspaceId ??
+    r.current_workspace_id) as string | undefined;
+  if (
+    currentWorkspaceId !== undefined &&
+    !isValidWorkspaceId(currentWorkspaceId, true)
+  ) {
+    throw new Error("invalid_current_workspace_id");
+  }
+
+  const targetWorkspaceId = (r.targetWorkspaceId ?? r.target_workspace_id) as
+    | string
+    | undefined;
+  if (
+    targetWorkspaceId !== undefined &&
+    !isValidWorkspaceId(targetWorkspaceId, true)
+  ) {
+    throw new Error("invalid_target_workspace_id");
+  }
+
+  const attemptId = (r.attemptId ?? r.attempt_id) as string | undefined;
+  if (attemptId !== undefined && !isValidUuidV4(attemptId)) {
+    throw new Error("invalid_attempt_id");
+  }
+
+  const correlationId = (r.correlationId ?? r.correlation_id) as
+    | string
+    | undefined;
+  if (correlationId !== undefined && !isValidUuidV4(correlationId)) {
+    throw new Error("invalid_correlation_id");
+  }
+
+  const pendingWorkDecision = (r.pendingWorkDecision ??
+    r.pending_work_decision) as SelectionRecordPendingWorkDecision | undefined;
+  if (
+    pendingWorkDecision !== undefined &&
+    !SELECTION_RECORD_PENDING_WORK_DECISIONS.includes(pendingWorkDecision)
+  ) {
+    throw new Error("invalid_pending_work_decision");
+  }
+
+  const safeReasonCode = (r.safeReasonCode ?? r.safe_reason_code) as
+    | (typeof SAFE_REASON_CODES)[number]
+    | undefined;
+  if (
+    safeReasonCode !== undefined &&
+    !SAFE_REASON_CODES.includes(safeReasonCode)
+  ) {
+    throw new Error("invalid_safe_reason_code");
+  }
+
+  const updatedAt = String(r.updatedAt ?? r.updated_at ?? "");
+  if (!updatedAt || Number.isNaN(Date.parse(updatedAt))) {
+    throw new Error("invalid_updated_at");
+  }
+
+  return Object.freeze({
+    formatVersion: 1,
+    profileReference,
+    profileGeneration,
+    issuerId,
+    subjectId,
+    selectionGeneration,
+    state: state as (typeof SELECTION_STATES)[number],
+    currentWorkspaceId,
+    targetWorkspaceId,
+    attemptId,
+    correlationId,
+    pendingWorkDecision,
+    safeReasonCode,
+    updatedAt,
+  });
 }

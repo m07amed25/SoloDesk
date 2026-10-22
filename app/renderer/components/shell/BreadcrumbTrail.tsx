@@ -31,7 +31,7 @@ export function BreadcrumbTrail() {
               {isLast || item.isCurrent ? (
                 <span
                   aria-current="page"
-                  className="font-semibold text-foreground select-none truncate"
+                  className="font-semibold text-foreground select-none truncate max-w-[120px] sm:max-w-none"
                 >
                   <BdiText>{label}</BdiText>
                 </span>
@@ -39,7 +39,7 @@ export function BreadcrumbTrail() {
                 <button
                   type="button"
                   onClick={() => navigateTo(item.routeId)}
-                  className="hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring rounded-xs transition-colors cursor-pointer truncate"
+                  className="hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring rounded-xs transition-colors cursor-pointer truncate max-w-[90px] sm:max-w-none"
                 >
                   <BdiText>{label}</BdiText>
                 </button>

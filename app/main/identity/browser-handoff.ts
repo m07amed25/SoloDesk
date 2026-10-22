@@ -12,6 +12,15 @@ export function buildAuthorizationUrl(
   },
 ): string {
   const url = new URL(config.hostedPath, config.hostedOrigin);
+  if (config.provider) {
+    const redirect = new URL(params.redirectUri);
+    redirect.searchParams.set("state", params.state);
+    url.searchParams.set("provider", config.provider);
+    url.searchParams.set("redirect_to", redirect.toString());
+    url.searchParams.set("code_challenge", params.challenge);
+    url.searchParams.set("code_challenge_method", "s256");
+    return url.toString();
+  }
   url.searchParams.set("client_id", config.audience);
   url.searchParams.set("response_type", "code");
   url.searchParams.set("code_challenge", params.challenge);
@@ -57,7 +66,9 @@ export function isAllowedHostedUrl(
 }
 
 export type BrowserHandoffOptions = {
-  onCallbackReceived?: (url: string) => boolean | void | Promise<boolean | void>;
+  onCallbackReceived?: (
+    url: string,
+  ) => boolean | void | Promise<boolean | void>;
   shellOpenExternal?: (url: string) => Promise<void>;
 };
 
@@ -110,8 +121,13 @@ export class BrowserHandoffManager {
       let port = 0;
       const server = http.createServer(async (req, res) => {
         const fullUrl = `http://127.0.0.1:${port}${req.url || ""}`;
-        if (this.loopbackServer !== server || req.method !== "GET" || req.headers.host !== `127.0.0.1:${port}` ||
-          !req.url?.startsWith("/auth/callback?") || Buffer.byteLength(fullUrl) > this.config.maxQueryBytes) {
+        if (
+          this.loopbackServer !== server ||
+          req.method !== "GET" ||
+          req.headers.host !== `127.0.0.1:${port}` ||
+          !req.url?.startsWith("/auth/callback?") ||
+          Buffer.byteLength(fullUrl) > this.config.maxQueryBytes
+        ) {
           res.writeHead(400, { "Cache-Control": "no-store" });
           res.end();
           return;
@@ -132,7 +148,8 @@ export class BrowserHandoffManager {
         res.writeHead(200, {
           "Content-Type": "text/html; charset=utf-8",
           "Cache-Control": "no-store",
-          "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline';",
+          "Content-Security-Policy":
+            "default-src 'none'; style-src 'unsafe-inline';",
           "X-Content-Type-Options": "nosniff",
         });
 
@@ -141,19 +158,162 @@ export class BrowserHandoffManager {
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title>SoloDesk Authentication</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Sign-in complete — SoloDesk</title>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0f172a; color: #f8fafc; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-    .card { background: #1e293b; padding: 2rem; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); text-align: center; max-width: 400px; }
-    h1 { font-size: 1.25rem; margin-bottom: 0.5rem; }
-    p { color: #94a3b8; font-size: 0.875rem; }
+    :root {
+      color-scheme: light;
+      --canvas: #f4f8ff;
+      --surface: #ffffff;
+      --ink: #111827;
+      --muted: #53657d;
+      --border: #dce7f7;
+      --divider: #e1e8f2;
+      --primary: #2854d7;
+      --primary-hover: #2047be;
+      --mark: #2463eb;
+      --mark-surface: #dceafe;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { margin: 0; min-height: 100%; }
+
+    body {
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      min-height: 100svh;
+      padding: 1.25rem;
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: Inter, "Noto Sans Arabic", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .card {
+      width: min(24rem, 100%);
+      padding: 2.25rem 2.375rem 2.375rem;
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      background: var(--surface);
+      box-shadow: 0 18px 48px rgba(45, 87, 150, 0.1);
+    }
+
+    .status-mark {
+      display: grid;
+      place-items: center;
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 50%;
+      background: var(--mark-surface);
+      color: var(--mark);
+    }
+
+    .status-mark svg {
+      width: 1.25rem;
+      height: 1.25rem;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 2.4;
+    }
+
+    h1 {
+      margin: 1.125rem 0 0;
+      color: var(--ink);
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.2;
+    }
+
+    p {
+      margin: 0.875rem 0 0;
+      color: var(--muted);
+      font-size: 0.875rem;
+      line-height: 1.55;
+    }
+
+    .divider {
+      height: 1px;
+      margin: 1.375rem 0 1.25rem;
+      background: var(--divider);
+    }
+
+    .return-action {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      min-height: 2.25rem;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 600;
+      line-height: 1.25;
+      text-align: center;
+      text-decoration: none;
+      transition: background-color 120ms ease-out;
+    }
+
+    .return-action:hover { background: var(--primary-hover); }
+
+    .return-action:focus-visible {
+      outline: 3px solid #a9c5ff;
+      outline-offset: 3px;
+    }
+
+    .return-action svg {
+      width: 0.875rem;
+      height: 0.875rem;
+      flex: none;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.8;
+    }
+
+    @media (max-width: 28rem) {
+      body { padding: 1rem; }
+      .card { padding: 1.75rem; }
+      h1 { font-size: 1.5rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .return-action { transition: none; }
+    }
+
+    @media (forced-colors: active) {
+      .card, .status-mark { border: 1px solid CanvasText; }
+      .return-action { border: 1px solid LinkText; }
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Return to SoloDesk / عُد إلى سولو ديسك</h1>
-    <p>Check the app for your sign-in status. / تحقّق من حالة تسجيل الدخول في التطبيق.</p>
-  </div>
+  <main class="card" aria-labelledby="completion-title">
+      <div class="status-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <path d="m5 12 4 4L19 6"></path>
+        </svg>
+      </div>
+      <h1 id="completion-title">Sign-in complete</h1>
+      <p>SoloDesk is ready in the desktop app. You can safely close this tab.</p>
+      <div class="divider" aria-hidden="true"></div>
+      <a class="return-action" href="solodesk://open/home">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="3" y="4" width="18" height="14" rx="2"></rect>
+          <path d="M8 21h8M12 18v3"></path>
+        </svg>
+        Return to the SoloDesk desktop app
+      </a>
+  </main>
 </body>
 </html>`,
         );
@@ -217,7 +377,10 @@ export class BrowserHandoffManager {
       await shell.openExternal(authUrl);
     } catch {
       // In test environment without Electron
-      if (process.env.NODE_ENV !== "test" && process.env.SOLODESK_TEST_MODE !== "1") {
+      if (
+        process.env.NODE_ENV !== "test" &&
+        process.env.SOLODESK_TEST_MODE !== "1"
+      ) {
         throw new Error("electron_shell_unavailable");
       }
     }

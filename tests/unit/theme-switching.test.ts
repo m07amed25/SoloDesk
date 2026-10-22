@@ -1,6 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { resolveTheme, getNextThemeMode } from "../../app/renderer/lib/theme.ts";
+import {
+  resolveTheme,
+  getNextThemeMode,
+  THEME_PRESET_OPTIONS,
+} from "../../app/renderer/lib/theme.ts";
 
 test("resolves theme based on user mode and OS system preference", () => {
   // Explicit light mode
@@ -20,4 +24,11 @@ test("cycles theme modes in predictable sequence (system -> light -> dark -> sys
   assert.equal(getNextThemeMode("system"), "light");
   assert.equal(getNextThemeMode("light"), "dark");
   assert.equal(getNextThemeMode("dark"), "system");
+});
+
+test("exposes each selectable theme preset once", () => {
+  assert.deepEqual(
+    THEME_PRESET_OPTIONS.map(({ id }) => id),
+    ["modern-minimal", "amber-mono", "graphite", "high-contrast", "solar"],
+  );
 });

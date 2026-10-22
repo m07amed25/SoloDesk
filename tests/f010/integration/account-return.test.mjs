@@ -71,3 +71,43 @@ test("T048: sign-out reports retained work without describing deletion", async (
   assert.equal(state.messageKey, "shell.identity.signedOutRetainedWork");
   assert.doesNotMatch(state.messageKey, /delete/i);
 });
+
+test("T048: same account sign-in restores committed device enrollment", async (t) => {
+  const root = mkdtempSync(join(tmpdir(), "solodesk-f010-return-"));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  const store = new ProtectedIdentityStore(root, PROFILE_A.profile_id, undefined, TEST_SECRET_PROTECTION);
+  store.saveProfile(PROFILE_A);
+  store.saveEnrollmentIntent({
+    enrollmentIntentId: "11111111-1111-4111-8111-111111111111", requestDigest: "a".repeat(64),
+    profileReference: `profile:${PROFILE_A.profile_id}`, profileGeneration: 1,
+    installationContextId: "installation-a", deviceContextDigest: "b".repeat(64), platform: "linux",
+    architecture: "x64", appVersion: "0.0.0", protectionProofReference: "proof-a",
+    payloadVersion: 1, status: "locally_committed", deviceLabel: "Alice workstation",
+    deviceEnrollmentId: "22222222-2222-4222-8222-222222222222",
+    receiptId: "33333333-3333-4333-8333-333333333333",
+  });
+  const now = Math.floor(Date.now() / 1000);
+  const identity = new IdentityCoordinator({
+    profileId: PROFILE_A.profile_id,
+    epoch: 1,
+    config,
+    store,
+    provider: {
+      async exchangeCodeForTokens() { throw new Error("unused"); },
+      async signInWithPassword() { return { access_token: "return-access", refresh_token: "return-refresh" }; },
+      async verifySession() {
+        return { iss: ACCOUNT_A.issuer_id, sub: ACCOUNT_A.subject_id, aud: config.audience, iat: now, exp: now + 300 };
+      },
+    },
+  });
+
+  await identity.signOut();
+  const state = await identity.signInWithPassword("alice@example.com", "synthetic-password");
+
+  assert.equal(state.lifecycle, "enrolled");
+  assert.equal(state.enrollmentStatus, "enrolled");
+  assert.equal(state.safeDeviceLabel, "Alice workstation");
+  assert.equal(identity.getProfileGeneration(), 2);
+  assert.equal(store.loadProfile().lifecycle, "enrolled");
+  assert.equal(store.loadEnrollmentIntent().deviceEnrollmentId, "22222222-2222-4222-8222-222222222222");
+});

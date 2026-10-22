@@ -40,6 +40,7 @@ export const ACCOUNT_A = Object.freeze({
   subject_id: "usr_a_11111111-1111-4111-8111-111111111111",
   displayName: "Alice Freelancer",
   displayIdentifier: "a***@example.com",
+  avatarUrl: "https://lh3.googleusercontent.com/a/test-avatar",
 });
 
 export const ACCOUNT_B = Object.freeze({

@@ -18,6 +18,8 @@ export const en = {
   "sidebar.expand": "Expand sidebar",
   "sidebar.collapse": "Collapse sidebar",
   "sidebar.main_nav": "Main Navigation",
+  "sidebar.open_menu": "Open menu",
+  "sidebar.close_menu": "Close menu",
 
   // Search & Command Palette
   "search.placeholder": "Search or type a command...",
@@ -38,6 +40,14 @@ export const en = {
   "theme.toggle": "Toggle theme",
   "theme.switch_to": "Switch theme: {mode}",
   "theme.label": "Theme",
+  "theme.preset.title": "Theme Style",
+  "theme.preset.description": "Choose visual style and accent palette.",
+  "theme.preset.modern": "Modern Minimal",
+  "theme.preset.amber": "Amber Mono",
+  "theme.preset.graphite": "Graphite",
+  "theme.preset.high_contrast": "High Contrast",
+  "theme.preset.solar": "Solar",
+  "theme.preset.switch_to": "Switch theme style: {style}",
 
   // Language
   "language.en": "English",
@@ -84,6 +94,16 @@ export const en = {
   "settings.environment.title": "Desktop Environment",
   "settings.environment.platform": "Platform",
   "settings.environment.version": "Version",
+  "settings.account.title": "Account & Device",
+  "settings.account.description":
+    "Manage your authenticated account, trusted device enrollment, and encryption vault.",
+  "settings.account.profileName": "Display Name",
+  "settings.account.identifier": "Account Identifier",
+  "settings.account.device": "Trusted Device",
+  "settings.account.protection": "Device Protection",
+  "settings.account.status": "Account Status",
+  "settings.account.notEnrolled": "Not enrolled yet",
+  "settings.account.noName": "Not provided",
 
   // Window Controls
   "window.minimize": "Minimize",
@@ -157,6 +177,45 @@ export const en = {
   "shell.identity.recovery.contactSupport":
     "Protected identity data could not be verified. Keep the existing files and contact support.",
 
+  // Authentication
+  "auth.title": "Sign in to SoloDesk",
+  "auth.description": "Sign in before creating or opening a cloud workspace.",
+  "auth.menuDescription": "Continue to your workspaces with your SoloDesk account.",
+  "auth.google": "Continue with Google",
+  "auth.or": "or",
+  "auth.signIn": "Sign in",
+  "auth.signUp": "Create account",
+  "auth.email": "Email",
+  "auth.password": "Password",
+  "auth.working": "Please wait…",
+  "auth.cancel": "Cancel",
+  "auth.error.unavailable": "Authentication is temporarily unavailable.",
+  "auth.enrollment.title": "Trust this device",
+  "auth.enrollment.description":
+    "Enroll this protected installation before accessing workspaces.",
+  "auth.enrollment.deviceLabel": "Device name",
+  "auth.enrollment.confirm": "Trust and continue",
+  "auth.account": "Account",
+  "auth.profile": "Profile",
+  "auth.signOut": "Sign out",
+  "auth.signingOut": "Signing out…",
+  "auth.notSignedIn": "Not signed in",
+  "auth.signedInAs": "Signed in as",
+  "auth.deviceEnrolled": "Trusted Device",
+  "auth.deviceNotEnrolled": "Enrollment pending",
+  "auth.protectionReady": "Protected vault active",
+  "auth.protectionBlocked": "Vault locked",
+  "auth.sessionActive": "Active session",
+  "auth.manageAccount": "Account Settings",
+  "auth.enrollDevicePrompt": "Complete device enrollment",
+  "shell.identity.signingIn": "Signing in securely…",
+  "shell.identity.invalidCredentials":
+    "The email or password is incorrect, or this account cannot sign in.",
+  "shell.identity.providerUnavailable":
+    "The authentication service is unavailable. Try again.",
+  "shell.identity.checkEmail":
+    "Check your email to confirm the account, then return and sign in.",
+
   // Identity Security & MFA (F011)
   "identity.security.title": "Account Security",
   "identity.security.policy.optional":
@@ -209,6 +268,85 @@ export const en = {
     "Completing this security change will sign out all other active sessions.",
   "identity.security.action.reauthenticate": "Reauthenticate",
   "identity.security.action.confirm_change": "Confirm change",
+
+  // Workspace Management (F012)
+  "workspace.title": "Workspaces",
+  "workspace.create.dialogTitle": "Create Workspace",
+  "workspace.create.displayNameLabel": "Workspace Name",
+  "workspace.create.displayNamePlaceholder": "e.g. Acme Studio",
+  "workspace.create.legalNameLabel": "Legal / Seller Name (Optional)",
+  "workspace.create.legalNamePlaceholder": "Optional legal entity name",
+  "workspace.create.tradeNameLabel": "Trade Name (Optional)",
+  "workspace.create.tradeNamePlaceholder": "Optional trade name",
+  "workspace.create.timezoneLabel": "Default Timezone",
+  "workspace.create.currencyLabel": "Default Currency",
+  "workspace.create.localeLabel": "Default Workspace Language",
+  "workspace.create.submit": "Create Workspace",
+  "workspace.create.cancel": "Cancel",
+  "workspace.create.creating": "Creating workspace...",
+  "workspace.create.incompleteReadinessNotice":
+    "This workspace will start with setup incomplete. Initial settings can be updated later.",
+  "workspace.create.error.nameRequired": "Workspace name is required.",
+  "workspace.create.error.nameTooLong":
+    "Workspace name exceeds 120 Unicode scalars.",
+  "workspace.create.error.invalidCurrency":
+    "Selected currency is not supported by policy.",
+  "workspace.create.error.policyDisabled":
+    "Workspace creation is currently unavailable.",
+  "workspace.readiness.setupIncomplete": "Setup Incomplete",
+  "workspace.readiness.ready": "Ready",
+  "workspace.switch.title": "Switch Workspace",
+  "workspace.switch.current": "Current Workspace",
+  "workspace.switch.switching": "Switching workspace...",
+  "workspace.switch.pendingChangesNotice":
+    "You have unsaved changes in your current workspace.",
+  "workspace.switch.saveAndSwitch": "Save & Switch",
+  "workspace.switch.discardAndSwitch": "Discard & Switch",
+  "workspace.switch.stay": "Stay in Current Workspace",
+  "shell.workspace.recovery.localPartitionMissing":
+    "Local encrypted workspace partition is missing or locked. Unlock or choose another workspace.",
+  "shell.workspace.recovery.protectionLocked":
+    "Device protected storage is locked. Unlock the device vault to access this workspace.",
+  "shell.workspace.recovery.localPartitionUnreadable":
+    "Local workspace data cannot be authenticated. Safe recovery is required; original files are preserved.",
+  "shell.workspace.recovery.upgradeRequired":
+    "A newer version of SoloDesk is required to open this workspace.",
+  "shell.workspace.recovery.workspaceUnavailable":
+    "The selected workspace is unavailable or access was revoked.",
+  "shell.workspace.recovery.recoveryRequired":
+    "Storage recovery is required before this workspace can be opened.",
+  "shell.workspace.recovery.onlineRequired":
+    "Online connection required to verify workspace membership.",
+  "shell.workspace.recovery.serviceUnavailable":
+    "Workspace service is temporarily unavailable. Please try again.",
+  "shell.workspace.recovery.outcomeUnknown":
+    "Workspace creation outcome is unknown. Please check or reconcile status.",
+  "shell.workspace.action.chooseAnotherWorkspace": "Choose another workspace",
+  "shell.workspace.action.reconnect": "Reconnect",
+  "shell.workspace.action.retry": "Try again",
+  "shell.workspace.action.reconcileCreation": "Check creation status",
+  "shell.workspace.action.sign_in_again": "Sign in again",
+  "shell.workspace.action.reenroll_device": "Re-enroll device",
+  "shell.workspace.action.refresh_options": "Refresh options",
+  "shell.workspace.action.refresh": "Refresh",
+  "shell.workspace.action.unlock": "Unlock",
+  "shell.workspace.action.approved_recovery": "Safe recovery",
+  "shell.workspace.action.retry_or_contact_support": "Retry or contact support",
+  "shell.workspace.action.correct_input": "Correct input",
+  "shell.workspace.action.upgrade": "Update SoloDesk",
+  "shell.workspace.rejection.auth_required":
+    "Authentication required. Please sign in again.",
+  "shell.workspace.rejection.device_not_enrolled":
+    "Device enrollment required to create a workspace.",
+  "shell.workspace.rejection.stale_creation_policy":
+    "Creation policy has changed. Please refresh and try again.",
+  "shell.workspace.rejection.workspace_creation_unavailable":
+    "Workspace creation is currently unavailable.",
+  "shell.workspace.rejection.changed_intent":
+    "Creation request was modified. Please reconcile or start fresh.",
+  "shell.workspace.rejection.validation": "Please check your workspace inputs.",
+  "shell.workspace.rejection.upgrade_required":
+    "An update to SoloDesk is required.",
+  "shell.workspace.rejection.workspace_unavailable":
+    "The selected workspace is unavailable.",
 } as const;
-
-

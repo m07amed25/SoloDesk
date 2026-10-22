@@ -35,6 +35,22 @@ import {
   type RendererAccountSecurityState,
   isRendererAccountSecurityState,
 } from "../shared/identity-security-contracts.ts";
+import {
+  type WorkspaceState,
+  type WorkspaceCreationResult,
+  type WorkspaceSwitchResult,
+  rejectProhibitedAuthority,
+  isValidUuidV4,
+} from "../shared/workspace-contracts.ts";
+
+export const WORKSPACE_METHODS = Object.freeze([
+  "getState",
+  "refresh",
+  "create",
+  "reconcileCreation",
+  "switch",
+] as const);
+export type WorkspaceMethod = (typeof WORKSPACE_METHODS)[number];
 
 export const IDENTITY_SECURITY_METHODS = Object.freeze([
   "getState",
@@ -66,7 +82,8 @@ type EventFamily =
   | "links"
   | "persistence"
   | "identity"
-  | "identitySecurity";
+  | "identitySecurity"
+  | "workspace";
 
 function documentOrigin(url: string): string | null {
   try {
@@ -165,6 +182,18 @@ type BridgeOptions = {
     profileId: string,
     epoch: number,
   ) => Promise<RendererIdentityState | null>;
+  signInWithPassword?: (
+    profileId: string,
+    epoch: number,
+    email: string,
+    password: string,
+  ) => Promise<RendererIdentityState | null>;
+  signUpWithPassword?: (
+    profileId: string,
+    epoch: number,
+    email: string,
+    password: string,
+  ) => Promise<RendererIdentityState | null>;
   cancelSignIn?: (
     profileId: string,
     epoch: number,
@@ -222,6 +251,29 @@ type BridgeOptions = {
     | Promise<RendererAccountSecurityState | null>
     | RendererAccountSecurityState
     | null;
+  workspaceState?: (
+    profileId: string,
+    epoch: number,
+  ) => Promise<WorkspaceState | null> | WorkspaceState | null;
+  refreshWorkspace?: (
+    profileId: string,
+    epoch: number,
+  ) => Promise<WorkspaceState | null>;
+  createWorkspace?: (
+    profileId: string,
+    epoch: number,
+    payload: unknown,
+  ) => Promise<WorkspaceCreationResult | null>;
+  reconcileWorkspaceCreation?: (
+    profileId: string,
+    epoch: number,
+    intentId: string,
+  ) => Promise<WorkspaceCreationResult | null>;
+  switchWorkspace?: (
+    profileId: string,
+    epoch: number,
+    payload: unknown,
+  ) => Promise<WorkspaceSwitchResult | null>;
 };
 
 export class DesktopBridge {
@@ -485,6 +537,20 @@ export class DesktopBridge {
           binding.profileId,
           binding.epoch,
         );
+      } else if (method === "identity.signInWithPassword") {
+        state = await this.options.signInWithPassword?.(
+          binding.profileId,
+          binding.epoch,
+          checked.value.payload.email as string,
+          checked.value.payload.password as string,
+        );
+      } else if (method === "identity.signUpWithPassword") {
+        state = await this.options.signUpWithPassword?.(
+          binding.profileId,
+          binding.epoch,
+          checked.value.payload.email as string,
+          checked.value.payload.password as string,
+        );
       } else if (method === "identity.cancelSignIn") {
         state = await this.options.cancelSignIn?.(
           binding.profileId,
@@ -628,6 +694,103 @@ export class DesktopBridge {
     return { subscriptionId };
   }
 
+  async invokeWorkspace(
+    method: WorkspaceMethod,
+    event: IpcMainInvokeEvent,
+    input: unknown,
+  ): Promise<
+    WorkspaceState | WorkspaceCreationResult | WorkspaceSwitchResult | null
+  > {
+    const binding = this.bindings.get(event.sender);
+    if (!admitCaller(event, binding, this.context(binding)) || !binding) {
+      return null;
+    }
+
+    if (input && typeof input === "object" && !Array.isArray(input)) {
+      try {
+        rejectProhibitedAuthority(input as Record<string, unknown>);
+      } catch {
+        return null;
+      }
+    }
+
+    if (method === "getState") {
+      return (
+        (await this.options.workspaceState?.(
+          binding.profileId,
+          binding.epoch,
+        )) ?? null
+      );
+    }
+    if (method === "refresh") {
+      return (
+        (await this.options.refreshWorkspace?.(
+          binding.profileId,
+          binding.epoch,
+        )) ?? null
+      );
+    }
+    if (method === "create") {
+      return (
+        (await this.options.createWorkspace?.(
+          binding.profileId,
+          binding.epoch,
+          input,
+        )) ?? null
+      );
+    }
+    if (method === "reconcileCreation") {
+      const intentId =
+        typeof input === "string"
+          ? input
+          : (input as { intentId?: string })?.intentId;
+      if (!intentId || !isValidUuidV4(intentId)) return null;
+      return (
+        (await this.options.reconcileWorkspaceCreation?.(
+          binding.profileId,
+          binding.epoch,
+          intentId,
+        )) ?? null
+      );
+    }
+    if (method === "switch") {
+      return (
+        (await this.options.switchWorkspace?.(
+          binding.profileId,
+          binding.epoch,
+          input,
+        )) ?? null
+      );
+    }
+    return null;
+  }
+
+  subscribeWorkspace(
+    event: IpcMainInvokeEvent,
+  ): { subscriptionId: string } | null {
+    const binding = this.bindings.get(event.sender);
+    if (!admitCaller(event, binding, this.context(binding)) || !binding) {
+      return null;
+    }
+    const subscriptionId = this.subscriptions.add(binding, "workspace");
+    void Promise.resolve(
+      this.options.workspaceState?.(binding.profileId, binding.epoch),
+    ).then((data) => {
+      if (data) {
+        queueMicrotask(() => {
+          if (!binding.contents.isDestroyed()) {
+            binding.contents.send("f004:event", {
+              family: "workspace",
+              subscriptionId,
+              data,
+            });
+          }
+        });
+      }
+    });
+    return { subscriptionId };
+  }
+
   remove(event: IpcMainInvokeEvent, input: unknown): void {
     const binding = this.bindings.get(event.sender);
     if (!admitCaller(event, binding, this.context(binding)) || !binding) return;
@@ -707,6 +870,13 @@ export async function installBridge(
     );
   ipcMain.handle("solodesk.identitySecurity.onStateChanged", (event) =>
     bridge.subscribeIdentitySecurity(event),
+  );
+  for (const method of WORKSPACE_METHODS)
+    ipcMain.handle(`solodesk.workspace.${method}`, (event, input: unknown) =>
+      bridge.invokeWorkspace(method, event, input),
+    );
+  ipcMain.handle("solodesk.workspace.onStateChanged", (event) =>
+    bridge.subscribeWorkspace(event),
   );
   ipcMain.on("f004:subscription:remove", (event, input: unknown) =>
     bridge.remove(event as IpcMainInvokeEvent, input),

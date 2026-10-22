@@ -226,6 +226,176 @@ export class PersistenceService {
     }
   }
 
+  async initializeAuthorizedWorkspace(
+    workspaceId: string,
+    receiptId: string,
+    keyBinding: ProtectionOwner = this.protection,
+  ): Promise<PersistenceStatusDto> {
+    if (!isWorkspaceId(workspaceId) || keyBinding !== this.protection)
+      throw new Error("protection_denied");
+    if (!receiptId || typeof receiptId !== "string")
+      throw new Error("invalid_receipt_id");
+    if (this.busy || this.closing) throw new Error("store_busy");
+    if (this.active?.workspaceId === workspaceId)
+      return this.getPersistenceState(workspaceId);
+    if (this.active) await this.closeWorkspaceStore(this.active.workspaceId);
+    this.setState({ workspaceId, status: "opening" });
+    const paths = workspacePaths(this.userData, this.profileId, workspaceId);
+    let connection: DatabaseConnection | undefined;
+    let createdNamespace = false;
+    try {
+      assertPathComponentsSafe(this.userData, paths);
+      const probe = probeStorage(paths);
+      if (probe === "key_missing" || probe === "integrity_failed")
+        throw new Error(probe);
+      let key: Buffer;
+      if (probe === "uninitialized") {
+        this.protection.assertKeyAvailable();
+        ensurePrivateDirectories(this.userData, paths);
+        createdNamespace = true;
+        const manifest: StoreManifest = {
+          workspaceId,
+          dataSetId: randomUUID(),
+          identityBindingId: this.profileId,
+          formatVersion: PROTECTION_FORMAT_VERSION,
+          activeGeneration: randomUUID(),
+          state: "sealed",
+        };
+        const handle = await this.protection.createKey(
+          paths.envelope,
+          manifest.dataSetId,
+          manifest.activeGeneration,
+        );
+        key = handle.key;
+        connection = DatabaseConnection.open(paths.database, key, false);
+        new MigrationCoordinator(
+          paths,
+          this.steps,
+          this.availableSpaceOverride,
+        ).initializeNew(connection);
+        writeFileSync(paths.manifest, JSON.stringify(manifest), {
+          flag: "wx",
+          mode: 0o600,
+        });
+      } else {
+        const manifest = JSON.parse(
+          readFileSync(paths.manifest, "utf8"),
+        ) as StoreManifest;
+        if (
+          manifest.workspaceId !== workspaceId ||
+          manifest.identityBindingId !== this.profileId
+        )
+          throw new Error("integrity_failed");
+        const handle = await this.protection.openKey(paths.envelope, manifest);
+        key = handle.key;
+        connection = DatabaseConnection.open(paths.database, key, true);
+        connection = await new MigrationCoordinator(
+          paths,
+          this.steps,
+          this.availableSpaceOverride,
+        ).migrate(connection, key);
+      }
+      this.active = { workspaceId, connection, key, paths };
+      return this.setState({ workspaceId, status: "ready" });
+    } catch (error) {
+      try {
+        connection?.close();
+      } catch {}
+      this.protection.lock();
+      if (createdNamespace && !existsSync(paths.database)) {
+        try {
+          if (
+            readdirSync(paths.attachments).length === 0 &&
+            readdirSync(paths.migration).length === 0
+          ) {
+            rmSync(paths.envelope, { force: true });
+            rmdirSync(paths.attachments);
+            rmdirSync(paths.migration);
+            rmdirSync(paths.directory);
+          }
+        } catch {}
+      }
+      const reason = classifyStorageError(error);
+      const details =
+        error && typeof error === "object"
+          ? (error as Record<string, unknown>)
+          : {};
+      return this.setState(
+        recoveryStatus(workspaceId, reason, {
+          ...(typeof details.required === "number"
+            ? { requiredFreeSpaceBytes: details.required }
+            : {}),
+          ...(typeof details.available === "number"
+            ? { availableFreeSpaceBytes: details.available }
+            : {}),
+        }),
+      );
+    }
+  }
+
+  async openRetainedWorkspace(
+    workspaceId: string,
+    keyBinding: ProtectionOwner = this.protection,
+  ): Promise<PersistenceStatusDto> {
+    if (!isWorkspaceId(workspaceId) || keyBinding !== this.protection)
+      throw new Error("protection_denied");
+    if (this.busy || this.closing) throw new Error("store_busy");
+    if (this.active?.workspaceId === workspaceId)
+      return this.getPersistenceState(workspaceId);
+    if (this.active) await this.closeWorkspaceStore(this.active.workspaceId);
+    this.setState({ workspaceId, status: "opening" });
+    const paths = workspacePaths(this.userData, this.profileId, workspaceId);
+    let connection: DatabaseConnection | undefined;
+    try {
+      assertPathComponentsSafe(this.userData, paths);
+      const probe = probeStorage(paths);
+      if (probe === "uninitialized") {
+        throw new Error("uninitialized");
+      }
+      if (probe === "key_missing" || probe === "integrity_failed")
+        throw new Error(probe);
+
+      const manifest = JSON.parse(
+        readFileSync(paths.manifest, "utf8"),
+      ) as StoreManifest;
+      if (
+        manifest.workspaceId !== workspaceId ||
+        manifest.identityBindingId !== this.profileId
+      )
+        throw new Error("integrity_failed");
+      const handle = await this.protection.openKey(paths.envelope, manifest);
+      const key = handle.key;
+      connection = DatabaseConnection.open(paths.database, key, true);
+      connection = await new MigrationCoordinator(
+        paths,
+        this.steps,
+        this.availableSpaceOverride,
+      ).migrate(connection, key);
+      this.active = { workspaceId, connection, key, paths };
+      return this.setState({ workspaceId, status: "ready" });
+    } catch (error) {
+      try {
+        connection?.close();
+      } catch {}
+      this.protection.lock();
+      const reason = classifyStorageError(error);
+      const details =
+        error && typeof error === "object"
+          ? (error as Record<string, unknown>)
+          : {};
+      return this.setState(
+        recoveryStatus(workspaceId, reason, {
+          ...(typeof details.required === "number"
+            ? { requiredFreeSpaceBytes: details.required }
+            : {}),
+          ...(typeof details.available === "number"
+            ? { availableFreeSpaceBytes: details.available }
+            : {}),
+        }),
+      );
+    }
+  }
+
   async closeWorkspaceStore(workspaceId: string): Promise<void> {
     if (!this.active || this.active.workspaceId !== workspaceId) return;
     const active = this.active;

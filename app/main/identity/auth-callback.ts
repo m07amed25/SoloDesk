@@ -23,6 +23,7 @@ const ALLOWED_QUERY_KEYS = new Set([
   "code",
   "state",
   "error",
+  "error_code",
   "error_description",
   "iss",
 ]);

@@ -24,7 +24,7 @@ export default defineConfig(({ command }) => ({
                 `script-src 'self'${development ? " 'unsafe-inline'" : ""}`,
                 "style-src 'self' 'unsafe-inline'",
                 `connect-src 'self'${development ? " ws://127.0.0.1:* ws://localhost:*" : ""}`,
-                "img-src 'self' data:",
+                "img-src 'self' data: https://lh3.googleusercontent.com",
                 "font-src 'self'",
                 "object-src 'none'",
                 "base-uri 'self'",

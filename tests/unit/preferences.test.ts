@@ -86,3 +86,17 @@ test("loads and saves valid preferences", () => {
   assert.equal(reloaded.theme, "dark");
   assert.equal(reloaded.sidebarCollapsed, true);
 });
+
+test("persists every supported theme preset", () => {
+  for (const themePreset of [
+    "modern-minimal",
+    "amber-mono",
+    "graphite",
+    "high-contrast",
+    "solar",
+  ] as const) {
+    const manager = new PreferencesManager(createMockStorage());
+    assert.equal(manager.save({ themePreset }).themePreset, themePreset);
+    assert.equal(manager.load().themePreset, themePreset);
+  }
+});

@@ -21,6 +21,8 @@ export type IdentityLifecycle = (typeof IDENTITY_LIFECYCLES)[number];
 export const IDENTITY_METHODS = Object.freeze([
   "identity.getState",
   "identity.startSignIn",
+  "identity.signInWithPassword",
+  "identity.signUpWithPassword",
   "identity.cancelSignIn",
   "identity.confirmEnrollment",
   "identity.retryReconciliation",
@@ -75,6 +77,27 @@ export function hasControlCharacters(value: string): boolean {
   });
 }
 
+export function isAllowedIdentityAvatarUrl(value: unknown): value is string {
+  if (
+    typeof value !== "string" ||
+    value.length === 0 ||
+    value.length > 2048 ||
+    hasControlCharacters(value)
+  )
+    return false;
+  try {
+    const url = new URL(value);
+    return (
+      url.origin === "https://lh3.googleusercontent.com" &&
+      url.username === "" &&
+      url.password === "" &&
+      url.hash === ""
+    );
+  } catch {
+    return false;
+  }
+}
+
 export const SESSION_STATUSES = Object.freeze([
   "current",
   "sign_in_required",
@@ -119,6 +142,7 @@ export type RendererIdentityState = Readonly<{
   profileReference: string;
   displayName?: string;
   displayIdentifier?: string;
+  avatarUrl?: string;
   safeDeviceLabel?: string;
   protectionStatus: "ready" | "blocked";
   sessionStatus: SessionStatus;
@@ -251,6 +275,7 @@ export function isRendererIdentityState(
     "profileReference",
     "displayName",
     "displayIdentifier",
+    "avatarUrl",
     "safeDeviceLabel",
     "protectionStatus",
     "sessionStatus",
@@ -283,6 +308,11 @@ export function isRendererIdentityState(
     entry.displayIdentifier !== undefined &&
     (typeof entry.displayIdentifier !== "string" ||
       entry.displayIdentifier.length > 256)
+  )
+    return false;
+  if (
+    entry.avatarUrl !== undefined &&
+    !isAllowedIdentityAvatarUrl(entry.avatarUrl)
   )
     return false;
   if (
@@ -535,9 +565,16 @@ export function sanitizeRendererState(
     version: 1,
     lifecycle: state.lifecycle,
     profileReference: state.profileReference,
-    displayName: state.displayName,
-    displayIdentifier: state.displayIdentifier,
-    safeDeviceLabel: state.safeDeviceLabel,
+    ...(state.displayName !== undefined
+      ? { displayName: state.displayName }
+      : {}),
+    ...(state.displayIdentifier !== undefined
+      ? { displayIdentifier: state.displayIdentifier }
+      : {}),
+    ...(state.avatarUrl !== undefined ? { avatarUrl: state.avatarUrl } : {}),
+    ...(state.safeDeviceLabel !== undefined
+      ? { safeDeviceLabel: state.safeDeviceLabel }
+      : {}),
     protectionStatus: state.protectionStatus,
     sessionStatus: state.sessionStatus,
     enrollmentStatus: state.enrollmentStatus,
@@ -566,9 +603,6 @@ export function validateIdentityRequest(
   if (!input || typeof input !== "object" || Array.isArray(input)) {
     return { ok: false, code: "VALIDATION" };
   }
-  if (containsProhibitedKey(input)) {
-    return { ok: false, code: "VALIDATION" };
-  }
   const raw = input as Record<string, unknown>;
   if (raw.version !== 1) {
     return { ok: false, code: "VALIDATION" };
@@ -585,7 +619,33 @@ export function validateIdentityRequest(
   if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
     return { ok: false, code: "VALIDATION" };
   }
-  if (method === "identity.confirmEnrollment") {
+  if (
+    method === "identity.signInWithPassword" ||
+    method === "identity.signUpWithPassword"
+  ) {
+    const credential = payload as Record<string, unknown>;
+    if (
+      Object.keys(credential).length !== 2 ||
+      typeof credential.email !== "string" ||
+      typeof credential.password !== "string"
+    ) {
+      return { ok: false, code: "VALIDATION" };
+    }
+    const email = credential.email.trim();
+    if (
+      email.length < 3 ||
+      email.length > 320 ||
+      hasControlCharacters(email) ||
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
+      credential.password.length < 1 ||
+      credential.password.length > 1024 ||
+      hasControlCharacters(credential.password)
+    ) {
+      return { ok: false, code: "VALIDATION" };
+    }
+  } else if (containsProhibitedKey(input)) {
+    return { ok: false, code: "VALIDATION" };
+  } else if (method === "identity.confirmEnrollment") {
     const keys = Object.keys(payload);
     for (const k of keys) {
       if (k !== "label") return { ok: false, code: "VALIDATION" };

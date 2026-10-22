@@ -63,6 +63,7 @@ export type IdentityConfig = Readonly<{
   maxQueryBytes: number;
   maxDeviceLabelLength: number;
   publishableKey: string;
+  provider?: "google";
   publicRegistrationEnabled: boolean;
   securityPolicy: IdentitySecurityPolicy;
   securityPurposes: readonly SecurityPurpose[];
@@ -78,6 +79,9 @@ export function parseIdentityConfig(
 
   const rawHostedOrigin =
     env.SOLODESK_AUTH_HOSTED_ORIGIN ||
+    (env.VITE_SUPABASE_URL
+      ? `${env.VITE_SUPABASE_URL.replace(/\/+$/, "")}/auth/v1`
+      : undefined) ||
     (isTest ? "https://auth.solodesk.test" : undefined);
   if (!rawHostedOrigin) {
     throw new Error("missing_hosted_origin");
@@ -103,7 +107,9 @@ export function parseIdentityConfig(
   }
 
   const hostedOrigin = hostedOriginUrl.origin;
-  const hostedPath = env.SOLODESK_AUTH_HOSTED_PATH || "/auth/signin";
+  const hostedPath =
+    env.SOLODESK_AUTH_HOSTED_PATH ||
+    (env.VITE_SUPABASE_URL ? "/auth/v1/authorize" : "/auth/signin");
   if (!hostedPath.startsWith("/")) {
     throw new Error("invalid_hosted_path");
   }
@@ -156,6 +162,14 @@ export function parseIdentityConfig(
     }
   }
 
+  const rawProvider =
+    env.SOLODESK_AUTH_PROVIDER ||
+    (env.VITE_SUPABASE_URL ? "google" : undefined);
+  if (rawProvider !== undefined && rawProvider !== "google") {
+    throw new Error("unsupported_auth_provider");
+  }
+  const provider = rawProvider as "google" | undefined;
+
   const pkceMethod = (env.SOLODESK_AUTH_PKCE_METHOD || "S256") as "S256";
   if (pkceMethod !== "S256") {
     throw new Error("unsupported_pkce_method");
@@ -183,7 +197,9 @@ export function parseIdentityConfig(
 
   const maxDeviceLabelLength = 64;
   const publicRegistrationEnabled =
-    env.SOLODESK_AUTH_PUBLIC_REGISTRATION === "true";
+    env.SOLODESK_AUTH_PUBLIC_REGISTRATION === "true" ||
+    (env.SOLODESK_AUTH_PUBLIC_REGISTRATION === undefined &&
+      Boolean(env.VITE_SUPABASE_URL));
 
   const destinations: Record<string, CallbackDestinationConfig> = {
     desktop_loopback_v1: Object.freeze({
@@ -266,6 +282,7 @@ export function parseIdentityConfig(
     maxQueryBytes,
     maxDeviceLabelLength,
     publishableKey,
+    provider,
     publicRegistrationEnabled,
     securityPolicy,
     securityPurposes: SECURITY_PURPOSES,

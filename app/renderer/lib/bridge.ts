@@ -35,6 +35,22 @@ export interface SoloDeskBridgeClient {
   links: {
     onDecision: (callback: (event: LinkDecisionEvent) => void) => () => void;
   };
+  workspace: {
+    getState: () => Promise<
+      import("../../shared/workspace-contracts.ts").WorkspaceState | null
+    >;
+    switch: (
+      targetWorkspaceId: string,
+      expectedSelectionGeneration: number,
+    ) => Promise<
+      import("../../shared/workspace-contracts.ts").WorkspaceSwitchResult | null
+    >;
+    onStateChanged: (
+      callback: (
+        state: import("../../shared/workspace-contracts.ts").WorkspaceState,
+      ) => void,
+    ) => () => void;
+  };
 }
 
 function mapResponse<T>(
@@ -112,6 +128,32 @@ export const bridge: SoloDeskBridgeClient = {
         return window.solodesk.links.onDecision((event) => {
           callback(event as LinkDecisionEvent);
         });
+      }
+      return () => {};
+    },
+  },
+  workspace: {
+    getState: async () => {
+      if (typeof window !== "undefined" && window.solodesk?.workspace) {
+        return window.solodesk.workspace.getState();
+      }
+      return null;
+    },
+    switch: async (
+      targetWorkspaceId: string,
+      expectedSelectionGeneration: number,
+    ) => {
+      if (typeof window !== "undefined" && window.solodesk?.workspace) {
+        return window.solodesk.workspace.switch({
+          targetWorkspaceId,
+          expectedSelectionGeneration,
+        });
+      }
+      return null;
+    },
+    onStateChanged: (callback) => {
+      if (typeof window !== "undefined" && window.solodesk?.workspace) {
+        return window.solodesk.workspace.onStateChanged(callback);
       }
       return () => {};
     },
