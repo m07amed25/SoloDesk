@@ -61,7 +61,9 @@ test("built preload exposes only named desktop actions", async ({
         "getState",
         "onStateChanged",
         "retryReconciliation",
+        "signInWithPassword",
         "signOut",
+        "signUpWithPassword",
         "startSignIn",
       ],
       identitySecurityKeys: [

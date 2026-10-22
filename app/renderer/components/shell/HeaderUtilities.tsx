@@ -226,12 +226,7 @@ export function HeaderUtilities() {
           aria-label="Switch language"
         >
           <Languages className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-          <span className="hidden sm:inline">
-            {locale === "en" ? "العربية" : "English"}
-          </span>
-          <span className="sm:hidden text-[11px] font-semibold">
-            {locale === "en" ? "عر" : "EN"}
-          </span>
+          <span>{locale === "en" ? "العربية" : "English"}</span>
         </Button>
 
         <UserMenu />

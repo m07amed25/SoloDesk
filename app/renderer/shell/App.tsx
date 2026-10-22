@@ -529,17 +529,13 @@ function ShellRoot() {
 
   React.useEffect(() => {
     const handleOpen = () => {
-      if (workspaceState?.creation) {
-        void refreshWorkspaces();
-        setCreateDialogOpen(true);
-      } else {
-        setAuthDialogOpen(true);
-      }
+      void refreshWorkspaces();
+      setCreateDialogOpen(true);
     };
     window.addEventListener("solodesk:open-workspace-create", handleOpen);
     return () =>
       window.removeEventListener("solodesk:open-workspace-create", handleOpen);
-  }, [refreshWorkspaces, setAuthDialogOpen, workspaceState?.creation]);
+  }, [refreshWorkspaces]);
 
   return (
     <ShellLayout
