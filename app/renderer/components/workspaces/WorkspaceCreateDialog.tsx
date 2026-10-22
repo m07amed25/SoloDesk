@@ -1,6 +1,7 @@
 import * as React from "react";
 import { AlertCircle } from "lucide-react";
 import { useLocalization } from "../../contexts/LocalizationContext.tsx";
+import { useOptionalWorkspace } from "../../contexts/WorkspaceContext.tsx";
 import {
   Dialog,
   DialogPopup,
@@ -31,6 +32,7 @@ export function WorkspaceCreateDialog({
   onCreated,
 }: WorkspaceCreateDialogProps) {
   const { t, locale } = useLocalization();
+  const workspace = useOptionalWorkspace();
 
   const [displayName, setDisplayName] = React.useState("");
   const [legalName, setLegalName] = React.useState("");
@@ -128,6 +130,7 @@ export function WorkspaceCreateDialog({
         setPendingIntentId(null);
         onOpenChange(false);
         onCreated?.(result);
+        void workspace?.refresh();
       } else if (result.status === "rejected") {
         setError(
           t(`shell.workspace.rejection.${result.code}`) ||

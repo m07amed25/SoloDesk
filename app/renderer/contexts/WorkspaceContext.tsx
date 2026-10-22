@@ -118,7 +118,12 @@ export function WorkspaceProvider({ children }: WorkspaceProviderProps) {
           targetWorkspaceId,
           expectedSelectionGeneration: selectionGeneration,
         });
-        return Boolean(res);
+        if (res?.success) {
+          const next = await window.solodesk.workspace.getState();
+          if (next) setState(next);
+          return true;
+        }
+        return false;
       }
       return false;
     },
@@ -142,7 +147,12 @@ export function WorkspaceProvider({ children }: WorkspaceProviderProps) {
           targetWorkspaceId: target,
           expectedSelectionGeneration: selectionGeneration,
         });
-        return Boolean(res);
+        if (res?.success) {
+          const next = await window.solodesk.workspace.getState();
+          if (next) setState(next);
+          return true;
+        }
+        return false;
       }
       return false;
     }, [envelope, pendingSwitchTarget, registry, selectionGeneration]);
@@ -166,7 +176,12 @@ export function WorkspaceProvider({ children }: WorkspaceProviderProps) {
         targetWorkspaceId: target,
         expectedSelectionGeneration: selectionGeneration,
       });
-      return Boolean(res);
+      if (res?.success) {
+        const next = await window.solodesk.workspace.getState();
+        if (next) setState(next);
+        return true;
+      }
+      return false;
     }
     return false;
   }, [envelope, pendingSwitchTarget, registry, selectionGeneration]);
@@ -181,6 +196,8 @@ export function WorkspaceProvider({ children }: WorkspaceProviderProps) {
   const refresh = React.useCallback(async () => {
     try {
       if (window.solodesk?.workspace) {
+        const immediate = await window.solodesk.workspace.getState();
+        if (immediate) setState(immediate);
         const res = await window.solodesk.workspace.refresh();
         if (res) setState(res);
       }
@@ -237,4 +254,8 @@ export function useWorkspace(): WorkspaceContextValue {
     throw new Error("useWorkspace must be used within a WorkspaceProvider");
   }
   return ctx;
+}
+
+export function useOptionalWorkspace(): WorkspaceContextValue | null {
+  return React.useContext(WorkspaceContext);
 }
