@@ -1,10 +1,10 @@
 # Implementation Plan: F012 — Workspace Creation and Safe Switching
 
-**Branch**: `012-workspace-creation-safe-switching` (Spec Kit identity; proposed delivery branch: `feat/f012-workspace-creation-and-safe-switching`; current checkout remains `feat/f011-mfa-and-account-recovery`) | **Date**: 2026-10-21 | **Spec**: [F012 feature specification](spec.md)
+**Branch**: `feat/f012-workspace-creation-and-safe-switching` | **PR**: [#15](https://github.com/m07amed25/SoloDesk/pull/15) | **Date**: 2026-10-22 | **Spec**: [F012 feature specification](spec.md)
 
 **Input**: Feature specification from `specs/012-workspace-creation-safe-switching/spec.md`
 
-**Status**: Local implementation & automated verification completed (21 October 2026); 97 focused tests pass across 22 suites in `tests/f012/`. Production cloud delivery, hosted sandbox deployment, and public release remain blocked behind open gates Q-01, Q-02, Q-03, Q-06, Q-07, and F029 (see [QA Report](../../docs/qa/F012.md) and [Feature Docs](../../docs/features/F012.md)).
+**Status**: PR [#15](https://github.com/m07amed25/SoloDesk/pull/15) opened; 100/100 tests pass across 5 verification suites in `tests/f012/`. Production cloud delivery, hosted sandbox deployment, and public release remain blocked behind open gates Q-01, Q-02, Q-03, Q-06, Q-07, and F029 (see [QA Report](../../docs/qa/F012.md) and [Feature Docs](../../docs/features/F012.md)).
 
 ## Summary
 
