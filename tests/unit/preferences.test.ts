@@ -96,6 +96,7 @@ test("persists every supported theme preset", () => {
     "solar",
     "chakra-industrial",
     "cobalt",
+    "amber-outfit",
   ] as const) {
     const manager = new PreferencesManager(createMockStorage());
     assert.equal(manager.save({ themePreset }).themePreset, themePreset);
