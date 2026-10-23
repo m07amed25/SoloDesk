@@ -220,6 +220,8 @@ export const ar: TranslationDictionary = {
     "خدمة المصادقة غير متاحة. حاول مرة أخرى.",
   "shell.identity.checkEmail":
     "تحقق من بريدك الإلكتروني لتأكيد الحساب، ثم ارجع وسجّل الدخول.",
+  "shell.identity.accountMismatch":
+    "هذا حساب مختلف. تابع في ملف شخصي محمي منفصل؛ ستبقى البيانات المحلية للحساب السابق دون تغيير.",
 
   // أمان الحساب والمصادقة متعددة العوامل (F011)
   "identity.security.title": "أمان الحساب",
@@ -353,4 +355,89 @@ export const ar: TranslationDictionary = {
   "shell.workspace.rejection.upgrade_required": "يلزم تحديث تطبيق SoloDesk.",
   "shell.workspace.rejection.workspace_unavailable":
     "مساحة العمل المحددة غير متاحة.",
+
+  // دعوات الأعضاء (F013)
+  "invitation.dialogTitle": "دعوة عضو",
+  "invitation.dialogDescription":
+    "دعوة متعاون إلى مساحة العمل هذه. سيتم إنشاء دعوة بصلاحيات محددة.",
+  "invitation.workspaceLabel": "مساحة العمل",
+  "invitation.recipientLabel": "البريد الإلكتروني للمستلم",
+  "invitation.recipientPlaceholder": "مثال: colleague@example.com",
+  "invitation.offerLabel": "عرض الصلاحيات",
+  "invitation.roleLabel": "الدور",
+  "invitation.scopeLabel": "النطاق",
+  "invitation.expiryLabel": "تاريخ الصلاحية",
+  "invitation.consequenceLabel": "صلاحيات الوصول",
+  "invitation.consequenceNotice":
+    "إنشاء الدعوة لا يمنح أي عضوية في مساحة العمل حتى يتم قبولها بواسطة الحساب المقصود.",
+  "invitation.submit": "إنشاء الدعوة",
+  "invitation.submitting": "جارٍ إنشاء الدعوة...",
+  "invitation.cancel": "إلغاء",
+  "invitation.success": "تم إنشاء الدعوة",
+  "invitation.successNotice":
+    "تم إنشاء الدعوة وإدراجها في قائمة الإرسال. لم يتم تسليمها أو قبولها بعد.",
+  "invitation.error.invalidEmail":
+    "يرجى تقديم عنوان بريد إلكتروني صالح للمستلم.",
+  "invitation.error.alreadyMember":
+    "هذا المستلم عضو نشط بالفعل في مساحة العمل هذه.",
+  "invitation.error.alreadyPending": "توجد دعوة معلقة بالفعل لهذا المستلم.",
+  "invitation.error.policyUnavailable":
+    "عرض الوصول أو السياسة المحددة غير متاحة حالياً.",
+  "invitation.error.onlineRequired": "يلزم الاتصال بالإنترنت لدعوة الأعضاء.",
+  "invitation.error.notAuthorized":
+    "ليس لديك الصلاحية لدعوة أعضاء إلى مساحة العمل هذه.",
+  "invitation.error.staleState":
+    "تغيرت حالة الدعوات لمساحة العمل. يرجى التحديث وإعادة المحاولة.",
+  "invitation.error.outcomeUnknown":
+    "حالة الدعوة غير معروفة. يرجى التحقق من الحالة أو مراجعة قائمة الدعوات.",
+  "invitation.error.temporarilyUnavailable":
+    "خدمة الدعوات غير متاحة مؤقتاً. يرجى إعادة المحاولة.",
+  "invitation.action.reconcile": "التحقق من الحالة",
+  "invitation.action.refresh": "تحديث",
+  "invitation.action.retry": "إعادة المحاولة",
+  "invitation.offer.memberStandard": "مساهم قياسي",
+  "invitation.offer.readOnly": "مشاهد للقراءة فقط",
+  "invitation.consequence.memberStandard":
+    "صلاحية قراءة وكتابة كاملة لملفات ومشاريع مساحة العمل.",
+  "invitation.consequence.readOnly":
+    "صلاحية عرض وقراءة فقط دون إمكانية التعديل.",
+  "invitation.expiry.sevenDays": "تنتهي الصلاحية خلال 7 أيام",
+  "invitation.redemption.title": "دعوة مساحة العمل",
+  "invitation.redemption.reviewHeading": "مراجعة دعوة مساحة العمل",
+  "invitation.redemption.confirm": "قبول الدعوة",
+  "invitation.redemption.accepting": "جارٍ قبول الدعوة...",
+  "invitation.redemption.accepted": "تم قبول الدعوة",
+  "invitation.redemption.acceptedNotice":
+    "لقد انضممت إلى مساحة العمل كعضو نشط.",
+  "invitation.redemption.wrongAccountNotice":
+    "تم إرسال هذه الدعوة إلى عنوان بريد إلكتروني مختلف. يرجى التبديل إلى الحساب المطلوب للمراجعة والقبول.",
+  "invitation.redemption.unavailableNotice":
+    "هذه الدعوة لم تعد متاحة أو انتهت صلاحيتها. يرجى طلب دعوة جديدة من مسؤول مساحة العمل.",
+  "invitation.redemption.switchAccount": "تبديل الحساب",
+  "invitation.redemption.returnHome": "العودة إلى سولو ديسك",
+  "invitation.action.resend": "إعادة إرسال الدعوة",
+  "invitation.action.revoke": "إلغاء الدعوة",
+  "invitation.action.confirmRevoke": "تأكيد الإلغاء",
+  "invitation.action.revokeNotice":
+    "إلغاء هذه الدعوة يبطل جميع روابط القبول بشكل دائم.",
+  "invitation.action.resendNotice":
+    "تؤدي إعادة الإرسال إلى إنشاء رابط قبول جديد وإبطال جميع الروابط السابقة.",
+  "invitation.status.delivered": "تم التسليم",
+  "invitation.status.queued": "قيد الإرسال",
+  "invitation.status.failed": "فشل التسليم",
+  "invitation.status.bounced": "مرتدة",
+  "invitation.status.unknown": "حالة التسليم غير معروفة",
+  "invitation.offer.member_standard": "مساهم قياسي",
+  "invitation.offer.read_only": "مشاهد للقراءة فقط",
+  "invitation.consequence.member_standard":
+    "صلاحية قراءة وكتابة كاملة لملفات ومشاريع مساحة العمل.",
+  "invitation.consequence.read_only":
+    "صلاحية عرض وقراءة فقط دون إمكانية التعديل.",
+  "roles.owner": "المالك",
+  "roles.admin": "مسؤول",
+  "roles.manager": "مدير",
+  "roles.contributor": "مساهم",
+  "roles.viewer": "مشاهد",
+  "scopes.workspace_read_write": "قراءة وكتابة كاملة",
+  "scopes.workspace_read_only": "قراءة فقط",
 };

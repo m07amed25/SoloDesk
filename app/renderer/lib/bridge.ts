@@ -51,6 +51,44 @@ export interface SoloDeskBridgeClient {
       ) => void,
     ) => () => void;
   };
+  invitation: {
+    getPolicy: (
+      envelope?: unknown,
+    ) => Promise<
+      | import("../../shared/invitation-contracts.ts").GetInvitationPolicyResult
+      | null
+    >;
+    list: (
+      request: unknown,
+    ) => Promise<
+      | import("../../shared/invitation-contracts.ts").ListInvitationsResult
+      | null
+    >;
+    create: (
+      request: unknown,
+    ) => Promise<
+      | import("../../shared/invitation-contracts.ts").CreateInvitationResult
+      | null
+    >;
+    resend: (
+      request: unknown,
+    ) => Promise<
+      | import("../../shared/invitation-contracts.ts").ResendInvitationResult
+      | null
+    >;
+    revoke: (
+      request: unknown,
+    ) => Promise<
+      | import("../../shared/invitation-contracts.ts").RevokeInvitationResult
+      | null
+    >;
+    reconcile: (
+      request: unknown,
+    ) => Promise<
+      | import("../../shared/invitation-contracts.ts").ReconcileInvitationResult
+      | null
+    >;
+  };
 }
 
 function mapResponse<T>(
@@ -156,6 +194,44 @@ export const bridge: SoloDeskBridgeClient = {
         return window.solodesk.workspace.onStateChanged(callback);
       }
       return () => {};
+    },
+  },
+  invitation: {
+    getPolicy: async (envelope?: unknown) => {
+      if (typeof window !== "undefined" && window.solodesk?.invitation) {
+        return window.solodesk.invitation.getPolicy(envelope);
+      }
+      return null;
+    },
+    list: async (request: unknown) => {
+      if (typeof window !== "undefined" && window.solodesk?.invitation) {
+        return window.solodesk.invitation.list(request);
+      }
+      return null;
+    },
+    create: async (request: unknown) => {
+      if (typeof window !== "undefined" && window.solodesk?.invitation) {
+        return window.solodesk.invitation.create(request);
+      }
+      return null;
+    },
+    resend: async (request: unknown) => {
+      if (typeof window !== "undefined" && window.solodesk?.invitation) {
+        return window.solodesk.invitation.resend(request);
+      }
+      return null;
+    },
+    revoke: async (request: unknown) => {
+      if (typeof window !== "undefined" && window.solodesk?.invitation) {
+        return window.solodesk.invitation.revoke(request);
+      }
+      return null;
+    },
+    reconcile: async (request: unknown) => {
+      if (typeof window !== "undefined" && window.solodesk?.invitation) {
+        return window.solodesk.invitation.reconcile(request);
+      }
+      return null;
     },
   },
 };
