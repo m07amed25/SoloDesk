@@ -74,7 +74,7 @@ test("T042: Offline bootstrap without approved lease fails closed with online_re
   assert.ok(state.nextActions.includes("reconnect"));
 });
 
-test("T042: Reconnect restores online authority and opens verified workspace", async (t) => {
+test("T042: Refresh after reconnect restores online authority and opens verified workspace", async (t) => {
   const { identityStore, profileId } = setup(t);
   const wsA = FIXTURE_WORKSPACES.ws1;
 
@@ -119,11 +119,63 @@ test("T042: Reconnect restores online authority and opens verified workspace", a
   const offlineState = await coordinator.bootstrap();
   assert.equal(offlineState.lifecycle, "online_required");
 
-  // Step 2: Connection restored, re-bootstrap
+  // Step 2: The renderer's post-auth refresh must re-bootstrap the workspace.
   isOnline = true;
-  const onlineState = await coordinator.bootstrap();
+  const onlineState = await coordinator.refresh();
   assert.equal(onlineState.lifecycle, "ready");
   assert.equal(coordinator.currentWorkspaceId, wsA.workspaceId);
+  assert.equal(openedWs, wsA.workspaceId);
+});
+
+test("T042: Refresh after account authentication bootstraps its workspace", async (t) => {
+  const { identityStore, profileId } = setup(t);
+  const wsA = FIXTURE_WORKSPACES.ws1;
+  let account = null;
+  let token = null;
+  let openedWs = null;
+
+  const coordinator = new WorkspaceCoordinator({
+    profileId,
+    getProfileGeneration: () => 1,
+    getAccount: () => account,
+    getAccessToken: async () => token,
+    getDeviceEnrollmentId: () => "d0000000-0000-4000-8000-000000000001",
+    persistence: {
+      async openRetainedWorkspace(id) {
+        openedWs = id;
+        return { workspaceId: id, status: "ready" };
+      },
+      async closeWorkspaceStore() {},
+    },
+    identityStore,
+    workspaceService: new WorkspaceService({
+      supabaseUrl: "https://auth.solodesk.test",
+      supabaseAnonKey: "anon-key",
+      rpcExecutor: async (fn) => {
+        if (fn === "solodesk_workspace_bootstrap") {
+          return {
+            version: 1,
+            creation: { enabled: true, locales: ["en", "ar"], currencyCodes: ["USD"] },
+            workspaces: [wsA],
+          };
+        }
+        throw new Error(`Unexpected rpc: ${fn}`);
+      },
+    }),
+  });
+
+  const signedOutState = await coordinator.bootstrap();
+  assert.equal(signedOutState.lifecycle, "locked");
+
+  account = {
+    issuerId: "https://auth.solodesk.test",
+    subjectId: "a0000000-0000-4000-8000-000000000001",
+  };
+  token = "token-valid";
+  const signedInState = await coordinator.refresh();
+
+  assert.equal(signedInState.lifecycle, "ready");
+  assert.equal(signedInState.current.workspaceId, wsA.workspaceId);
   assert.equal(openedWs, wsA.workspaceId);
 });
 

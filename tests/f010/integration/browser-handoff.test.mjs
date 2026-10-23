@@ -48,6 +48,7 @@ describe("T016: Electron Ingress and Browser Launch Handoff", () => {
     }));
     assert.equal(parsed.href.startsWith("https://project.supabase.co/auth/v1/authorize?"), true);
     assert.equal(parsed.searchParams.get("provider"), "google");
+    assert.equal(parsed.searchParams.get("prompt"), "select_account");
     assert.equal(parsed.searchParams.get("code_challenge_method"), "s256");
     const redirect = new URL(parsed.searchParams.get("redirect_to"));
     assert.equal(redirect.origin, "http://127.0.0.1:42042");

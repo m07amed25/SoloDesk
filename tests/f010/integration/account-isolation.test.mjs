@@ -18,6 +18,7 @@ test("T047/T049: account bindings are immutable, unique, and path-isolated", (t)
   assert.notEqual(a.profileId, b.profileId);
   assert.notEqual(a.paths.directory, b.paths.directory);
   assert.equal(registry.bind(ACCOUNT_A.issuer_id, ACCOUNT_A.subject_id).profileId, a.profileId);
+  assert.equal(registry.list().length, 2);
   assert.throws(() => registry.assertBinding(a.profileId, ACCOUNT_B.issuer_id, ACCOUNT_B.subject_id), /profile_binding_mismatch/);
 
   const aStore = new ProtectedIdentityStore(root, a.profileId, undefined, TEST_SECRET_PROTECTION);
@@ -44,6 +45,19 @@ test("T047/T049: account bindings are immutable, unique, and path-isolated", (t)
     .findPendingAttemptByState(aAttempts.getAttemptProof(aAttempt.attempt_id).state, b.profileId, 1), null);
   assert.equal(readFileSync(a.paths.profile, "utf8").includes(ACCOUNT_B.subject_id), false);
   assert.equal(readFileSync(a.paths.enrollment, "utf8").includes("Alice only"), true);
+});
+
+test("T049/T051: an app-owned legacy profile can join the isolated profile registry", (t) => {
+  const root = mkdtempSync(join(tmpdir(), "solodesk-f010-isolation-"));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  const registry = new IdentityProfileRegistry(root);
+  const legacy = registry.register("default", ACCOUNT_A.issuer_id, ACCOUNT_A.subject_id);
+  assert.equal(legacy.profileId, "default");
+  assert.equal(registry.bind(ACCOUNT_A.issuer_id, ACCOUNT_A.subject_id).profileId, "default");
+  assert.throws(
+    () => registry.register("default", ACCOUNT_B.issuer_id, ACCOUNT_B.subject_id),
+    /profile_registry_conflict/,
+  );
 });
 
 test("T047/T049: corrupt registry bytes are preserved without empty replacement", (t) => {

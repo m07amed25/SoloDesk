@@ -34,6 +34,14 @@ test("distinct profiles never share owner or activation", async () => {
   await assert.rejects(owners.activate("foreign", async () => ({})));
 });
 
+test("app-registered isolated profiles can be activated", async () => {
+  const owners = new ProfileOwners([profiles.default]);
+  const profileId = "p0123456789abcdef0123456789abcd";
+  owners.register(profileId);
+  const view = { focus() {} };
+  assert.equal(await owners.activate(profileId, async () => view), view);
+});
+
 test("close removes stale context and reopen advances epoch", async () => {
   const owners = new ProfileOwners([profiles.default]);
   const first = await owners.activate(profiles.default, async (_id, epoch) => ({

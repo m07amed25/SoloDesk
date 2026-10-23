@@ -43,9 +43,11 @@ if (mode === "inspect") {
     const existing = query(`SELECT to_regclass('supabase_migrations.schema_migrations') IS NOT NULL;`);
     let status = "apply";
     if (existing === "t") {
+      const recorded = query(`SELECT EXISTS (SELECT 1 FROM supabase_migrations.schema_migrations WHERE version=${quote(version)});`);
+      if (recorded !== "t" && recorded !== "f") throw new Error("migration_history_read_failed");
       const applied = query(`SELECT COALESCE(array_to_string(statements,E'\\n'),'') FROM supabase_migrations.schema_migrations WHERE version=${quote(version)};`);
       if (applied && applied.trim() !== sql.trim()) throw new Error(`migration_drift_${version}`);
-      if (applied) status = "skip";
+      if (recorded === "t") status = "skip";
     }
     console.log(JSON.stringify({ migration: version, status, sha256 }));
     if (status === "apply") {
@@ -82,6 +84,9 @@ if (mode === "deploy" || mode === "verify") {
         'solodesk_reconcile_workspace_creation', 'solodesk_list_selectable_workspaces',
         'solodesk_check_workspace_selectability'
       ) ORDER BY p.proname;
+    SELECT p.proname, array_to_string(p.proconfig, ',') AS function_config
+      FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace
+      WHERE n.nspname='public' AND p.proname='solodesk_invitation_create';
     SELECT c.relname, c.relrowsecurity, c.relforcerowsecurity
       FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
       WHERE n.nspname='public' AND c.relkind='r'

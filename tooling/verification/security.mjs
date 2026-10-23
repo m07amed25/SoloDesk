@@ -242,6 +242,60 @@ export function scanF012SecretEvidence(root) {
   return findings;
 }
 
+export function scanF013SecretEvidence(root) {
+  const findings = [];
+  const targetDirs = [
+    "app/renderer",
+    "app/preload",
+    "packages/localization",
+    "web/auth",
+  ];
+  const prohibitedPatterns = [
+    { pattern: /CANARY_F013_RAW_SECRET/g, rule: "f013-raw-secret-leak" },
+    { pattern: /CANARY_SECRET_FRAGMENT/g, rule: "f013-secret-url-leak" },
+    { pattern: /CANARY_CONTINUATION_TOKEN/g, rule: "f013-continuation-leak" },
+    { pattern: /CANARY_RAW_PROVIDER_PAYLOAD/g, rule: "f013-provider-payload-leak" },
+    { pattern: /CANARY_RECIPIENT_BINDING/g, rule: "f013-recipient-binding-leak" },
+    { pattern: /\binvitationToken\b/g, rule: "f013-legacy-token-leak" },
+    { pattern: /\bsolodesk_invitation_secret_\b/g, rule: "f013-secret-marker-leak" },
+  ];
+
+  for (const dir of targetDirs) {
+    const fullDir = path.join(root, dir);
+    if (!fs.existsSync(fullDir)) continue;
+    const entries = fs.readdirSync(fullDir, {
+      recursive: true,
+      withFileTypes: true,
+    });
+    for (const entry of entries) {
+      if (!entry.isFile() || entry.name.endsWith(".d.ts")) continue;
+      const parentDir = entry.parentPath || entry.path || fullDir;
+      const filePath = path.join(parentDir, entry.name);
+      const relativePath = path.relative(root, filePath);
+      const content = fs.readFileSync(filePath, "utf-8");
+      const lines = content.split("\n");
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        for (const { pattern, rule } of prohibitedPatterns) {
+          pattern.lastIndex = 0;
+          if (pattern.test(line)) {
+            findings.push({
+              code: "secret",
+              rule,
+              location: relativePath,
+              line: i + 1,
+              severity: "blocking",
+              action:
+                "Remove raw invitation secret, URL fragment, continuation cookie, or canary from renderer/preload/auth surface",
+            });
+          }
+        }
+      }
+    }
+  }
+  return findings;
+}
+
 async function boundedDownload(url, file, max = 33554432) {
   const response = await fetch(url, { signal: AbortSignal.timeout(180000) });
   if (!response.ok) throw new Error("scanner-download-unavailable");
@@ -432,6 +486,7 @@ export async function securityCheck(root, kind) {
       findings.push(...scanF010SecretEvidence(root));
       findings.push(...scanF011SecretEvidence(root));
       findings.push(...scanF012SecretEvidence(root));
+      findings.push(...scanF013SecretEvidence(root));
       inputs = files.length;
       source = tool.name;
       version = tool.version;

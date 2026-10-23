@@ -7,6 +7,7 @@
   "scripts": {
     "start": "node tooling/start.mjs",
     "build": "vite build --config vite.main.config.mts && vite build --config vite.preload.config.mts && vite build",
+    "db:migrate": "node tooling/f010/database.mjs deploy",
     "typecheck": "tsc --noEmit",
     "test:launcher": "node --test --test-isolation=none tooling/start.test.mjs",
     "ui:info": "node tooling/ui-info.mjs",
@@ -65,7 +66,14 @@
     "test:f012:service": "node tooling/f012/verify.mjs test:f012:service",
     "test:f012:switching": "node tooling/f012/verify.mjs test:f012:switching",
     "test:f012:security": "node tooling/f012/verify.mjs test:f012:security",
-    "test:f012:ui": "node tooling/f012/verify.mjs test:f012:ui"
+    "test:f012:ui": "node tooling/f012/verify.mjs test:f012:ui",
+    "test:f013": "node tooling/f013/verify.mjs",
+    "test:f013:contracts": "node tooling/f013/verify.mjs test:f013:contracts",
+    "test:f013:service": "node tooling/f013/verify.mjs test:f013:service",
+    "test:f013:acceptance": "node tooling/f013/verify.mjs test:f013:acceptance",
+    "test:f013:delivery": "node tooling/f013/verify.mjs test:f013:delivery",
+    "test:f013:security": "node tooling/f013/verify.mjs test:f013:security",
+    "test:f013:ui": "node tooling/f013/verify.mjs test:f013:ui"
   },
   "engines": {
     "node": ">=24 <25"
