@@ -45,7 +45,7 @@ type Entry<T extends OwnedView> = {
 };
 
 export class ProfileOwners<T extends OwnedView> {
-  private readonly known: ReadonlySet<string>;
+  private readonly known: Set<string>;
   private readonly entries = new Map<string, Entry<T>>();
   private nextEpoch = 0;
 
@@ -58,6 +58,11 @@ export class ProfileOwners<T extends OwnedView> {
   }
   hasProfile(profileId: string): boolean {
     return this.known.has(profileId);
+  }
+  register(profileId: string): void {
+    if (!/^[a-z][a-z0-9-]{0,31}$/.test(profileId))
+      throw new Error("invalid-profile");
+    this.known.add(profileId);
   }
   current(profileId: string): T | undefined {
     return this.entries.get(profileId)?.view;

@@ -23,7 +23,12 @@ export class IdentityProfileRegistry {
   }
 
   bind(issuerId: string, subjectId: string): AccountProfileRegistration {
-    if (!issuerId || issuerId.length > 512 || !subjectId || subjectId.length > 256)
+    if (
+      !issuerId ||
+      issuerId.length > 512 ||
+      !subjectId ||
+      subjectId.length > 256
+    )
       throw new Error("invalid_account_binding");
     const entries = this.load();
     const existing = entries.find(
@@ -40,6 +45,39 @@ export class IdentityProfileRegistry {
     });
     this.save([...entries, entry]);
     return this.withPaths(entry);
+  }
+
+  register(
+    profileId: string,
+    issuerId: string,
+    subjectId: string,
+  ): AccountProfileRegistration {
+    if (!/^[a-z][a-z0-9-]{0,31}$/.test(profileId))
+      throw new Error("invalid_profile_id");
+    if (!issuerId || issuerId.length > 512 || !subjectId || subjectId.length > 256)
+      throw new Error("invalid_account_binding");
+    const entries = this.load();
+    const byProfile = entries.find((entry) => entry.profileId === profileId);
+    const byAccount = entries.find(
+      (entry) => entry.issuerId === issuerId && entry.subjectId === subjectId,
+    );
+    if (byProfile || byAccount) {
+      if (byProfile && byAccount && byProfile === byAccount)
+        return this.withPaths(byProfile);
+      throw new Error("profile_registry_conflict");
+    }
+    const entry = Object.freeze({
+      profileId,
+      issuerId,
+      subjectId,
+      protectionBindingId: `protection:${profileId}`,
+    });
+    this.save([...entries, entry]);
+    return this.withPaths(entry);
+  }
+
+  list(): readonly AccountProfileRegistration[] {
+    return Object.freeze(this.load().map((entry) => this.withPaths(entry)));
   }
 
   get(profileId: string): AccountProfileRegistration | null {
@@ -66,7 +104,7 @@ export class IdentityProfileRegistry {
       value.some((entry) =>
         !entry ||
         typeof entry !== "object" ||
-        !/^[a-z][a-z0-9]{30}$/.test(String(entry.profileId)) ||
+        !/^[a-z][a-z0-9-]{0,31}$/.test(String(entry.profileId)) ||
         typeof entry.issuerId !== "string" ||
         typeof entry.subjectId !== "string" ||
         entry.protectionBindingId !== `protection:${entry.profileId}`

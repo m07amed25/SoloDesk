@@ -42,6 +42,14 @@ import {
   rejectProhibitedAuthority,
   isValidUuidV4,
 } from "../shared/workspace-contracts.ts";
+import {
+  type GetInvitationPolicyResult,
+  type CreateInvitationResult,
+  type ResendInvitationResult,
+  type RevokeInvitationResult,
+  type ListInvitationsResult,
+  type ReconcileInvitationResult,
+} from "../shared/invitation-contracts.ts";
 
 export const WORKSPACE_METHODS = Object.freeze([
   "getState",
@@ -51,6 +59,16 @@ export const WORKSPACE_METHODS = Object.freeze([
   "switch",
 ] as const);
 export type WorkspaceMethod = (typeof WORKSPACE_METHODS)[number];
+
+export const INVITATION_METHODS = Object.freeze([
+  "getPolicy",
+  "list",
+  "create",
+  "resend",
+  "revoke",
+  "reconcile",
+] as const);
+export type InvitationMethod = (typeof INVITATION_METHODS)[number];
 
 export const IDENTITY_SECURITY_METHODS = Object.freeze([
   "getState",
@@ -274,6 +292,41 @@ type BridgeOptions = {
     epoch: number,
     payload: unknown,
   ) => Promise<WorkspaceSwitchResult | null>;
+  getInvitationPolicy?: (
+    profileId: string,
+    epoch: number,
+    envelope: unknown,
+  ) => Promise<GetInvitationPolicyResult | null>;
+  createInvitation?: (
+    profileId: string,
+    epoch: number,
+    envelope: unknown,
+    payload: unknown,
+  ) => Promise<CreateInvitationResult | null>;
+  reconcileInvitation?: (
+    profileId: string,
+    epoch: number,
+    envelope: unknown,
+    payload: unknown,
+  ) => Promise<ReconcileInvitationResult | null>;
+  resendInvitation?: (
+    profileId: string,
+    epoch: number,
+    envelope: unknown,
+    payload: unknown,
+  ) => Promise<ResendInvitationResult | null>;
+  revokeInvitation?: (
+    profileId: string,
+    epoch: number,
+    envelope: unknown,
+    payload: unknown,
+  ) => Promise<RevokeInvitationResult | null>;
+  listInvitations?: (
+    profileId: string,
+    epoch: number,
+    envelope: unknown,
+    payload: unknown,
+  ) => Promise<ListInvitationsResult | null>;
 };
 
 export class DesktopBridge {
@@ -837,6 +890,100 @@ export class DesktopBridge {
     for (const event of events)
       binding.contents.send("f004:event", { family, ...event });
   }
+  async invokeInvitation(
+    method: InvitationMethod,
+    event: IpcMainInvokeEvent,
+    input: unknown,
+  ): Promise<
+    | GetInvitationPolicyResult
+    | CreateInvitationResult
+    | ReconcileInvitationResult
+    | ResendInvitationResult
+    | RevokeInvitationResult
+    | ListInvitationsResult
+    | null
+  > {
+    const binding = this.bindings.get(event.sender);
+    if (!admitCaller(event, binding, this.context(binding)) || !binding) {
+      return null;
+    }
+
+    if (input && typeof input === "object" && !Array.isArray(input)) {
+      try {
+        rejectProhibitedAuthority(input as Record<string, unknown>);
+      } catch {
+        return null;
+      }
+    }
+
+    const obj =
+      input && typeof input === "object" && !Array.isArray(input)
+        ? (input as Record<string, unknown>)
+        : {};
+    const envelope = obj.envelope ?? input;
+    const payload = obj.payload ?? input;
+
+    if (method === "getPolicy") {
+      return (
+        (await this.options.getInvitationPolicy?.(
+          binding.profileId,
+          binding.epoch,
+          envelope,
+        )) ?? null
+      );
+    }
+    if (method === "create") {
+      return (
+        (await this.options.createInvitation?.(
+          binding.profileId,
+          binding.epoch,
+          envelope,
+          payload,
+        )) ?? null
+      );
+    }
+    if (method === "reconcile") {
+      return (
+        (await this.options.reconcileInvitation?.(
+          binding.profileId,
+          binding.epoch,
+          envelope,
+          payload,
+        )) ?? null
+      );
+    }
+    if (method === "resend") {
+      return (
+        (await this.options.resendInvitation?.(
+          binding.profileId,
+          binding.epoch,
+          envelope,
+          payload,
+        )) ?? null
+      );
+    }
+    if (method === "revoke") {
+      return (
+        (await this.options.revokeInvitation?.(
+          binding.profileId,
+          binding.epoch,
+          envelope,
+          payload,
+        )) ?? null
+      );
+    }
+    if (method === "list") {
+      return (
+        (await this.options.listInvitations?.(
+          binding.profileId,
+          binding.epoch,
+          envelope,
+          payload,
+        )) ?? null
+      );
+    }
+    return null;
+  }
 }
 
 export async function installBridge(
@@ -878,6 +1025,10 @@ export async function installBridge(
   ipcMain.handle("solodesk.workspace.onStateChanged", (event) =>
     bridge.subscribeWorkspace(event),
   );
+  for (const method of INVITATION_METHODS)
+    ipcMain.handle(`solodesk.invitation.${method}`, (event, input: unknown) =>
+      bridge.invokeInvitation(method, event, input),
+    );
   ipcMain.on("f004:subscription:remove", (event, input: unknown) =>
     bridge.remove(event as IpcMainInvokeEvent, input),
   );

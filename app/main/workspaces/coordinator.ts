@@ -645,7 +645,12 @@ export class WorkspaceCoordinator {
   }
 
   async refresh(): Promise<WorkspaceState> {
-    if (!this.currentSummary && this.lifecycle === "loading")
+    if (
+      !this.currentSummary &&
+      (this.lifecycle === "loading" ||
+        this.lifecycle === "online_required" ||
+        this.messageKey === "shell.workspace.recovery.authRequired")
+    )
       return this.bootstrap();
     try {
       const token = await this.getAccessToken();
@@ -721,6 +726,16 @@ export class WorkspaceCoordinator {
     } catch {
       // Protection errors preserve memory state
     }
+  }
+
+  /**
+   * Authoritative discovery of newly accepted memberships (F013 T040).
+   * Refreshes workspace authority from the server and returns updated selectable workspaces.
+   * Requires explicit user selection to switch active workspace; never switches automatically.
+   */
+  async discoverAcceptedMemberships(): Promise<readonly WorkspaceSummary[]> {
+    await this.refresh();
+    return Object.freeze([...this.selectableWorkspaces]);
   }
 
   async dispose(): Promise<void> {

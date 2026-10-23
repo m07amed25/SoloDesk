@@ -23,6 +23,8 @@ import {
 import { ProtectedIdentityStore } from "./identity/protected-identity-store.ts";
 import { SupabaseProviderAdapter } from "./identity/provider-adapter.ts";
 import { IdentityCoordinator } from "./identity/coordinator.ts";
+import { IdentityProfileRegistry } from "./identity/profile-registry.ts";
+import type { PendingAccountSwitch } from "./identity/session-owner.ts";
 import { SupabaseEnrollmentService } from "./identity/enrollment-service.ts";
 import { LifecycleCoordinator } from "./lifecycle.ts";
 import { createTrustedWindow, registerAssetScheme } from "./windows.ts";
@@ -33,6 +35,8 @@ import { isWorkspaceId } from "../shared/persistence-contracts.ts";
 import { KeyUnavailable } from "./protection/key-provider.ts";
 import { WorkspaceCoordinator } from "./workspaces/coordinator.ts";
 import { WorkspaceService } from "./workspaces/workspace-service.ts";
+import { InvitationCoordinator } from "./invitations/coordinator.ts";
+import { InvitationService } from "./invitations/invitation-service.ts";
 import {
   blockedProtection,
   type ProtectionResult,
@@ -75,18 +79,22 @@ if (!lockHeld) {
   app.exit(0);
 } else {
   registerAssetScheme(protocol);
-  type NativeView = OwnedView & { contents: WebContents };
+  type NativeView = OwnedView & { contents: WebContents; close(): void };
   const profiles = new ProfileOwners<NativeView>(catalogue);
+  const identityProfileRegistry = new IdentityProfileRegistry(
+    app.getPath("userData"),
+  );
   const keyProvider = new ElectronKeyProvider();
   const protectionOwners = new Map<string, ProtectionOwner>();
   const persistenceServices = new Map<string, PersistenceService>();
   const identityCoordinators = new Map<string, IdentityCoordinator>();
   const workspaceCoordinators = new Map<string, WorkspaceCoordinator>();
+  const invitationCoordinators = new Map<string, InvitationCoordinator>();
   function getIdentityConfig(): IdentityConfig {
     const environment = identityEnvironment(process.cwd(), {
       VITE_SUPABASE_URL: import.meta.env.VITE_SUPABASE_URL,
-      VITE_SUPABASE_PUBLISHABLE_KEY:
-        import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+      VITE_SUPABASE_PUBLISHABLE_KEY: import.meta.env
+        .VITE_SUPABASE_PUBLISHABLE_KEY,
       ...process.env,
     });
     try {
@@ -204,6 +212,8 @@ if (!lockHeld) {
           await persistence.closeActiveStore();
           protection.lock();
         },
+        onAccountSwitch: (pending) =>
+          switchIdentityProfile(id, epoch, pending),
         enrollment: {
           service: enrollmentService,
           installationContextId: `installation:${id}`,
@@ -222,6 +232,14 @@ if (!lockHeld) {
       });
       identityCoordinators.set(id, identity);
       await identity.restoreStartup();
+      const restoredAccount = identity.getAccount();
+      if (restoredAccount) {
+        identityProfileRegistry.register(
+          id,
+          restoredAccount.issuer_id,
+          restoredAccount.subject_id,
+        );
+      }
 
       const workspaceService = new WorkspaceService({
         supabaseUrl: new URL(identityConfig.issuer).origin,
@@ -257,6 +275,36 @@ if (!lockHeld) {
       workspaceCoordinators.set(id, workspace);
       await workspace.bootstrap();
 
+      const invitationService = new InvitationService({
+        supabaseUrl: new URL(identityConfig.issuer).origin,
+        supabaseAnonKey: identityConfig.publishableKey,
+      });
+      const invitation = new InvitationCoordinator({
+        profileId: id,
+        getProfileGeneration: () => profiles.epoch(id) ?? 1,
+        getContextEnvelope: () => {
+          const wsState = workspace.getState();
+          if (!wsState || !wsState.current) return null;
+          return {
+            profileReference: id,
+            profileGeneration: profiles.epoch(id) ?? 1,
+            workspaceId: wsState.current.workspaceId,
+            generation: wsState.current.authorityVersion ?? 1,
+            selectionGeneration: wsState.selectionGeneration ?? 1,
+          };
+        },
+        getAccessToken: async () => {
+          try {
+            return identity.getAccessToken();
+          } catch {
+            return null;
+          }
+        },
+        getDeviceEnrollmentId: () => identity.getDeviceEnrollmentId(),
+        invitationService,
+      });
+      invitationCoordinators.set(id, invitation);
+
       if (syntheticWorkspace)
         await persistence.openWorkspaceStore(syntheticWorkspace);
       let view: NativeView | undefined;
@@ -278,6 +326,8 @@ if (!lockHeld) {
           workspace.dispose();
           if (workspaceCoordinators.get(id) === workspace)
             workspaceCoordinators.delete(id);
+          if (invitationCoordinators.get(id) === invitation)
+            invitationCoordinators.delete(id);
           if (view) profiles.close(id, view);
         },
         onCreated: (window, origin, documentUrl) => {
@@ -314,9 +364,47 @@ if (!lockHeld) {
           if (trusted.window.isMinimized()) trusted.window.restore();
           if (!trusted.window.isDestroyed()) trusted.window.focus();
         },
+        close: () => {
+          if (!trusted.window.isDestroyed()) trusted.window.close();
+        },
       };
       return view;
     });
+  }
+
+  async function switchIdentityProfile(
+    sourceProfileId: string,
+    sourceEpoch: number,
+    pendingSwitch: PendingAccountSwitch,
+  ) {
+    if (profiles.epoch(sourceProfileId) !== sourceEpoch) return null;
+    const sourceIdentity = identityCoordinators.get(sourceProfileId);
+    const sourceAccount = sourceIdentity?.getAccount();
+    if (sourceAccount) {
+      identityProfileRegistry.register(
+        sourceProfileId,
+        sourceAccount.issuer_id,
+        sourceAccount.subject_id,
+      );
+    }
+
+    const target = identityProfileRegistry.bind(
+      pendingSwitch.account.issuer_id,
+      pendingSwitch.account.subject_id,
+    );
+    if (target.profileId === sourceProfileId) return null;
+    profiles.register(target.profileId);
+
+    const targetView = await activate(target.profileId);
+    const targetIdentity = identityCoordinators.get(target.profileId);
+    if (!targetView || !targetIdentity) return null;
+    const state = await targetIdentity.adoptAccountSwitch(pendingSwitch.tokens);
+    bridge.emit(targetView.contents, "identity", state);
+    if (state.sessionStatus === "current") {
+      const sourceView = profiles.current(sourceProfileId);
+      if (sourceView) setTimeout(() => sourceView.close(), 0);
+    }
+    return state;
   }
 
   async function route(intent: Activation): Promise<void> {
@@ -375,6 +463,8 @@ if (!lockHeld) {
   app
     .whenReady()
     .then(async () => {
+      for (const registration of identityProfileRegistry.list())
+        profiles.register(registration.profileId);
       bridge = await installBridge({
         state: () => owner.state,
         epoch: (id) => profiles.epoch(id),
@@ -514,7 +604,56 @@ if (!lockHeld) {
               )) ?? null
           );
         },
+        getInvitationPolicy: async (profileId, epoch, envelope) => {
+          if (profiles.epoch(profileId) !== epoch) return null;
+          return (
+            (await invitationCoordinators
+              .get(profileId)
+              ?.getPolicy(envelope as any)) ?? null
+          );
+        },
+        createInvitation: async (profileId, epoch, envelope, payload) => {
+          if (profiles.epoch(profileId) !== epoch) return null;
+          return (
+            (await invitationCoordinators
+              .get(profileId)
+              ?.create(envelope as any, payload as any)) ?? null
+          );
+        },
+        reconcileInvitation: async (profileId, epoch, envelope, payload) => {
+          if (profiles.epoch(profileId) !== epoch) return null;
+          return (
+            (await invitationCoordinators
+              .get(profileId)
+              ?.reconcile(envelope as any, payload as any)) ?? null
+          );
+        },
+        resendInvitation: async (profileId, epoch, envelope, payload) => {
+          if (profiles.epoch(profileId) !== epoch) return null;
+          return (
+            (await invitationCoordinators
+              .get(profileId)
+              ?.resend(envelope as any, payload as any)) ?? null
+          );
+        },
+        revokeInvitation: async (profileId, epoch, envelope, payload) => {
+          if (profiles.epoch(profileId) !== epoch) return null;
+          return (
+            (await invitationCoordinators
+              .get(profileId)
+              ?.revoke(envelope as any, payload as any)) ?? null
+          );
+        },
+        listInvitations: async (profileId, epoch, envelope, payload) => {
+          if (profiles.epoch(profileId) !== epoch) return null;
+          return (
+            (await invitationCoordinators
+              .get(profileId)
+              ?.list(envelope as any, payload as any)) ?? null
+          );
+        },
       });
+
       owner.onState((state) => {
         for (const view of profiles.views()) {
           bridge.emit(view.contents, "lifecycle", { state });

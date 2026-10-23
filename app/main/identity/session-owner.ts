@@ -54,6 +54,11 @@ export type SignOutResult = Readonly<{
   retainedWork: "none" | "present" | "unknown";
 }>;
 
+export type PendingAccountSwitch = Readonly<{
+  account: VerifiedAccount;
+  tokens: ProviderTokens;
+}>;
+
 function maskIdentifier(id: string): string {
   if (id.includes("@")) {
     const parts = id.split("@");
@@ -72,6 +77,7 @@ export class SessionOwner {
   private readonly provider: IdentityProviderAdapter;
   private currentAccount: VerifiedAccount | null = null;
   private currentBinding: ProtectedSessionBinding | null = null;
+  private pendingAccountSwitch: PendingAccountSwitch | null = null;
   private operationGeneration = 0;
 
   constructor(
@@ -90,6 +96,12 @@ export class SessionOwner {
 
   getCurrentBinding(): ProtectedSessionBinding | null {
     return this.currentBinding;
+  }
+
+  takePendingAccountSwitch(): PendingAccountSwitch | null {
+    const pending = this.pendingAccountSwitch;
+    this.pendingAccountSwitch = null;
+    return pending;
   }
 
   getAccessToken(): string {
@@ -172,6 +184,7 @@ export class SessionOwner {
     diagnosticId = crypto.randomUUID(),
     operationGeneration = this.operationGeneration,
   ): Promise<ExchangeResult> {
+    this.pendingAccountSwitch = null;
 
     let idToken;
     try {
@@ -267,9 +280,29 @@ export class SessionOwner {
     try {
       this.store.assertProtectionUsable();
       const profile = this.store.loadProfile();
-      if (profile && (profile.issuer_id !== idToken.iss || profile.subject_id !== idToken.sub ||
-        profile.profile_generation !== request.profileGeneration)) {
-        return Object.freeze({ success: false, reason: "account_mismatch", diagnosticId });
+      if (
+        profile?.profile_generation !== undefined &&
+        profile.profile_generation !== request.profileGeneration
+      ) {
+        return Object.freeze({
+          success: false,
+          reason: "session_invalidated",
+          diagnosticId,
+        });
+      }
+      if (
+        profile &&
+        (profile.issuer_id !== idToken.iss || profile.subject_id !== idToken.sub)
+      ) {
+        this.pendingAccountSwitch = Object.freeze({
+          account: verifiedAccount,
+          tokens: request.tokens,
+        });
+        return Object.freeze({
+          success: false,
+          reason: "account_mismatch",
+          diagnosticId,
+        });
       }
       if (!profile) this.store.saveProfile({
         profile_id: request.profileId,
@@ -308,6 +341,7 @@ export class SessionOwner {
 
   signOut(generationIncrement: boolean = true): SignOutResult {
     this.operationGeneration += 1;
+    this.pendingAccountSwitch = null;
     let accessToken: string | undefined;
     try { accessToken = this.store.loadEncryptedCredentials()?.accessToken; } catch { /* Local removal still proceeds. */ }
     let profileGeneration = (this.currentBinding?.profile_generation ?? 0) + 1;

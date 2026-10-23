@@ -16,6 +16,7 @@ export function buildAuthorizationUrl(
     const redirect = new URL(params.redirectUri);
     redirect.searchParams.set("state", params.state);
     url.searchParams.set("provider", config.provider);
+    url.searchParams.set("prompt", "select_account");
     url.searchParams.set("redirect_to", redirect.toString());
     url.searchParams.set("code_challenge", params.challenge);
     url.searchParams.set("code_challenge_method", "s256");
