@@ -1,6 +1,6 @@
 # Implementation Plan: F013 — Member Invitations
 
-**Branch**: `feat/f013-member-invitations` | **Date**: 2026-10-23 | **Spec**: [F013 feature specification](spec.md)
+**Branch**: `feat/f013-member-invitations` | **Date**: 2026-10-23 | **Spec**: [F013 feature specification](spec.md) | **PR**: [#18](https://github.com/m07amed25/SoloDesk/pull/18)
 
 **Input**: Feature specification from `specs/013-member-invitations/spec.md`
 
