@@ -156,6 +156,95 @@ registerAuditProjector("task.create", (_op, payload) => {
   };
 });
 
+registerAuditProjector("invitation.create", (_op, payload, target) => {
+  const safe = sanitizeAllowlist(payload, [
+    "invitationId",
+    "workspaceId",
+    "recipientLabel",
+    "offerRef",
+    "policyRevision",
+  ]);
+  return {
+    summary_kind: "invitation.create.summary",
+    summary_version: 1,
+    summary: {
+      targetId: target?.id ?? safe.invitationId ?? null,
+      targetKind: target?.kind ?? "invitation",
+      ...safe,
+    },
+  };
+});
+
+registerAuditProjector("invitation.resend", (_op, payload, target) => {
+  const safe = sanitizeAllowlist(payload, [
+    "invitationId",
+    "workspaceId",
+    "expectedRevision",
+    "newGenerationNumber",
+  ]);
+  return {
+    summary_kind: "invitation.resend.summary",
+    summary_version: 1,
+    summary: {
+      targetId: target?.id ?? safe.invitationId ?? null,
+      targetKind: target?.kind ?? "invitation",
+      ...safe,
+    },
+  };
+});
+
+registerAuditProjector("invitation.revoke", (_op, payload, target) => {
+  const safe = sanitizeAllowlist(payload, [
+    "invitationId",
+    "workspaceId",
+    "expectedRevision",
+    "terminalOutcome",
+  ]);
+  return {
+    summary_kind: "invitation.revoke.summary",
+    summary_version: 1,
+    summary: {
+      targetId: target?.id ?? safe.invitationId ?? null,
+      targetKind: target?.kind ?? "invitation",
+      ...safe,
+    },
+  };
+});
+
+registerAuditProjector("invitation.accept", (_op, payload, target) => {
+  const safe = sanitizeAllowlist(payload, [
+    "invitationId",
+    "workspaceId",
+    "membershipId",
+  ]);
+  return {
+    summary_kind: "invitation.accept.summary",
+    summary_version: 1,
+    summary: {
+      targetId: target?.id ?? safe.invitationId ?? null,
+      targetKind: target?.kind ?? "invitation",
+      ...safe,
+    },
+  };
+});
+
+registerAuditProjector("invitation.delivery_status", (_op, payload, target) => {
+  const safe = sanitizeAllowlist(payload, [
+    "deliveryStatus",
+    "attemptNumber",
+    "providerDigest",
+  ]);
+  return {
+    summary_kind: "invitation.delivery_status.summary",
+    summary_version: 1,
+    summary: {
+      targetId: target?.id ?? null,
+      targetKind: target?.kind ?? "invitation_delivery",
+      ...safe,
+    },
+  };
+});
+
 /**
  * Executes registered projector or safe minimal projection for the command.
  * Strictly avoids generic raw payload copying.

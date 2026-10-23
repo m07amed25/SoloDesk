@@ -29,27 +29,6 @@ export interface MembershipDbAdapter {
 export class MembershipHandler {
   constructor(private adapter: MembershipDbAdapter) {}
 
-  inviteMember(
-    context: TrustedContext,
-    targetUserId: string,
-    role: WorkspaceRole,
-    email: string,
-  ): MembershipRecord {
-    assertActionAuthorized(context.role, "membership.invite");
-
-    const record: MembershipRecord = {
-      workspace_id: context.workspaceId,
-      user_id: targetUserId,
-      role,
-      status: "invited",
-      invited_email: email,
-      invitation_token: `inv_${Math.random().toString(36).substring(2, 12)}`,
-    };
-
-    this.adapter.insertMember(record);
-    return record;
-  }
-
   updateMemberRole(
     context: TrustedContext,
     targetUserId: string,
