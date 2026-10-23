@@ -21,6 +21,7 @@ import {
   LogOut,
   LogIn,
 } from "lucide-react";
+import { InvitationStatusList } from "../workspaces/InvitationStatusList.tsx";
 
 export function SettingsView() {
   const { locale, setLocale, direction, t } = useLocalization();
@@ -241,6 +242,20 @@ export function SettingsView() {
               العربية (RTL)
             </Button>
           </div>
+        </section>
+
+        {/* Workspace Invitations Section */}
+        <section
+          aria-labelledby="invitations-heading"
+          className="rounded-xl border border-border bg-surface p-4 sm:p-6 shadow-xs"
+        >
+          <InvitationStatusList
+            onInviteClick={() => {
+              window.dispatchEvent(
+                new CustomEvent("solodesk:open-member-invite"),
+              );
+            }}
+          />
         </section>
 
         {/* Theme Section */}

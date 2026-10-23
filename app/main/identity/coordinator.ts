@@ -5,9 +5,11 @@ import type { IdentityProviderAdapter } from "./provider-adapter.ts";
 import { AuthAttemptManager, type SignInAttempt } from "./auth-attempts.ts";
 import {
   SessionOwner,
+  type PendingAccountSwitch,
   type ExchangeResult,
   type VerifiedAccount,
 } from "./session-owner.ts";
+import type { ProviderTokens } from "./provider-adapter.ts";
 import { EnrollmentCoordinator, type EnrollmentService } from "./enrollment.ts";
 import {
   BrowserHandoffManager,
@@ -41,6 +43,9 @@ export type IdentityCoordinatorOptions = {
   openBrowser?: (url: string) => Promise<boolean>;
   isCurrentOwner?: () => boolean;
   onTeardown?: () => Promise<void>;
+  onAccountSwitch?: (
+    pending: PendingAccountSwitch,
+  ) => Promise<RendererIdentityState | null>;
   restoreSession?: (
     binding: ProtectedSessionBinding,
   ) => Promise<VerifiedAccount | null>;
@@ -85,6 +90,7 @@ export class IdentityCoordinator {
   private disposed = false;
   private readonly isCurrentOwner?: () => boolean;
   private readonly onTeardown?: () => Promise<void>;
+  private readonly onAccountSwitch?: IdentityCoordinatorOptions["onAccountSwitch"];
 
   constructor(options: IdentityCoordinatorOptions) {
     this.profileId = options.profileId;
@@ -92,6 +98,7 @@ export class IdentityCoordinator {
     this.profileGeneration = options.epoch;
     this.isCurrentOwner = options.isCurrentOwner;
     this.onTeardown = options.onTeardown;
+    this.onAccountSwitch = options.onAccountSwitch;
     this.config = options.config;
     this.store = options.store;
     this.provider = options.provider;
@@ -284,6 +291,7 @@ export class IdentityCoordinator {
   dispose(): void {
     this.authorityGeneration += 1;
     this.disposed = true;
+    this.sessionOwner.takePendingAccountSwitch();
     this.handoff.closeLoopbackListener();
     this.verifiedAccount = null;
     this.enrollment = null;
@@ -318,12 +326,19 @@ export class IdentityCoordinator {
     if (!exchange.success) {
       this.lifecycle = "sign_in_required";
       this.sessionStatus = "rejected";
-      this.messageKey =
-        exchange.reason === "provider_unavailable"
-          ? "shell.identity.providerUnavailable"
-          : "shell.identity.invalidCredentials";
-      this.actionKey = "shell.identity.action.retry";
-      this.nextActions = Object.freeze(["retry"]);
+      if (exchange.reason === "account_mismatch") {
+        this.lifecycle = "recovery_required";
+        this.messageKey = "shell.identity.accountMismatch";
+        this.actionKey = "shell.identity.action.chooseIsolatedProfile";
+        this.nextActions = Object.freeze(["choose_isolated_profile"]);
+      } else {
+        this.messageKey =
+          exchange.reason === "provider_unavailable"
+            ? "shell.identity.providerUnavailable"
+            : "shell.identity.invalidCredentials";
+        this.actionKey = "shell.identity.action.retry";
+        this.nextActions = Object.freeze(["retry"]);
+      }
       this.notifyStateChange();
       return this.getState();
     }
@@ -430,6 +445,7 @@ export class IdentityCoordinator {
 
   async startSignIn(): Promise<RendererIdentityState> {
     if (this.disposed) return this.getState();
+    this.sessionOwner.takePendingAccountSwitch();
     const generation = ++this.authorityGeneration;
     this.handoff.closeLoopbackListener();
     try {
@@ -515,6 +531,7 @@ export class IdentityCoordinator {
     password: string,
   ): Promise<RendererIdentityState> {
     if (this.disposed) return this.getState();
+    this.sessionOwner.takePendingAccountSwitch();
     const generation = ++this.authorityGeneration;
     this.handoff.closeLoopbackListener();
     this.lifecycle = "signing_in";
@@ -583,6 +600,7 @@ export class IdentityCoordinator {
 
   async cancelSignIn(): Promise<RendererIdentityState> {
     this.authorityGeneration += 1;
+    this.sessionOwner.takePendingAccountSwitch();
     this.handoff.closeLoopbackListener();
     if (this.currentAttempt) {
       this.attempts.cancelAttempt(
@@ -830,6 +848,26 @@ export class IdentityCoordinator {
   }
 
   async confirmAccountSwitch(): Promise<RendererIdentityState> {
-    return this.signOut();
+    const pending = this.sessionOwner.takePendingAccountSwitch();
+    if (!pending || !this.onAccountSwitch) return this.getState();
+    await this.signOut();
+    return (await this.onAccountSwitch(pending)) ?? this.getState();
+  }
+
+  async adoptAccountSwitch(
+    tokens: ProviderTokens,
+  ): Promise<RendererIdentityState> {
+    if (this.disposed) return this.getState();
+    const generation = ++this.authorityGeneration;
+    this.profileGeneration =
+      this.store.loadProfile()?.profile_generation ?? this.profileGeneration;
+    const exchange = await this.sessionOwner.adoptSession({
+      tokens,
+      profileId: this.profileId,
+      profileGeneration: this.profileGeneration,
+      isCurrent: () => this.isCurrent(generation),
+    });
+    if (!this.isCurrent(generation)) return this.getState();
+    return this.applyAuthenticationResult(exchange);
   }
 }

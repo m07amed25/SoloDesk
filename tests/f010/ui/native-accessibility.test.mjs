@@ -77,6 +77,11 @@ describe("T055: Renderer Native Accessibility for F010", () => {
 
     assert.ok(code.includes('role="alert"'), "Errors in AuthDialog must use role=alert");
     assert.ok(code.includes('aria-hidden'), "Decorative icons must be hidden from screen readers");
+    assert.ok(
+      code.includes("choose_isolated_profile") &&
+        code.includes("confirmAccountSwitch()"),
+      "A verified different account must expose an explicit isolated-profile action",
+    );
   });
 
   it("ensures SettingsView provides structured headings and accessible form elements", () => {

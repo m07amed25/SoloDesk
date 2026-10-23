@@ -47,7 +47,7 @@ export type WorkspaceMembershipDto = Readonly<{
   role: WorkspaceRole;
   status: MembershipStatus;
   invitedEmail?: string | null;
-  invitationToken?: string | null;
+  invitationToken?: never;
   invitationExpiresAt?: string | null;
   grantedBy?: string | null;
   createdAt: string;

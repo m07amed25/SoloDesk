@@ -36,6 +36,7 @@ import type { PersistenceStatusDto } from "../../shared/persistence-contracts.ts
 import { PersistenceRecoveryModal } from "./PersistenceRecoveryModal.tsx";
 import { QuotaWarningBanner } from "./QuotaWarningBanner.tsx";
 import { WorkspaceCreateDialog } from "../components/workspaces/WorkspaceCreateDialog.tsx";
+import { InviteMemberDialog } from "../components/workspaces/InviteMemberDialog.tsx";
 import { PendingWorkspaceSwitchDialog } from "../components/workspaces/PendingWorkspaceSwitchDialog.tsx";
 import { AuthDialog } from "../components/identity/AuthDialog.tsx";
 import {
@@ -496,6 +497,29 @@ function ShellRoot() {
       }),
     );
 
+    cleanups.push(
+      registerAction({
+        id: "workspace-invite-member",
+        category: "actions",
+        titleKey: "invitation.dialogTitle",
+        titleText: t("invitation.dialogTitle"),
+        keywords: [
+          "workspace",
+          "invite",
+          "member",
+          "مساحة",
+          "دعوة",
+          "عضو",
+          "فريق",
+        ],
+        iconName: "UserPlus",
+        execute: () => {
+          window.dispatchEvent(new CustomEvent("solodesk:open-member-invite"));
+        },
+        enabled: true,
+      }),
+    );
+
     return () => {
       for (const cleanup of cleanups) {
         cleanup();
@@ -521,6 +545,7 @@ function ShellRoot() {
     refresh: refreshWorkspaces,
   } = useWorkspace();
   const [createDialogOpen, setCreateDialogOpen] = React.useState(false);
+  const [inviteDialogOpen, setInviteDialogOpen] = React.useState(false);
 
   const handleIdentityReady = React.useCallback(async () => {
     await refreshWorkspaces();
@@ -532,9 +557,18 @@ function ShellRoot() {
       void refreshWorkspaces();
       setCreateDialogOpen(true);
     };
+    const handleOpenInvite = () => {
+      setInviteDialogOpen(true);
+    };
     window.addEventListener("solodesk:open-workspace-create", handleOpen);
-    return () =>
+    window.addEventListener("solodesk:open-member-invite", handleOpenInvite);
+    return () => {
       window.removeEventListener("solodesk:open-workspace-create", handleOpen);
+      window.removeEventListener(
+        "solodesk:open-member-invite",
+        handleOpenInvite,
+      );
+    };
   }, [refreshWorkspaces]);
 
   return (
@@ -556,6 +590,10 @@ function ShellRoot() {
         open={createDialogOpen}
         onOpenChange={setCreateDialogOpen}
         policy={workspaceState?.creation}
+      />
+      <InviteMemberDialog
+        open={inviteDialogOpen}
+        onOpenChange={setInviteDialogOpen}
       />
       <PendingWorkspaceSwitchDialog />
       <MainContentRenderer key={selectionGeneration} />

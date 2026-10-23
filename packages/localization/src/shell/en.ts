@@ -50,6 +50,7 @@ export const en = {
   "theme.preset.chakra": "Chakra Industrial",
   "theme.preset.cobalt": "Cobalt",
   "theme.preset.amber_outfit": "Amber Outfit",
+  "theme.preset.rose": "Rose",
   "theme.preset.switch_to": "Switch theme style: {style}",
 
   // Language
@@ -218,6 +219,8 @@ export const en = {
     "The authentication service is unavailable. Try again.",
   "shell.identity.checkEmail":
     "Check your email to confirm the account, then return and sign in.",
+  "shell.identity.accountMismatch":
+    "This is a different account. Continue in a separate protected profile; the previous account's local data will stay unchanged.",
 
   // Identity Security & MFA (F011)
   "identity.security.title": "Account Security",
@@ -352,4 +355,91 @@ export const en = {
     "An update to SoloDesk is required.",
   "shell.workspace.rejection.workspace_unavailable":
     "The selected workspace is unavailable.",
+
+  // Member Invitations (F013)
+  "invitation.dialogTitle": "Invite Member",
+  "invitation.dialogDescription":
+    "Invite a collaborator to this workspace. An invitation will be created with configured access.",
+  "invitation.workspaceLabel": "Workspace",
+  "invitation.recipientLabel": "Recipient Email",
+  "invitation.recipientPlaceholder": "colleague@example.com",
+  "invitation.offerLabel": "Access Offer",
+  "invitation.roleLabel": "Role",
+  "invitation.scopeLabel": "Scope",
+  "invitation.expiryLabel": "Expiration",
+  "invitation.consequenceLabel": "Access Consequence",
+  "invitation.consequenceNotice":
+    "An invitation creates zero workspace membership until accepted by the intended account.",
+  "invitation.submit": "Create Invitation",
+  "invitation.submitting": "Creating invitation...",
+  "invitation.cancel": "Cancel",
+  "invitation.success": "Invitation created",
+  "invitation.successNotice":
+    "The invitation was created and queued for delivery. It has not been delivered or accepted yet.",
+  "invitation.error.invalidEmail":
+    "Please provide a valid recipient email address.",
+  "invitation.error.alreadyMember":
+    "This recipient is already an active member of this workspace.",
+  "invitation.error.alreadyPending":
+    "An invitation is already pending for this recipient.",
+  "invitation.error.policyUnavailable":
+    "The selected access offer or policy is currently unavailable.",
+  "invitation.error.onlineRequired":
+    "An active internet connection is required to invite members.",
+  "invitation.error.notAuthorized":
+    "You do not have permission to invite members to this workspace.",
+  "invitation.error.staleState":
+    "The workspace invitation state has changed. Please refresh and try again.",
+  "invitation.error.outcomeUnknown":
+    "Invitation status is unknown. Please reconcile or check the invitation list.",
+  "invitation.error.temporarilyUnavailable":
+    "Invitation service is temporarily unavailable. Please try again.",
+  "invitation.action.reconcile": "Check Status",
+  "invitation.action.refresh": "Refresh",
+  "invitation.action.retry": "Try Again",
+  "invitation.offer.memberStandard": "Standard Contributor",
+  "invitation.offer.readOnly": "Read-Only Viewer",
+  "invitation.consequence.memberStandard":
+    "Full read and write access to workspace files and projects.",
+  "invitation.consequence.readOnly":
+    "View and read-only access without edit permissions.",
+  "invitation.expiry.sevenDays": "Expires in 7 days",
+  "invitation.redemption.title": "Workspace Invitation",
+  "invitation.redemption.reviewHeading": "Review Workspace Invitation",
+  "invitation.redemption.confirm": "Accept Invitation",
+  "invitation.redemption.accepting": "Accepting invitation...",
+  "invitation.redemption.accepted": "Invitation Accepted",
+  "invitation.redemption.acceptedNotice":
+    "You have joined the workspace as an active member.",
+  "invitation.redemption.wrongAccountNotice":
+    "This invitation was sent to a different email address. Please switch accounts to review and accept.",
+  "invitation.redemption.unavailableNotice":
+    "This invitation is no longer available or has expired. Please request a new invitation from your workspace administrator.",
+  "invitation.redemption.switchAccount": "Switch Account",
+  "invitation.redemption.returnHome": "Return to SoloDesk",
+  "invitation.action.resend": "Resend Invitation",
+  "invitation.action.revoke": "Revoke Invitation",
+  "invitation.action.confirmRevoke": "Confirm Revocation",
+  "invitation.action.revokeNotice":
+    "Revoking this invitation permanently invalidates all acceptance links.",
+  "invitation.action.resendNotice":
+    "Resending creates a new acceptance link and invalidates all earlier links.",
+  "invitation.status.delivered": "Delivered",
+  "invitation.status.queued": "Delivery Queued",
+  "invitation.status.failed": "Delivery Failed",
+  "invitation.status.bounced": "Bounced",
+  "invitation.status.unknown": "Delivery Unknown",
+  "invitation.offer.member_standard": "Standard Contributor",
+  "invitation.offer.read_only": "Read-Only Viewer",
+  "invitation.consequence.member_standard":
+    "Full read and write access to workspace files and projects.",
+  "invitation.consequence.read_only":
+    "View and read-only access without edit permissions.",
+  "roles.owner": "Owner",
+  "roles.admin": "Admin",
+  "roles.manager": "Manager",
+  "roles.contributor": "Contributor",
+  "roles.viewer": "Viewer",
+  "scopes.workspace_read_write": "Full Read & Write",
+  "scopes.workspace_read_only": "Read Only",
 } as const;

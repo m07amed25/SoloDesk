@@ -10,6 +10,23 @@ import type {
   WorkspaceCreationResult,
   WorkspaceSwitchResult,
 } from "../shared/workspace-contracts.ts";
+import type {
+  GetInvitationPolicyResult,
+  CreateInvitationResult,
+  ResendInvitationResult,
+  RevokeInvitationResult,
+  ListInvitationsResult,
+  ReconcileInvitationResult,
+} from "../shared/invitation-contracts.ts";
+
+export type InvitationApi = Readonly<{
+  getPolicy: (envelope?: unknown) => Promise<GetInvitationPolicyResult | null>;
+  list: (request: unknown) => Promise<ListInvitationsResult | null>;
+  create: (request: unknown) => Promise<CreateInvitationResult | null>;
+  resend: (request: unknown) => Promise<ResendInvitationResult | null>;
+  revoke: (request: unknown) => Promise<RevokeInvitationResult | null>;
+  reconcile: (request: unknown) => Promise<ReconcileInvitationResult | null>;
+}>;
 
 export type WorkspaceApi = Readonly<{
   getState: () => Promise<WorkspaceState | null>;
@@ -49,7 +66,9 @@ export type IdentityApi = Readonly<{
   retryReconciliation: () => Promise<RendererIdentityState>;
   signOut: () => Promise<RendererIdentityState>;
   confirmAccountSwitch: () => Promise<RendererIdentityState>;
-  onStateChanged: (callback: (state: RendererIdentityState) => void) => () => void;
+  onStateChanged: (
+    callback: (state: RendererIdentityState) => void,
+  ) => () => void;
 }>;
 
 declare global {
@@ -58,6 +77,7 @@ declare global {
     solodesk: Readonly<{
       identity: IdentityApi;
       workspace?: WorkspaceApi;
+      invitation?: InvitationApi;
       identitySecurity?: IdentitySecurityApi;
       persistence: Readonly<{
         getState: (workspaceId: string) => Promise<PersistenceStatusDto>;

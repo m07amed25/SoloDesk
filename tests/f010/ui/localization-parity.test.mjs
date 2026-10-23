@@ -49,6 +49,8 @@ describe("T054: English/Arabic Localization Parity for F010", () => {
       "auth.enrollment.description",
       "auth.enrollment.deviceLabel",
       "auth.enrollment.confirm",
+      "shell.identity.accountMismatch",
+      "shell.identity.action.chooseIsolatedProfile",
       "settings.account.title",
       "settings.account.description",
       "settings.account.profileName",

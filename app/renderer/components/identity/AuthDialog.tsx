@@ -79,6 +79,9 @@ export function AuthDialog({
 
   const isEnrolling = state?.lifecycle === "enrolling";
   const isWaitingForBrowser = state?.lifecycle === "signing_in";
+  const needsIsolatedProfile = state?.nextActions.includes(
+    "choose_isolated_profile",
+  );
   const stateMessage =
     state?.messageKey === "shell.identity.invalidCredentials" ||
     state?.messageKey === "shell.identity.providerUnavailable" ||
@@ -147,10 +150,25 @@ export function AuthDialog({
           </form>
         ) : (
           <>
+            {needsIsolatedProfile && (
+              <Button
+                type="button"
+                className="mt-5 w-full"
+                disabled={busy}
+                onClick={() =>
+                  void run(() =>
+                    window.solodesk.identity.confirmAccountSwitch(),
+                  )
+                }
+              >
+                {t("shell.identity.action.chooseIsolatedProfile")}
+              </Button>
+            )}
+
             <Button
               type="button"
               variant="outline"
-              className="mt-5 w-full"
+              className={needsIsolatedProfile ? "mt-3 w-full" : "mt-5 w-full"}
               disabled={busy || isWaitingForBrowser}
               onClick={() => void run(() => window.solodesk.identity.startSignIn())}
             >

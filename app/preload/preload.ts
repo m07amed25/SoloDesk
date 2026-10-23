@@ -26,6 +26,14 @@ import type {
   WorkspaceCreationResult,
   WorkspaceSwitchResult,
 } from "../shared/workspace-contracts.ts";
+import type {
+  GetInvitationPolicyResult,
+  CreateInvitationResult,
+  ResendInvitationResult,
+  RevokeInvitationResult,
+  ListInvitationsResult,
+  ReconcileInvitationResult,
+} from "../shared/invitation-contracts.ts";
 
 type Family =
   | "lifecycle"
@@ -423,6 +431,47 @@ const workspaceFacade = Object.freeze({
     subscribeWorkspace(callback),
 });
 
+const invitationFacade = Object.freeze({
+  getPolicy: (envelope?: unknown) =>
+    invokeInvitation(
+      "getPolicy",
+      envelope,
+    ) as Promise<GetInvitationPolicyResult | null>,
+  list: (request: unknown) =>
+    invokeInvitation("list", request) as Promise<ListInvitationsResult | null>,
+  create: (request: unknown) =>
+    invokeInvitation(
+      "create",
+      request,
+    ) as Promise<CreateInvitationResult | null>,
+  resend: (request: unknown) =>
+    invokeInvitation(
+      "resend",
+      request,
+    ) as Promise<ResendInvitationResult | null>,
+  revoke: (request: unknown) =>
+    invokeInvitation(
+      "revoke",
+      request,
+    ) as Promise<RevokeInvitationResult | null>,
+  reconcile: (request: unknown) =>
+    invokeInvitation(
+      "reconcile",
+      request,
+    ) as Promise<ReconcileInvitationResult | null>,
+});
+
+async function invokeInvitation(
+  method: string,
+  input?: unknown,
+): Promise<unknown> {
+  try {
+    return await ipcRenderer.invoke(`solodesk.invitation.${method}`, input);
+  } catch {
+    return null;
+  }
+}
+
 const facade = Object.freeze({
   identity: Object.freeze({
     getState: () => invokeIdentity("identity.getState"),
@@ -469,6 +518,7 @@ const facade = Object.freeze({
     onDecision: (callback: Listener) => subscribe("links", callback),
   }),
   workspace: workspaceFacade,
+  invitation: invitationFacade,
 });
 
 contextBridge.exposeInMainWorld("solodesk", facade);

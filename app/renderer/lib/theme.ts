@@ -8,7 +8,8 @@ export type ThemePreset =
   | "solar"
   | "chakra-industrial"
   | "cobalt"
-  | "amber-outfit";
+  | "amber-outfit"
+  | "rose";
 
 export interface ThemePresetOption {
   id: ThemePreset;
@@ -20,7 +21,8 @@ export interface ThemePresetOption {
     | "theme.preset.solar"
     | "theme.preset.chakra"
     | "theme.preset.cobalt"
-    | "theme.preset.amber_outfit";
+    | "theme.preset.amber_outfit"
+    | "theme.preset.rose";
   accentColor: string;
   keywords: readonly string[];
 }
@@ -91,6 +93,12 @@ export const THEME_PRESET_OPTIONS: readonly ThemePresetOption[] = [
       "آوتفت",
       "نمط",
     ],
+  },
+  {
+    id: "rose",
+    titleKey: "theme.preset.rose",
+    accentColor: "oklch(0.7192 0.1690 13.4280)",
+    keywords: ["preset", "rose", "pink", "ورد", "وردي", "زهري", "نمط"],
   },
 ] as const;
 
