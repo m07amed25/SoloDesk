@@ -38,6 +38,7 @@ test("exposes each selectable theme preset once", () => {
       "chakra-industrial",
       "cobalt",
       "amber-outfit",
+      "rose",
     ],
   );
 });

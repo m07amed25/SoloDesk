@@ -50,6 +50,7 @@ export const en = {
   "theme.preset.chakra": "Chakra Industrial",
   "theme.preset.cobalt": "Cobalt",
   "theme.preset.amber_outfit": "Amber Outfit",
+  "theme.preset.rose": "Rose",
   "theme.preset.switch_to": "Switch theme style: {style}",
 
   // Language

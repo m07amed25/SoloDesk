@@ -52,6 +52,7 @@ export const ar: TranslationDictionary = {
   "theme.preset.chakra": "شاكرا صناعي",
   "theme.preset.cobalt": "كوبالت",
   "theme.preset.amber_outfit": "عنبري آوتفت",
+  "theme.preset.rose": "وردي",
   "theme.preset.switch_to": "تغيير النمط البصري: {style}",
 
   // Language
