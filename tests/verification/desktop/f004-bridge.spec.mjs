@@ -33,6 +33,7 @@ test("built preload exposes only named desktop actions", async ({
       identitySecurityKeys: Object.keys(
         window.solodesk?.identitySecurity || {},
       ).sort(),
+      invitationKeys: Object.keys(window.solodesk?.invitation || {}).sort(),
       windowKeys: Object.keys(window.solodesk?.window || {}).sort(),
       lifecycleKeys: Object.keys(window.solodesk?.lifecycle || {}).sort(),
       linkKeys: Object.keys(window.solodesk?.links || {}).sort(),
@@ -47,6 +48,7 @@ test("built preload exposes only named desktop actions", async ({
       keys: [
         "identity",
         "identitySecurity",
+        "invitation",
         "lifecycle",
         "links",
         "persistence",
@@ -73,6 +75,14 @@ test("built preload exposes only named desktop actions", async ({
         "onStateChanged",
         "retryReconciliation",
         "start",
+      ],
+      invitationKeys: [
+        "create",
+        "getPolicy",
+        "list",
+        "reconcile",
+        "resend",
+        "revoke",
       ],
       windowKeys: ["getState", "minimize", "requestClose", "restore"],
       lifecycleKeys: ["onState"],
